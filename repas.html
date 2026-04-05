@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Deentag — Repas</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+/* ===== ACCORDÉON ===== */
+.accordion {
+  margin: 8px 0;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--card-border);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.accordion.open {
+  border-color: var(--gold);
+  box-shadow: 0 4px 20px rgba(201,168,76,0.15);
+}
+
+.accordion-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 15px 18px;
+  cursor: pointer;
+  background: var(--card-bg);
+  transition: background 0.25s;
+  user-select: none;
+  gap: 12px;
+}
+.accordion.open .accordion-header {
+  background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.04));
+  border-bottom: 1px solid var(--card-border);
+}
+
+.accordion-title {
+  font-family: 'Cinzel', serif;
+  font-size: 8.5px;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  text-transform: uppercase;
+  flex: 1;
+  line-height: 1.6;
+}
+
+.accordion-arrow {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gold);
+  font-size: 10px;
+  transition: transform 0.35s ease, background 0.25s;
+  flex-shrink: 0;
+}
+.accordion.open .accordion-arrow {
+  transform: rotate(90deg);
+  background: var(--gold);
+  color: var(--bg);
+}
+
+.accordion-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s ease;
+  background: var(--bg);
+}
+.accordion.open .accordion-body { max-height: 3000px; }
+.accordion-inner { padding: 18px 18px 22px; }
+
+/* ===== LANGUE ===== */
+.lang-block { display: none; }
+.lang-block.active { display: block; }
+span.lang-block.active { display: inline; }
+
+/* ===== TITRE CATÉGORIE ===== */
+.inv-cat {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 0.45em;
+  color: var(--gold);
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+/* ===== SCRIPT (Invocation/Supplication) ===== */
+.inv-script {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 28px;
+  color: var(--gold);
+  font-weight: 300;
+  line-height: 1.1;
+}
+
+/* ===== CONTENU ===== */
+.translation-block {
+  text-align: center; margin: 14px 0;
+  color: var(--text); font-size: 17px; line-height: 1.8; font-style: italic;
+}
+.phonetic-block {
+  text-align: center; margin: 10px 0;
+  color: var(--gold); font-size: 14px; line-height: 1.65;
+  font-style: italic; font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(201,168,76,0.06);
+}
+.arabic-block {
+  text-align: center; margin: 16px 0;
+  font-family: 'Amiri', serif; font-size: 24px; line-height: 2.1;
+  color: var(--arabic-color); direction: rtl;
+}
+.hadith-block {
+  text-align: center; margin: 12px 0;
+  color: var(--text3); font-size: 12.5px; line-height: 1.75;
+  font-style: italic;
+  padding: 10px 14px;
+  border-top: 1px solid var(--card-border);
+}
+.sunnah-item {
+  margin: 10px 0; padding: 12px 15px;
+  border-left: 2px solid var(--gold);
+  background: var(--card-bg);
+  border-radius: 0 10px 10px 0;
+}
+.sunnah-title {
+  font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.22em;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 6px;
+}
+.sunnah-text { color: var(--text2); font-size: 13px; line-height: 1.7; }
+
+.closing-dua {
+  text-align: center; margin: 20px 0 6px;
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 17px; color: var(--gold); line-height: 1.7;
+}
+</style>
+</head>
+<body class="day">
+
+  <!-- TOP BAR -->
+  <div class="top-bar">
+    <div class="back-btn">
+      <a href="index.html" class="back-arrow">←</a>
+      <span class="back-label" data-i18n="back">Retour</span>
+    </div>
+    <div class="lang-wrapper">
+      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()">FR ▾</button>
+      <div class="lang-menu" id="lang-menu">
+        <span class="lang-option" data-lang="fr" onclick="setLang('fr')">Français</span>
+        <span class="lang-option" data-lang="en" onclick="setLang('en')">English</span>
+        <span class="lang-option" data-lang="es" onclick="setLang('es')">Español</span>
+      </div>
+    </div>
+    <div class="theme-toggle" onclick="toggleTheme()"><div class="knob" id="theme-knob">☀️</div></div>
+  </div>
+
+  <!-- HEADER -->
+  <div class="inv-header">
+    <img src="images/logo.png" class="inv-logo" alt="Deentag">
+    <div class="inv-brand">DEENTAG</div>
+    <div class="inv-script">
+      <span class="lang-block" data-lang-block="fr">Invocation</span>
+      <span class="lang-block" data-lang-block="en">Supplication</span>
+      <span class="lang-block" data-lang-block="es">Invocación</span>
+    </div>
+    <div class="inv-cat">
+      <span class="lang-block" data-lang-block="fr">REPAS</span>
+      <span class="lang-block" data-lang-block="en">MEALS</span>
+      <span class="lang-block" data-lang-block="es">COMIDAS</span>
+    </div>
+  </div>
+
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-center">
+      <div class="ornament-diamond"></div>
+      <span style="color:var(--gold);font-size:13px;">✦</span>
+      <div class="ornament-diamond"></div>
+    </div>
+    <div class="ornament-line"></div>
+  </div>
+
+  <!-- CONTENU -->
+  <div class="inv-content">
+
+    <!-- ===== SECTION 1 : AVANT DE MANGER ===== -->
+    <div class="accordion open" id="acc1">
+      <div class="accordion-header" onclick="toggleAccordion('acc1')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">AVANT DE COMMENCER À MANGER</span>
+          <span class="lang-block" data-lang-block="en">BEFORE EATING</span>
+          <span class="lang-block" data-lang-block="es">ANTES DE COMER</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+
+          <div class="lang-block" data-lang-block="fr">
+            <div class="translation-block">Au nom d'Allah</div>
+            <div class="phonetic-block">Bismillâh</div>
+            <div class="arabic-block">بِسْمِ اللَّهِ</div>
+            <div class="hadith-block">À dire à voix basse avant de commencer à manger.</div>
+          </div>
+
+          <div class="lang-block" data-lang-block="en">
+            <div class="translation-block">In the name of Allah</div>
+            <div class="phonetic-block">Bismillaah</div>
+            <div class="arabic-block">بِسْمِ اللَّهِ</div>
+            <div class="hadith-block">To be said softly before beginning to eat.</div>
+          </div>
+
+          <div class="lang-block" data-lang-block="es">
+            <div class="translation-block">En el nombre de Allah</div>
+            <div class="phonetic-block">Bismilláh</div>
+            <div class="arabic-block">بِسْمِ اللَّهِ</div>
+            <div class="hadith-block">Se dice en voz baja antes de comenzar a comer.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 2 : OUBLI BISMILLAH ===== -->
+    <div class="accordion" id="acc2">
+      <div class="accordion-header" onclick="toggleAccordion('acc2')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">SI OUBLI DE DIRE BISMILLAH AU DÉBUT</span>
+          <span class="lang-block" data-lang-block="en">IF YOU FORGET BISMILLAH AT THE START</span>
+          <span class="lang-block" data-lang-block="es">SI OLVIDAS DECIR BISMILLAH AL INICIO</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+
+          <div class="lang-block" data-lang-block="fr">
+            <div class="translation-block">Au nom d'Allah au début et à la fin</div>
+            <div class="phonetic-block">Bismillâhi awwalahû wa âkhirahû</div>
+            <div class="arabic-block">بِسْمِ اللَّهِ أَوَّلَهُ وَآخِرَهُ</div>
+            <div class="hadith-block">Le Prophète ﷺ a dit : « Quand l'un de vous mange, qu'il dise 'Bismillah'. Et s'il oublie au début, qu'il dise : 'Bismillah fî awwalihi wa âkhirihi'. » Sahih al-Bukhari (5376) et Sahih Muslim (2022).</div>
+          </div>
+
+          <div class="lang-block" data-lang-block="en">
+            <div class="translation-block">In the name of Allah, at the beginning and at the end</div>
+            <div class="phonetic-block">Bismillaahi awwalahu wa aakhirahu</div>
+            <div class="arabic-block">بِسْمِ اللَّهِ أَوَّلَهُ وَآخِرَهُ</div>
+            <div class="hadith-block">The Prophet ﷺ said: "When one of you eats, let him say 'Bismillah'. If he forgets at the beginning, let him say: 'Bismillah fi awwalihi wa akhirihi'." Sahih al-Bukhari (5376) and Sahih Muslim (2022).</div>
+          </div>
+
+          <div class="lang-block" data-lang-block="es">
+            <div class="translation-block">En el nombre de Allah, al principio y al final</div>
+            <div class="phonetic-block">Bismilláhi awwalahu wa ájirah</div>
+            <div class="arabic-block">بِسْمِ اللَّهِ أَوَّلَهُ وَآخِرَهُ</div>
+            <div class="hadith-block">El Profeta ﷺ dijo: "Cuando alguno de vosotros coma, que diga 'Bismillah'. Y si olvida al principio, que diga: 'Bismillah fi awwalihi wa akhirihi'." Sahih al-Bukhari (5376) y Sahih Muslim (2022).</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 3 : APRÈS MANGER ===== -->
+    <div class="accordion" id="acc3">
+      <div class="accordion-header" onclick="toggleAccordion('acc3')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">APRÈS AVOIR FINI DE MANGER</span>
+          <span class="lang-block" data-lang-block="en">AFTER FINISHING THE MEAL</span>
+          <span class="lang-block" data-lang-block="es">DESPUÉS DE TERMINAR DE COMER</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+
+          <div class="lang-block" data-lang-block="fr">
+            <div class="translation-block">Louange à Allah qui m'a nourri de ceci et me l'a accordé sans force ni puissance de ma part.</div>
+            <div class="phonetic-block">Al-hamdu lil-lâhi lladhî at'amanî hâdhâ wa razaqanîhi min ghayri hawlin minnî wa lâ quwwatin</div>
+            <div class="arabic-block">الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ</div>
+            <div class="hadith-block">Variante courte (si pressé) : <em style="color:var(--gold);">Al-hamdu lil-lâhi</em> — Louange à Allah (suffit et authentique)</div>
+          </div>
+
+          <div class="lang-block" data-lang-block="en">
+            <div class="translation-block">Praise be to Allah Who has fed me this and provided it for me without any strength or power on my part.</div>
+            <div class="phonetic-block">Al-hamdu lillaahil-lathee at-'amanee haathaa wa razaqaneehi min ghayri hawlin minnee wa laa quwwatin</div>
+            <div class="arabic-block">الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ</div>
+            <div class="hadith-block">Short version (if in a hurry): <em style="color:var(--gold);">Al-hamdu lillaah</em> — Praise be to Allah (sufficient and authentic)</div>
+          </div>
+
+          <div class="lang-block" data-lang-block="es">
+            <div class="translation-block">Alabado sea Allah que me alimentó con esto y me lo proveyó sin fuerza ni poder de mi parte.</div>
+            <div class="phonetic-block">Al-hamdu lilláhil-lathí at-'amaní hátha wa razaqaníhi min gáiri hawlin minní wa lá qúwwatin</div>
+            <div class="arabic-block">الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ</div>
+            <div class="hadith-block">Versión corta (si tienes prisa): <em style="color:var(--gold);">Al-hamdu lilláh</em> — Alabado sea Allah (suficiente y auténtico)</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== SECTION 4 : SUNNAHS ===== -->
+    <div class="accordion" id="acc4">
+      <div class="accordion-header" onclick="toggleAccordion('acc4')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">SUNNAHS DU PROPHÈTE ﷺ</span>
+          <span class="lang-block" data-lang-block="en">PROPHET'S ﷺ SUNNAH</span>
+          <span class="lang-block" data-lang-block="es">SUNNAH DEL PROFETA ﷺ</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+
+          <div class="lang-block" data-lang-block="fr">
+            <div class="sunnah-item">
+              <div class="sunnah-title">MANGER ET BOIRE AVEC LA MAIN DROITE</div>
+              <div class="sunnah-text">Hadith : « Quand l'un de vous mange, qu'il mange avec sa main droite ; quand il boit, qu'il boive avec sa main droite, car Shaytan mange et boit avec sa main gauche. » (Sahih Muslim 2020)</div>
+            </div>
+            <div class="sunnah-item">
+              <div class="sunnah-title">MANGER CE QUI EST DEVANT SOI</div>
+              <div class="sunnah-text">Hadith : « … et mange de ce qui est près de toi. » (Sahih al-Bukhari et Muslim)</div>
+            </div>
+            <div class="sunnah-item">
+              <div class="sunnah-title">NE PAS CRITIQUER LA NOURRITURE</div>
+              <div class="sunnah-text">Le Prophète ﷺ ne critiquait jamais la nourriture : s'il aimait, il mangeait ; sinon, il laissait. (Sahih al-Bukhari 5409 et Muslim)</div>
+            </div>
+            <div class="sunnah-item">
+              <div class="sunnah-title">MANGER MODÉRÉMENT</div>
+              <div class="sunnah-text">Hadith : « L'être humain ne remplit pas un récipient pire que son ventre. Il suffit au fils d'Adam de quelques bouchées pour redresser son dos. S'il doit absolument le remplir, alors qu'il réserve un tiers pour sa nourriture, un tiers pour sa boisson et un tiers pour sa respiration. » Sunan at-Tirmidhi (2380), Sunan Ibn Majah (3349).</div>
+            </div>
+          </div>
+
+          <div class="lang-block" data-lang-block="en">
+            <div class="sunnah-item">
+              <div class="sunnah-title">EAT AND DRINK WITH THE RIGHT HAND</div>
+              <div class="sunnah-text">Hadith: "When one of you eats, let him eat with his right hand; when he drinks, let him drink with his right hand, for Satan eats and drinks with his left hand." (Sahih Muslim 2020)</div>
+            </div>
+            <div class="sunnah-item">
+              <div class="sunnah-title">EAT WHAT IS IN FRONT OF YOU</div>
+              <div class="sunnah-text">Hadith: "… and eat from what is nearest to you." (Sahih al-Bukhari and Muslim)</div>
+            </div>
+            <div class="sunnah-item">
+              <div class="sunnah-title">DO NOT CRITICIZE FOOD</div>
+              <div class="sunnah-text">The Prophet ﷺ never criticized food: if he liked it, he ate it; if not, he left it. (Sahih al-Bukhari 5409 and Muslim)</div>
+            </div>
+            <div class="sunnah-item">
+              <div class="sunnah-title">EAT IN MODERATION</div>
+              <div class="sunnah-text">Hadith: "No human ever filled a vessel worse than the stomach. It is sufficient for the son of Adam to have a few bites to keep his back straight. If he must fill it, then one third for his food, one third for his drink and one third for his breath." Sunan at-Tirmidhi (2380), Sunan Ibn Majah (3349).</div>
+            </div>
+          </div>
+
+          <div class="lang-block" data-lang-block="es">
+            <div class="sunnah-item">
+              <div class="sunnah-title">COMER Y BEBER CON LA MANO DERECHA</div>
+              <div class="sunnah-text">Hadiz: "Cuando alguno de vosotros coma, que coma con su mano derecha; cuando beba, que beba con su mano derecha, pues Satanás come y bebe con su mano izquierda." (Sahih Muslim 2020)</div>
+            </div>
+            <div class="sunnah-item">
+              <div class="sunnah-title">COMER LO QUE TIENES DELANTE</div>
+              <div class="sunnah-text">Hadiz: "… y come de lo que está cerca de ti." (Sahih al-Bujari y Muslim)</div>
+            </div>
+            <div class="sunnah-item">
+              <div class="sunnah-title">NO CRITICAR LA COMIDA</div>
+              <div class="sunnah-text">El Profeta ﷺ nunca criticaba la comida: si le gustaba, comía; si no, la dejaba. (Sahih al-Bujari 5409 y Muslim)</div>
+            </div>
+            <div class="sunnah-item">
+              <div class="sunnah-title">COMER CON MODERACIÓN</div>
+              <div class="sunnah-text">Hadiz: "Ningún ser humano llena un recipiente peor que su estómago. Le bastan al hijo de Adán unos pocos bocados para mantener su espalda recta. Si debe llenarlo, entonces un tercio para su comida, un tercio para su bebida y un tercio para su respiración." Sunan at-Tirmidhi (2380), Sunan Ibn Mayah (3349).</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- CLOSING -->
+    <div class="closing-dua">
+      <span class="lang-block" data-lang-block="fr">Que ton repas soit béni</span>
+      <span class="lang-block" data-lang-block="en">May your meal be blessed</span>
+      <span class="lang-block" data-lang-block="es">Que tu comida sea bendecida</span>
+    </div>
+
+  </div>
+
+<script src="js/main.js"></script>
+<script>
+// ===== ACCORDÉON =====
+function toggleAccordion(id) {
+  const clicked = document.getElementById(id);
+  const isOpen = clicked.classList.contains('open');
+  document.querySelectorAll('.accordion').forEach(a => a.classList.remove('open'));
+  if (!isOpen) {
+    clicked.classList.add('open');
+    // Scroll automatique après ouverture
+    setTimeout(() => {
+      clicked.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+// ===== LANGUE BLOCS =====
+function applyLangBlocks(lang) {
+  document.querySelectorAll('[data-lang-block]').forEach(el => {
+    el.classList.toggle('active', el.getAttribute('data-lang-block') === lang);
+  });
+}
+
+const _orig = window.setLang;
+window.setLang = function(lang) {
+  if (typeof _orig === 'function') _orig(lang);
+  applyLangBlocks(lang);
+};
+
+window.addEventListener('DOMContentLoaded', () => {
+  const lang = localStorage.getItem('deentag_lang') || 'fr';
+  applyLangBlocks(lang);
+});
+</script>
+</body>
+</html>
