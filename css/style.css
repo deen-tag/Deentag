@@ -153,7 +153,7 @@ body.night .theme-toggle .knob { transform:translateX(20px); }
 .icon-card:active { transform:scale(0.95); }
 .icon-card.coming-soon { opacity:0.65; cursor:default; pointer-events:none; }
 
-.icon-img { width:82px; height:82px; object-fit:contain; }
+.icon-img { width:58px; height:58px; object-fit:contain; }
 .icon-label {
   font-family:'Cinzel', serif; font-size:9px; letter-spacing:0.1em;
   color:var(--text2); text-align:center; margin-top:8px; text-transform:uppercase;
