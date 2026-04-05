@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Deentag — Réveil & Coucher</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="day">
+  <div class="top-bar">
+    <div class="back-btn">
+      <a href="index.html" class="back-arrow">←</a>
+      <span class="back-label" data-i18n="back">Retour</span>
+    </div>
+    <div class="lang-wrapper">
+      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()">FR ▾</button>
+      <div class="lang-menu" id="lang-menu">
+        <span class="lang-option" data-lang="fr" onclick="setLang('fr')">Français</span>
+        <span class="lang-option" data-lang="en" onclick="setLang('en')">English</span>
+        <span class="lang-option" data-lang="es" onclick="setLang('es')">Español</span>
+      </div>
+    </div>
+    <div class="theme-toggle" onclick="toggleTheme()"><div class="knob" id="theme-knob">☀️</div></div>
+  </div>
+  <div class="inv-header">
+    <img src="images/logo.png" class="inv-logo" alt="Deentag">
+    <div class="inv-brand">DEENTAG</div>
+    <div class="inv-script" data-i18n="invocation2">Invocation</div>
+    <div class="inv-cat">RÉVEIL & COUCHER</div>
+  </div>
+  
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-center">
+      <div class="ornament-diamond"></div>
+      <span style="color:var(--gold);font-size:13px;">✦</span>
+      <div class="ornament-diamond"></div>
+    </div>
+    <div class="ornament-line"></div>
+  </div>
+  <div class="inv-content fade-in">
+
+  <div class="section-ornament">
+    <div class="section-line"></div>
+    <div class="section-title-wrap"><div class="section-title">LORSQU'ON SE RÉVEILLE</div></div>
+    <div class="section-line"></div>
+  </div>
+    <div class="translation-block">Louange à Allah qui nous a rendus à la vie après nous avoir fait mourir, et c'est vers Lui que sera la résurrection.</div>
+    <div class="phonetic-block">Al-hamdu lillâhi lladhî ahyânâ ba'da mâ amâtanâ wa ilayhi n-nushûr.</div>
+    <div class="arabic-block">الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَ مَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ</div>
+    <div class="hadith-block">Le Prophète ﷺ disait cette invocation au réveil pour remercier Allah de redonner la vie après le "petit mort" du sommeil. Rapporté par Al-Bukhari (6312) et Muslim (2711), authentique.</div>
+
+  <div class="section-ornament">
+    <div class="section-line"></div>
+    <div class="section-title-wrap"><div class="section-title">INVOCATION LORSQU'ON VA SE COUCHER</div></div>
+    <div class="section-line"></div>
+  </div>
+    <div class="translation-block">C'est en Ton nom, ô Allah, que je meurs et que je vis</div>
+    <div class="phonetic-block">Bismika Allâhumma amûtu wa ahyâ.</div>
+    <div class="arabic-block">بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا</div>
+    <div class="hadith-block">Le Prophète ﷺ disait cela avant de dormir, rappelant que le sommeil est une petite mort et que la vie revient par Allah. Rapporté par Al-Bukhari et Muslim (dans les chapitres d'adhkar).</div>
+
+  <div class="section-ornament">
+    <div class="section-line"></div>
+    <div class="section-title-wrap"><div class="section-title">VARIANTE COMPLÈTE</div></div>
+    <div class="section-line"></div>
+  </div>
+    <div class="translation-block">Ô mon Seigneur, c'est en Ton nom que je me couche sur le côté, et c'est par Toi que je le relève. Si Tu retiens mon âme, fais-lui miséricorde ; et si Tu la renvoies, protège-la comme Tu protèges Tes serviteurs pieux.</div>
+    <div class="phonetic-block">Bismika Rabbî wada'tu janbî, wa bika arfa'uhu. Fa-in amsakta nafsî farhamhâ, wa in arsaltahâ fahfazhâ bimâ tahfazu bihi 'ibâdaka s-sâlihîn.</div>
+    <div class="arabic-block">بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي وَبِكَ أَرْفَعُهُ فَإِنْ أَمْسَكْتَ نَفْسِي فَارْحَمْهَا وَإِنْ أَرْسَلْتَهَا فَاحْفَظْهَا بِمَا تَحْفَظُ بِهِ عِبَادَكَ الصَّالِحِينَ</div>
+    <div class="hadith-block">Cette dua protège l'âme pendant le sommeil. Rapporté par Al-Bukhari (dans les invocations avant dormir), authentique.</div>
+
+  <div class="section-ornament">
+    <div class="section-line"></div>
+    <div class="section-title-wrap"><div class="section-title">SUNNAHS DU PROPHÈTE ﷺ</div></div>
+    <div class="section-line"></div>
+  </div>
+    <div class="sunnah-item">
+      <div class="sunnah-title">RÉCITE ÂYATU L-KURSÎ AVANT DE DORMIR</div>
+      <div class="sunnah-text">Récite Âyatu l-Kursî (Sourate Al-Baqarah 255) avant de te coucher : Allah nommera un gardien pour te protéger toute la nuit, et Shaytan ne pourra t'approcher jusqu'au matin. Rapporté par Al-Bukhari (2311).</div>
+    </div>
+    <div class="sunnah-item">
+      <div class="sunnah-title">LES TROIS DERNIÈRES SOURATES</div>
+      <div class="sunnah-text">Avant de dormir, joins tes mains, crache légèrement dedans et récite les trois dernières sourates (Al-Ikhlas, Al-Falaq, An-Nas) trois fois, puis passe-les sur ton corps. Le Prophète ﷺ faisait cela pour se protéger. Rapporté par Al-Bukhari (dans Mukhtasar).</div>
+    </div>
+    <div class="closing-dua">Que tes nuits soient protégées<br>et tes réveils remplis de baraka</div>
+  </div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

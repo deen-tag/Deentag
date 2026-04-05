@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Deentag — Repas</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="day">
+  <div class="top-bar">
+    <div class="back-btn">
+      <a href="index.html" class="back-arrow">←</a>
+      <span class="back-label" data-i18n="back">Retour</span>
+    </div>
+    <div class="lang-wrapper">
+      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()">FR ▾</button>
+      <div class="lang-menu" id="lang-menu">
+        <span class="lang-option" data-lang="fr" onclick="setLang('fr')">Français</span>
+        <span class="lang-option" data-lang="en" onclick="setLang('en')">English</span>
+        <span class="lang-option" data-lang="es" onclick="setLang('es')">Español</span>
+      </div>
+    </div>
+    <div class="theme-toggle" onclick="toggleTheme()"><div class="knob" id="theme-knob">☀️</div></div>
+  </div>
+  <div class="inv-header">
+    <img src="images/logo.png" class="inv-logo" alt="Deentag">
+    <div class="inv-brand">DEENTAG</div>
+    <div class="inv-script" data-i18n="invocation2">Invocation</div>
+    <div class="inv-cat">REPAS</div>
+  </div>
+  
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-center">
+      <div class="ornament-diamond"></div>
+      <span style="color:var(--gold);font-size:13px;">✦</span>
+      <div class="ornament-diamond"></div>
+    </div>
+    <div class="ornament-line"></div>
+  </div>
+  <div class="inv-content fade-in">
+
+  <div class="section-ornament">
+    <div class="section-line"></div>
+    <div class="section-title-wrap"><div class="section-title">AVANT DE COMMENCER À MANGER (DITES-LA À VOIX BASSE)</div></div>
+    <div class="section-line"></div>
+  </div>
+    <div class="translation-block">Au nom d'Allah</div>
+    <div class="phonetic-block">Bismillâh</div>
+    <div class="arabic-block">بِسْمِ اللَّهِ</div>
+
+  <div class="section-ornament">
+    <div class="section-line"></div>
+    <div class="section-title-wrap"><div class="section-title">SI OUBLI DE DIRE BISMILLAH AU DÉBUT (DÈS QUE TU T'EN SOUVIENS PENDANT LE REPAS)</div></div>
+    <div class="section-line"></div>
+  </div>
+    <div class="translation-block">Au nom d'Allah au début et à la fin</div>
+    <div class="phonetic-block">Bismillâhi awwalahu wa âkhirahu</div>
+    <div class="arabic-block">بِسْمِ اللَّهِ أَوَّلَهُ وَآخِرَهُ</div>
+    <div class="hadith-block">Le Prophète ﷺ a dit : « Quand l'un de vous mange, qu'il dise 'Bismillah'. Et s'il oublie au début, qu'il dise : 'Bismillah fî awwalihi wa âkhirihi' (Au nom d'Allah au début et à la fin). » Source : Sahih al-Bukhari (5376) et Sahih Muslim (2022).</div>
+
+  <div class="section-ornament">
+    <div class="section-line"></div>
+    <div class="section-title-wrap"><div class="section-title">APRÈS AVOIR FINI DE MANGER</div></div>
+    <div class="section-line"></div>
+  </div>
+    <div class="translation-block">Louange à Allah qui m'a nourri de ceci et me l'a accordé sans force ni puissance de ma part.</div>
+    <div class="phonetic-block">Al-hamdu lil-lâhi lladhî at'amanî hâdhâ wa razaqanîhi min ghayri hawlin minnî wa lâ quwwatin</div>
+    <div class="arabic-block">الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلَا قُوَّةٍ</div>
+    <div class="hadith-block">Variante courte (si pressé) : <em style="color:var(--gold);">Al-hamdu lil-lâhi</em> — Louange à Allah (suffit et authentique)</div>
+
+  <div class="section-ornament">
+    <div class="section-line"></div>
+    <div class="section-title-wrap"><div class="section-title">SUNNAHS DU PROPHÈTE ﷺ (PENDANT LE REPAS)</div></div>
+    <div class="section-line"></div>
+  </div>
+    <div class="sunnah-item">
+      <div class="sunnah-title">MANGER ET BOIRE AVEC LA MAIN DROITE</div>
+      <div class="sunnah-text">Hadith : « Quand l'un de vous mange, qu'il mange avec sa main droite ; quand il boit, qu'il boive avec sa main droite, car Shaytan mange et boit avec sa main gauche. » (Sahih Muslim 2020)</div>
+    </div>
+    <div class="sunnah-item">
+      <div class="sunnah-title">MANGER CE QUI EST DEVANT SOI (NE PAS TENDRE LA MAIN PARTOUT DANS LE PLAT)</div>
+      <div class="sunnah-text">Hadith : « … et mange de ce qui est près de toi. » (Sahih al-Bukhari et Muslim)</div>
+    </div>
+    <div class="sunnah-item">
+      <div class="sunnah-title">NE PAS CRITIQUER LA NOURRITURE</div>
+      <div class="sunnah-text">Le Prophète ﷺ ne critiquait jamais la nourriture : s'il aimait, il mangeait ; sinon, il laissait. (Sahih al-Bukhari 5409 et Muslim)</div>
+    </div>
+    <div class="sunnah-item">
+      <div class="sunnah-title">MANGER MODÉRÉMENT</div>
+      <div class="sunnah-text">Hadith : « L'être humain ne remplit pas un récipient pire que son ventre. Il suffit au fils d'Adam de quelques bouchées pour redresser son dos. S'il doit absolument (le remplir), alors qu'il réserve un tiers pour sa nourriture, un tiers pour sa boisson et un tiers pour sa respiration. » Rapporté par : Sunan at-Tirmidhi (2380), Sunan Ibn Majah (3349).</div>
+    </div>
+    <div class="closing-dua">Que ton repas soit béni</div>
+  </div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
