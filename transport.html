@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Deentag — Transport</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="day">
+  <div class="top-bar">
+    <div class="back-btn">
+      <a href="index.html" class="back-arrow">←</a>
+      <span class="back-label" data-i18n="back">Retour</span>
+    </div>
+    <div class="lang-wrapper">
+      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()">FR ▾</button>
+      <div class="lang-menu" id="lang-menu">
+        <span class="lang-option" data-lang="fr" onclick="setLang('fr')">Français</span>
+        <span class="lang-option" data-lang="en" onclick="setLang('en')">English</span>
+        <span class="lang-option" data-lang="es" onclick="setLang('es')">Español</span>
+      </div>
+    </div>
+    <div class="theme-toggle" onclick="toggleTheme()"><div class="knob" id="theme-knob">☀️</div></div>
+  </div>
+  <div class="inv-header">
+    <img src="images/logo.png" class="inv-logo" alt="Deentag">
+    <div class="inv-brand">DEENTAG</div>
+    <div class="inv-script">
+      <span class="lang-block" data-lang-block="fr">Invocation</span>
+      <span class="lang-block" data-lang-block="en">Supplication</span>
+      <span class="lang-block" data-lang-block="es">Invocación</span>
+    </div>
+    <div class="inv-cat">
+      <span class="lang-block" data-lang-block="fr">TRANSPORTS</span>
+      <span class="lang-block" data-lang-block="en">TRANSPORT</span>
+      <span class="lang-block" data-lang-block="es">TRANSPORTE</span>
+    </div>
+  </div>
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-center">
+      <div class="ornament-diamond"></div>
+      <span style="color:var(--gold);font-size:13px;">✦</span>
+      <div class="ornament-diamond"></div>
+    </div>
+    <div class="ornament-line"></div>
+  </div>
+  <div class="inv-content">
+    <div class="accordion" id="acc1">
+      <div class="accordion-header" onclick="toggleAccordion('acc1')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">LORSQU'ON PREND UN MOYEN DE TRANSPORT</span>
+          <span class="lang-block" data-lang-block="en">WHEN TAKING ANY MEANS OF TRANSPORT</span>
+          <span class="lang-block" data-lang-block="es">AL TOMAR UN MEDIO DE TRANSPORTE</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="translation-block" id="acc1-tr-fr">Au nom d'Allah. Louange à Allah. Gloire à Celui qui a soumis ceci à notre service alors que nous n'étions pas capables de le maîtriser. Et certes, nous retournerons vers notre Seigneur.</div>
+            <div class="phonetic-block" id="acc1-ph-fr">Bismillâh. Al-hamdu lillâh. Subhâna lladhî sakhkhara lanâ hâdhâ wa mâ kunnâ lahu muqrînîn. Wa innâ ilâ rabbinâ lamunqalibûn.</div>
+            <div class="arabic-block" id="acc1-ar-fr">بِسْمِ اللَّهِ، الْحَمْدُ لِلَّهِ، سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَٰذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَىٰ رَبِّنَا لَمُنْقَلِبُونَ</div>
+            <div class="hadith-block">Récite cette dua en montant ou en démarrant. Sunan Abu Daoud (2602) et Sunan Tirmidhi (3446), classé sahih par Al-Albani.</div></div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="translation-block" id="acc1-tr-en">In the name of Allah. Praise be to Allah. Glory be to Him Who has subjected this to us while we were unable to subdue it. And indeed to our Lord we are returning.</div>
+            <div class="phonetic-block" id="acc1-ph-en">Bismillaah. Al-hamdu lillaah. Subhaanalladhee sakhkhara lanaa haathaa wa maa kunnaa lahu muqrineen. Wa innaa ilaa rabbinaa lamunqaliboon.</div>
+            <div class="arabic-block" id="acc1-ar-en">بِسْمِ اللَّهِ، الْحَمْدُ لِلَّهِ، سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَٰذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَىٰ رَبِّنَا لَمُنْقَلِبُونَ</div>
+            <div class="hadith-block">Recite this dua when boarding or starting. Sunan Abu Daoud (2602) and Tirmidhi (3446), classified sahih by Al-Albani.</div></div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="translation-block" id="acc1-tr-es">En el nombre de Allah. La alabanza es para Allah. Gloria a Quien ha sometido esto a nuestro servicio cuando no éramos capaces de dominarlo. Y ciertamente, volveremos a nuestro Señor.</div>
+            <div class="phonetic-block" id="acc1-ph-es">Bismilláh. Al-hamdu lilláh. Subhánalladhí sajjhara lanaa háthaa wa maa kunnaa lahu muqrineen. Wa innaa ilaa rabbiná lamunqalibúun.</div>
+            <div class="arabic-block" id="acc1-ar-es">بِسْمِ اللَّهِ، الْحَمْدُ لِلَّهِ، سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَٰذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَىٰ رَبِّنَا لَمُنْقَلِبُونَ</div>
+            <div class="hadith-block">Recita esta dua al subir o al arrancar. Sunan Abu Daoud (2602) y Tirmidhi (3446), clasificado sahih por Al-Albani.</div></div>
+        <div class="tts-bar">
+          <button class="tts-btn" id="tts-acc1" onclick="toggleTTS('acc1')">
+            <span class="tts-icon">🔊</span>
+            <span class="lang-block" data-lang-block="fr">Écouter</span>
+            <span class="lang-block" data-lang-block="en">Listen</span>
+            <span class="lang-block" data-lang-block="es">Escuchar</span>
+          </button>
+        </div>
+      </div></div>
+    </div>
+    <div class="accordion" id="acc2">
+      <div class="accordion-header" onclick="toggleAccordion('acc2')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">OPTION POUR LES TRAJETS PLUS LONGS (VARIANTE COMPLÈTE)</span>
+          <span class="lang-block" data-lang-block="en">OPTION FOR LONGER JOURNEYS (COMPLETE VERSION)</span>
+          <span class="lang-block" data-lang-block="es">OPCIÓN PARA VIAJES MÁS LARGOS (VERSIÓN COMPLETA)</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="translation-block" id="acc2-tr-fr">Ô Allah, nous Te demandons dans ce voyage la piété, la crainte pieuse et les actions qui Te plaisent. Ô Allah, facilite-nous ce voyage et raccourcis sa distance...</div>
+            <div class="phonetic-block" id="acc2-ph-fr">Allâhumma innâ nas'aluka fî safarinâ hâdhâ l-birra wat-taqwâ, wa minal-'amali mâ tardâ. Allâhumma hawwin 'alaynâ safaranâ hâdhâ watwi 'annâ bu'dahu...</div>
+            <div class="arabic-block" id="acc2-ar-fr">اللَّهُمَّ إِنَّا نَسْأَلُكَ فِي سَفَرِنَا هَذَا الْبِرَّ وَالتَّقْوَى وَمِنَ الْعَمَلِ مَا تَرْضَى. اللَّهُمَّ هَوِّنْ عَلَيْنَا سَفَرَنَا هَذَا وَاطْوِ عَنَّا بُعْدَهُ</div>
+            <div class="hadith-block">Rapporté par Ibn 'Umar (qu'Allah l'agrée) dans Sahih Muslim (1342), authentique. Pour le quotidien, la version courte suffit largement.</div></div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="translation-block" id="acc2-tr-en">O Allah, we ask You in this journey of ours for righteousness and piety, and for deeds that please You. O Allah, make this journey easy for us and shorten its distance...</div>
+            <div class="phonetic-block" id="acc2-ph-en">Allaahummaa innaa nas'aluka fee safarinaa haathal-birra wat-taqwaa, wa minal-'amali maa tardaa. Allaahummaa hawwin 'alaynaa safaranaa haathaa watwi 'annaa bu'dah...</div>
+            <div class="arabic-block" id="acc2-ar-en">اللَّهُمَّ إِنَّا نَسْأَلُكَ فِي سَفَرِنَا هَذَا الْبِرَّ وَالتَّقْوَى وَمِنَ الْعَمَلِ مَا تَرْضَى. اللَّهُمَّ هَوِّنْ عَلَيْنَا سَفَرَنَا هَذَا وَاطْوِ عَنَّا بُعْدَهُ</div>
+            <div class="hadith-block">Reported by Ibn Umar in Sahih Muslim (1342), authentic. For daily commutes, the short version is sufficient.</div></div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="translation-block" id="acc2-tr-es">Oh Allah, Te pedimos en este viaje piedad, temor reverente y acciones que Te complazcan. Oh Allah, facilítanos este viaje y acorta su distancia...</div>
+            <div class="phonetic-block" id="acc2-ph-es">Alláhummaa innaa nas'aluka fee safarinaa haathal-birra wat-taqwáa, wa minal-'amali maa tardáa. Alláhummaa hawwin 'alaynaa safaranaa haathaa watwi 'annaa bu'dah...</div>
+            <div class="arabic-block" id="acc2-ar-es">اللَّهُمَّ إِنَّا نَسْأَلُكَ فِي سَفَرِنَا هَذَا الْبِرَّ وَالتَّقْوَى وَمِنَ الْعَمَلِ مَا تَرْضَى. اللَّهُمَّ هَوِّنْ عَلَيْنَا سَفَرَنَا هَذَا وَاطْوِ عَنَّا بُعْدَهُ</div>
+            <div class="hadith-block">Relatado por Ibn Umar en Sahih Muslim (1342), auténtico.</div></div>
+        <div class="tts-bar">
+          <button class="tts-btn" id="tts-acc2" onclick="toggleTTS('acc2')">
+            <span class="tts-icon">🔊</span>
+            <span class="lang-block" data-lang-block="fr">Écouter</span>
+            <span class="lang-block" data-lang-block="en">Listen</span>
+            <span class="lang-block" data-lang-block="es">Escuchar</span>
+          </button>
+        </div>
+      </div></div>
+    </div>
+    <div class="accordion" id="acc3">
+      <div class="accordion-header" onclick="toggleAccordion('acc3')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">SUNNAHS DU PROPHÈTE ﷺ</span>
+          <span class="lang-block" data-lang-block="en">PROPHET'S ﷺ SUNNAH</span>
+          <span class="lang-block" data-lang-block="es">SUNNAH DEL PROFETA ﷺ</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="sunnah-item"><div class="sunnah-title">COMMENCE PAR BISMILLAH ET LOUANGE</div><div class="sunnah-text">Le Prophète ﷺ insistait sur le rappel d'Allah avant tout déplacement, même court. Cela protège et rend l'acte une adoration.</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">FAIS CONFIANCE À ALLAH POUR LA SÉCURITÉ</div><div class="sunnah-text">Le Prophète ﷺ enseignait à placer sa tawakkul en Allah pour tout voyage, même quotidien.</div></div></div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="sunnah-item"><div class="sunnah-title">START WITH BISMILLAH AND PRAISE</div><div class="sunnah-text">The Prophet ﷺ insisted on remembering Allah before any journey, even short ones. This protects and makes the act an act of worship.</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">TRUST ALLAH FOR SAFETY</div><div class="sunnah-text">The Prophet ﷺ taught to place one's tawakkul in Allah for every journey, even daily ones.</div></div></div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="sunnah-item"><div class="sunnah-title">COMIENZA CON BISMILLAH Y ALABANZA</div><div class="sunnah-text">El Profeta ﷺ insistía en recordar a Allah antes de cualquier desplazamiento, incluso corto. Esto protege y convierte el acto en una adoración.</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">CONFÍA EN ALLAH PARA LA SEGURIDAD</div><div class="sunnah-text">El Profeta ﷺ enseñaba a depositar su tawakkul en Allah para todo viaje, incluso el diario.</div></div></div>
+
+      </div></div>
+    </div>
+    <div class="closing-dua">
+      <span class="lang-block" data-lang-block="fr">Que tes trajets quotidiens soient protégés et bénis</span>
+      <span class="lang-block" data-lang-block="en">May your daily journeys be protected and blessed</span>
+      <span class="lang-block" data-lang-block="es">Que tus viajes diarios sean protegidos y bendecidos</span>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>
