@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Deentag — Tristesse</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="day">
+  <div class="top-bar">
+    <div class="back-btn">
+      <a href="index.html" class="back-arrow">←</a>
+      <span class="back-label" data-i18n="back">Retour</span>
+    </div>
+    <div class="lang-wrapper">
+      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()">FR ▾</button>
+      <div class="lang-menu" id="lang-menu">
+        <span class="lang-option" data-lang="fr" onclick="setLang('fr')">Français</span>
+        <span class="lang-option" data-lang="en" onclick="setLang('en')">English</span>
+        <span class="lang-option" data-lang="es" onclick="setLang('es')">Español</span>
+      </div>
+    </div>
+    <div class="theme-toggle" onclick="toggleTheme()"><div class="knob" id="theme-knob">☀️</div></div>
+  </div>
+  <div class="inv-header">
+    <img src="images/logo.png" class="inv-logo" alt="Deentag">
+    <div class="inv-brand">DEENTAG</div>
+    <div class="inv-script">
+      <span class="lang-block" data-lang-block="fr">Invocation</span>
+      <span class="lang-block" data-lang-block="en">Supplication</span>
+      <span class="lang-block" data-lang-block="es">Invocación</span>
+    </div>
+    <div class="inv-cat">
+      <span class="lang-block" data-lang-block="fr">TRISTESSE</span>
+      <span class="lang-block" data-lang-block="en">SADNESS</span>
+      <span class="lang-block" data-lang-block="es">TRISTEZA</span>
+    </div>
+  </div>
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-center">
+      <div class="ornament-diamond"></div>
+      <span style="color:var(--gold);font-size:13px;">✦</span>
+      <div class="ornament-diamond"></div>
+    </div>
+    <div class="ornament-line"></div>
+  </div>
+  <div class="inv-content">
+    <div class="accordion" id="acc1">
+      <div class="accordion-header" onclick="toggleAccordion('acc1')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">LORSQU'ON RESSENT DE LA TRISTESSE / DU CHAGRIN</span>
+          <span class="lang-block" data-lang-block="en">WHEN FEELING SADNESS / GRIEF / ANXIETY</span>
+          <span class="lang-block" data-lang-block="es">CUANDO SE SIENTE TRISTEZA / PENA / ANGUSTIA</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="translation-block" id="acc1-tr-fr">Ô Allah, je cherche refuge auprès de Toi contre les soucis et la tristesse, contre l'incapacité et la paresse, contre la lâcheté et l'avarice, contre le poids de la dette et la domination des hommes.</div>
+            <div class="phonetic-block" id="acc1-ph-fr">Allâhumma innî a'ûdhu bika minal-hammi wal-hazani, wal-'ajzi wal-kasali, wal-jubni wal-bukhli, wa dala'i d-dayni wa ghalabati r-rijâli.</div>
+            <div class="arabic-block" id="acc1-ar-fr">اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْجُبْنِ وَالْبُخْلِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ</div>
+            <div class="hadith-block">Anas ibn Malik (qu'Allah l'agrée) rapporte que le Prophète ﷺ avait l'habitude de dire cette invocation. Rapporté dans Sahih al-Bukhari (n°6369), authentique.</div></div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="translation-block" id="acc1-tr-en">O Allah, I seek refuge in You from worry and grief, from helplessness and laziness, from cowardice and miserliness, from the burden of debt and the oppression of men.</div>
+            <div class="phonetic-block" id="acc1-ph-en">Allaahummaa innee a'oodhu bika minal-hammi wal-hazani, wal-'ajzi wal-kasali, wal-jubni wal-bukhli, wa dhala'id-dayni wa ghalabatir-rijaal.</div>
+            <div class="arabic-block" id="acc1-ar-en">اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْجُبْنِ وَالْبُخْلِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ</div>
+            <div class="hadith-block">Reported by Anas ibn Malik. Sahih al-Bukhari (6369), authentic.</div></div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="translation-block" id="acc1-tr-es">Oh Allah, me refugio en Ti de la preocupación y la tristeza, de la impotencia y la pereza, de la cobardía y la avaricia, del peso de la deuda y la dominación de los hombres.</div>
+            <div class="phonetic-block" id="acc1-ph-es">Alláhummaa innee a'údhu bika minal-hammi wal-hazani, wal-'ayzi wal-kasali, wal-yubni wal-bujli, wa dhala'id-dayni wa ghalabatir-riyaal.</div>
+            <div class="arabic-block" id="acc1-ar-es">اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ، وَالْعَجْزِ وَالْكَسَلِ، وَالْجُبْنِ وَالْبُخْلِ، وَضَلَعِ الدَّيْنِ وَغَلَبَةِ الرِّجَالِ</div>
+            <div class="hadith-block">Relatado por Anas ibn Malik. Sahih al-Bukhari (6369), auténtico.</div></div>
+        <div class="tts-bar">
+          <button class="tts-btn" id="tts-acc1" onclick="toggleTTS('acc1')">
+            <span class="tts-icon">🔊</span>
+            <span class="lang-block" data-lang-block="fr">Écouter</span>
+            <span class="lang-block" data-lang-block="en">Listen</span>
+            <span class="lang-block" data-lang-block="es">Escuchar</span>
+          </button>
+        </div>
+      </div></div>
+    </div>
+    <div class="accordion" id="acc2">
+      <div class="accordion-header" onclick="toggleAccordion('acc2')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">DUA DU CORAN — PRINTEMPS DU CŒUR</span>
+          <span class="lang-block" data-lang-block="en">QUR'AN DUA — SPRING OF THE HEART</span>
+          <span class="lang-block" data-lang-block="es">DUA DEL CORÁN — PRIMAVERA DEL CORAZÓN</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="translation-block" id="acc2-tr-fr">Ô Allah ! Je suis Ton serviteur, fils de Ton serviteur, fils de Ta servante. Mon toupet est dans Ta Main. Ton jugement s'accomplit sur moi, Ton décret sur moi est juste.<br><br>Je Te demande par tout nom qui T'appartient... de faire du Coran le printemps de mon cœur, la lumière de ma poitrine, la dissipation de ma tristesse et la fin de mes soucis.</div>
+            <div class="phonetic-block" id="acc2-ph-fr">Allâhumma innî 'abduka ibnu 'abdika ibnu amatika, nâsiyatî biyadika, mâdin fiyya hukmuka, 'adlun fiyya qadâ'uka. As'aluka bikulli ismin huwa laka... an taj'ala l-Qur'âna rabî'a qalbî, wa nûra sadrî, wa jalâ'a huznî, wa dhahâba hammî.</div>
+            <div class="arabic-block" id="acc2-ar-fr">اللَّهُمَّ إِنِّي عَبْدُكَ ابْنُ عَبْدِكَ ابْنُ أَمَتِكَ نَاصِيَتِي بِيَدِكَ مَاضٍ فِيَّ حُكْمُكَ عَدْلٌ فِيَّ قَضَاؤُكَ أَسْأَلُكَ بِكُلِّ اسْمٍ هُوَ لَكَ سَمَّيْتَ بِهِ نَفْسَكَ أَوْ أَنْزَلْتَهُ فِي كِتَابِكَ أَوْ عَلَّمْتَهُ أَحَداً مِنْ خَلْقِكَ أَوِ اسْتَأْثَرْتَ بِهِ فِي عِلْمِ الْغَيْبِ عِنْدَكَ أَنْ تَجْعَلَ الْقُرْآنَ رَبِيعَ قَلْبِي وَنُورَ صَدْرِي وَجَلاَءَ حُزْنِي وَذَهَابَ هَمِّي</div>
+            <div class="hadith-block">Abdullah ibn Mas'ûd rapporte que le Prophète ﷺ enseignait cette invocation : « Quiconque la prononce, Allah dissipera son souci et le remplacera par de la joie. » Musnad Ahmad (1/391), authentifié par Al-Albani.</div></div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="translation-block" id="acc2-tr-en">O Allah! I am Your servant, son of Your servant, son of Your maidservant. My forelock is in Your Hand... to make the Quran the spring of my heart, the light of my chest, the removal of my sadness and the departure of my anxiety.</div>
+            <div class="phonetic-block" id="acc2-ph-en">Allaahummaa innee 'abduka ibnu 'abdika ibnu amatika, naasiyatee biyadika... an taj'alal-Qur'aana rabee'a qalbee, wa noora sadree, wa jalaa'a huznee, wa dhahaaba hammee.</div>
+            <div class="arabic-block" id="acc2-ar-en">اللَّهُمَّ إِنِّي عَبْدُكَ ابْنُ عَبْدِكَ ابْنُ أَمَتِكَ نَاصِيَتِي بِيَدِكَ مَاضٍ فِيَّ حُكْمُكَ عَدْلٌ فِيَّ قَضَاؤُكَ أَسْأَلُكَ بِكُلِّ اسْمٍ هُوَ لَكَ سَمَّيْتَ بِهِ نَفْسَكَ أَوْ أَنْزَلْتَهُ فِي كِتَابِكَ أَوْ عَلَّمْتَهُ أَحَداً مِنْ خَلْقِكَ أَوِ اسْتَأْثَرْتَ بِهِ فِي عِلْمِ الْغَيْبِ عِنْدَكَ أَنْ تَجْعَلَ الْقُرْآنَ رَبِيعَ قَلْبِي وَنُورَ صَدْرِي وَجَلاَءَ حُزْنِي وَذَهَابَ هَمِّي</div>
+            <div class="hadith-block">Ibn Mas'ud reported that whoever says this, Allah will remove his distress and replace it with joy. Musnad Ahmad (1/391), authenticated by Al-Albani.</div></div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="translation-block" id="acc2-tr-es">Oh Allah, soy Tu siervo, hijo de Tu siervo, hijo de Tu sierva... que hagas del Corán la primavera de mi corazón, la luz de mi pecho, la disipación de mi tristeza y el fin de mis preocupaciones.</div>
+            <div class="phonetic-block" id="acc2-ph-es">Alláhummaa innee 'abduka ibnu 'abdika ibnu amatika, naasiyatee biyadika... an taj'alal-Qur'aana rabee'a qalbee, wa núura sadree, wa yalaa'a huznee, wa dhahaaba hammee.</div>
+            <div class="arabic-block" id="acc2-ar-es">اللَّهُمَّ إِنِّي عَبْدُكَ ابْنُ عَبْدِكَ ابْنُ أَمَتِكَ نَاصِيَتِي بِيَدِكَ مَاضٍ فِيَّ حُكْمُكَ عَدْلٌ فِيَّ قَضَاؤُكَ أَسْأَلُكَ بِكُلِّ اسْمٍ هُوَ لَكَ سَمَّيْتَ بِهِ نَفْسَكَ أَوْ أَنْزَلْتَهُ فِي كِتَابِكَ أَوْ عَلَّمْتَهُ أَحَداً مِنْ خَلْقِكَ أَوِ اسْتَأْثَرْتَ بِهِ فِي عِلْمِ الْغَيْبِ عِنْدَكَ أَنْ تَجْعَلَ الْقُرْآنَ رَبِيعَ قَلْبِي وَنُورَ صَدْرِي وَجَلاَءَ حُزْنِي وَذَهَابَ هَمِّي</div>
+            <div class="hadith-block">Ibn Mas'ud relató que quien diga esto, Allah disipará su angustia y la reemplazará por alegría. Musnad Ahmad (1/391), autentificado por Al-Albani.</div></div>
+        <div class="tts-bar">
+          <button class="tts-btn" id="tts-acc2" onclick="toggleTTS('acc2')">
+            <span class="tts-icon">🔊</span>
+            <span class="lang-block" data-lang-block="fr">Écouter</span>
+            <span class="lang-block" data-lang-block="en">Listen</span>
+            <span class="lang-block" data-lang-block="es">Escuchar</span>
+          </button>
+        </div>
+      </div></div>
+    </div>
+    <div class="accordion" id="acc3">
+      <div class="accordion-header" onclick="toggleAccordion('acc3')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">SUNNAHS DU PROPHÈTE ﷺ</span>
+          <span class="lang-block" data-lang-block="en">PROPHET'S ﷺ SUNNAH</span>
+          <span class="lang-block" data-lang-block="es">SUNNAH DEL PROFETA ﷺ</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="sunnah-item"><div class="sunnah-title">FAIS DU CORAN TON REMÈDE QUOTIDIEN</div><div class="sunnah-text">D'après Abu Hurayra (qu'Allah l'agrée), le Prophète ﷺ encourageait la récitation du Coran pour apaiser l'âme. Le Coran apporte lumière et printemps au cœur. [Ibn Majah 3742]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">COMBINE AVEC LE TAWAKKUL ET LE SABR (patience)</div><div class="sunnah-text">D'après Anas ibn Malik (qu'Allah l'agrée), le Prophète ﷺ enseignait la confiance totale en Allah et la patience face aux épreuves. Allah remplace le chagrin par la joie. [Sahih Muslim 2701]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">INVOQUE ALLAH CONTRE LA TRISTESSE</div><div class="sunnah-text">D'après Ibn Abbas (qu'Allah l'agrée), le Prophète ﷺ a dit : « Ô Allah, je cherche refuge auprès de Toi contre l'inquiétude et la tristesse, la faiblesse et la paresse, l'avarice et la lâcheté, le poids des dettes et l'oppression des hommes. » [Sahih al-Bukhari 6369]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">LA PRIÈRE EST TON REMÈDE</div><div class="sunnah-text">D'après Abu Hurayra (qu'Allah l'agrée), le Prophète ﷺ a dit : « La prière est lumière, elle éloigne la tristesse et apporte la sérénité au cœur du croyant. » [Sahih Muslim 223]</div></div>
+        </div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="sunnah-item"><div class="sunnah-title">MAKE THE QURAN YOUR DAILY REMEDY</div><div class="sunnah-text">According to Abu Hurairah (may Allah be pleased with him), the Prophet ﷺ encouraged the recitation of the Quran to soothe the soul. The Quran brings light and spring to the heart. [Ibn Majah 3742]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">COMBINE WITH TAWAKKUL AND SABR (patience)</div><div class="sunnah-text">According to Anas ibn Malik (may Allah be pleased with him), the Prophet ﷺ taught complete trust in Allah and patience in the face of trials. Allah replaces grief with joy. [Sahih Muslim 2701]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">INVOKE ALLAH AGAINST SADNESS</div><div class="sunnah-text">According to Ibn Abbas (may Allah be pleased with him), the Prophet ﷺ said: "O Allah, I seek refuge in You from worry and sadness, from weakness and laziness, from miserliness and cowardice, from the burden of debt and the oppression of men." [Sahih al-Bukhari 6369]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">PRAYER IS YOUR REMEDY</div><div class="sunnah-text">According to Abu Hurairah (may Allah be pleased with him), the Prophet ﷺ said: "Prayer is light, it drives away sadness and brings serenity to the heart of the believer." [Sahih Muslim 223]</div></div>
+        </div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="sunnah-item"><div class="sunnah-title">HAZ DEL CORÁN TU REMEDIO DIARIO</div><div class="sunnah-text">Según Abu Hurairah (que Allah esté complacido con él), el Profeta ﷺ alentaba la recitación del Corán para calmar el alma. El Corán trae luz y primavera al corazón. [Ibn Mayah 3742]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">COMBINA CON TAWAKKUL Y SABR (paciencia)</div><div class="sunnah-text">Según Anas ibn Malik (que Allah esté complacido con él), el Profeta ﷺ enseñaba la confianza total en Allah y la paciencia ante las pruebas. Allah reemplaza el dolor por la alegría. [Sahih Muslim 2701]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">INVOCA A ALLAH CONTRA LA TRISTEZA</div><div class="sunnah-text">Según Ibn Abbas (que Allah esté complacido con él), el Profeta ﷺ dijo: "Oh Allah, me refugio en Ti de la preocupación y la tristeza, de la debilidad y la pereza, de la avaricia y la cobardía, del peso de las deudas y la opresión de los hombres." [Sahih al-Bukhari 6369]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">LA ORACIÓN ES TU REMEDIO</div><div class="sunnah-text">Según Abu Hurairah (que Allah esté complacido con él), el Profeta ﷺ dijo: "La oración es luz, aleja la tristeza y trae serenidad al corazón del creyente." [Sahih Muslim 223]</div></div>
+        </div>
+
+      </div></div>
+    </div>
+    <div class="closing-dua">
+      <span class="lang-block" data-lang-block="fr">Que Allah dissipe ta tristesse et remplisse ton cœur de sérénité</span>
+      <span class="lang-block" data-lang-block="en">May Allah dispel your sadness and fill your heart with serenity</span>
+      <span class="lang-block" data-lang-block="es">Que Allah disipe tu tristeza y llene tu corazón de serenidad</span>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>
