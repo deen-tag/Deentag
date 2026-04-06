@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Deentag — Enfants</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="day">
+  <div class="top-bar">
+    <div class="back-btn">
+      <a href="index.html" class="back-arrow">←</a>
+      <span class="back-label" data-i18n="back">Retour</span>
+    </div>
+    <div class="lang-wrapper">
+      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()">FR ▾</button>
+      <div class="lang-menu" id="lang-menu">
+        <span class="lang-option" data-lang="fr" onclick="setLang('fr')">Français</span>
+        <span class="lang-option" data-lang="en" onclick="setLang('en')">English</span>
+        <span class="lang-option" data-lang="es" onclick="setLang('es')">Español</span>
+      </div>
+    </div>
+    <div class="theme-toggle" onclick="toggleTheme()"><div class="knob" id="theme-knob">☀️</div></div>
+  </div>
+  <div class="inv-header">
+    <img src="images/logo.png" class="inv-logo" alt="Deentag">
+    <div class="inv-brand">DEENTAG</div>
+    <div class="inv-script">
+      <span class="lang-block" data-lang-block="fr">Invocation</span>
+      <span class="lang-block" data-lang-block="en">Supplication</span>
+      <span class="lang-block" data-lang-block="es">Invocación</span>
+    </div>
+    <div class="inv-cat">
+      <span class="lang-block" data-lang-block="fr">ENFANTS</span>
+      <span class="lang-block" data-lang-block="en">CHILDREN</span>
+      <span class="lang-block" data-lang-block="es">NIÑOS</span>
+    </div>
+  </div>
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-center">
+      <div class="ornament-diamond"></div>
+      <span style="color:var(--gold);font-size:13px;">✦</span>
+      <div class="ornament-diamond"></div>
+    </div>
+    <div class="ornament-line"></div>
+  </div>
+  <div class="inv-content">
+    <div class="accordion" id="acc1">
+      <div class="accordion-header" onclick="toggleAccordion('acc1')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">INVOCATION PRINCIPALE — PROTÉGER SES ENFANTS</span>
+          <span class="lang-block" data-lang-block="en">MAIN SUPPLICATION — PROTECT YOUR CHILDREN</span>
+          <span class="lang-block" data-lang-block="es">INVOCACIÓN PRINCIPAL — PROTEGER A TUS HIJOS</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="translation-block" id="acc1-tr-fr">Je cherche refuge pour vous deux* dans les paroles parfaites d'Allah contre tout diable, toute bête venimeuse et tout mauvais œil envieux.</div>
+            <div class="phonetic-block" id="acc1-ph-fr">*U'îdhukumâ bi kalimâti Llâhi t-tâmmati min kulli shaytânin wa hâmmatin wa min kulli 'aynin lâmmatin.</div>
+            <div class="arabic-block" id="acc1-ar-fr">أُعِيذُكُمَا* بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ</div>
+            <div class="hadith-block">Ibn 'Abbâs rapporte que le Messager d'Allah ﷺ cherchait refuge pour Al-Hasan et Al-Husayn en disant cette invocation. Sahih al-Bukhari (3371).<br><br><strong style="color:var(--gold);">* 1 enfant :</strong> Phonétique : <em>U'îdhuka</em> — Arabe : <span style="font-family:'Amiri',serif;">أُعِيذُكَ</span></div></div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="translation-block" id="acc1-tr-en">I seek refuge for you both* in the perfect words of Allah from every devil, every poisonous creature, and every evil eye.</div>
+            <div class="phonetic-block" id="acc1-ph-en">*U'eedhukumaa bi kalimaaatillaahit-taammati min kulli shaytaanin wa haammatin wa min kulli 'aynin laammatin.</div>
+            <div class="arabic-block" id="acc1-ar-en">أُعِيذُكُمَا* بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ</div>
+            <div class="hadith-block">Ibn Abbas reported that the Messenger of Allah ﷺ sought refuge for Al-Hasan and Al-Husayn with this supplication. Sahih al-Bukhari (3371).<br><br><strong style="color:var(--gold);">* 1 child:</strong> Phonetic: <em>U'eedhuka</em> — Arabic: <span style="font-family:'Amiri',serif;">أُعِيذُكَ</span></div></div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="translation-block" id="acc1-tr-es">Me refugio para vosotros dos* en las palabras perfectas de Allah de todo diablo, toda criatura venenosa y todo mal de ojo.</div>
+            <div class="phonetic-block" id="acc1-ph-es">*U'eedhukumáa bi kalimaatilláahit-taammati min kulli shaytaanin wa haammatin wa min kulli 'aynin laammatin.</div>
+            <div class="arabic-block" id="acc1-ar-es">أُعِيذُكُمَا* بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ</div>
+            <div class="hadith-block">Ibn Abbas narró que el Mensajero de Allah ﷺ buscaba refugio para Al-Hasan y Al-Husayn con esta súplica. Sahih al-Bukhari (3371).<br><br><strong style="color:var(--gold);">* 1 niño:</strong> Fonético: <em>U'eedhuka</em> — Árabe: <span style="font-family:'Amiri',serif;">أُعِيذُكَ</span></div></div>
+        <div class="tts-bar">
+          <button class="tts-btn" id="tts-acc1" onclick="toggleTTS('acc1')">
+            <span class="tts-icon">🔊</span>
+            <span class="lang-block" data-lang-block="fr">Écouter</span>
+            <span class="lang-block" data-lang-block="en">Listen</span>
+            <span class="lang-block" data-lang-block="es">Escuchar</span>
+          </button>
+        </div>
+      </div></div>
+    </div>
+    <div class="accordion" id="acc2">
+      <div class="accordion-header" onclick="toggleAccordion('acc2')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">VARIANTE POUR UN ENFANT UNIQUE</span>
+          <span class="lang-block" data-lang-block="en">VARIANT FOR A SINGLE CHILD</span>
+          <span class="lang-block" data-lang-block="es">VARIANTE PARA UN HIJO ÚNICO</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="translation-block" id="acc2-tr-fr">Je cherche refuge pour toi dans les paroles parfaites d'Allah contre tout diable, toute bête venimeuse et tout mauvais œil envieux.</div>
+            <div class="phonetic-block" id="acc2-ph-fr">U'îdhuka bi kalimâti Llâhi t-tâmmati min kulli shaytânin wa hâmmatin wa min kulli 'aynin lâmmatin.</div>
+            <div class="arabic-block" id="acc2-ar-fr">أُعِيذُكَ بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ</div></div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="translation-block" id="acc2-tr-en">I seek refuge for you in the perfect words of Allah from every devil, every poisonous creature, and every evil eye.</div>
+            <div class="phonetic-block" id="acc2-ph-en">U'eedhuka bi kalimaatillaahit-taammati min kulli shaytaanin wa haammatin wa min kulli 'aynin laammatin.</div>
+            <div class="arabic-block" id="acc2-ar-en">أُعِيذُكَ بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ</div></div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="translation-block" id="acc2-tr-es">Me refugio para ti en las palabras perfectas de Allah de todo diablo, toda criatura venenosa y todo mal de ojo.</div>
+            <div class="phonetic-block" id="acc2-ph-es">U'eedhuka bi kalimaatilláahit-taammati min kulli shaytaanin wa haammatin wa min kulli 'aynin laammatin.</div>
+            <div class="arabic-block" id="acc2-ar-es">أُعِيذُكَ بِكَلِمَاتِ اللَّهِ التَّامَّةِ مِنْ كُلِّ شَيْطَانٍ وَهَامَّةٍ وَمِنْ كُلِّ عَيْنٍ لَامَّةٍ</div></div>
+        <div class="tts-bar">
+          <button class="tts-btn" id="tts-acc2" onclick="toggleTTS('acc2')">
+            <span class="tts-icon">🔊</span>
+            <span class="lang-block" data-lang-block="fr">Écouter</span>
+            <span class="lang-block" data-lang-block="en">Listen</span>
+            <span class="lang-block" data-lang-block="es">Escuchar</span>
+          </button>
+        </div>
+      </div></div>
+    </div>
+    <div class="accordion" id="acc3">
+      <div class="accordion-header" onclick="toggleAccordion('acc3')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">SUNNAHS DU PROPHÈTE ﷺ (PROTECTIONS)</span>
+          <span class="lang-block" data-lang-block="en">PROPHET'S ﷺ SUNNAH (PROTECTIONS)</span>
+          <span class="lang-block" data-lang-block="es">SUNNAH DEL PROFETA ﷺ (PROTECCIONES)</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="sunnah-item"><div class="sunnah-title">RÉCITE LES SOURATES DE PROTECTION</div><div class="sunnah-text">D'après Aïcha (qu'Allah l'agrée), le Prophète ﷺ soufflait sur ses mains en récitant Al-Ikhlas, Al-Falaq et An-Nas, puis les passait sur son corps. Récite-les trois fois chaque matin et soir sur tes enfants. [Sahih al-Bukhari 5017]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">PROTÉGER LES ENFANTS EN LES BÉNISSANT</div><div class="sunnah-text">D'après Abou Hourayra (qu'Allah l'agrée), le Prophète ﷺ a dit : « Si l'un de vous voit chez son frère ce qui l'impressionne, qu'il dise : "Bârakallâhu fîhi", car le mauvais œil est une réalité. » [Sahih Muslim 2188]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">AYATUL KURSI CHAQUE SOIR</div><div class="sunnah-text">D'après Abou Hourayra (qu'Allah l'agrée), le Prophète ﷺ a dit : « Celui qui récite Ayatul Kursi le soir sera protégé par Allah et aucun shaytan ne pourra l'approcher jusqu'au matin. » [Sahih al-Bukhari 2311]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">L'INVOCATION DU PÈRE EST EXAUCÉE</div><div class="sunnah-text">D'après Ibn Abbas (qu'Allah l'agrée), le Prophète ﷺ a dit : « Il y a trois invocations qui ne sont pas refusées : l'invocation du père pour son enfant, l'invocation du voyageur et l'invocation de celui à qui on a fait tort. » [Sunan at-Tirmidhi 1905, authentifié par Al-Albani]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">FERME LES PORTES EN DISANT BISMILLAH</div><div class="sunnah-text">D'après Jabir ibn Abdillah (qu'Allah l'agrée), le Prophète ﷺ a dit : « Fermez vos portes en mentionnant le nom d'Allah, car les shayateen ne peuvent ouvrir une porte fermée avec le nom d'Allah. » [Sahih al-Bukhari 3280]</div></div>
+        </div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="sunnah-item"><div class="sunnah-title">RECITE THE PROTECTION SURAHS</div><div class="sunnah-text">According to Aisha (may Allah be pleased with her), the Prophet ﷺ used to blow on his hands while reciting Al-Ikhlas, Al-Falaq and An-Nas, then pass them over his body. Recite them three times every morning and evening over your children. [Sahih al-Bukhari 5017]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">PROTECT CHILDREN BY BLESSING THEM</div><div class="sunnah-text">According to Abu Hurairah (may Allah be pleased with him), the Prophet ﷺ said: "If any of you sees something impressive in his brother, let him say: 'Barakallahu fih', for the evil eye is a reality." [Sahih Muslim 2188]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">AYATUL KURSI EVERY EVENING</div><div class="sunnah-text">According to Abu Hurairah (may Allah be pleased with him), the Prophet ﷺ said: "Whoever recites Ayatul Kursi in the evening will be protected by Allah and no shaytan will be able to approach him until morning." [Sahih al-Bukhari 2311]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">THE FATHER'S SUPPLICATION IS ANSWERED</div><div class="sunnah-text">According to Ibn Abbas (may Allah be pleased with him), the Prophet ﷺ said: "There are three supplications that are not rejected: the supplication of the father for his child, the supplication of the traveler and the supplication of the one who has been wronged." [Sunan at-Tirmidhi 1905, authenticated by Al-Albani]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">CLOSE DOORS SAYING BISMILLAH</div><div class="sunnah-text">According to Jabir ibn Abdillah (may Allah be pleased with him), the Prophet ﷺ said: "Close your doors while mentioning the name of Allah, for the shayateen cannot open a door closed with the name of Allah." [Sahih al-Bukhari 3280]</div></div>
+        </div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="sunnah-item"><div class="sunnah-title">RECITA LAS SURAS DE PROTECCIÓN</div><div class="sunnah-text">Según Aisha (que Allah esté complacido con ella), el Profeta ﷺ soplaba sobre sus manos recitando Al-Ikhlas, Al-Falaq y An-Nas, luego las pasaba por su cuerpo. Recítalas tres veces cada mañana y tarde sobre tus hijos. [Sahih al-Bukhari 5017]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">PROTEGE A LOS NIÑOS BENDICIÉNDOLOS</div><div class="sunnah-text">Según Abu Hurairah (que Allah esté complacido con él), el Profeta ﷺ dijo: "Si alguno de vosotros ve algo impresionante en su hermano, que diga: 'Barakallahu fih', pues el mal de ojo es una realidad." [Sahih Muslim 2188]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">AYATUL KURSI CADA TARDE</div><div class="sunnah-text">Según Abu Hurairah (que Allah esté complacido con él), el Profeta ﷺ dijo: "Quien recite Ayatul Kursi por la tarde será protegido por Allah y ningún shaytan podrá acercarse hasta la mañana." [Sahih al-Bukhari 2311]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">LA SÚPLICA DEL PADRE ES ACEPTADA</div><div class="sunnah-text">Según Ibn Abbas (que Allah esté complacido con él), el Profeta ﷺ dijo: "Hay tres súplicas que no son rechazadas: la súplica del padre por su hijo, la súplica del viajero y la súplica de quien ha sido agraviado." [Sunan at-Tirmidhi 1905, autentificado por Al-Albani]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">CIERRA LAS PUERTAS DICIENDO BISMILLAH</div><div class="sunnah-text">Según Jabir ibn Abdillah (que Allah esté complacido con él), el Profeta ﷺ dijo: "Cerrad vuestras puertas mencionando el nombre de Allah, pues los shayateen no pueden abrir una puerta cerrada con el nombre de Allah." [Sahih al-Bukhari 3280]</div></div>
+        </div>
+
+      </div></div>
+    </div>
+    <div class="closing-dua">
+      <span class="lang-block" data-lang-block="fr">Que Allah protège tes enfants de tout mal, visible ou invisible, et les garde dans Sa miséricorde</span>
+      <span class="lang-block" data-lang-block="en">May Allah protect your children from all evil, visible or invisible, and keep them in His mercy</span>
+      <span class="lang-block" data-lang-block="es">Que Allah proteja a tus hijos de todo mal, visible o invisible, y los guarde en Su misericordia</span>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+</body>
+</html>
