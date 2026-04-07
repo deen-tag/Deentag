@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Deentag — Sélection Invocation</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+</head>
+<body class="day">
+
+  <div class="top-bar">
+    <div style="width:44px;"></div>
+    <div class="lang-wrapper">
+      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()">FR ▾</button>
+      <div class="lang-menu" id="lang-menu">
+        <span class="lang-option" data-lang="fr" onclick="setLang('fr')">Français</span>
+        <span class="lang-option" data-lang="en" onclick="setLang('en')">English</span>
+        <span class="lang-option" data-lang="es" onclick="setLang('es')">Español</span>
+      </div>
+    </div>
+    <div class="theme-wrapper">
+      <span class="theme-emoji">☀️</span>
+      <div class="theme-toggle" onclick="toggleTheme()"><div class="knob" id="theme-knob"></div></div>
+      <span class="theme-emoji">🌙</span>
+    </div>
+  </div>
+
+  <div class="site-header">
+    <img src="images/logo.png" class="logo-img" alt="Deentag">
+    <div class="brand-name">DEENTAG</div>
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-center">
+      <div class="ornament-diamond"></div>
+      <span style="color:var(--gold);font-size:13px;">✦</span>
+      <div class="ornament-diamond"></div>
+    </div>
+    <div class="ornament-line"></div>
+  </div>
+    <div class="brand-script">
+      <span class="lang-block" data-lang-block="fr">Chaque instant a son invocation</span>
+      <span class="lang-block" data-lang-block="en">Every moment has its supplication</span>
+      <span class="lang-block" data-lang-block="es">Cada momento tiene su invocación</span>
+    </div>
+  </div>
+
+  <div class="icons-grid">
+    <a href="repas.html" class="icon-card">
+      <img src="images/repas.png" class="icon-img" alt="Repas">
+      <div class="icon-label">
+        <span class="lang-block" data-lang-block="fr">Repas</span>
+        <span class="lang-block" data-lang-block="en">Meals</span>
+        <span class="lang-block" data-lang-block="es">Comidas</span>
+      </div>
+    </a>
+    <a href="reveil.html" class="icon-card">
+      <img src="images/lit.png" class="icon-img" alt="Réveil">
+      <div class="icon-label">
+        <span class="lang-block" data-lang-block="fr">Réveil<br>Couché</span>
+        <span class="lang-block" data-lang-block="en">Wake<br>Sleep</span>
+        <span class="lang-block" data-lang-block="es">Despertar<br>Dormir</span>
+      </div>
+    </a>
+    <div class="icon-card coming-soon">
+      <img src="images/logo.png" class="icon-img" alt="Bientôt" style="opacity:0.4;">
+      <div class="icon-label">
+        <span class="lang-block" data-lang-block="fr">Bientôt</span>
+        <span class="lang-block" data-lang-block="en">Coming</span>
+        <span class="lang-block" data-lang-block="es">Pronto</span>
+      </div>
+      <div class="coming-badge">
+        <span class="lang-block" data-lang-block="fr">disponible</span>
+        <span class="lang-block" data-lang-block="en">soon</span>
+        <span class="lang-block" data-lang-block="es">disponible</span>
+      </div>
+    </div>
+    <a href="tristesse.html" class="icon-card">
+      <img src="images/tristesse.png" class="icon-img" alt="Tristesse">
+      <div class="icon-label">
+        <span class="lang-block" data-lang-block="fr">Tristesse</span>
+        <span class="lang-block" data-lang-block="en">Sadness</span>
+        <span class="lang-block" data-lang-block="es">Tristeza</span>
+      </div>
+    </a>
+    <a href="toilettes.html" class="icon-card">
+      <img src="images/wc.png" class="icon-img" alt="Toilettes">
+      <div class="icon-label">
+        <span class="lang-block" data-lang-block="fr">Toilettes</span>
+        <span class="lang-block" data-lang-block="en">Restroom</span>
+        <span class="lang-block" data-lang-block="es">Baño</span>
+      </div>
+    </a>
+    <a href="ablution.html" class="icon-card">
+      <img src="images/ablution.png" class="icon-img" alt="Ablution">
+      <div class="icon-label">
+        <span class="lang-block" data-lang-block="fr">Ablution</span>
+        <span class="lang-block" data-lang-block="en">Ablution</span>
+        <span class="lang-block" data-lang-block="es">Ablución</span>
+      </div>
+    </a>
+    <a href="maison.html" class="icon-card">
+      <img src="images/maison.png" class="icon-img" alt="Maison">
+      <div class="icon-label">
+        <span class="lang-block" data-lang-block="fr">Maison</span>
+        <span class="lang-block" data-lang-block="en">Home</span>
+        <span class="lang-block" data-lang-block="es">Casa</span>
+      </div>
+    </a>
+    <a href="enfants.html" class="icon-card">
+      <img src="images/enfants.png" class="icon-img" alt="Enfants">
+      <div class="icon-label">
+        <span class="lang-block" data-lang-block="fr">Enfants</span>
+        <span class="lang-block" data-lang-block="en">Children</span>
+        <span class="lang-block" data-lang-block="es">Niños</span>
+      </div>
+    </a>
+    <a href="transport.html" class="icon-card">
+      <img src="images/voiture.png" class="icon-img" alt="Transport">
+      <div class="icon-label">
+        <span class="lang-block" data-lang-block="fr">Transport</span>
+        <span class="lang-block" data-lang-block="en">Transport</span>
+        <span class="lang-block" data-lang-block="es">Transporte</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="ornament" style="margin-top:10px;">
+    <div class="ornament-line"></div>
+    <div class="ornament-center">
+      <div class="ornament-diamond"></div>
+      <span style="color:var(--gold);font-size:13px;">✦</span>
+      <div class="ornament-diamond"></div>
+    </div>
+    <div class="ornament-line"></div>
+  </div>
+
+  <div class="social-bar">
+    <a href="https://tiktok.com/@deentag" class="social-icon" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>
+    </a>
+    <a href="https://snapchat.com/add/deentag" class="social-icon" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M12.017 2C8.396 2 6 4.91 6 8.175c0 .347.03.688.085 1.02-.24.12-.494.178-.755.178-.37 0-.686-.138-.883-.138-.17 0-.447.07-.447.4 0 .456.717.7 1.37.97.11.044.22.09.322.14-.057.197-.122.43-.122.65 0 .095.01.19.025.28C5.262 11.848 4 12.7 4 13.474c0 .424.32.682.805.8.894.217 1.6.35 2.06.97.316.425.42.963.88 1.292.302.215.648.295 1.003.295.43 0 .874-.106 1.252-.106.228 0 .46.03.727.119.427.141.835.43 1.273.43.438 0 .847-.289 1.273-.43.267-.089.499-.119.727-.119.378 0 .822.106 1.252.106.355 0 .7-.08 1.003-.295.46-.33.564-.867.88-1.292.46-.62 1.166-.753 2.06-.97.485-.118.805-.376.805-.8 0-.774-1.262-1.626-1.595-1.86.015-.09.025-.185.025-.28 0-.22-.065-.453-.122-.65.102-.05.212-.096.322-.14.653-.27 1.37-.514 1.37-.97 0-.33-.277-.4-.447-.4-.197 0-.513.138-.883.138-.261 0-.515-.058-.755-.178.055-.332.085-.673.085-1.02C18.017 4.91 15.638 2 12.017 2z"/></svg>
+    </a>
+    <a href="https://instagram.com/deentag" class="social-icon" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+    </a>
+    <a href="https://facebook.com/deentag" class="social-icon" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+    </a>
+  </div>
+  <div style="height:12px;"></div>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
