@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Deentag — Toilettes</title>
 <link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body class="day">
   <div class="top-bar">
@@ -20,22 +21,19 @@
         <span class="lang-option" data-lang="es" onclick="setLang('es')">Español</span>
       </div>
     </div>
-    <div class="theme-toggle" onclick="toggleTheme()"><div class="knob" id="theme-knob">☀️</div></div>
+    <div class="theme-wrapper">
+      <span class="theme-emoji">☀️</span>
+      <div class="theme-toggle" onclick="toggleTheme()"><div class="knob" id="theme-knob"></div></div>
+      <span class="theme-emoji">🌙</span>
+    </div>
   </div>
   <div class="inv-header">
-    <img src="images/logo.png" class="inv-logo" alt="Deentag">
-    <div class="inv-brand">DEENTAG</div>
-    <div class="inv-script">
-      <span class="lang-block" data-lang-block="fr">Invocation</span>
-      <span class="lang-block" data-lang-block="en">Supplication</span>
-      <span class="lang-block" data-lang-block="es">Invocación</span>
-    </div>
     <div class="inv-cat">
       <span class="lang-block" data-lang-block="fr">TOILETTES</span>
       <span class="lang-block" data-lang-block="en">RESTROOM</span>
       <span class="lang-block" data-lang-block="es">BAÑO</span>
     </div>
-  </div>
+    <div class="cat-icon-wrap"><img src="images/wc.png" class="cat-icon-img" alt=""></div>
   <div class="ornament">
     <div class="ornament-line"></div>
     <div class="ornament-center">
@@ -44,6 +42,14 @@
       <div class="ornament-diamond"></div>
     </div>
     <div class="ornament-line"></div>
+  </div>
+    <img src="images/logo.png" class="inv-logo" alt="Deentag">
+    <div class="inv-brand">DEENTAG</div>
+    <div class="inv-script">
+      <span class="lang-block" data-lang-block="fr">Invocation</span>
+      <span class="lang-block" data-lang-block="en">Supplication</span>
+      <span class="lang-block" data-lang-block="es">Invocación</span>
+    </div>
   </div>
   <div class="inv-content">
     <div class="accordion" id="acc1">
