@@ -275,8 +275,11 @@ span.lang-block.active { display: inline; }
   border-bottom: 1px solid var(--card-border);
 }
 .accordion-title {
-  font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 0.08em;
-  color: var(--gold-dark); text-transform: uppercase; flex: 1; line-height: 1.6;
+  font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 0.03em;
+  color: #8B6914; font-weight: 600; text-transform: uppercase; flex: 1; line-height: 1.6;
+}
+body.night .accordion-title {
+  color: #F0D070;
 }
 .accordion-arrow {
   width: 32px; height: 32px; border-radius: 50%;
@@ -424,7 +427,6 @@ span.lang-block.active { display: inline; }
 ::-webkit-scrollbar-track { background:transparent; }
 ::-webkit-scrollbar-thumb { background:var(--gold-dark); border-radius:2px; }
 
-/* ===== DOUBLE BOUTON TTS ===== */
 .acc-controls-bar {
   display: flex; align-items: center; gap: 8px;
   margin: 16px 0 4px; flex-wrap: wrap;
@@ -433,7 +435,11 @@ span.lang-block.active { display: inline; }
 .tts-ar-btn { border-color: var(--arabic-color); color: var(--arabic-color); }
 .tts-ar-btn.playing, .tts-ar-btn:hover { background: var(--arabic-color); color: var(--bg); }
 .share-btn svg { display: block; stroke: var(--text); }
-.acc-actions { display: flex; gap: 4px; flex-shrink: 0; }
+.acc-actions {
+  display: flex; gap: 4px; flex-shrink: 0;
+  justify-content: flex-end;
+  margin-bottom: 4px;
+}
 .settings-btn, .share-btn {
   width: 32px; height: 32px; border-radius: 50%;
   border: 1px solid var(--card-border);
