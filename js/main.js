@@ -123,13 +123,11 @@ function toggleAccordion(id) {
 let audioState = { player: null, btn: null, type: null, accId: null };
 
 function stopAudio() {
-  // Arrêter MP3
   if (audioState.player) {
     audioState.player.pause();
     audioState.player.currentTime = 0;
     audioState.player = null;
   }
-  // Arrêter TTS voix
   window.speechSynthesis && window.speechSynthesis.cancel();
   if (audioState.btn) {
     audioState.btn.classList.remove('playing');
@@ -151,7 +149,6 @@ function clearAllHighlights() {
 }
 
 function playAudio(accId, type, btn, audioFile) {
-  // Si déjà en lecture → stop
   if (audioState.btn === btn && audioState.player) {
     stopAudio();
     return;
@@ -160,7 +157,6 @@ function playAudio(accId, type, btn, audioFile) {
 
   const lang = localStorage.getItem('deentag_lang') || 'fr';
 
-  // Bouton traduction → TTS voix synthétique
   if (type === 'tr') {
     const trEl = document.getElementById(accId + '-tr-' + lang);
     if (!trEl || !trEl.textContent.trim()) return;
@@ -175,9 +171,7 @@ function playAudio(accId, type, btn, audioFile) {
     btn.classList.add('playing');
     const ic = btn.querySelector('.tts-icon');
     if (ic) ic.textContent = '⏹';
-    // Illuminer traduction uniquement
     trEl.setAttribute('data-tts-reading', '1');
-    // Estomper arabe + phonétique + reste du site
     applyGlobalDim(accId, [trEl]);
     utt.onend = () => stopAudio();
     utt.onerror = () => stopAudio();
@@ -185,9 +179,7 @@ function playAudio(accId, type, btn, audioFile) {
     return;
   }
 
-  // Bouton arabe → MP3
   const player = new Audio('Audio/' + audioFile);
-
   audioState.player = player;
   audioState.btn = btn;
   audioState.type = type;
@@ -197,13 +189,11 @@ function playAudio(accId, type, btn, audioFile) {
   const ic = btn.querySelector('.tts-icon');
   if (ic) ic.textContent = '⏹';
 
-  // Illuminer arabe + phonétique
   const arEl = document.getElementById(accId + '-ar-' + lang);
   const phEl = document.getElementById(accId + '-ph-' + lang);
   if (arEl) arEl.setAttribute('data-tts-reading', '1');
   if (phEl) phEl.setAttribute('data-tts-reading', '1');
 
-  // Estomper traduction + tout le reste du site
   const trEl = document.getElementById(accId + '-tr-' + lang);
   applyGlobalDim(accId, [arEl, phEl]);
 
@@ -212,9 +202,7 @@ function playAudio(accId, type, btn, audioFile) {
   player.onerror = () => stopAudio();
 }
 
-// Estompe tout le site sauf les éléments illuminés
 function applyGlobalDim(accId, litEls) {
-  // Estomper tous les blocs de texte de la page
   document.querySelectorAll('.translation-block, .phonetic-block, .arabic-block, .hadith-block, .accordion-title, .closing-dua').forEach(el => {
     if (!litEls.includes(el)) {
       el.classList.add('audio-shimmer');
@@ -222,7 +210,6 @@ function applyGlobalDim(accId, litEls) {
   });
 }
 
-// Compatibilité ancienne fonction TTS (au cas où)
 function stopTTS() { stopAudio(); }
 function toggleTTS(accId) {}
 
@@ -296,8 +283,6 @@ function shareAccordion(accId) {
 }
 
 // ===== MAP AUDIO PAR PAGE =====
-// Format: { accId: { tr: 'fichier.mp3', ar: 'fichier.mp3' } }
-// Détecté automatiquement selon data-page sur le body ou le titre de la page
 function getAudioMap() {
   const page = document.body.getAttribute('data-page') || '';
   const maps = {
@@ -325,18 +310,17 @@ function getAudioMap() {
       acc2: { tr: 'tristesse2.mp3', ar: 'tristesse2.mp3' },
     },
     maison: {
-      acc1: { tr: 'maison1.mp4', ar: 'maison1.mp4' },
-      acc2: { tr: 'maison2.mp4', ar: 'maison2.mp4' },
-      acc3: { tr: 'maison3.mp4', ar: 'maison3.mp4' },
-      acc4: { tr: 'maison4.mp4', ar: 'maison4.mp4' },
+      acc1: { tr: 'maison1.mp3', ar: 'maison1.mp3' },
+      acc2: { tr: 'maison2.mp3', ar: 'maison2.mp3' },
+      acc3: { tr: 'maison3.mp3', ar: 'maison3.mp3' },
     },
     enfants: {
-      acc1: { tr: 'enfants1.mp4', ar: 'enfants1.mp4' },
-      acc2: { tr: 'enfants2.mp4', ar: 'enfants2.mp4' },
+      acc1: { tr: 'enfants1.mp3', ar: 'enfants1.mp3' },
+      acc2: { tr: 'enfants2.mp3', ar: 'enfants2.mp3' },
     },
     transport: {
-      acc1: { tr: 'transport1.mp4', ar: 'transport1.mp4' },
-      acc2: { tr: 'transport2.mp4', ar: 'transport2.mp4' },
+      acc1: { tr: 'transport1.mp3', ar: 'transport1.mp3' },
+      acc2: { tr: 'transport2.mp3', ar: 'transport2.mp3' },
     },
   };
   return maps[page] || {};
@@ -353,10 +337,24 @@ function injectAccordionControls() {
     if (!accId) return;
     const inner = acc.querySelector('.accordion-inner');
     if (!inner) return;
-    inner.querySelectorAll('.tts-bar, .acc-controls-bar, .settings-panel').forEach(b => b.remove());
+
+    // Nettoyer les anciens éléments injectés
+    inner.querySelectorAll('.tts-bar, .acc-controls-bar, .settings-panel, .acc-actions').forEach(b => b.remove());
+    const header = acc.querySelector('.accordion-header');
+    header.querySelectorAll('.acc-actions').forEach(b => b.remove());
+
     const hasSunnah = !!inner.querySelector('.sunnah-item');
     const hasAudio = !hasSunnah && audioMap[accId];
 
+    // === BOUTONS ⚙️ et PARTAGE — coin haut droit du corps ===
+    const actions = document.createElement('div');
+    actions.className = 'acc-actions';
+    actions.innerHTML =
+      '<button class="settings-btn" onclick="event.stopPropagation();toggleSettings(\'' + accId + '\')" title="Réglages">⚙️</button>' +
+      '<button class="share-btn" onclick="event.stopPropagation();shareAccordion(\'' + accId + '\')" title="Partager">' + SHARE_ICON + '</button>';
+    inner.insertBefore(actions, inner.firstChild);
+
+    // === BARRE AUDIO EN BAS ===
     const bar = document.createElement('div');
     bar.className = 'acc-controls-bar';
 
@@ -384,18 +382,6 @@ function injectAccordionControls() {
           '</button>' +
         '</div>';
     }
-    // Sunnahs et pages sans audio : aucun bouton audio
-
-    // Injecter les boutons réglages/partage dans le header
-    const header = acc.querySelector('.accordion-header');
-    let existingActions = header.querySelector('.acc-actions');
-    if (existingActions) existingActions.remove();
-    const actions = document.createElement('div');
-    actions.className = 'acc-actions';
-    actions.innerHTML =
-      '<button class="settings-btn" onclick="event.stopPropagation();toggleSettings(\'' + accId + '\')" title="Réglages">⚙️</button>' +
-      '<button class="share-btn" onclick="event.stopPropagation();shareAccordion(\'' + accId + '\')" title="Partager">' + SHARE_ICON + '</button>';
-    header.appendChild(actions);
 
     let slidersHTML = '';
     if (!hasSunnah) {
@@ -447,3 +433,4 @@ window.addEventListener('DOMContentLoaded', () => {
   const content = document.querySelector('.inv-content, .page-content');
   if (content) content.classList.add('fade-in');
 });
+  
