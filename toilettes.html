@@ -110,37 +110,14 @@ body.night .inv-header-icon {
 }
 
 /* --- ACCORDÉONS RESTYLED --- */
-.accordion {
-  margin:10px 0; border-radius:18px !important; overflow:hidden;
-  border:1px solid var(--card-border);
-  transition:border-color 0.3s, box-shadow 0.3s;
-}
-.accordion.open {
-  border-color:var(--gold);
-  box-shadow:0 4px 22px rgba(201,168,76,0.15);
-}
-body.night .accordion {
-  background:#1E1A0F;
-  border-color:rgba(201,168,76,0.40);
-}
-body.night .accordion.open {
-  border-color:var(--gold);
-  box-shadow:0 4px 22px rgba(201,168,76,0.22);
-}
 .accordion-header {
   padding:15px 16px;
-  background:var(--card-bg);
 }
-body.night .accordion-header { background:#1E1A0F; }
-body.night .accordion.open .accordion-header {
-  background:linear-gradient(135deg,rgba(201,168,76,0.14),rgba(201,168,76,0.05));
-}
-.accordion-body { background:var(--bg); }
-body.night .accordion-body { background:#161208; }
+.accordion-body { }
 .accordion-title { color:var(--gold-dark); }
 body.night .accordion-title { color:#F0D070; }
 
-/* accordion arrow restyled */
+/* accordion arrow */
 .accordion-arrow {
   width:30px; height:30px; border-radius:50%;
   border:1.5px solid rgba(201,168,76,0.5);
@@ -195,23 +172,11 @@ body.night .size-pill.active { background:var(--gold); border-color:var(--gold);
         </div>
       </div>
     </div>
-    <div style="display:flex;align-items:center;gap:8px;">
-      <button class="settings-pill" id="settings-pill-btn" onclick="toggleSettingsPill()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="4" y1="6" x2="20" y2="6"/>
-          <line x1="4" y1="12" x2="20" y2="12"/>
-          <line x1="4" y1="18" x2="20" y2="18"/>
-          <circle cx="8" cy="6" r="2" fill="var(--gold)" stroke="none"/>
-          <circle cx="16" cy="12" r="2" fill="var(--gold)" stroke="none"/>
-          <circle cx="10" cy="18" r="2" fill="var(--gold)" stroke="none"/>
-        </svg>
-      </button>
-      <div class="theme-wrapper">
+    <div class="theme-wrapper">
         <span class="theme-emoji">&#9728;&#65039;</span>
         <div class="theme-toggle" onclick="toggleTheme()"><div class="knob" id="theme-knob"></div></div>
         <span class="theme-emoji">&#127769;</span>
       </div>
-    </div>
   </div>
   <div class="inv-header">
     <img src="images/logo.png" class="inv-logo" alt="Deentag">
