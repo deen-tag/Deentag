@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Deentag — Transport</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="favicon.png" type="image/png">
+<style>
+/* ===== INVOCATION PAGE v7 ===== */
+.inv-topbar {
+  width:100%; display:flex; justify-content:space-between; align-items:center;
+  padding:11px 16px 10px;
+  background:var(--bg);
+  border-bottom:1px solid var(--card-border);
+  position:sticky; top:0; z-index:200;
+}
+body.night .inv-topbar { background:#0F0D08; border-bottom-color:rgba(201,168,76,0.30); }
+.back-pill {
+  display:flex; align-items:center; gap:7px;
+  text-decoration:none;
+  background:transparent;
+  border:1px solid rgba(201,168,76,0.35);
+  border-radius:24px;
+  padding:6px 13px 6px 9px;
+  transition:background 0.2s, border-color 0.2s, transform 0.15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.back-pill:active { background:rgba(201,168,76,0.12); border-color:var(--gold); transform:scale(0.95); }
+body.night .back-pill { border-color:rgba(201,168,76,0.45); }
+.back-pill-arrow {
+  width:22px; height:22px; border-radius:50%;
+  background:rgba(201,168,76,0.12);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--gold); font-size:13px; line-height:1; flex-shrink:0;
+  transition:background 0.2s;
+}
+.back-pill:active .back-pill-arrow { background:var(--gold); color:var(--bg); }
+.back-pill-txt {
+  font-family:'Cinzel',serif; font-size:9.5px; letter-spacing:0.16em;
+  color:var(--gold); text-transform:uppercase; white-space:nowrap;
+}
+.settings-pill {
+  display:flex; align-items:center; justify-content:center;
+  width:38px; height:38px; border-radius:50%;
+  border:1px solid rgba(201,168,76,0.35);
+  background:transparent; cursor:pointer;
+  transition:background 0.2s, border-color 0.2s, transform 0.15s;
+  -webkit-tap-highlight-color:transparent;
+  flex-shrink:0;
+}
+.settings-pill:active, .settings-pill.active {
+  background:var(--gold); border-color:var(--gold);
+  transform:scale(0.93);
+}
+.settings-pill.active svg { stroke:#fff; }
+body.night .settings-pill { border-color:rgba(201,168,76,0.50); }
+.settings-pill svg { display:block; }
+.inv-topbar-center {
+  position:absolute; left:50%; transform:translateX(-50%);
+}
+.inv-header-v7 {
+  display:flex; flex-direction:column; align-items:center;
+  padding:16px 20px 6px; gap:6px;
+}
+.inv-header-icon {
+  width:58px; height:58px; border-radius:50%;
+  background:rgba(201,168,76,0.10);
+  border:1.5px solid rgba(201,168,76,0.35);
+  display:flex; align-items:center; justify-content:center;
+}
+body.night .inv-header-icon {
+  background:rgba(201,168,76,0.16);
+  border-color:rgba(201,168,76,0.55);
+}
+.inv-header-icon img { width:36px; height:36px; object-fit:contain; }
+.inv-header-name {
+  font-family:'Cinzel',serif; font-size:17px; letter-spacing:0.18em;
+  color:var(--gold); font-weight:600; text-align:center;
+}
+.inv-header-sub {
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-size:13px; color:var(--text3); letter-spacing:0.06em;
+}
+.inv-header-ornament {
+  display:flex; align-items:center; gap:10px;
+  width:100%; padding:0 24px; margin:2px 0 8px;
+}
+.inv-header-ornament-line {
+  flex:1; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0.4;
+}
+.inv-header-ornament-center {
+  display:flex; align-items:center; gap:5px;
+}
+.inv-header-ornament-diamond {
+  width:5px; height:5px; background:var(--gold);
+  transform:rotate(45deg); opacity:0.65;
+}
+.accordion-header {
+  padding:15px 16px;
+}
+.accordion-body { }
+.accordion-title { color:var(--gold-dark); }
+body.night .accordion-title { color:#F0D070; }
+.accordion-arrow {
+  width:30px; height:30px; border-radius:50%;
+  border:1.5px solid rgba(201,168,76,0.5);
+  background:transparent;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--gold); font-size:10px;
+  transition:transform 0.35s ease, background 0.25s, border-color 0.25s;
+  flex-shrink:0;
+}
+.accordion.open .accordion-arrow {
+  transform:rotate(90deg);
+  background:var(--gold); color:var(--bg);
+  border-color:var(--gold);
+}
+body.night .sunnah-item {
+  background:#252010;
+  border-left-color:var(--gold);
+}
+body.night .sunnah-title { color:var(--gold); }
+body.night .sunnah-text { color:#C8B070; }
+body.night .settings-panel {
+  background:#1E1A0F;
+  border-color:rgba(201,168,76,0.55);
+}
+body.night .settings-panel-title { color:var(--gold); }
+body.night .size-pill { border-color:rgba(201,168,76,0.35); color:#A89060; }
+body.night .size-pill:hover { border-color:var(--gold); color:var(--gold); }
+body.night .size-pill.active { background:var(--gold); border-color:var(--gold); color:#0F0D08; }
+</style>
+</head>
+<body class="day" data-page="transport">
+  <div class="inv-topbar">
+    <a class="back-pill" href="categorie.html?cat=transport">
+      <div class="back-pill-arrow">&#8592;</div>
+      <span class="back-pill-txt">
+        <span class="lang-block" data-lang-block="fr">Retour</span>
+        <span class="lang-block" data-lang-block="en">Back</span>
+        <span class="lang-block" data-lang-block="es">Volver</span>
+      </span>
+    </a>
+    <div class="inv-topbar-center">
+      <div class="lang-wrapper">
+        <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()">FR &#9662;</button>
+        <div class="lang-menu" id="lang-menu">
+          <span class="lang-option" data-lang="fr" onclick="setLang('fr')">Fran&#231;ais</span>
+          <span class="lang-option" data-lang="en" onclick="setLang('en')">English</span>
+          <span class="lang-option" data-lang="es" onclick="setLang('es')">Espa&#241;ol</span>
+        </div>
+      </div>
+    </div>
+    <div class="theme-wrapper">
+        <span class="theme-emoji">&#9728;&#65039;</span>
+        <div class="theme-toggle" onclick="toggleTheme()"><div class="knob" id="theme-knob"></div></div>
+        <span class="theme-emoji">&#127769;</span>
+      </div>
+  </div>
+  <div class="inv-header-v7">
+    <div class="inv-header-icon">
+      <img src="images/voiture.png" alt="Transport">
+    </div>
+    <div class="inv-header-name">
+      <span class="lang-block" data-lang-block="fr">Transport</span>
+      <span class="lang-block" data-lang-block="en">Transport</span>
+      <span class="lang-block" data-lang-block="es">Transporte</span>
+    </div>
+    <div class="inv-header-sub">
+      <span class="lang-block" data-lang-block="fr">Invocations</span>
+      <span class="lang-block" data-lang-block="en">Supplications</span>
+      <span class="lang-block" data-lang-block="es">Invocaciones</span>
+    </div>
+    <div class="inv-header-ornament">
+      <div class="inv-header-ornament-line"></div>
+      <div class="inv-header-ornament-center">
+        <div class="inv-header-ornament-diamond"></div>
+        <span style="color:var(--gold);font-size:12px">&#10022;</span>
+        <div class="inv-header-ornament-diamond"></div>
+      </div>
+      <div class="inv-header-ornament-line"></div>
+    </div>
+  </div>
+
+  <div class="inv-content">
+    <div class="accordion" id="acc1">
+      <div class="accordion-header" onclick="toggleAccordion('acc1')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">LORSQU'ON PREND UN MOYEN DE TRANSPORT</span>
+          <span class="lang-block" data-lang-block="en">WHEN TAKING ANY MEANS OF TRANSPORT</span>
+          <span class="lang-block" data-lang-block="es">AL TOMAR UN MEDIO DE TRANSPORTE</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="translation-block" id="acc1-tr-fr">Au nom d'Allah. Louange à Allah. Gloire à Celui qui a soumis ceci à notre service alors que nous n'étions pas capables de le maîtriser. Et certes, nous retournerons vers notre Seigneur.</div>
+            <div class="phonetic-block" id="acc1-ph-fr">Bismillâh. Al-hamdu lillâh. Subhâna lladhî sakhkhara lanâ hâdhâ wa mâ kunnâ lahu muqrînîn. Wa innâ ilâ rabbinâ lamunqalibûn.</div>
+            <div class="arabic-block" id="acc1-ar-fr">بِسْمِ اللَّهِ، الْحَمْدُ لِلَّهِ، سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَٰذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَىٰ رَبِّنَا لَمُنْقَلِبُونَ</div>
+            <div class="hadith-block">Récite cette dua en montant ou en démarrant. Sunan Abu Daoud (2602) et Sunan Tirmidhi (3446), classé sahih par Al-Albani.</div></div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="translation-block" id="acc1-tr-en">In the name of Allah. Praise be to Allah. Glory be to Him Who has subjected this to us while we were unable to subdue it. And indeed to our Lord we are returning.</div>
+            <div class="phonetic-block" id="acc1-ph-en">Bismillaah. Al-hamdu lillaah. Subhaanalladhee sakhkhara lanaa haathaa wa maa kunnaa lahu muqrineen. Wa innaa ilaa rabbinaa lamunqaliboon.</div>
+            <div class="arabic-block" id="acc1-ar-en">بِسْمِ اللَّهِ، الْحَمْدُ لِلَّهِ، سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَٰذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَىٰ رَبِّنَا لَمُنْقَلِبُونَ</div>
+            <div class="hadith-block">Recite this dua when boarding or starting. Sunan Abu Daoud (2602) and Tirmidhi (3446), classified sahih by Al-Albani.</div></div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="translation-block" id="acc1-tr-es">En el nombre de Allah. La alabanza es para Allah. Gloria a Quien ha sometido esto a nuestro servicio cuando no éramos capaces de dominarlo. Y ciertamente, volveremos a nuestro Señor.</div>
+            <div class="phonetic-block" id="acc1-ph-es">Bismilláh. Al-hamdu lilláh. Subhánalladhí sajjhara lanaa háthaa wa maa kunnaa lahu muqrineen. Wa innaa ilaa rabbiná lamunqalibúun.</div>
+            <div class="arabic-block" id="acc1-ar-es">بِسْمِ اللَّهِ، الْحَمْدُ لِلَّهِ، سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَٰذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَىٰ رَبِّنَا لَمُنْقَلِبُونَ</div>
+            <div class="hadith-block">Recita esta dua al subir o al arrancar. Sunan Abu Daoud (2602) y Tirmidhi (3446), clasificado sahih por Al-Albani.</div></div>
+        <div class="tts-bar">
+          <button class="tts-btn" id="tts-acc1" onclick="toggleTTS('acc1')">
+            <span class="tts-icon">🔊</span>
+            <span class="lang-block" data-lang-block="fr">Écouter</span>
+            <span class="lang-block" data-lang-block="en">Listen</span>
+            <span class="lang-block" data-lang-block="es">Escuchar</span>
+          </button>
+        </div>
+      </div></div>
+    </div>
+    <div class="accordion" id="acc2">
+      <div class="accordion-header" onclick="toggleAccordion('acc2')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">OPTION POUR LES TRAJETS PLUS LONGS (VARIANTE COMPLÈTE)</span>
+          <span class="lang-block" data-lang-block="en">OPTION FOR LONGER JOURNEYS (COMPLETE VERSION)</span>
+          <span class="lang-block" data-lang-block="es">OPCIÓN PARA VIAJES MÁS LARGOS (VERSIÓN COMPLETA)</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="translation-block" id="acc2-tr-fr">Ô Allah, nous Te demandons dans ce voyage la piété, la crainte pieuse et les actions qui Te plaisent. Ô Allah, facilite-nous ce voyage et raccourcis sa distance...</div>
+            <div class="phonetic-block" id="acc2-ph-fr">Allâhumma innâ nas'aluka fî safarinâ hâdhâ l-birra wat-taqwâ, wa minal-'amali mâ tardâ. Allâhumma hawwin 'alaynâ safaranâ hâdhâ watwi 'annâ bu'dahu...</div>
+            <div class="arabic-block" id="acc2-ar-fr">اللَّهُمَّ إِنَّا نَسْأَلُكَ فِي سَفَرِنَا هَذَا الْبِرَّ وَالتَّقْوَى وَمِنَ الْعَمَلِ مَا تَرْضَى. اللَّهُمَّ هَوِّنْ عَلَيْنَا سَفَرَنَا هَذَا وَاطْوِ عَنَّا بُعْدَهُ</div>
+            <div class="hadith-block">Rapporté par Ibn 'Umar (qu'Allah l'agrée) dans Sahih Muslim (1342), authentique. Pour le quotidien, la version courte suffit largement.</div></div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="translation-block" id="acc2-tr-en">O Allah, we ask You in this journey of ours for righteousness and piety, and for deeds that please You. O Allah, make this journey easy for us and shorten its distance...</div>
+            <div class="phonetic-block" id="acc2-ph-en">Allaahummaa innaa nas'aluka fee safarinaa haathal-birra wat-taqwaa, wa minal-'amali maa tardaa. Allaahummaa hawwin 'alaynaa safaranaa haathaa watwi 'annaa bu'dah...</div>
+            <div class="arabic-block" id="acc2-ar-en">اللَّهُمَّ إِنَّا نَسْأَلُكَ فِي سَفَرِنَا هَذَا الْبِرَّ وَالتَّقْوَى وَمِنَ الْعَمَلِ مَا تَرْضَى. اللَّهُمَّ هَوِّنْ عَلَيْنَا سَفَرَنَا هَذَا وَاطْوِ عَنَّا بُعْدَهُ</div>
+            <div class="hadith-block">Reported by Ibn Umar in Sahih Muslim (1342), authentic. For daily commutes, the short version is sufficient.</div></div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="translation-block" id="acc2-tr-es">Oh Allah, Te pedimos en este viaje piedad, temor reverente y acciones que Te complazcan. Oh Allah, facilítanos este viaje y acorta su distancia...</div>
+            <div class="phonetic-block" id="acc2-ph-es">Alláhummaa innaa nas'aluka fee safarinaa haathal-birra wat-taqwáa, wa minal-'amali maa tardáa. Alláhummaa hawwin 'alaynaa safaranaa haathaa watwi 'annaa bu'dah...</div>
+            <div class="arabic-block" id="acc2-ar-es">اللَّهُمَّ إِنَّا نَسْأَلُكَ فِي سَفَرِنَا هَذَا الْبِرَّ وَالتَّقْوَى وَمِنَ الْعَمَلِ مَا تَرْضَى. اللَّهُمَّ هَوِّنْ عَلَيْنَا سَفَرَنَا هَذَا وَاطْوِ عَنَّا بُعْدَهُ</div>
+            <div class="hadith-block">Relatado por Ibn Umar en Sahih Muslim (1342), auténtico.</div></div>
+        <div class="tts-bar">
+          <button class="tts-btn" id="tts-acc2" onclick="toggleTTS('acc2')">
+            <span class="tts-icon">🔊</span>
+            <span class="lang-block" data-lang-block="fr">Écouter</span>
+            <span class="lang-block" data-lang-block="en">Listen</span>
+            <span class="lang-block" data-lang-block="es">Escuchar</span>
+          </button>
+        </div>
+      </div></div>
+    </div>
+    <div class="accordion" id="acc3">
+      <div class="accordion-header" onclick="toggleAccordion('acc3')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">SUNNAHS DU PROPHÈTE ﷺ</span>
+          <span class="lang-block" data-lang-block="en">PROPHET'S ﷺ SUNNAH</span>
+          <span class="lang-block" data-lang-block="es">SUNNAH DEL PROFETA ﷺ</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="sunnah-item"><div class="sunnah-title">COMMENCE PAR BISMILLAH ET LOUANGE</div><div class="sunnah-text">D'après Abou Hourayra (qu'Allah l'agrée), le Prophète ﷺ insistait sur le rappel d'Allah avant tout déplacement, même court. Cela protège et rend l'acte une adoration. [Sahih Muslim 2727a]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">FAIS CONFIANCE À ALLAH POUR LA SÉCURITÉ</div><div class="sunnah-text">D'après Anas ibn Malik (qu'Allah l'agrée), le Prophète ﷺ enseignait à placer sa tawakkul en Allah pour tout voyage, même quotidien. [Sahih Tirmidhi 2344]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">DIS BISMILLAH AVANT TOUT DÉPART</div><div class="sunnah-text">D'après Abou Hourayra (qu'Allah l'agrée), le Prophète ﷺ ordonnait de dire Bismillah avant de monter sa monture. Cela sanctifie le voyage. [Sahih Muslim 2727a]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">PROTECTION ET COUVERTURE DU DANGER</div><div class="sunnah-text">D'après Ibn Omar (qu'Allah l'agrée), le Prophète ﷺ récitait cette protection à chaque départ. Elle couvre tous dangers. [Sahih Muslim 2182]</div></div>
+        </div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="sunnah-item"><div class="sunnah-title">START WITH BISMILLAH AND PRAISE</div><div class="sunnah-text">According to Abu Hurairah (may Allah be pleased with him), the Prophet ﷺ insisted on remembering Allah before any journey, even short ones. This protects and makes the act an act of worship. [Sahih Muslim 2727a]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">TRUST ALLAH FOR SAFETY</div><div class="sunnah-text">According to Anas ibn Malik (may Allah be pleased with him), the Prophet ﷺ taught to place one's tawakkul in Allah for every journey, even daily ones. [Sahih Tirmidhi 2344]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">SAY BISMILLAH BEFORE EVERY DEPARTURE</div><div class="sunnah-text">According to Abu Hurairah (may Allah be pleased with him), the Prophet ﷺ commanded saying Bismillah before mounting. This sanctifies the journey. [Sahih Muslim 2727a]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">PROTECTION AND COVERAGE FROM DANGER</div><div class="sunnah-text">According to Ibn Umar (may Allah be pleased with him), the Prophet ﷺ recited this protection at every departure. It covers all dangers. [Sahih Muslim 2182]</div></div>
+        </div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="sunnah-item"><div class="sunnah-title">COMIENZA CON BISMILLAH Y ALABANZA</div><div class="sunnah-text">Según Abu Hurairah (que Allah esté complacido con él), el Profeta ﷺ insistía en recordar a Allah antes de cualquier desplazamiento, incluso corto. Esto protege y convierte el acto en una adoración. [Sahih Muslim 2727a]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">CONFÍA EN ALLAH PARA LA SEGURIDAD</div><div class="sunnah-text">Según Anas ibn Malik (que Allah esté complacido con él), el Profeta ﷺ enseñaba a depositar su tawakkul en Allah para todo viaje, incluso el diario. [Sahih Tirmidhi 2344]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">DI BISMILLAH ANTES DE CADA SALIDA</div><div class="sunnah-text">Según Abu Hurairah (que Allah esté complacido con él), el Profeta ﷺ ordenaba decir Bismillah antes de montar. Esto santifica el viaje. [Sahih Muslim 2727a]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">PROTECCIÓN Y COBERTURA DEL PELIGRO</div><div class="sunnah-text">Según Ibn Umar (que Allah esté complacido con él), el Profeta ﷺ recitaba esta protección en cada salida. Cubre todos los peligros. [Sahih Muslim 2182]</div></div>
+        </div>
+
+      </div></div>
+    </div>
+    <div class="closing-dua">
+      <span class="lang-block" data-lang-block="fr">Que tes trajets quotidiens soient protégés et bénis</span>
+      <span class="lang-block" data-lang-block="en">May your daily journeys be protected and blessed</span>
+      <span class="lang-block" data-lang-block="es">Que tus viajes diarios sean protegidos y bendecidos</span>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+<script>
+function toggleSettingsPill() {
+  const btn = document.getElementById('settings-pill-btn');
+  const panels = document.querySelectorAll('.settings-panel');
+  if(panels.length === 0) return;
+  const firstPanel = panels[0];
+  const isOpen = firstPanel.classList.contains('open');
+  panels.forEach(p => { p.classList.remove('open'); });
+  document.querySelectorAll('.settings-btn').forEach(b => b.classList.remove('active'));
+  const overlay = document.getElementById('settings-overlay');
+  if(overlay) overlay.classList.remove('open');
+  if(!isOpen) {
+    firstPanel.classList.add('open');
+    if(overlay) overlay.classList.add('open');
+    btn.classList.add('active');
+    const topbar = document.querySelector('.inv-topbar');
+    const h = topbar ? topbar.offsetHeight : 56;
+    firstPanel.style.top = (h + 6) + 'px';
+    firstPanel.style.right = '16px';
+    firstPanel.style.left = 'auto';
+  } else {
+    btn.classList.remove('active');
+  }
+}</script>
+</body>
+</html>
