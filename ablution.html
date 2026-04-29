@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Deentag — Ablution</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="favicon.png" type="image/png">
+<style>
+/* ===== INVOCATION PAGE v7 ===== */
+.inv-topbar {
+  width:100%; display:flex; justify-content:space-between; align-items:center;
+  padding:11px 16px 10px;
+  background:var(--bg);
+  border-bottom:1px solid var(--card-border);
+  position:sticky; top:0; z-index:200;
+}
+body.night .inv-topbar { background:#0F0D08; border-bottom-color:rgba(201,168,76,0.30); }
+.back-pill {
+  display:flex; align-items:center; gap:7px;
+  text-decoration:none;
+  background:transparent;
+  border:1px solid rgba(201,168,76,0.35);
+  border-radius:24px;
+  padding:6px 13px 6px 9px;
+  transition:background 0.2s, border-color 0.2s, transform 0.15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.back-pill:active { background:rgba(201,168,76,0.12); border-color:var(--gold); transform:scale(0.95); }
+body.night .back-pill { border-color:rgba(201,168,76,0.45); }
+.back-pill-arrow {
+  width:22px; height:22px; border-radius:50%;
+  background:rgba(201,168,76,0.12);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--gold); font-size:13px; line-height:1; flex-shrink:0;
+  transition:background 0.2s;
+}
+.back-pill:active .back-pill-arrow { background:var(--gold); color:var(--bg); }
+.back-pill-txt {
+  font-family:'Cinzel',serif; font-size:9.5px; letter-spacing:0.16em;
+  color:var(--gold); text-transform:uppercase; white-space:nowrap;
+}
+.settings-pill {
+  display:flex; align-items:center; justify-content:center;
+  width:38px; height:38px; border-radius:50%;
+  border:1px solid rgba(201,168,76,0.35);
+  background:transparent; cursor:pointer;
+  transition:background 0.2s, border-color 0.2s, transform 0.15s;
+  -webkit-tap-highlight-color:transparent;
+  flex-shrink:0;
+}
+.settings-pill:active, .settings-pill.active {
+  background:var(--gold); border-color:var(--gold);
+  transform:scale(0.93);
+}
+.settings-pill.active svg { stroke:#fff; }
+body.night .settings-pill { border-color:rgba(201,168,76,0.50); }
+.settings-pill svg { display:block; }
+.inv-topbar-center {
+  position:absolute; left:50%; transform:translateX(-50%);
+}
+.inv-header-v7 {
+  display:flex; flex-direction:column; align-items:center;
+  padding:16px 20px 6px; gap:6px;
+}
+.inv-header-icon {
+  width:58px; height:58px; border-radius:50%;
+  background:rgba(201,168,76,0.10);
+  border:1.5px solid rgba(201,168,76,0.35);
+  display:flex; align-items:center; justify-content:center;
+}
+body.night .inv-header-icon {
+  background:rgba(201,168,76,0.16);
+  border-color:rgba(201,168,76,0.55);
+}
+.inv-header-icon img { width:36px; height:36px; object-fit:contain; }
+.inv-header-name {
+  font-family:'Cinzel',serif; font-size:17px; letter-spacing:0.18em;
+  color:var(--gold); font-weight:600; text-align:center;
+}
+.inv-header-sub {
+  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-size:13px; color:var(--text3); letter-spacing:0.06em;
+}
+.inv-header-ornament {
+  display:flex; align-items:center; gap:10px;
+  width:100%; padding:0 24px; margin:2px 0 8px;
+}
+.inv-header-ornament-line {
+  flex:1; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0.4;
+}
+.inv-header-ornament-center {
+  display:flex; align-items:center; gap:5px;
+}
+.inv-header-ornament-diamond {
+  width:5px; height:5px; background:var(--gold);
+  transform:rotate(45deg); opacity:0.65;
+}
+.accordion-header {
+  padding:15px 16px;
+}
+.accordion-body { }
+.accordion-title { color:var(--gold-dark); }
+body.night .accordion-title { color:#F0D070; }
+.accordion-arrow {
+  width:30px; height:30px; border-radius:50%;
+  border:1.5px solid rgba(201,168,76,0.5);
+  background:transparent;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--gold); font-size:10px;
+  transition:transform 0.35s ease, background 0.25s, border-color 0.25s;
+  flex-shrink:0;
+}
+.accordion.open .accordion-arrow {
+  transform:rotate(90deg);
+  background:var(--gold); color:var(--bg);
+  border-color:var(--gold);
+}
+body.night .sunnah-item {
+  background:#252010;
+  border-left-color:var(--gold);
+}
+body.night .sunnah-title { color:var(--gold); }
+body.night .sunnah-text { color:#C8B070; }
+body.night .settings-panel {
+  background:#1E1A0F;
+  border-color:rgba(201,168,76,0.55);
+}
+body.night .settings-panel-title { color:var(--gold); }
+body.night .size-pill { border-color:rgba(201,168,76,0.35); color:#A89060; }
+body.night .size-pill:hover { border-color:var(--gold); color:var(--gold); }
+body.night .size-pill.active { background:var(--gold); border-color:var(--gold); color:#0F0D08; }
+</style>
+</head>
+<body class="day" data-page="ablution">
+  <div class="inv-topbar">
+    <a class="back-pill" href="categorie.html?cat=ablution">
+      <div class="back-pill-arrow">&#8592;</div>
+      <span class="back-pill-txt">
+        <span class="lang-block" data-lang-block="fr">Retour</span>
+        <span class="lang-block" data-lang-block="en">Back</span>
+        <span class="lang-block" data-lang-block="es">Volver</span>
+      </span>
+    </a>
+    <div class="inv-topbar-center">
+      <div class="lang-wrapper">
+        <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()">FR &#9662;</button>
+        <div class="lang-menu" id="lang-menu">
+          <span class="lang-option" data-lang="fr" onclick="setLang('fr')">Fran&#231;ais</span>
+          <span class="lang-option" data-lang="en" onclick="setLang('en')">English</span>
+          <span class="lang-option" data-lang="es" onclick="setLang('es')">Espa&#241;ol</span>
+        </div>
+      </div>
+    </div>
+    <div class="theme-wrapper">
+        <span class="theme-emoji">&#9728;&#65039;</span>
+        <div class="theme-toggle" onclick="toggleTheme()"><div class="knob" id="theme-knob"></div></div>
+        <span class="theme-emoji">&#127769;</span>
+      </div>
+  </div>
+  <div class="inv-header-v7">
+    <div class="inv-header-icon">
+      <img src="images/ablution.png" alt="Ablution">
+    </div>
+    <div class="inv-header-name">
+      <span class="lang-block" data-lang-block="fr">Ablution</span>
+      <span class="lang-block" data-lang-block="en">Ablution</span>
+      <span class="lang-block" data-lang-block="es">Ablución</span>
+    </div>
+    <div class="inv-header-sub">
+      <span class="lang-block" data-lang-block="fr">Invocations</span>
+      <span class="lang-block" data-lang-block="en">Supplications</span>
+      <span class="lang-block" data-lang-block="es">Invocaciones</span>
+    </div>
+    <div class="inv-header-ornament">
+      <div class="inv-header-ornament-line"></div>
+      <div class="inv-header-ornament-center">
+        <div class="inv-header-ornament-diamond"></div>
+        <span style="color:var(--gold);font-size:12px">&#10022;</span>
+        <div class="inv-header-ornament-diamond"></div>
+      </div>
+      <div class="inv-header-ornament-line"></div>
+    </div>
+  </div>
+
+  <div class="inv-content">
+    <div class="accordion" id="acc1">
+      <div class="accordion-header" onclick="toggleAccordion('acc1')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">AVANT COMMENCER LES ABLUTIONS (وضوء / WUDU)</span>
+          <span class="lang-block" data-lang-block="en">BEFORE STARTING ABLUTION (WUDU)</span>
+          <span class="lang-block" data-lang-block="es">ANTES DE COMENZAR LA ABLUCIÓN (WUDU)</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="translation-block" id="acc1-tr-fr">Au nom d'Allah</div>
+            <div class="phonetic-block" id="acc1-ph-fr">Bismillâh</div>
+            <div class="arabic-block" id="acc1-ar-fr">بِسْمِ اللَّهِ</div>
+            <div class="hadith-block">Le Prophète ﷺ a dit : « L'ablution de celui qui n'a pas mentionné le nom d'Allah n'est pas complète (ou "n'est pas parfaite"). » Rapporté par Abou Daoud (101), authentifié par Al-Albani.</div></div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="translation-block" id="acc1-tr-en">In the name of Allah</div>
+            <div class="phonetic-block" id="acc1-ph-en">Bismillaah</div>
+            <div class="arabic-block" id="acc1-ar-en">بِسْمِ اللَّهِ</div>
+            <div class="hadith-block">The Prophet ﷺ said: "The ablution of the one who does not mention the name of Allah is not complete." Abu Daoud (101).</div></div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="translation-block" id="acc1-tr-es">En el nombre de Allah</div>
+            <div class="phonetic-block" id="acc1-ph-es">Bismilláh</div>
+            <div class="arabic-block" id="acc1-ar-es">بِسْمِ اللَّهِ</div>
+            <div class="hadith-block">El Profeta ﷺ dijo: "La ablución de quien no menciona el nombre de Allah no es completa." Abu Daoud (101).</div></div>
+        <div class="tts-bar">
+          <button class="tts-btn" id="tts-acc1" onclick="toggleTTS('acc1')">
+            <span class="tts-icon">🔊</span>
+            <span class="lang-block" data-lang-block="fr">Écouter</span>
+            <span class="lang-block" data-lang-block="en">Listen</span>
+            <span class="lang-block" data-lang-block="es">Escuchar</span>
+          </button>
+        </div>
+      </div></div>
+    </div>
+    <div class="accordion" id="acc2">
+      <div class="accordion-header" onclick="toggleAccordion('acc2')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">RÉCITE CETTE SHAHADA APRÈS UN WUDU PARFAIT</span>
+          <span class="lang-block" data-lang-block="en">RECITE THIS SHAHADA AFTER PERFECT WUDU</span>
+          <span class="lang-block" data-lang-block="es">RECITA ESTA SHAHADA DESPUÉS DE UN WUDU PERFECTO</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="translation-block" id="acc2-tr-fr">J'atteste qu'il n'y a de divinité digne d'adoration qu'Allah, Unique sans associé, et j'atteste que Muhammad est Son serviteur et Son Messager.</div>
+            <div class="phonetic-block" id="acc2-ph-fr">Ash-hadu an lâ ilâha illallâhu wahdahu lâ sharîka lah, wa ashhadu anna Muhammadan 'abduhu wa rasûluh.</div>
+            <div class="arabic-block" id="acc2-ar-fr">أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّداً عَبْدُهُ وَرَسُولُهُ</div>
+            <div class="hadith-block">Le Prophète ﷺ a dit : « Celui qui fait ses ablutions correctement puis dit cette attestation, les huit portes du Paradis lui seront ouvertes et il pourra entrer par celle qu'il veut. » Rapporté par Muslim (234).</div></div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="translation-block" id="acc2-tr-en">I bear witness that there is no deity worthy of worship except Allah, alone without partner, and I bear witness that Muhammad is His servant and Messenger.</div>
+            <div class="phonetic-block" id="acc2-ph-en">Ash-hadu an laa ilaaha illallaahu wahdahu laa shareeka lah, wa ash-hadu anna Muhammadan 'abduhu wa rasooluh.</div>
+            <div class="arabic-block" id="acc2-ar-en">أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّداً عَبْدُهُ وَرَسُولُهُ</div>
+            <div class="hadith-block">The Prophet ﷺ said: "Whoever performs ablution correctly then says this testimony, the eight gates of Paradise will be opened for him." Muslim (234).</div></div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="translation-block" id="acc2-tr-es">Atestiguo que no hay más dios que Allah, Único sin asociado, y atestiguo que Muhammad es Su siervo y Su Mensajero.</div>
+            <div class="phonetic-block" id="acc2-ph-es">Ash-hadu an laa iláaha illalláahu wahdahu laa sharíika lah, wa ash-hadu anna Muhammadan 'abduhu wa rasúluh.</div>
+            <div class="arabic-block" id="acc2-ar-es">أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ وَأَشْهَدُ أَنَّ مُحَمَّداً عَبْدُهُ وَرَسُولُهُ</div>
+            <div class="hadith-block">El Profeta ﷺ dijo: "Quien realice la ablución correctamente y luego diga esta profesión de fe, se abrirán para él las ocho puertas del Paraíso." Muslim (234).</div></div>
+        <div class="tts-bar">
+          <button class="tts-btn" id="tts-acc2" onclick="toggleTTS('acc2')">
+            <span class="tts-icon">🔊</span>
+            <span class="lang-block" data-lang-block="fr">Écouter</span>
+            <span class="lang-block" data-lang-block="en">Listen</span>
+            <span class="lang-block" data-lang-block="es">Escuchar</span>
+          </button>
+        </div>
+      </div></div>
+    </div>
+    <div class="accordion" id="acc3">
+      <div class="accordion-header" onclick="toggleAccordion('acc3')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">DOU'A COMPLÈTE APRÈS LES ABLUTIONS (TRÈS RÉCOMPENSÉE)</span>
+          <span class="lang-block" data-lang-block="en">COMPLETE DUA AFTER ABLUTION (HIGHLY REWARDED)</span>
+          <span class="lang-block" data-lang-block="es">DUA COMPLETA DESPUÉS DE LA ABLUCIÓN (MUY RECOMPENSADA)</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="translation-block" id="acc3-tr-fr">Ô Allah, fais de moi l'un de ceux qui se repentent souvent et fais de moi l'un de ceux qui se purifient.</div>
+            <div class="phonetic-block" id="acc3-ph-fr">Allâhumma j'alnî minat-tawwâbîna waj'alnî minal-mutatahhirîn.</div>
+            <div class="arabic-block" id="acc3-ar-fr">اللَّهُمَّ اجْعَلْنِي مِنَ التَّوَّابِينَ وَاجْعَلْنِي مِنَ الْمُتَطَهِّرِينَ</div></div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="translation-block" id="acc3-tr-en">O Allah, make me of those who repent often and make me of those who purify themselves.</div>
+            <div class="phonetic-block" id="acc3-ph-en">Allaahummaj'alnee minat-tawwaabeena waj'alnee minal-mutatahhireen.</div>
+            <div class="arabic-block" id="acc3-ar-en">اللَّهُمَّ اجْعَلْنِي مِنَ التَّوَّابِينَ وَاجْعَلْنِي مِنَ الْمُتَطَهِّرِينَ</div></div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="translation-block" id="acc3-tr-es">Oh Allah, hazme de aquellos que se arrepienten frecuentemente y hazme de aquellos que se purifican.</div>
+            <div class="phonetic-block" id="acc3-ph-es">Alláhummay'alnee minat-tawwaabeena way'alnee minal-mutatahhireen.</div>
+            <div class="arabic-block" id="acc3-ar-es">اللَّهُمَّ اجْعَلْنِي مِنَ التَّوَّابِينَ وَاجْعَلْنِي مِنَ الْمُتَطَهِّرِينَ</div></div>
+        <div class="tts-bar">
+          <button class="tts-btn" id="tts-acc3" onclick="toggleTTS('acc3')">
+            <span class="tts-icon">🔊</span>
+            <span class="lang-block" data-lang-block="fr">Écouter</span>
+            <span class="lang-block" data-lang-block="en">Listen</span>
+            <span class="lang-block" data-lang-block="es">Escuchar</span>
+          </button>
+        </div>
+      </div></div>
+    </div>
+    <div class="accordion" id="acc4">
+      <div class="accordion-header" onclick="toggleAccordion('acc4')">
+        <div class="accordion-title">
+          <span class="lang-block" data-lang-block="fr">SUNNAHS DU PROPHÈTE ﷺ</span>
+          <span class="lang-block" data-lang-block="en">PROPHET'S ﷺ SUNNAH</span>
+          <span class="lang-block" data-lang-block="es">SUNNAH DEL PROFETA ﷺ</span>
+        </div>
+        <span class="accordion-arrow">▶</span>
+      </div>
+      <div class="accordion-body"><div class="accordion-inner">
+        <div class="lang-block" data-lang-block="fr">
+            <div class="sunnah-item"><div class="sunnah-title">WUDU EFFACE LES PETITS PÉCHÉS</div><div class="sunnah-text">Le Prophète ﷺ a dit : « Quand le musulman accomplit ses ablutions, ses péchés sortent de ses mains, de son visage, de sa tête et de ses pieds avec l'eau, ou avec la dernière goutte d'eau. » [Muslim 245 - Sahih]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">EAU DU WUDU = LUMIÈRE AU PARADIS</div><div class="sunnah-text">D'après Uthman ibn Affan (qu'Allah l'agrée), le Prophète ﷺ a dit : « Celui qui accomplit ses ablutions, son eau atteindra jusqu'à ses pieds et sera une lumière pour lui au Jour Dernier. » [Tirmidhi 22 - Sahih]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">WUDU = CLÉ DE LA PRIÈRE</div><div class="sunnah-text">D'après Abu Hurayra (qu'Allah l'agrée), le Prophète ﷺ a dit : « La prière ne peut être accomplie sans ablutions. » [Muslim 225 - Sahih]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">10 RÉCOMPENSES PAR MEMBRE</div><div class="sunnah-text">D'après Abu Hurayra (qu'Allah l'agrée), le Prophète ﷺ a dit : « À celui qui accomplit parfaitement ses ablutions, il est écrit dix bonnes actions pour chaque membre qu'il a lavé. » [Muslim 226 - Sahih]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">WUDU PARFAIT = ANGES TÉMOINS</div><div class="sunnah-text">D'après Umar ibn al-Khattab (qu'Allah l'agrée), le Prophète ﷺ a dit : « Quand l'un de vous accomplit ses ablutions parfaitement, les anges témoignent pour lui : Qu'Allah te purifie ! » [Tirmidhi 13 - Sahih]</div></div>
+        </div>
+        <div class="lang-block" data-lang-block="en">
+            <div class="sunnah-item"><div class="sunnah-title">WUDU ERASES MINOR SINS</div><div class="sunnah-text">The Prophet ﷺ said: "When a Muslim performs ablution, his sins leave his hands, face, head and feet with the water, or with the last drop of water." [Muslim 245 - Sahih]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">WUDU WATER = LIGHT ON JUDGEMENT DAY</div><div class="sunnah-text">According to Uthman ibn Affan (may Allah be pleased with him), the Prophet ﷺ said: "Whoever performs his ablutions, the water reaching his feet will be a light for him on the Last Day." [Tirmidhi 22 - Sahih]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">WUDU = KEY TO PRAYER</div><div class="sunnah-text">According to Abu Hurairah (may Allah be pleased with him), the Prophet ﷺ said: "Prayer cannot be performed without ablution." [Muslim 225 - Sahih]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">10 REWARDS PER LIMB</div><div class="sunnah-text">According to Abu Hurairah (may Allah be pleased with him), the Prophet ﷺ said: "For whoever performs his ablutions perfectly, ten good deeds are recorded for each limb he has washed." [Muslim 226 - Sahih]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">PERFECT WUDU = ANGELS WITNESS</div><div class="sunnah-text">According to Umar ibn al-Khattab (may Allah be pleased with him), the Prophet ﷺ said: "When one of you performs his ablutions perfectly, the angels bear witness for him: May Allah purify you!" [Tirmidhi 13 - Sahih]</div></div>
+        </div>
+        <div class="lang-block" data-lang-block="es">
+            <div class="sunnah-item"><div class="sunnah-title">EL WUDU BORRA LOS PECADOS MENORES</div><div class="sunnah-text">El Profeta ﷺ dijo: "Cuando el musulmán realiza sus abluciones, sus pecados salen de sus manos, cara, cabeza y pies con el agua, o con la última gota de agua." [Muslim 245 - Sahih]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">AGUA DEL WUDU = LUZ EN EL JUICIO</div><div class="sunnah-text">Según Uthman ibn Affan (que Allah esté complacido con él), el Profeta ﷺ dijo: "Quien realice sus abluciones, el agua que llegue hasta sus pies será una luz para él en el Día Final." [Tirmidhi 22 - Sahih]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">WUDU = LLAVE DE LA ORACIÓN</div><div class="sunnah-text">Según Abu Hurairah (que Allah esté complacido con él), el Profeta ﷺ dijo: "La oración no puede realizarse sin abluciones." [Muslim 225 - Sahih]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">10 RECOMPENSAS POR MIEMBRO</div><div class="sunnah-text">Según Abu Hurairah (que Allah esté complacido con él), el Profeta ﷺ dijo: "A quien realice perfectamente sus abluciones, se le anotan diez buenas acciones por cada miembro que haya lavado." [Muslim 226 - Sahih]</div></div>
+            <div class="sunnah-item"><div class="sunnah-title">WUDU PERFECTO = ÁNGELES TESTIGOS</div><div class="sunnah-text">Según Umar ibn al-Khattab (que Allah esté complacido con él), el Profeta ﷺ dijo: "Cuando alguno de vosotros realiza sus abluciones perfectamente, los ángeles atestiguan por él: ¡Que Allah te purifique!" [Tirmidhi 13 - Sahih]</div></div>
+        </div>
+
+      </div></div>
+    </div>
+    <div class="closing-dua">
+      <span class="lang-block" data-lang-block="fr">Que tes ablutions soient acceptées, tes péchés effacés et les portes du Paradis ouvertes pour toi</span>
+      <span class="lang-block" data-lang-block="en">May your ablution be accepted, your sins erased and the gates of Paradise opened for you</span>
+      <span class="lang-block" data-lang-block="es">Que tu ablución sea aceptada, tus pecados borrados y las puertas del Paraíso abiertas para ti</span>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+<script>
+function toggleSettingsPill() {
+  const btn = document.getElementById('settings-pill-btn');
+  const panels = document.querySelectorAll('.settings-panel');
+  if(panels.length === 0) return;
+  const firstPanel = panels[0];
+  const isOpen = firstPanel.classList.contains('open');
+  panels.forEach(p => { p.classList.remove('open'); });
+  document.querySelectorAll('.settings-btn').forEach(b => b.classList.remove('active'));
+  const overlay = document.getElementById('settings-overlay');
+  if(overlay) overlay.classList.remove('open');
+  if(!isOpen) {
+    firstPanel.classList.add('open');
+    if(overlay) overlay.classList.add('open');
+    btn.classList.add('active');
+    const topbar = document.querySelector('.inv-topbar');
+    const h = topbar ? topbar.offsetHeight : 56;
+    firstPanel.style.top = (h + 6) + 'px';
+    firstPanel.style.right = '16px';
+    firstPanel.style.left = 'auto';
+  } else {
+    btn.classList.remove('active');
+  }
+}</script>
+</body>
+</html>
