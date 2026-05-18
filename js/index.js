@@ -315,13 +315,19 @@ function renderDua(cat, accId) {
         '<span class="lang-block" data-lang-block="fr">' + (dua.titre.fr||'') + '</span>' +
         '<span class="lang-block" data-lang-block="en">' + (dua.titre.en||'') + '</span>' +
         '<span class="lang-block" data-lang-block="es">' + (dua.titre.es||'') + '</span>' +
-      '</div>' +
-      '<button class="dua-menu-btn" onclick="event.stopPropagation();toggleAccSettings(\'' + accId + '\')" title="Réglages">⋮</button>' +
-      '</div>' +
+      '</div></div>' +
       '<div class="accordion-body" style="max-height:none;overflow:visible"><div class="accordion-inner">' +
         '<div class="lang-block" data-lang-block="fr">' + sunHtml.fr + '</div>' +
         '<div class="lang-block" data-lang-block="en">' + sunHtml.en + '</div>' +
         '<div class="lang-block" data-lang-block="es">' + sunHtml.es + '</div>' +
+        '<div class="dua-action-bar">' +
+          '<button class="dua-action-icon" onclick="event.stopPropagation();shareAccordion(\''+accId+'\')" title="Partager">' +
+            '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>' +
+          '</button>' +
+          '<button class="dua-action-icon" onclick="event.stopPropagation();toggleAccSettings(\''+accId+'\')" title="Réglages">' +
+            '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>' +
+          '</button>' +
+        '</div>' +
       '</div></div>';
   } else {
     const ph = dua.phonetique || {};
@@ -332,6 +338,16 @@ function renderDua(cat, accId) {
     const hdB = l => hd[l] ? '<div class="hadith-block">'+hd[l]+'</div>' : '';
 
     const audioFile = window.DUAS && DUAS[cat] && DUAS[cat][accId] ? (DUAS[cat][accId].audio || '') : '';
+
+    const svgCopy = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+    const svgGear = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>';
+    const svgShare = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>';
+    const actionBar =
+      '<div class="dua-action-bar">' +
+        '<button class="dua-action-icon" onclick="event.stopPropagation();copyAccordion(\''+accId+'\')" title="Copier">'+svgCopy+'</button>' +
+        '<button class="dua-action-icon" onclick="event.stopPropagation();toggleAccSettings(\''+accId+'\')" title="Réglages">'+svgGear+'</button>' +
+        '<button class="dua-action-icon" onclick="event.stopPropagation();shareAccordion(\''+accId+'\')" title="Partager">'+svgShare+'</button>' +
+      '</div>';
     const svgAudio = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>';
     const audioBtn = audioFile
       ? '<div class="audio-solo-bar"><button class="audio-solo-btn" id="tts-ar-'+accId+'" data-accid="'+accId+'" data-audio="'+audioFile+'" onclick="playAudio(this.dataset.accid,&quot;ar&quot;,this,this.dataset.audio)">'+svgAudio+'</button></div>'
@@ -351,11 +367,10 @@ function renderDua(cat, accId) {
         '<span class="lang-block" data-lang-block="fr">'+(dua.titre.fr||'')+'</span>' +
         '<span class="lang-block" data-lang-block="en">'+(dua.titre.en||'')+'</span>' +
         '<span class="lang-block" data-lang-block="es">'+(dua.titre.es||'')+'</span>' +
-      '</div>' +
-      '<button class="dua-menu-btn" data-accid="'+accId+'" onclick="event.stopPropagation();toggleAccSettings(this.dataset.accid)" title="Réglages">⋮</button>' +
-      '</div>' +
+      '</div></div>' +
       '<div class="accordion-body" style="max-height:none;overflow:visible"><div class="accordion-inner">' +
         langBlock('fr') + langBlock('en') + langBlock('es') +
+        actionBar +
       '</div></div>';
   }
 
