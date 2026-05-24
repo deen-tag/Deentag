@@ -454,4 +454,33 @@ body.night .shop-link-label { color:var(--gold); }
 <div style="position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); padding: 8px 12px; border-radius: 40px; z-index: 9999; display: flex; gap: 8px; font-family: monospace;">
   <button id="prevTheme" style="background: white; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-weight: bold;">◀</button>
   <span id="themeCounter" style="color: white; min-width: 50px; text-align: center; line-height: 36px;">1/60</span>
-  <button id="nextTheme" 
+  <button id="nextTheme" <!-- Sélecteur flottant 60 thèmes -->
+<div style="position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); padding: 8px 12px; border-radius: 40px; z-index: 9999; display: flex; gap: 8px; align-items: center;">
+  <button id="prevTheme" style="background: white; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 20px;">◀</button>
+  <span id="themeCounter" style="color: white; min-width: 50px; text-align: center; font-size: 16px; font-weight: bold;">1/60</span>
+  <button id="nextTheme" style="background: white; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-weight: bold; font-size: 20px;">▶</button>
+</div>
+
+<script>
+  let currentTheme = parseInt(localStorage.getItem('deentag_selected_theme') || '1');
+  const totalThemes = 60;
+
+  function applyTheme(index) {
+    document.body.classList.remove(...Array.from(document.body.classList).filter(c => c.startsWith('theme-')));
+    document.body.classList.add(`theme-${index}`);
+    localStorage.setItem('deentag_selected_theme', index);
+    const counter = document.getElementById('themeCounter');
+    if (counter) counter.innerText = `${index}/${totalThemes}`;
+  }
+
+  document.getElementById('prevTheme').onclick = () => {
+    currentTheme = currentTheme > 1 ? currentTheme - 1 : totalThemes;
+    applyTheme(currentTheme);
+  };
+  document.getElementById('nextTheme').onclick = () => {
+    currentTheme = currentTheme < totalThemes ? currentTheme + 1 : 1;
+    applyTheme(currentTheme);
+  };
+  applyTheme(currentTheme);
+</script>
+  
