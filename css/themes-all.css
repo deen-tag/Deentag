@@ -1,0 +1,2923 @@
+/* ================================================================
+   DEENTAG — THEMES-TEST.CSS
+   30 thèmes islamiques premium — fichier temporaire test
+   Approche 2026 : chaque thème a sa propre personnalité visuelle
+   ================================================================ */
+
+/* ── Picker UI ─────────────────────────────────────────────── */
+.ct-wrap {
+  width: 100%;
+  background: var(--bg);
+  border-bottom: 1px solid rgba(128,128,128,0.15);
+  padding: 8px 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  position: sticky;
+  top: 57px;
+  z-index: 190;
+}
+.ct-wrap::-webkit-scrollbar { display: none; }
+.ct-picker {
+  display: flex;
+  gap: 8px;
+  width: max-content;
+  padding: 2px 0;
+}
+.ct-dot {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.18s, box-shadow 0.18s;
+  -webkit-tap-highlight-color: transparent;
+  padding: 0;
+}
+.ct-dot:active { transform: scale(0.82); }
+.ct-dot.active {
+  transform: scale(1.25);
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px currentColor;
+  border-color: rgba(255,255,255,0.4);
+}
+
+/* ── Macro commune — remplace toutes les couleurs or ───────── */
+[data-color-theme] {
+  --gold:       var(--ac);
+  --gold-light: var(--ac-light);
+  --gold-dark:  var(--ac-dark);
+  --gold-shine: var(--ac-shine);
+}
+[data-color-theme] body { background: var(--bg); }
+[data-color-theme] .circle-btn { border-color: var(--ac); }
+[data-color-theme] .circle-btn:active {
+  background: linear-gradient(135deg, var(--ac), var(--ac-light));
+  box-shadow: 0 0 0 8px rgba(var(--acr),0.08), 0 4px 16px rgba(var(--acr),0.4);
+}
+[data-color-theme] .lang-btn { color: var(--ac); border-color: var(--ac); }
+[data-color-theme] .lang-btn:hover { background: var(--ac); color: var(--bg); }
+[data-color-theme] .lang-option:hover,
+[data-color-theme] .lang-option.active { background: var(--ac); }
+[data-color-theme] .lang-menu {
+  background: var(--card-bg);
+  border-color: var(--card-border);
+}
+[data-color-theme] .back-arrow { border-color: var(--ac); color: var(--ac); }
+[data-color-theme] .back-arrow:hover { background: var(--ac); color: var(--bg); }
+[data-color-theme] .deen-card { border-color: var(--card-border); box-shadow: var(--card-shadow); }
+[data-color-theme] .deen-card::after { border-top-color: var(--ac); border-right-color: var(--ac); }
+[data-color-theme] .ornament-line, [data-color-theme] .index-ornament-line,
+[data-color-theme] .shop-hero-line, [data-color-theme] .shop-footer-line,
+[data-color-theme] .section-line, [data-color-theme] .audio-line-left,
+[data-color-theme] .audio-line-right {
+  background: linear-gradient(90deg, transparent, var(--ac), transparent);
+}
+[data-color-theme] .ornament-diamond, [data-color-theme] .pack-feature-dot,
+[data-color-theme] .free-badge-dot { background: var(--ac); }
+[data-color-theme] .ornament-star, [data-color-theme] .brand-script,
+[data-color-theme] .index-brand, [data-color-theme] .inv-header-name,
+[data-color-theme] .shop-brand, [data-color-theme] .inv-script,
+[data-color-theme] .section-title, [data-color-theme] .closing-dua,
+[data-color-theme] .sunnah-title, [data-color-theme] .acc-back-lbl,
+[data-color-theme] .direct-acc-title, [data-color-theme] .audio-center-ornament,
+[data-color-theme] .step-number, [data-color-theme] .pack-qty-label,
+[data-color-theme] .pack-qty-num, [data-color-theme] .pack-name,
+[data-color-theme] .shop-sep-title, [data-color-theme] .free-badge-text,
+[data-color-theme] .pack-app-free { color: var(--ac); }
+[data-color-theme] .accordion { border-color: var(--card-border); background: var(--card-bg); }
+[data-color-theme] .accordion-header::after { border-top-color: var(--ac); border-right-color: var(--ac); }
+[data-color-theme] .accordion-arrow { border-color: var(--ac); color: var(--ac); }
+[data-color-theme] .accordion.open .accordion-arrow { background: var(--ac); color: var(--bg); }
+[data-color-theme] .phonetic-block { color: var(--ac); background: rgba(var(--acr),0.07); }
+[data-color-theme] .social-icon { border-color: var(--ac); }
+[data-color-theme] .social-icon svg { fill: var(--ac); }
+[data-color-theme] .audio-player-circle { border-color: var(--ac); }
+[data-color-theme] .audio-solo-btn { border-color: var(--ac); color: var(--ac); }
+[data-color-theme] .audio-player-btn.playing .audio-player-circle {
+  background: linear-gradient(135deg, var(--ac), var(--ac-light));
+}
+[data-color-theme] .tts-btn { border-color: var(--ac); color: var(--ac); background: rgba(var(--acr),0.07); }
+[data-color-theme] .tts-btn:hover,
+[data-color-theme] .tts-btn.playing { background: var(--ac); color: var(--bg); }
+[data-color-theme] .share-btn,
+[data-color-theme] .acc-back-circle,
+[data-color-theme] .acc-settings-btn,
+[data-color-theme] .direct-close-btn,
+[data-color-theme] .reorder-circle { border-color: var(--ac); color: var(--ac); }
+[data-color-theme] .share-btn:active,
+[data-color-theme] .acc-back-btn:active .acc-back-circle,
+[data-color-theme] .acc-settings-btn.active,
+[data-color-theme] .direct-close-btn:active { background: var(--ac); color: var(--bg); }
+[data-color-theme] .size-pill:hover { border-color: var(--ac); color: var(--ac); }
+[data-color-theme] .size-pill.active { background: var(--ac); border-color: var(--ac); }
+[data-color-theme] .settings-panel { border-color: var(--ac); background: var(--card-bg); }
+[data-color-theme] .settings-panel::after { border-top-color: var(--ac); border-right-color: var(--ac); }
+[data-color-theme] .cat-icon-circle { border-color: var(--card-border); background: rgba(var(--acr),0.08); }
+[data-color-theme] .icon-card-circle { border-color: var(--card-border); }
+[data-color-theme] .icon-card-circle::before { background: linear-gradient(135deg, rgba(var(--acr),0.08), transparent); }
+[data-color-theme] .pack-single { border-color: var(--ac); }
+[data-color-theme] .pack-single::after { border-top-color: var(--ac); border-right-color: var(--ac); }
+[data-color-theme] .pack-qty-btn.active { border-color: var(--ac); background: rgba(var(--acr),0.08); }
+[data-color-theme] .pack-cta { border-color: var(--ac); color: var(--ac); }
+[data-color-theme] .pack-cta:hover { background: var(--ac); color: var(--bg); }
+[data-color-theme] .back-pill { border-color: var(--ac); }
+[data-color-theme] .back-pill-arrow { color: var(--ac); background: rgba(var(--acr),0.10); }
+[data-color-theme] .soon-modal { border-color: var(--ac); background: var(--card-bg); }
+[data-color-theme] .soon-title { color: var(--ac); }
+[data-color-theme] .soon-close { border-color: var(--ac); color: var(--ac); }
+[data-color-theme] .soon-close:active { background: var(--ac); color: var(--bg); }
+[data-color-theme] .direct-acc-wrapper { border-color: var(--ac); }
+[data-color-theme] .bs-handle-bar { background: rgba(var(--acr),0.30); }
+[data-color-theme] .bottom-sheet { border-top-color: var(--ac); }
+[data-color-theme] .inv-header-icon { border-color: var(--ac); background: rgba(var(--acr),0.10); }
+[data-color-theme] .step-number { border-color: var(--ac); background: rgba(var(--acr),0.10); }
+[data-color-theme] .bs-header-title { color: var(--ac); }
+[data-color-theme] .sub-card-sub { color: var(--ac); }
+[data-color-theme] .dua-back { border-color: var(--ac); color: var(--ac); }
+[data-color-theme] .word-highlight.active-word { background: rgba(var(--acr),0.30); }
+[data-color-theme] ::-webkit-scrollbar-thumb { background: var(--ac-dark); }
+[data-color-theme] .ct-wrap { background: var(--bg); }
+
+/* Filtres icônes */
+[data-color-theme] .logo-img, [data-color-theme] .inv-logo,
+[data-color-theme] .index-logo, [data-color-theme] .shop-logo,
+[data-color-theme] .cat-icon, [data-color-theme] .cat-icon-img,
+[data-color-theme] .inv-header-icon img, [data-color-theme] .icon-img,
+[data-color-theme] #bsIcon, [data-color-theme] #duaCatIcon {
+  filter: var(--icon-filter);
+}
+
+/* ================================================================
+   THÈME 1 — ISLAM
+   Liquid Glass · fond parchemin avec grain · vert prophétique
+   ================================================================ */
+body.day[data-color-theme="islam"] {
+  --ac: #1B6B3A; --ac-light: #2E9B58; --ac-dark: #0D4020; --ac-shine: #A8D8B8;
+  --acr: 27,107,58;
+  --bg: #F8F5EC; --bg2: #EEE9D8;
+  --text: #0A160C; --text2: #1A3020; --text3: #2A4830;
+  --card-bg: rgba(255,255,255,0.75); --card-border: rgba(27,107,58,0.20);
+  --card-shadow: 0 8px 32px rgba(27,107,58,0.10), 0 2px 8px rgba(0,0,0,0.06);
+  --arabic-color: #1B6B3A; --phonetic-color: #2E8048; --hadith-color: #1C4228;
+  --icon-filter: sepia(1) saturate(3.5) hue-rotate(88deg) brightness(0.73);
+  background-color: #F0EDE4;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+body.day[data-color-theme="islam"] .deen-card,
+body.day[data-color-theme="islam"] .accordion,
+body.day[data-color-theme="islam"] .concept-step {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.72);
+  border: 1px solid rgba(27,107,58,0.18);
+}
+body.night[data-color-theme="islam"] {
+  --ac: #2E9B58; --ac-light: #4ABB74; --ac-dark: #1B6B3A; --ac-shine: #B8ECC8;
+  --acr: 46,155,88;
+  --bg: #060D08; --bg2: #0A1510;
+  --text: #B8ECC8; --text2: #78C890; --text3: #4AA864;
+  --card-bg: rgba(14,26,16,0.85); --card-border: rgba(46,155,88,0.25);
+  --card-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(46,155,88,0.10);
+  --arabic-color: #78C890; --phonetic-color: #78C890; --hadith-color: #4AA864;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(95deg) brightness(1.0);
+  background-color: #060D08;
+  background-image: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(27,107,58,0.12) 0%, transparent 70%);
+}
+body.night[data-color-theme="islam"] .deen-card,
+body.night[data-color-theme="islam"] .accordion {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(14,26,16,0.80);
+  border: 1px solid rgba(46,155,88,0.20);
+}
+
+/* ================================================================
+   THÈME 2 — FORÊT
+   Flat Editorial · minimaliste · vert forêt intense
+   ================================================================ */
+body.day[data-color-theme="foret"] {
+  --ac: #2D5A3D; --ac-light: #4A8060; --ac-dark: #183828; --ac-shine: #A0C8B0;
+  --acr: 45,90,61;
+  --bg: #F4F7F4; --bg2: #E8EEE8;
+  --text: #081208; --text2: #182A18; --text3: #284828;
+  --card-bg: #FFFFFF; --card-border: rgba(45,90,61,0.12);
+  --card-shadow: 0 2px 4px rgba(45,90,61,0.06), 0 16px 40px rgba(45,90,61,0.08);
+  --arabic-color: #2D5A3D; --phonetic-color: #2D5A3D; --hadith-color: #183828;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(75deg) brightness(0.68);
+  background-color: #F4F7F4;
+}
+body.day[data-color-theme="foret"] .deen-card,
+body.day[data-color-theme="foret"] .accordion,
+body.day[data-color-theme="foret"] .concept-step {
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(45,90,61,0.06), 0 16px 40px rgba(45,90,61,0.08);
+}
+body.night[data-color-theme="foret"] {
+  --ac: #4A8060; --ac-light: #68A880; --ac-dark: #2D5A3D; --ac-shine: #A8D8B8;
+  --acr: 74,128,96;
+  --bg: #080C08; --bg2: #0C1210;
+  --text: #C8E8D0; --text2: #88C8A0; --text3: #5A9870;
+  --card-bg: #101810; --card-border: rgba(74,128,96,0.15);
+  --card-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 16px 40px rgba(0,0,0,0.4);
+  --arabic-color: #88C8A0; --phonetic-color: #88C8A0; --hadith-color: #5A9870;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(80deg) brightness(0.92);
+  background-color: #080C08;
+}
+body.night[data-color-theme="foret"] .deen-card,
+body.night[data-color-theme="foret"] .accordion {
+  border: none;
+  border-radius: 20px;
+  background: #101810;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 16px 40px rgba(0,0,0,0.4);
+}
+
+/* ================================================================
+   THÈME 3 — JADE
+   Deep Material · vert froid minéral · matière froide
+   ================================================================ */
+body.day[data-color-theme="jade"] {
+  --ac: #3A7A68; --ac-light: #5AA088; --ac-dark: #1E5248; --ac-shine: #B0D8CC;
+  --acr: 58,122,104;
+  --bg: #EEF4F2; --bg2: #E0EDE8;
+  --text: #061412; --text2: #102A26; --text3: #1A403C;
+  --card-bg: #F8FCFA; --card-border: rgba(58,122,104,0.18);
+  --card-shadow: 0 1px 3px rgba(58,122,104,0.08), 0 8px 24px rgba(58,122,104,0.10), inset 0 1px 0 rgba(255,255,255,0.9);
+  --arabic-color: #3A7A68; --phonetic-color: #3A7A68; --hadith-color: #1E5248;
+  --icon-filter: sepia(1) saturate(2.2) hue-rotate(130deg) brightness(0.82);
+  background-color: #EEF4F2;
+  background-image: repeating-linear-gradient(135deg, transparent 0, transparent 40px, rgba(58,122,104,0.03) 40px, rgba(58,122,104,0.03) 41px);
+}
+body.night[data-color-theme="jade"] {
+  --ac: #5AA088; --ac-light: #7ABCA8; --ac-dark: #3A7A68; --ac-shine: #B8DDD5;
+  --acr: 90,160,136;
+  --bg: #04100C; --bg2: #081814;
+  --text: #B8DDD5; --text2: #78B8A8; --text3: #508070;
+  --card-bg: #0C1A16; --card-border: rgba(90,160,136,0.18);
+  --card-shadow: 0 1px 0 rgba(90,160,136,0.10), 0 8px 24px rgba(0,0,0,0.5), inset 0 1px 0 rgba(90,160,136,0.06);
+  --arabic-color: #78B8A8; --phonetic-color: #78B8A8; --hadith-color: #508070;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(135deg) brightness(1.08);
+  background-color: #04100C;
+}
+
+/* ================================================================
+   THÈME 4 — SAUGE
+   Soft Blur · poudré délicat · espaces généreux
+   ================================================================ */
+body.day[data-color-theme="sauge"] {
+  --ac: #6A9468; --ac-light: #8AB888; --ac-dark: #486048; --ac-shine: #C4DCC2;
+  --acr: 106,148,104;
+  --bg: #F0F6EF; --bg2: #E4EEE3;
+  --text: #0E1A0D; --text2: #1E2E1D; --text3: #304830;
+  --card-bg: rgba(240,250,240,0.80); --card-border: rgba(106,148,104,0.15);
+  --card-shadow: 0 4px 24px rgba(106,148,104,0.12);
+  --arabic-color: #4A7848; --phonetic-color: #4A7848; --hadith-color: #304E2E;
+  --icon-filter: sepia(1) saturate(1.8) hue-rotate(68deg) brightness(0.88);
+  background-color: #ECF4EB;
+  background-image: radial-gradient(ellipse 120% 80% at 50% -20%, rgba(106,148,104,0.08) 0%, transparent 60%);
+}
+body.day[data-color-theme="sauge"] .deen-card,
+body.day[data-color-theme="sauge"] .accordion {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 24px;
+}
+body.night[data-color-theme="sauge"] {
+  --ac: #7D9E7A; --ac-light: #A0C09C; --ac-dark: #4A7848; --ac-shine: #C4DCC2;
+  --acr: 125,158,122;
+  --bg: #080E08; --bg2: #0C1410;
+  --text: #C4DCC2; --text2: #90B88C; --text3: #6E9468;
+  --card-bg: rgba(16,28,16,0.85); --card-border: rgba(125,158,122,0.15);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  --arabic-color: #90B88C; --phonetic-color: #90B88C; --hadith-color: #6E9468;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(68deg) brightness(1.08);
+  background-color: #080E08;
+}
+body.night[data-color-theme="sauge"] .deen-card,
+body.night[data-color-theme="sauge"] .accordion {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 24px;
+}
+
+/* ================================================================
+   THÈME 5 — ÉMERAUDE
+   Neon Glow · halo lumineux · émeraude vivant
+   ================================================================ */
+body.day[data-color-theme="emeraude"] {
+  --ac: #0D8060; --ac-light: #18A878; --ac-dark: #065840; --ac-shine: #90D8C0;
+  --acr: 13,128,96;
+  --bg: #EDF8F4; --bg2: #DCF0E8;
+  --text: #041410; --text2: #0A2820; --text3: #103C30;
+  --card-bg: #F5FCF9; --card-border: rgba(13,128,96,0.18);
+  --card-shadow: 0 4px 20px rgba(13,128,96,0.12), 0 0 0 1px rgba(13,128,96,0.06);
+  --arabic-color: #0D8060; --phonetic-color: #0D8060; --hadith-color: #065840;
+  --icon-filter: sepia(1) saturate(3.5) hue-rotate(108deg) brightness(0.76);
+  background-color: #EDF8F4;
+  background-image: radial-gradient(ellipse 60% 40% at 50% 100%, rgba(13,128,96,0.06) 0%, transparent 70%);
+}
+body.night[data-color-theme="emeraude"] {
+  --ac: #18A878; --ac-light: #30C890; --ac-dark: #0D8060; --ac-shine: #A0E8D0;
+  --acr: 24,168,120;
+  --bg: #020C08; --bg2: #061410;
+  --text: #A0E8D0; --text2: #58C8A0; --text3: #28A878;
+  --card-bg: #081410; --card-border: rgba(24,168,120,0.15);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.6), 0 0 20px rgba(24,168,120,0.05);
+  --arabic-color: #58C8A0; --phonetic-color: #58C8A0; --hadith-color: #28A878;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(113deg) brightness(1.05);
+  background-color: #020C08;
+  background-image: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(24,168,120,0.08) 0%, transparent 60%);
+}
+body.night[data-color-theme="emeraude"] .deen-card,
+body.night[data-color-theme="emeraude"] .accordion {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.6), 0 0 20px rgba(24,168,120,0.04), inset 0 1px 0 rgba(24,168,120,0.08);
+}
+
+/* ================================================================
+   THÈME 6 — SABLE
+   Parchemin · grain fin · chaleur désert
+   ================================================================ */
+body.day[data-color-theme="sable"] {
+  --ac: #A07840; --ac-light: #C09858; --ac-dark: #705820; --ac-shine: #E0C898;
+  --acr: 160,120,64;
+  --bg: #FAF5E8; --bg2: #F2EAD8;
+  --text: #180E04; --text2: #2E200A; --text3: #483418;
+  --card-bg: #FFFDF5; --card-border: rgba(160,120,64,0.20);
+  --card-shadow: 0 4px 20px rgba(160,120,64,0.10), inset 0 1px 0 rgba(255,255,255,0.9);
+  --arabic-color: #A07840; --phonetic-color: #A07840; --hadith-color: #705820;
+  --icon-filter: sepia(1) saturate(1.5) hue-rotate(10deg) brightness(0.85);
+  background-color: #FAF5E8;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+}
+body.night[data-color-theme="sable"] {
+  --ac: #C09858; --ac-light: #E0B870; --ac-dark: #A07840; --ac-shine: #F0D8A8;
+  --acr: 192,152,88;
+  --bg: #100A04; --bg2: #1A1208;
+  --text: #F0D8A8; --text2: #C8A870; --text3: #A08040;
+  --card-bg: #1A1408; --card-border: rgba(192,152,88,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.55), inset 0 1px 0 rgba(192,152,88,0.06);
+  --arabic-color: #C8A870; --phonetic-color: #C8A870; --hadith-color: #A08040;
+  --icon-filter: sepia(1) saturate(1.8) hue-rotate(10deg) brightness(1.05);
+  background-color: #100A04;
+}
+
+/* ================================================================
+   THÈME 7 — ARGILE
+   Wabi-sabi · matière brute · terre cuite douce
+   ================================================================ */
+body.day[data-color-theme="argile"] {
+  --ac: #8A5840; --ac-light: #AA7858; --ac-dark: #5C3820; --ac-shine: #D8B8A0;
+  --acr: 138,88,64;
+  --bg: #F5EDE4; --bg2: #EDE0D4;
+  --text: #180C08; --text2: #2E1C14; --text3: #482C20;
+  --card-bg: #FDF8F4; --card-border: rgba(138,88,64,0.18);
+  --card-shadow: 0 2px 8px rgba(138,88,64,0.08), 0 12px 32px rgba(138,88,64,0.08);
+  --arabic-color: #8A5840; --phonetic-color: #8A5840; --hadith-color: #5C3820;
+  --icon-filter: sepia(1) saturate(1.2) hue-rotate(8deg) brightness(0.82);
+  background-color: #F0E6D8;
+  background-image: repeating-linear-gradient(45deg, transparent 0, transparent 6px, rgba(138,88,64,0.04) 6px, rgba(138,88,64,0.04) 7px),
+                    repeating-linear-gradient(-45deg, transparent 0, transparent 6px, rgba(138,88,64,0.04) 6px, rgba(138,88,64,0.04) 7px);
+}
+body.night[data-color-theme="argile"] {
+  --ac: #AA7858; --ac-light: #C89870; --ac-dark: #8A5840; --ac-shine: #E0C0A0;
+  --acr: 170,120,88;
+  --bg: #0E0804; --bg2: #180E08;
+  --text: #F0D8C0; --text2: #C8A888; --text3: #A07850;
+  --card-bg: #1A1008; --card-border: rgba(170,120,88,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.55);
+  --arabic-color: #C8A888; --phonetic-color: #C8A888; --hadith-color: #A07850;
+  --icon-filter: sepia(1) saturate(1.5) hue-rotate(8deg) brightness(1.05);
+  background-color: #0E0804;
+}
+
+/* ================================================================
+   THÈME 8 — DUNE
+   Gradient cinématique · coucher de soleil · cuivré profond
+   ================================================================ */
+body.day[data-color-theme="dune"] {
+  --ac: #C87830; --ac-light: #E09848; --ac-dark: #905818; --ac-shine: #F0C888;
+  --acr: 200,120,48;
+  --bg: #FBF2E4; --bg2: #F2E4CC;
+  --text: #180C04; --text2: #2E1C08; --text3: #4A2C10;
+  --card-bg: #FFFDF6; --card-border: rgba(200,120,48,0.18);
+  --card-shadow: 0 4px 24px rgba(200,120,48,0.10);
+  --arabic-color: #C87830; --phonetic-color: #C87830; --hadith-color: #905818;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(18deg) brightness(0.88);
+  background-color: #FBF2E4;
+  background-image: linear-gradient(180deg, rgba(200,120,48,0.04) 0%, transparent 40%);
+}
+body.night[data-color-theme="dune"] {
+  --ac: #E09848; --ac-light: #F8B860; --ac-dark: #C87830; --ac-shine: #F8D8A0;
+  --acr: 224,152,72;
+  --bg: #120804; --bg2: #1E1008;
+  --text: #F8D8A0; --text2: #D0A860; --text3: #A87830;
+  --card-bg: #1E1408; --card-border: rgba(224,152,72,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.55), 0 0 40px rgba(224,152,72,0.03);
+  --arabic-color: #D0A860; --phonetic-color: #D0A860; --hadith-color: #A87830;
+  --icon-filter: sepia(1) saturate(2.2) hue-rotate(18deg) brightness(1.08);
+  background-color: #120804;
+  background-image: radial-gradient(ellipse 100% 60% at 50% 100%, rgba(200,80,0,0.08) 0%, transparent 60%);
+}
+
+/* ================================================================
+   THÈME 9 — OCRE
+   Brutalisme doux · contrastes francs · orange terre
+   ================================================================ */
+body.day[data-color-theme="ocre"] {
+  --ac: #B86820; --ac-light: #D88838; --ac-dark: #804810; --ac-shine: #E8B880;
+  --acr: 184,104,32;
+  --bg: #F8F0E4; --bg2: #EEE0CC;
+  --text: #160A04; --text2: #2A1608; --text3: #402410;
+  --card-bg: #FFFFFF; --card-border: rgba(184,104,32,0.15);
+  --card-shadow: 4px 4px 0px rgba(184,104,32,0.20), 0 8px 24px rgba(184,104,32,0.08);
+  --arabic-color: #B86820; --phonetic-color: #B86820; --hadith-color: #804810;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(22deg) brightness(0.82);
+  background-color: #F8F0E4;
+}
+body.day[data-color-theme="ocre"] .deen-card,
+body.day[data-color-theme="ocre"] .accordion {
+  box-shadow: 4px 4px 0px rgba(184,104,32,0.20), 0 8px 24px rgba(184,104,32,0.08);
+  border-radius: 16px;
+}
+body.night[data-color-theme="ocre"] {
+  --ac: #D88838; --ac-light: #F0A850; --ac-dark: #B86820; --ac-shine: #F8D090;
+  --acr: 216,136,56;
+  --bg: #100804; --bg2: #1C1008;
+  --text: #F8D090; --text2: #D09050; --text3: #A86828;
+  --card-bg: #1C1408; --card-border: rgba(216,136,56,0.18);
+  --card-shadow: 4px 4px 0px rgba(216,136,56,0.15), 0 8px 24px rgba(0,0,0,0.5);
+  --arabic-color: #D09050; --phonetic-color: #D09050; --hadith-color: #A86828;
+  --icon-filter: sepia(1) saturate(2.2) hue-rotate(22deg) brightness(1.05);
+  background-color: #100804;
+}
+body.night[data-color-theme="ocre"] .deen-card,
+body.night[data-color-theme="ocre"] .accordion {
+  box-shadow: 4px 4px 0px rgba(216,136,56,0.15), 0 8px 24px rgba(0,0,0,0.5);
+}
+
+/* ================================================================
+   THÈME 10 — SILEX
+   Mono stone · gris chaud neutre · minimalisme absolu
+   ================================================================ */
+body.day[data-color-theme="silex"] {
+  --ac: #5A6848; --ac-light: #788860; --ac-dark: #384828; --ac-shine: #B8C8A0;
+  --acr: 90,104,72;
+  --bg: #F4F2EE; --bg2: #EAE8E2;
+  --text: #141210; --text2: #282420; --text3: #403C38;
+  --card-bg: #FAFAF8; --card-border: rgba(90,104,72,0.14);
+  --card-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.06);
+  --arabic-color: #5A6848; --phonetic-color: #5A6848; --hadith-color: #384828;
+  --icon-filter: sepia(1) saturate(1.4) hue-rotate(50deg) brightness(0.82);
+  background-color: #F4F2EE;
+}
+body.day[data-color-theme="silex"] .deen-card,
+body.day[data-color-theme="silex"] .accordion {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 32px rgba(0,0,0,0.06);
+}
+body.night[data-color-theme="silex"] {
+  --ac: #788860; --ac-light: #98A878; --ac-dark: #5A6848; --ac-shine: #C8D8B0;
+  --acr: 120,136,96;
+  --bg: #0E0E0C; --bg2: #181814;
+  --text: #E8E4DC; --text2: #B8B4A8; --text3: #888478;
+  --card-bg: #181814; --card-border: rgba(120,136,96,0.12);
+  --card-shadow: 0 1px 0 rgba(255,255,255,0.04), 0 8px 32px rgba(0,0,0,0.4);
+  --arabic-color: #B8B4A8; --phonetic-color: #B8B4A8; --hadith-color: #888478;
+  --icon-filter: sepia(1) saturate(1.4) hue-rotate(50deg) brightness(1.05);
+  background-color: #0E0E0C;
+}
+body.night[data-color-theme="silex"] .deen-card,
+body.night[data-color-theme="silex"] .accordion {
+  border: none;
+  border-radius: 12px;
+}
+
+/* ================================================================
+   THÈME 11 — NUIT
+   Starfield · bleu nuit · étoiles lointaines
+   ================================================================ */
+body.day[data-color-theme="nuit"] {
+  --ac: #2A4A8A; --ac-light: #4868A8; --ac-dark: #142860; --ac-shine: #A0B4D8;
+  --acr: 42,74,138;
+  --bg: #EEF0F8; --bg2: #E0E4F4;
+  --text: #080C1A; --text2: #101828; --text3: #1C2840;
+  --card-bg: #FAFBFF; --card-border: rgba(42,74,138,0.15);
+  --card-shadow: 0 4px 20px rgba(42,74,138,0.10);
+  --arabic-color: #2A4A8A; --phonetic-color: #2A4A8A; --hadith-color: #142860;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(200deg) brightness(0.75);
+  background-color: #EEF0F8;
+}
+body.night[data-color-theme="nuit"] {
+  --ac: #5878C8; --ac-light: #7898E0; --ac-dark: #2A4A8A; --ac-shine: #B0C0E8;
+  --acr: 88,120,200;
+  --bg: #04060F; --bg2: #080C1A;
+  --text: #C0CCEE; --text2: #8898CC; --text3: #5868A0;
+  --card-bg: #0A0E1C; --card-border: rgba(88,120,200,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.6), 0 0 60px rgba(88,120,200,0.04);
+  --arabic-color: #8898CC; --phonetic-color: #8898CC; --hadith-color: #5868A0;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(205deg) brightness(1.1);
+  background-color: #04060F;
+  background-image: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(42,74,138,0.15) 0%, transparent 70%);
+}
+
+/* ================================================================
+   THÈME 12 — MOSQUÉE
+   Zellige · bleu ottoman · carreaux géométriques
+   ================================================================ */
+body.day[data-color-theme="mosquee"] {
+  --ac: #1A5A8A; --ac-light: #2E78A8; --ac-dark: #0A3860; --ac-shine: #90C0E0;
+  --acr: 26,90,138;
+  --bg: #EDF4FA; --bg2: #DCE8F4;
+  --text: #060E18; --text2: #0E1C2E; --text3: #183048;
+  --card-bg: #F5FBFF; --card-border: rgba(26,90,138,0.18);
+  --card-shadow: 0 4px 20px rgba(26,90,138,0.10);
+  --arabic-color: #1A5A8A; --phonetic-color: #1A5A8A; --hadith-color: #0A3860;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(195deg) brightness(0.72);
+  background-color: #EDF4FA;
+  background-image: repeating-linear-gradient(45deg, transparent 0, transparent 20px, rgba(26,90,138,0.04) 20px, rgba(26,90,138,0.04) 21px),
+                    repeating-linear-gradient(-45deg, transparent 0, transparent 20px, rgba(26,90,138,0.04) 20px, rgba(26,90,138,0.04) 21px);
+}
+body.night[data-color-theme="mosquee"] {
+  --ac: #3A90C8; --ac-light: #58B0E8; --ac-dark: #1A5A8A; --ac-shine: #A8D8F8;
+  --acr: 58,144,200;
+  --bg: #040810; --bg2: #080E1C;
+  --text: #B0D8F8; --text2: #70A8D8; --text3: #4080B8;
+  --card-bg: #0A1020; --card-border: rgba(58,144,200,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  --arabic-color: #70A8D8; --phonetic-color: #70A8D8; --hadith-color: #4080B8;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(198deg) brightness(1.1);
+  background-color: #040810;
+  background-image: repeating-linear-gradient(45deg, transparent 0, transparent 20px, rgba(58,144,200,0.04) 20px, rgba(58,144,200,0.04) 21px),
+                    repeating-linear-gradient(-45deg, transparent 0, transparent 20px, rgba(58,144,200,0.04) 20px, rgba(58,144,200,0.04) 21px);
+}
+
+/* ================================================================
+   THÈME 13 — LAPIS
+   Luxe profond · lapis-lazuli · or blanc
+   ================================================================ */
+body.day[data-color-theme="lapis"] {
+  --ac: #1A3A78; --ac-light: #2C5898; --ac-dark: #0A2050; --ac-shine: #90A8D8;
+  --acr: 26,58,120;
+  --bg: #F0F2F8; --bg2: #E0E4F4;
+  --text: #080C1C; --text2: #101828; --text3: #1C2840;
+  --card-bg: rgba(255,255,255,0.80); --card-border: rgba(26,58,120,0.15);
+  --card-shadow: 0 8px 40px rgba(26,58,120,0.12), inset 0 1px 0 rgba(255,255,255,0.9);
+  --arabic-color: #1A3A78; --phonetic-color: #1A3A78; --hadith-color: #0A2050;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(210deg) brightness(0.68);
+  background-color: #EEF0F8;
+}
+body.day[data-color-theme="lapis"] .deen-card,
+body.day[data-color-theme="lapis"] .accordion {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+body.night[data-color-theme="lapis"] {
+  --ac: #4868C8; --ac-light: #6888E8; --ac-dark: #1A3A78; --ac-shine: #A8B8E8;
+  --acr: 72,104,200;
+  --bg: #020408; --bg2: #060A14;
+  --text: #C0C8F0; --text2: #8090D0; --text3: #5060A8;
+  --card-bg: rgba(6,10,24,0.90); --card-border: rgba(72,104,200,0.20);
+  --card-shadow: 0 8px 40px rgba(0,0,0,0.7), inset 0 1px 0 rgba(72,104,200,0.08);
+  --arabic-color: #8090D0; --phonetic-color: #8090D0; --hadith-color: #5060A8;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(215deg) brightness(1.1);
+  background-color: #020408;
+  background-image: radial-gradient(ellipse 100% 60% at 20% 50%, rgba(26,58,120,0.12) 0%, transparent 60%),
+                    radial-gradient(ellipse 80% 60% at 80% 50%, rgba(72,104,200,0.08) 0%, transparent 60%);
+}
+body.night[data-color-theme="lapis"] .deen-card,
+body.night[data-color-theme="lapis"] .accordion {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ================================================================
+   THÈME 14 — TURQUOISE
+   Méditerranéen · vif et frais · céramique ottomane
+   ================================================================ */
+body.day[data-color-theme="turquoise"] {
+  --ac: #0A7878; --ac-light: #189898; --ac-dark: #045050; --ac-shine: #88D0D0;
+  --acr: 10,120,120;
+  --bg: #EBF7F7; --bg2: #D8F0F0;
+  --text: #041010; --text2: #082020; --text3: #103434;
+  --card-bg: #F5FCFC; --card-border: rgba(10,120,120,0.18);
+  --card-shadow: 0 4px 20px rgba(10,120,120,0.10);
+  --arabic-color: #0A7878; --phonetic-color: #0A7878; --hadith-color: #045050;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(155deg) brightness(0.72);
+  background-color: #EBF7F7;
+  background-image: radial-gradient(ellipse 80% 60% at 0% 0%, rgba(10,120,120,0.06) 0%, transparent 60%),
+                    radial-gradient(ellipse 80% 60% at 100% 100%, rgba(10,120,120,0.06) 0%, transparent 60%);
+}
+body.night[data-color-theme="turquoise"] {
+  --ac: #18A8A8; --ac-light: #30C8C8; --ac-dark: #0A7878; --ac-shine: #A0E0E0;
+  --acr: 24,168,168;
+  --bg: #020C0C; --bg2: #061414;
+  --text: #A0E0E0; --text2: #60C0C0; --text3: #30A0A0;
+  --card-bg: #081818; --card-border: rgba(24,168,168,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  --arabic-color: #60C0C0; --phonetic-color: #60C0C0; --hadith-color: #30A0A0;
+  --icon-filter: sepia(1) saturate(3.5) hue-rotate(158deg) brightness(1.08);
+  background-color: #020C0C;
+}
+
+/* ================================================================
+   THÈME 15 — FAJR
+   Aurore · bleu-gris perle · heure entre chien et loup
+   ================================================================ */
+body.day[data-color-theme="fajr"] {
+  --ac: #4A6888; --ac-light: #6888A8; --ac-dark: #2A4868; --ac-shine: #A8C0D8;
+  --acr: 74,104,136;
+  --bg: #F2F5FA; --bg2: #E4EAF4;
+  --text: #0A0E18; --text2: #141C2C; --text3: #202C40;
+  --card-bg: rgba(250,252,255,0.85); --card-border: rgba(74,104,136,0.15);
+  --card-shadow: 0 4px 24px rgba(74,104,136,0.10);
+  --arabic-color: #4A6888; --phonetic-color: #4A6888; --hadith-color: #2A4868;
+  --icon-filter: sepia(1) saturate(1.8) hue-rotate(195deg) brightness(0.85);
+  background-color: #F0F4FA;
+  background-image: linear-gradient(180deg, rgba(74,104,136,0.06) 0%, transparent 50%);
+}
+body.night[data-color-theme="fajr"] {
+  --ac: #7898C8; --ac-light: #98B8E8; --ac-dark: #4A6888; --ac-shine: #C0D4F0;
+  --acr: 120,152,200;
+  --bg: #060810; --bg2: #0A0E1A;
+  --text: #C8D8F0; --text2: #8898C8; --text3: #5868A0;
+  --card-bg: rgba(10,14,26,0.90); --card-border: rgba(120,152,200,0.15);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  --arabic-color: #8898C8; --phonetic-color: #8898C8; --hadith-color: #5868A0;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(200deg) brightness(1.1);
+  background-color: #060810;
+  background-image: linear-gradient(180deg, rgba(74,104,136,0.12) 0%, transparent 40%);
+}
+
+/* ================================================================
+   THÈME 16 — ENCRE
+   Pure Dark · encre japonaise · blanc pur sur noir
+   ================================================================ */
+body.day[data-color-theme="encre"] {
+  --ac: #1A1A2A; --ac-light: #302A40; --ac-dark: #080810; --ac-shine: #A0A0C0;
+  --acr: 26,26,42;
+  --bg: #FAFAFA; --bg2: #F4F4F8;
+  --text: #080810; --text2: #18181E; --text3: #282830;
+  --card-bg: #FFFFFF; --card-border: rgba(26,26,42,0.10);
+  --card-shadow: 0 2px 4px rgba(0,0,0,0.04), 0 12px 40px rgba(0,0,0,0.08);
+  --arabic-color: #1A1A2A; --phonetic-color: #383848; --hadith-color: #282830;
+  --icon-filter: sepia(0) saturate(0) brightness(0.15);
+  background-color: #FAFAFA;
+}
+body.day[data-color-theme="encre"] .deen-card,
+body.day[data-color-theme="encre"] .accordion {
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 16px;
+}
+body.night[data-color-theme="encre"] {
+  --ac: #D0D0E8; --ac-light: #E8E8FF; --ac-dark: #A0A0C0; --ac-shine: #F0F0FF;
+  --acr: 208,208,232;
+  --bg: #080808; --bg2: #101010;
+  --text: #F0F0F8; --text2: #C0C0D8; --text3: #909098;
+  --card-bg: #101010; --card-border: rgba(208,208,232,0.10);
+  --card-shadow: 0 2px 0 rgba(255,255,255,0.03), 0 12px 40px rgba(0,0,0,0.5);
+  --arabic-color: #D0D0E8; --phonetic-color: #C0C0D8; --hadith-color: #909098;
+  --icon-filter: sepia(0) saturate(0) brightness(0.85);
+  background-color: #080808;
+}
+
+/* ================================================================
+   THÈME 17 — CHARBON
+   Dark Warm · charbon bois · chaleur imperceptible
+   ================================================================ */
+body.day[data-color-theme="charbon"] {
+  --ac: #383830; --ac-light: #504848; --ac-dark: #181810; --ac-shine: #B0A898;
+  --acr: 56,56,48;
+  --bg: #F8F6F2; --bg2: #EEE8E0;
+  --text: #0C0C0A; --text2: #1C1A18; --text3: #2E2C28;
+  --card-bg: #FFFEFC; --card-border: rgba(56,56,48,0.12);
+  --card-shadow: 0 2px 8px rgba(56,56,48,0.06), 0 16px 40px rgba(56,56,48,0.08);
+  --arabic-color: #383830; --phonetic-color: #504848; --hadith-color: #282820;
+  --icon-filter: sepia(0.5) saturate(0.5) brightness(0.3);
+  background-color: #F5F3EE;
+}
+body.night[data-color-theme="charbon"] {
+  --ac: #C8C0B0; --ac-light: #E0D8C8; --ac-dark: #A09880; --ac-shine: #F0E8D8;
+  --acr: 200,192,176;
+  --bg: #0A0A08; --bg2: #141410;
+  --text: #F0E8D8; --text2: #C8C0B0; --text3: #988878;
+  --card-bg: #141410; --card-border: rgba(200,192,176,0.12);
+  --card-shadow: 0 2px 0 rgba(255,255,255,0.02), 0 12px 40px rgba(0,0,0,0.5);
+  --arabic-color: #C8C0B0; --phonetic-color: #C8C0B0; --hadith-color: #988878;
+  --icon-filter: sepia(0.3) saturate(0.5) brightness(0.75);
+  background-color: #0A0A08;
+}
+
+/* ================================================================
+   THÈME 18 — ÉBÈNE
+   Green-black · vert encre profond · luxe silencieux
+   ================================================================ */
+body.day[data-color-theme="ebene"] {
+  --ac: #183020; --ac-light: #284830; --ac-dark: #081808; --ac-shine: #90A890;
+  --acr: 24,48,32;
+  --bg: #F2F5F2; --bg2: #E4EAE4;
+  --text: #060E06; --text2: #101C10; --text3: #1C2E1C;
+  --card-bg: #FAFCFA; --card-border: rgba(24,48,32,0.12);
+  --card-shadow: 0 2px 8px rgba(24,48,32,0.06), 0 16px 40px rgba(24,48,32,0.08);
+  --arabic-color: #183020; --phonetic-color: #284830; --hadith-color: #102018;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(88deg) brightness(0.35);
+  background-color: #F2F5F2;
+}
+body.night[data-color-theme="ebene"] {
+  --ac: #7AAA88; --ac-light: #98C8A8; --ac-dark: #4A7858; --ac-shine: #C0D8C8;
+  --acr: 122,170,136;
+  --bg: #040804; --bg2: #080E08;
+  --text: #D8ECD8; --text2: #98C898; --text3: #609860;
+  --card-bg: #080E08; --card-border: rgba(122,170,136,0.14);
+  --card-shadow: 0 2px 0 rgba(122,170,136,0.06), 0 12px 40px rgba(0,0,0,0.55);
+  --arabic-color: #98C898; --phonetic-color: #98C898; --hadith-color: #609860;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(92deg) brightness(0.95);
+  background-color: #040804;
+}
+
+/* ================================================================
+   THÈME 19 — ANTHRACITE
+   Frosted Steel · acier brossé · lignes précises
+   ================================================================ */
+body.day[data-color-theme="anthracite"] {
+  --ac: #3A4848; --ac-light: #506060; --ac-dark: #202E2E; --ac-shine: #A8B8B8;
+  --acr: 58,72,72;
+  --bg: #F2F4F4; --bg2: #E4E8E8;
+  --text: #080C0C; --text2: #141C1C; --text3: #202C2C;
+  --card-bg: rgba(255,255,255,0.88); --card-border: rgba(58,72,72,0.12);
+  --card-shadow: 0 2px 8px rgba(58,72,72,0.06), 0 12px 36px rgba(58,72,72,0.08);
+  --arabic-color: #3A4848; --phonetic-color: #506060; --hadith-color: #202E2E;
+  --icon-filter: sepia(0.3) saturate(0.8) hue-rotate(160deg) brightness(0.4);
+  background-color: #ECEEF0;
+  background-image: repeating-linear-gradient(0deg, transparent 0, transparent 40px, rgba(58,72,72,0.03) 40px, rgba(58,72,72,0.03) 41px);
+}
+body.day[data-color-theme="anthracite"] .deen-card,
+body.day[data-color-theme="anthracite"] .accordion {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+body.night[data-color-theme="anthracite"] {
+  --ac: #90AAAA; --ac-light: #B0C8C8; --ac-dark: #3A4848; --ac-shine: #D0E0E0;
+  --acr: 144,170,170;
+  --bg: #080C0C; --bg2: #101818;
+  --text: #E0ECEC; --text2: #A8C0C0; --text3: #708888;
+  --card-bg: rgba(16,24,24,0.90); --card-border: rgba(144,170,170,0.12);
+  --card-shadow: 0 2px 0 rgba(144,170,170,0.06), 0 12px 40px rgba(0,0,0,0.55);
+  --arabic-color: #A8C0C0; --phonetic-color: #A8C0C0; --hadith-color: #708888;
+  --icon-filter: sepia(0.3) saturate(0.8) hue-rotate(165deg) brightness(0.85);
+  background-color: #080C0C;
+  background-image: repeating-linear-gradient(0deg, transparent 0, transparent 40px, rgba(144,170,170,0.04) 40px, rgba(144,170,170,0.04) 41px);
+}
+body.night[data-color-theme="anthracite"] .deen-card,
+body.night[data-color-theme="anthracite"] .accordion {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* ================================================================
+   THÈME 20 — QADR
+   Laylat al-Qadr · violet-noir · nuit des nuits
+   ================================================================ */
+body.day[data-color-theme="qadr"] {
+  --ac: #2A1A4A; --ac-light: #402868; --ac-dark: #140A28; --ac-shine: #A090C8;
+  --acr: 42,26,74;
+  --bg: #F4F0FA; --bg2: #EAE4F4;
+  --text: #080410; --text2: #140A20; --text3: #201430;
+  --card-bg: #FDFAFF; --card-border: rgba(42,26,74,0.12);
+  --card-shadow: 0 4px 20px rgba(42,26,74,0.10);
+  --arabic-color: #2A1A4A; --phonetic-color: #402868; --hadith-color: #140A28;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(255deg) brightness(0.55);
+  background-color: #F2EEF8;
+}
+body.night[data-color-theme="qadr"] {
+  --ac: #8868C8; --ac-light: #A888E8; --ac-dark: #5840A0; --ac-shine: #C8B0F0;
+  --acr: 136,104,200;
+  --bg: #020108; --bg2: #06040E;
+  --text: #C8B0F0; --text2: #9878D0; --text3: #7050A8;
+  --card-bg: rgba(8,4,18,0.95); --card-border: rgba(136,104,200,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.7), 0 0 60px rgba(136,104,200,0.05);
+  --arabic-color: #9878D0; --phonetic-color: #9878D0; --hadith-color: #7050A8;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(260deg) brightness(1.05);
+  background-color: #020108;
+  background-image: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(42,26,74,0.25) 0%, transparent 70%),
+                    radial-gradient(ellipse 40% 30% at 50% 100%, rgba(136,104,200,0.10) 0%, transparent 60%);
+}
+body.night[data-color-theme="qadr"] .deen-card,
+body.night[data-color-theme="qadr"] .accordion {
+  background: rgba(8,4,18,0.90);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.7), inset 0 1px 0 rgba(136,104,200,0.08);
+}
+
+/* ================================================================
+   THÈME 21 — SOUFI
+   Mystic Purple · violet soufi · contemplation profonde
+   ================================================================ */
+body.day[data-color-theme="soufi"] {
+  --ac: #5A2A7A; --ac-light: #7A4898; --ac-dark: #380A58; --ac-shine: #C0A0D8;
+  --acr: 90,42,122;
+  --bg: #F6F0FA; --bg2: #EDE4F4;
+  --text: #0C0410; --text2: #1A0C22; --text3: #281434;
+  --card-bg: #FDF8FF; --card-border: rgba(90,42,122,0.15);
+  --card-shadow: 0 4px 20px rgba(90,42,122,0.10);
+  --arabic-color: #5A2A7A; --phonetic-color: #7A4898; --hadith-color: #380A58;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(255deg) brightness(0.65);
+  background-color: #F2EAF8;
+  background-image: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(90,42,122,0.06) 0%, transparent 70%);
+}
+body.night[data-color-theme="soufi"] {
+  --ac: #9860C8; --ac-light: #B880E8; --ac-dark: #6838A0; --ac-shine: #D0B0F0;
+  --acr: 152,96,200;
+  --bg: #06020C; --bg2: #0C0618;
+  --text: #D0B0F0; --text2: #A078D0; --text3: #7850A8;
+  --card-bg: #0C0818; --card-border: rgba(152,96,200,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color: #A078D0; --phonetic-color: #A078D0; --hadith-color: #7850A8;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(260deg) brightness(1.05);
+  background-color: #06020C;
+  background-image: radial-gradient(ellipse 80% 50% at 50% 50%, rgba(90,42,122,0.10) 0%, transparent 70%);
+}
+
+/* ================================================================
+   THÈME 22 — AMÉTHYSTE
+   Crystal · améthyste claire · reflets précieux
+   ================================================================ */
+body.day[data-color-theme="amethyste"] {
+  --ac: #7848A8; --ac-light: #9868C8; --ac-dark: #502878; --ac-shine: #D0B8E8;
+  --acr: 120,72,168;
+  --bg: #F8F2FF; --bg2: #F0E8F8;
+  --text: #0E0818; --text2: #1C1028; --text3: #2A1838;
+  --card-bg: rgba(255,250,255,0.85); --card-border: rgba(120,72,168,0.15);
+  --card-shadow: 0 4px 24px rgba(120,72,168,0.10);
+  --arabic-color: #7848A8; --phonetic-color: #9868C8; --hadith-color: #502878;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(258deg) brightness(0.75);
+  background-color: #F5EEFF;
+  background-image: radial-gradient(ellipse 80% 60% at 100% 0%, rgba(120,72,168,0.07) 0%, transparent 60%),
+                    radial-gradient(ellipse 60% 50% at 0% 100%, rgba(120,72,168,0.05) 0%, transparent 60%);
+}
+body.day[data-color-theme="amethyste"] .deen-card,
+body.day[data-color-theme="amethyste"] .accordion {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+body.night[data-color-theme="amethyste"] {
+  --ac: #B888E8; --ac-light: #D0A8FF; --ac-dark: #8858C0; --ac-shine: #E8D0FF;
+  --acr: 184,136,232;
+  --bg: #060210; --bg2: #0C0820;
+  --text: #E8D0FF; --text2: #C0A0F0; --text3: #9878D0;
+  --card-bg: rgba(12,8,32,0.90); --card-border: rgba(184,136,232,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color: #C0A0F0; --phonetic-color: #C0A0F0; --hadith-color: #9878D0;
+  --icon-filter: sepia(1) saturate(3.5) hue-rotate(262deg) brightness(1.1);
+  background-color: #060210;
+}
+body.night[data-color-theme="amethyste"] .deen-card,
+body.night[data-color-theme="amethyste"] .accordion {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* ================================================================
+   THÈME 23 — PRUNE
+   Velvet · prune sombre · douceur veloutée
+   ================================================================ */
+body.day[data-color-theme="prune"] {
+  --ac: #6A2858; --ac-light: #884878; --ac-dark: #440838; --ac-shine: #C8A0B8;
+  --acr: 106,40,88;
+  --bg: #FAF0F6; --bg2: #F2E4EE;
+  --text: #100610; --text2: #1E0E1C; --text3: #2C1628;
+  --card-bg: #FFF8FC; --card-border: rgba(106,40,88,0.15);
+  --card-shadow: 0 4px 20px rgba(106,40,88,0.10);
+  --arabic-color: #6A2858; --phonetic-color: #884878; --hadith-color: #440838;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(285deg) brightness(0.65);
+  background-color: #F8EEF4;
+}
+body.night[data-color-theme="prune"] {
+  --ac: #C07898; --ac-light: #E098B8; --ac-dark: #9A5878; --ac-shine: #F0C8DC;
+  --acr: 192,120,152;
+  --bg: #080410; --bg2: #100818;
+  --text: #F0C8DC; --text2: #D098B8; --text3: #A86888;
+  --card-bg: #100818; --card-border: rgba(192,120,152,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color: #D098B8; --phonetic-color: #D098B8; --hadith-color: #A86888;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(288deg) brightness(1.05);
+  background-color: #080410;
+}
+
+/* ================================================================
+   THÈME 24 — LAVANDE
+   Airy · lavande éthérée · légèreté absolue
+   ================================================================ */
+body.day[data-color-theme="lavande"] {
+  --ac: #7868A8; --ac-light: #9888C8; --ac-dark: #504878; --ac-shine: #D0C8E8;
+  --acr: 120,104,168;
+  --bg: #F6F4FF; --bg2: #EEEAFF;
+  --text: #0C0A18; --text2: #181428; --text3: #241E38;
+  --card-bg: rgba(255,254,255,0.90); --card-border: rgba(120,104,168,0.14);
+  --card-shadow: 0 4px 24px rgba(120,104,168,0.08);
+  --arabic-color: #7868A8; --phonetic-color: #9888C8; --hadith-color: #504878;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(248deg) brightness(0.78);
+  background-color: #F4F2FF;
+  background-image: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(120,104,168,0.06) 0%, transparent 60%);
+}
+body.day[data-color-theme="lavande"] .deen-card,
+body.day[data-color-theme="lavande"] .accordion {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 22px;
+}
+body.night[data-color-theme="lavande"] {
+  --ac: #A898D8; --ac-light: #C8B8F0; --ac-dark: #7868A8; --ac-shine: #E0D8FF;
+  --acr: 168,152,216;
+  --bg: #060410; --bg2: #0C0A1C;
+  --text: #E0D8FF; --text2: #B8A8E8; --text3: #9078C8;
+  --card-bg: rgba(12,10,28,0.90); --card-border: rgba(168,152,216,0.15);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color: #B8A8E8; --phonetic-color: #B8A8E8; --hadith-color: #9078C8;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(250deg) brightness(1.08);
+  background-color: #060410;
+}
+body.night[data-color-theme="lavande"] .deen-card,
+body.night[data-color-theme="lavande"] .accordion {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 22px;
+}
+
+/* ================================================================
+   THÈME 25 — INDIGO
+   Bold Contrast · indigo persan · contraste maximal
+   ================================================================ */
+body.day[data-color-theme="indigo"] {
+  --ac: #2A1E78; --ac-light: #4838A0; --ac-dark: #100A50; --ac-shine: #9888D8;
+  --acr: 42,30,120;
+  --bg: #F0EEF8; --bg2: #E0DCF4;
+  --text: #06041A; --text2: #100C28; --text3: #1A1438;
+  --card-bg: #FAFAFF; --card-border: rgba(42,30,120,0.15);
+  --card-shadow: 0 4px 20px rgba(42,30,120,0.10);
+  --arabic-color: #2A1E78; --phonetic-color: #4838A0; --hadith-color: #100A50;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(228deg) brightness(0.62);
+  background-color: #EEEAF8;
+  background-image: repeating-linear-gradient(90deg, transparent 0, transparent 60px, rgba(42,30,120,0.03) 60px, rgba(42,30,120,0.03) 61px);
+}
+body.night[data-color-theme="indigo"] {
+  --ac: #6858D8; --ac-light: #8878F0; --ac-dark: #2A1E78; --ac-shine: #C0B0F8;
+  --acr: 104,88,216;
+  --bg: #04020E; --bg2: #08060C;
+  --text: #C0B0F8; --text2: #8878D0; --text3: #6050A8;
+  --card-bg: #080618; --card-border: rgba(104,88,216,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.7);
+  --arabic-color: #8878D0; --phonetic-color: #8878D0; --hadith-color: #6050A8;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(232deg) brightness(1.05);
+  background-color: #04020E;
+  background-image: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(42,30,120,0.20) 0%, transparent 70%);
+}
+
+/* ================================================================
+   THÈME 26 — NACRE
+   Blanc nacré · lumière pure · clarté maximale
+   ================================================================ */
+body.day[data-color-theme="nacre"] {
+  --ac: #2A6840; --ac-light: #409858; --ac-dark: #104828; --ac-shine: #A0D0B0;
+  --acr: 42,104,64;
+  --bg: #FDFCFA; --bg2: #F8F5F0;
+  --text: #0A100C; --text2: #14201A; --text3: #203028;
+  --card-bg: rgba(255,255,255,0.95); --card-border: rgba(42,104,64,0.12);
+  --card-shadow: 0 2px 4px rgba(0,0,0,0.04), 0 12px 48px rgba(0,0,0,0.06);
+  --arabic-color: #2A6840; --phonetic-color: #409858; --hadith-color: #104828;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(88deg) brightness(0.72);
+  background-color: #FAFCF8;
+  background-image: linear-gradient(135deg, rgba(42,104,64,0.02) 0%, transparent 50%);
+}
+body.day[data-color-theme="nacre"] .deen-card,
+body.day[data-color-theme="nacre"] .accordion {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(42,104,64,0.08);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04), 0 12px 48px rgba(0,0,0,0.06);
+}
+body.night[data-color-theme="nacre"] {
+  --ac: #48A868; --ac-light: #68C888; --ac-dark: #2A6840; --ac-shine: #B8E8C8;
+  --acr: 72,168,104;
+  --bg: #060A06; --bg2: #0A100A;
+  --text: #E8F8EC; --text2: #A8D8B0; --text3: #70A878;
+  --card-bg: rgba(10,16,10,0.92); --card-border: rgba(72,168,104,0.15);
+  --card-shadow: 0 2px 0 rgba(72,168,104,0.06), 0 12px 48px rgba(0,0,0,0.55);
+  --arabic-color: #A8D8B0; --phonetic-color: #A8D8B0; --hadith-color: #70A878;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(92deg) brightness(1.0);
+  background-color: #060A06;
+}
+
+/* ================================================================
+   THÈME 27 — AURORE
+   Warm Glow · rose aurore · lever du soleil
+   ================================================================ */
+body.day[data-color-theme="aurore"] {
+  --ac: #985848; --ac-light: #B87868; --ac-dark: #683828; --ac-shine: #E0C0B0;
+  --acr: 152,88,72;
+  --bg: #FFF4F0; --bg2: #F8E8E0;
+  --text: #180C08; --text2: #2A1814; --text3: #402820;
+  --card-bg: rgba(255,250,248,0.90); --card-border: rgba(152,88,72,0.14);
+  --card-shadow: 0 4px 24px rgba(152,88,72,0.10);
+  --arabic-color: #985848; --phonetic-color: #B87868; --hadith-color: #683828;
+  --icon-filter: sepia(1) saturate(1.8) hue-rotate(350deg) brightness(0.82);
+  background-color: #FFF0EC;
+  background-image: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(200,100,60,0.06) 0%, transparent 60%);
+}
+body.day[data-color-theme="aurore"] .deen-card,
+body.day[data-color-theme="aurore"] .accordion {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+body.night[data-color-theme="aurore"] {
+  --ac: #D08878; --ac-light: #F0A898; --ac-dark: #985848; --ac-shine: #F8D0C0;
+  --acr: 208,136,120;
+  --bg: #100604; --bg2: #1C0E08;
+  --text: #F8D0C0; --text2: #D0A090; --text3: #A87060;
+  --card-bg: rgba(20,10,8,0.90); --card-border: rgba(208,136,120,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.60);
+  --arabic-color: #D0A090; --phonetic-color: #D0A090; --hadith-color: #A87060;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(352deg) brightness(1.05);
+  background-color: #100604;
+  background-image: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(152,48,20,0.12) 0%, transparent 60%);
+}
+
+/* ================================================================
+   THÈME 28 — PÊCHE
+   Soft Warm · pêche doré · intimité chaleureuse
+   ================================================================ */
+body.day[data-color-theme="peche"] {
+  --ac: #B87840; --ac-light: #D89860; --ac-dark: #805020; --ac-shine: #F0C890;
+  --acr: 184,120,64;
+  --bg: #FFF8F0; --bg2: #FFF0E0;
+  --text: #180E04; --text2: #2C1E0A; --text3: #442E14;
+  --card-bg: rgba(255,253,248,0.88); --card-border: rgba(184,120,64,0.14);
+  --card-shadow: 0 4px 24px rgba(184,120,64,0.10);
+  --arabic-color: #B87840; --phonetic-color: #D89860; --hadith-color: #805020;
+  --icon-filter: sepia(1) saturate(1.8) hue-rotate(15deg) brightness(0.84);
+  background-color: #FFF5E8;
+  background-image: radial-gradient(ellipse 60% 40% at 80% 20%, rgba(240,160,80,0.06) 0%, transparent 60%);
+}
+body.day[data-color-theme="peche"] .deen-card,
+body.day[data-color-theme="peche"] .accordion {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 20px;
+}
+body.night[data-color-theme="peche"] {
+  --ac: #E0A060; --ac-light: #F8C080; --ac-dark: #B87840; --ac-shine: #F8D8A8;
+  --acr: 224,160,96;
+  --bg: #100806; --bg2: #1C1008;
+  --text: #F8D8A8; --text2: #D0A868; --text3: #A07838;
+  --card-bg: rgba(20,12,8,0.90); --card-border: rgba(224,160,96,0.16);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.58);
+  --arabic-color: #D0A868; --phonetic-color: #D0A868; --hadith-color: #A07838;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(15deg) brightness(1.06);
+  background-color: #100806;
+}
+
+/* ================================================================
+   THÈME 29 — IVOIRE
+   Papyrus · ivoire pur · manuscrit sacré
+   ================================================================ */
+body.day[data-color-theme="ivoire"] {
+  --ac: #387048; --ac-light: #508860; --ac-dark: #1E4828; --ac-shine: #A8C8B0;
+  --acr: 56,112,72;
+  --bg: #FEFCF4; --bg2: #F8F4E8;
+  --text: #0C0C06; --text2: #1A1A0E; --text3: #2A2A1A;
+  --card-bg: rgba(254,252,244,0.95); --card-border: rgba(56,112,72,0.14);
+  --card-shadow: 0 2px 8px rgba(56,112,72,0.06), 0 16px 48px rgba(56,112,72,0.08);
+  --arabic-color: #387048; --phonetic-color: #508860; --hadith-color: #1E4828;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(88deg) brightness(0.76);
+  background-color: #FEFAF0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+}
+body.night[data-color-theme="ivoire"] {
+  --ac: #60A878; --ac-light: #80C898; --ac-dark: #387048; --ac-shine: #C0E8D0;
+  --acr: 96,168,120;
+  --bg: #080806; --bg2: #10100A;
+  --text: #F0ECD8; --text2: #C0C4A0; --text3: #909060;
+  --card-bg: #10100A; --card-border: rgba(96,168,120,0.14);
+  --card-shadow: 0 2px 0 rgba(96,168,120,0.05), 0 12px 40px rgba(0,0,0,0.55);
+  --arabic-color: #C0C4A0; --phonetic-color: #C0C4A0; --hadith-color: #909060;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(90deg) brightness(0.98);
+  background-color: #080806;
+}
+
+/* ================================================================
+   THÈME 30 — OR BLANC
+   Platine · blanc or · prestige silencieux
+   ================================================================ */
+body.day[data-color-theme="or-blanc"] {
+  --ac: #4A7858; --ac-light: #6A9878; --ac-dark: #285838; --ac-shine: #B8D8C0;
+  --acr: 74,120,88;
+  --bg: #FAFAF6; --bg2: #F4F4EE;
+  --text: #0C0E0A; --text2: #181C14; --text3: #24281E;
+  --card-bg: rgba(255,255,254,0.92); --card-border: rgba(74,120,88,0.12);
+  --card-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 8px 32px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,1);
+  --arabic-color: #4A7858; --phonetic-color: #6A9878; --hadith-color: #285838;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(88deg) brightness(0.76);
+  background-color: #F8F8F4;
+  background-image: linear-gradient(135deg, rgba(74,120,88,0.02) 25%, transparent 25%) -10px 0,
+                    linear-gradient(225deg, rgba(74,120,88,0.02) 25%, transparent 25%) -10px 0,
+                    linear-gradient(315deg, rgba(74,120,88,0.02) 25%, transparent 25%),
+                    linear-gradient(45deg, rgba(74,120,88,0.02) 25%, transparent 25%);
+  background-size: 20px 20px;
+}
+body.day[data-color-theme="or-blanc"] .deen-card,
+body.day[data-color-theme="or-blanc"] .accordion {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 18px;
+}
+body.night[data-color-theme="or-blanc"] {
+  --ac: #7AB898; --ac-light: #9AD8B8; --ac-dark: #4A7858; --ac-shine: #C8ECD8;
+  --acr: 122,184,152;
+  --bg: #080A08; --bg2: #0C100C;
+  --text: #F0F8F2; --text2: #C0D8C8; --text3: #88A890;
+  --card-bg: rgba(12,16,12,0.94); --card-border: rgba(122,184,152,0.12);
+  --card-shadow: 0 1px 0 rgba(122,184,152,0.06), 0 8px 32px rgba(0,0,0,0.55), inset 0 1px 0 rgba(122,184,152,0.04);
+  --arabic-color: #C0D8C8; --phonetic-color: #C0D8C8; --hadith-color: #88A890;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(90deg) brightness(1.0);
+  background-color: #080A08;
+}
+body.night[data-color-theme="or-blanc"] .deen-card,
+body.night[data-color-theme="or-blanc"] .accordion {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 18px;
+}
+/* ================================================================
+   DEENTAG — THEMES-TEST-2.CSS
+   30 thèmes radicalement différents — approche 2026
+   Chaque thème redéfinit la forme, pas juste la couleur
+   ================================================================ */
+
+/* ── Picker dots pour themes-test-2 ───────────────────────── */
+.ct2-dot[data-ct2="brutalist"]   { background: #1A1A1A; }
+.ct2-dot[data-ct2="neon-mosque"] { background: #00FF88; }
+.ct2-dot[data-ct2="verre"]       { background: rgba(200,240,220,0.8); border: 1.5px solid #1B6B3A; }
+.ct2-dot[data-ct2="manuscript"]  { background: #8B6040; }
+.ct2-dot[data-ct2="aurora"]      { background: #60C8A0; }
+.ct2-dot[data-ct2="mono-green"]  { background: #00AA44; }
+.ct2-dot[data-ct2="marble"]      { background: #E8EEE8; border: 1.5px solid #3A6A50; }
+.ct2-dot[data-ct2="terminal"]    { background: #0A1A0A; }
+.ct2-dot[data-ct2="dusk"]        { background: #8040C0; }
+.ct2-dot[data-ct2="paper"]       { background: #F0E8D0; border: 1.5px solid #587040; }
+.ct2-dot[data-ct2="carbon"]      { background: #181818; }
+.ct2-dot[data-ct2="zellij"]      { background: #2A88A8; }
+.ct2-dot[data-ct2="rose-gold"]   { background: #D09080; }
+.ct2-dot[data-ct2="void"]        { background: #08000F; }
+.ct2-dot[data-ct2="sage-milk"]   { background: #D8E8D0; border: 1.5px solid #4A7848; }
+.ct2-dot[data-ct2="ink-wash"]    { background: #2A3828; }
+.ct2-dot[data-ct2="copper"]      { background: #A06030; }
+.ct2-dot[data-ct2="frost"]       { background: #C8E8F8; border: 1.5px solid #2A6878; }
+.ct2-dot[data-ct2="obsidian"]    { background: #1A1820; }
+.ct2-dot[data-ct2="matcha"]      { background: #7AAA60; }
+.ct2-dot[data-ct2="cinema"]      { background: #0A0A0A; }
+.ct2-dot[data-ct2="sand-dune"]   { background: #E8C878; }
+.ct2-dot[data-ct2="deep-sea"]    { background: #0A3048; }
+.ct2-dot[data-ct2="spring"]      { background: #88CC88; }
+.ct2-dot[data-ct2="charcoal-rose"]{ background: #3A2028; }
+.ct2-dot[data-ct2="solar"]       { background: #F0A000; }
+.ct2-dot[data-ct2="pewter"]      { background: #8A9890; }
+.ct2-dot[data-ct2="abyssal"]     { background: #040810; }
+.ct2-dot[data-ct2="clay-mint"]   { background: #B8A090; }
+.ct2-dot[data-ct2="celestial"]   { background: #304880; }
+
+/* ── Macro commune ct2 ─────────────────────────────────────── */
+[data-color-theme2] {
+  --gold:       var(--ac);
+  --gold-light: var(--ac-light);
+  --gold-dark:  var(--ac-dark);
+  --gold-shine: var(--ac-shine);
+}
+[data-color-theme2] .circle-btn { border-color: var(--ac); color: var(--ac); }
+[data-color-theme2] .circle-btn:active { background: var(--ac); color: var(--bg); box-shadow: 0 0 0 8px rgba(var(--acr),0.08); }
+[data-color-theme2] .lang-btn { color: var(--ac); border-color: var(--ac); }
+[data-color-theme2] .lang-btn:hover { background: var(--ac); color: var(--bg); }
+[data-color-theme2] .lang-option:hover, [data-color-theme2] .lang-option.active { background: var(--ac); }
+[data-color-theme2] .lang-menu { background: var(--card-bg); border-color: var(--card-border); }
+[data-color-theme2] .back-arrow { border-color: var(--ac); color: var(--ac); }
+[data-color-theme2] .back-arrow:hover { background: var(--ac); color: var(--bg); }
+[data-color-theme2] .deen-card { border-color: var(--card-border); box-shadow: var(--card-shadow); background: var(--card-bg); }
+[data-color-theme2] .deen-card::after { border-top-color: var(--ac); border-right-color: var(--ac); }
+[data-color-theme2] .ornament-line, [data-color-theme2] .index-ornament-line,
+[data-color-theme2] .shop-hero-line, [data-color-theme2] .shop-footer-line,
+[data-color-theme2] .section-line, [data-color-theme2] .audio-line-left,
+[data-color-theme2] .audio-line-right { background: linear-gradient(90deg, transparent, var(--ac), transparent); }
+[data-color-theme2] .ornament-diamond, [data-color-theme2] .pack-feature-dot,
+[data-color-theme2] .free-badge-dot { background: var(--ac); }
+[data-color-theme2] .ornament-star, [data-color-theme2] .brand-script,
+[data-color-theme2] .index-brand, [data-color-theme2] .inv-header-name,
+[data-color-theme2] .shop-brand, [data-color-theme2] .inv-script,
+[data-color-theme2] .section-title, [data-color-theme2] .closing-dua,
+[data-color-theme2] .sunnah-title, [data-color-theme2] .acc-back-lbl,
+[data-color-theme2] .direct-acc-title, [data-color-theme2] .step-number,
+[data-color-theme2] .pack-qty-num, [data-color-theme2] .pack-name,
+[data-color-theme2] .shop-sep-title, [data-color-theme2] .free-badge-text,
+[data-color-theme2] .bs-header-title, [data-color-theme2] .sub-card-sub { color: var(--ac); }
+[data-color-theme2] .accordion { border-color: var(--card-border); background: var(--card-bg); }
+[data-color-theme2] .accordion-header::after { border-top-color: var(--ac); border-right-color: var(--ac); }
+[data-color-theme2] .accordion-arrow { border-color: var(--ac); color: var(--ac); }
+[data-color-theme2] .accordion.open .accordion-arrow { background: var(--ac); color: var(--bg); }
+[data-color-theme2] .phonetic-block { color: var(--ac); background: rgba(var(--acr),0.07); }
+[data-color-theme2] .social-icon { border-color: var(--ac); }
+[data-color-theme2] .social-icon svg { fill: var(--ac); }
+[data-color-theme2] .audio-player-circle { border-color: var(--ac); }
+[data-color-theme2] .audio-player-btn.playing .audio-player-circle { background: var(--ac); }
+[data-color-theme2] .audio-solo-btn { border-color: var(--ac); color: var(--ac); }
+[data-color-theme2] .tts-btn { border-color: var(--ac); color: var(--ac); }
+[data-color-theme2] .tts-btn:hover, [data-color-theme2] .tts-btn.playing { background: var(--ac); color: var(--bg); }
+[data-color-theme2] .share-btn, [data-color-theme2] .acc-back-circle,
+[data-color-theme2] .acc-settings-btn, [data-color-theme2] .direct-close-btn,
+[data-color-theme2] .reorder-circle { border-color: var(--ac); color: var(--ac); }
+[data-color-theme2] .size-pill.active { background: var(--ac); border-color: var(--ac); }
+[data-color-theme2] .settings-panel { border-color: var(--ac); background: var(--card-bg); }
+[data-color-theme2] .cat-icon-circle { border-color: var(--card-border); background: rgba(var(--acr),0.08); }
+[data-color-theme2] .pack-single { border-color: var(--ac); }
+[data-color-theme2] .pack-qty-btn.active { border-color: var(--ac); background: rgba(var(--acr),0.08); }
+[data-color-theme2] .pack-cta { border-color: var(--ac); color: var(--ac); }
+[data-color-theme2] .pack-cta:hover { background: var(--ac); color: var(--bg); }
+[data-color-theme2] .back-pill { border-color: var(--ac); }
+[data-color-theme2] .soon-modal { border-color: var(--ac); background: var(--card-bg); }
+[data-color-theme2] .soon-title, [data-color-theme2] .soon-close { color: var(--ac); border-color: var(--ac); }
+[data-color-theme2] .bottom-sheet { border-top-color: var(--ac); }
+[data-color-theme2] .inv-header-icon { border-color: var(--ac); background: rgba(var(--acr),0.10); }
+[data-color-theme2] .dua-back { border-color: var(--ac); color: var(--ac); }
+[data-color-theme2] .ct-wrap { background: var(--bg); }
+[data-color-theme2] ::-webkit-scrollbar-thumb { background: var(--ac-dark); }
+[data-color-theme2] .logo-img, [data-color-theme2] .inv-logo,
+[data-color-theme2] .index-logo, [data-color-theme2] .shop-logo,
+[data-color-theme2] .cat-icon, [data-color-theme2] .cat-icon-img,
+[data-color-theme2] .inv-header-icon img, [data-color-theme2] .icon-img,
+[data-color-theme2] #bsIcon, [data-color-theme2] #duaCatIcon { filter: var(--icon-filter); }
+
+/* ================================================================
+   1. BRUTALIST
+   Zéro arrondi · contraste brutal · impact maximal
+   ================================================================ */
+body[data-color-theme2="brutalist"] {
+  --ac: #1A8A4A; --ac-light: #2AAA5A; --ac-dark: #0A6030; --ac-shine: #80D0A0;
+  --acr: 26,138,74;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(88deg) brightness(0.72);
+}
+body.day[data-color-theme2="brutalist"] {
+  --bg: #F5F5F0; --bg2: #E8E8E0;
+  --text: #080808; --text2: #181818; --text3: #282828;
+  --card-bg: #FFFFFF; --card-border: #1A1A1A;
+  --card-shadow: 4px 4px 0 #1A1A1A;
+  --arabic-color: #0A6030; --phonetic-color: #0A6030; --hadith-color: #282828;
+  background: #F5F5F0;
+}
+body.night[data-color-theme2="brutalist"] {
+  --bg: #0A0A0A; --bg2: #141414;
+  --text: #F0F0F0; --text2: #C0C0C0; --text3: #888888;
+  --card-bg: #141414; --card-border: #2AAA5A;
+  --card-shadow: 4px 4px 0 #2AAA5A;
+  --arabic-color: #2AAA5A; --phonetic-color: #2AAA5A; --hadith-color: #888888;
+  background: #0A0A0A;
+}
+body[data-color-theme2="brutalist"] .deen-card,
+body[data-color-theme2="brutalist"] .accordion,
+body[data-color-theme2="brutalist"] .cat-card,
+body[data-color-theme2="brutalist"] .sub-card,
+body[data-color-theme2="brutalist"] .concept-step {
+  border-radius: 0 !important;
+  border-width: 2px;
+}
+body[data-color-theme2="brutalist"] .circle-btn,
+body[data-color-theme2="brutalist"] .back-arrow,
+body[data-color-theme2="brutalist"] .lang-btn,
+body[data-color-theme2="brutalist"] .acc-back-circle,
+body[data-color-theme2="brutalist"] .direct-close-btn,
+body[data-color-theme2="brutalist"] .audio-player-circle,
+body[data-color-theme2="brutalist"] .dua-back {
+  border-radius: 0 !important;
+}
+body[data-color-theme2="brutalist"] .accordion-header {
+  border-bottom: 2px solid var(--card-border) !important;
+}
+body[data-color-theme2="brutalist"] .cat-icon-circle {
+  border-radius: 0 !important;
+  border: 2px solid var(--ac) !important;
+}
+body[data-color-theme2="brutalist"] .index-brand { letter-spacing: 0.5em; }
+body[data-color-theme2="brutalist"] .arabic-text { font-size: 2.2em !important; }
+
+/* ================================================================
+   2. NEON MOSQUE
+   Cyberpunk islamique · vert néon · fond noir profond
+   ================================================================ */
+body[data-color-theme2="neon-mosque"] {
+  --ac: #00FF88; --ac-light: #40FFAA; --ac-dark: #00CC66; --ac-shine: #AAFFDD;
+  --acr: 0,255,136;
+  --icon-filter: sepia(1) saturate(5) hue-rotate(100deg) brightness(1.4);
+}
+body.day[data-color-theme2="neon-mosque"] {
+  --bg: #F0FFF8; --bg2: #D8FFF0;
+  --text: #002210; --text2: #003818; --text3: #005020;
+  --card-bg: rgba(0,255,136,0.05); --card-border: rgba(0,255,136,0.3);
+  --card-shadow: 0 0 20px rgba(0,255,136,0.15), inset 0 1px 0 rgba(0,255,136,0.2);
+  --arabic-color: #007744; --phonetic-color: #009955; --hadith-color: #005030;
+  background: #F0FFF8;
+}
+body.night[data-color-theme2="neon-mosque"] {
+  --bg: #020A04; --bg2: #041008;
+  --text: #AAFFDD; --text2: #55FFAA; --text3: #00DD77;
+  --card-bg: rgba(0,20,10,0.90); --card-border: rgba(0,255,136,0.20);
+  --card-shadow: 0 0 30px rgba(0,255,136,0.10), 0 4px 24px rgba(0,0,0,0.8);
+  --arabic-color: #55FFAA; --phonetic-color: #55FFAA; --hadith-color: #00DD77;
+  background: #020A04;
+  background-image: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0,255,136,0.06) 0%, transparent 70%);
+}
+body.night[data-color-theme2="neon-mosque"] .deen-card,
+body.night[data-color-theme2="neon-mosque"] .accordion {
+  box-shadow: 0 0 30px rgba(0,255,136,0.06), 0 4px 24px rgba(0,0,0,0.8), inset 0 1px 0 rgba(0,255,136,0.08);
+}
+body.night[data-color-theme2="neon-mosque"] .index-brand,
+body.night[data-color-theme2="neon-mosque"] .inv-header-name {
+  text-shadow: 0 0 20px rgba(0,255,136,0.6), 0 0 40px rgba(0,255,136,0.3);
+}
+body.night[data-color-theme2="neon-mosque"] .circle-btn,
+body.night[data-color-theme2="neon-mosque"] .audio-player-circle {
+  box-shadow: 0 0 12px rgba(0,255,136,0.3);
+}
+
+/* ================================================================
+   3. VERRE
+   Pure Glass · transparence maximale · blur partout
+   ================================================================ */
+body[data-color-theme2="verre"] {
+  --ac: #2A8060; --ac-light: #40A878; --ac-dark: #186048; --ac-shine: #A0D8C0;
+  --acr: 42,128,96;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(95deg) brightness(0.76);
+}
+body.day[data-color-theme2="verre"] {
+  --bg: #EEF8F4; --bg2: #DCF0E8;
+  --text: #061410; --text2: #0E2820; --text3: #183C2C;
+  --card-bg: rgba(255,255,255,0.45); --card-border: rgba(42,128,96,0.18);
+  --card-shadow: 0 8px 32px rgba(42,128,96,0.08);
+  --arabic-color: #2A8060; --phonetic-color: #2A8060; --hadith-color: #186048;
+  background: linear-gradient(135deg, #DCF8EC 0%, #E8F8F0 40%, #D8F0EC 100%);
+  background-attachment: fixed;
+}
+body.day[data-color-theme2="verre"] .deen-card,
+body.day[data-color-theme2="verre"] .accordion,
+body.day[data-color-theme2="verre"] .cat-card,
+body.day[data-color-theme2="verre"] .sub-card,
+body.day[data-color-theme2="verre"] .concept-step,
+body.day[data-color-theme2="verre"] .bottom-sheet,
+body.day[data-color-theme2="verre"] .lang-menu {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255,255,255,0.45) !important;
+  border: 1px solid rgba(255,255,255,0.7);
+  border-radius: 24px !important;
+  box-shadow: 0 8px 32px rgba(42,128,96,0.08), inset 0 1px 0 rgba(255,255,255,0.8);
+}
+body.night[data-color-theme2="verre"] {
+  --bg: #040E08; --bg2: #081610;
+  --text: #C0E8D0; --text2: #80C8A0; --text3: #50A070;
+  --card-bg: rgba(8,30,16,0.55); --card-border: rgba(42,128,96,0.20);
+  --card-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  --arabic-color: #80C8A0; --phonetic-color: #80C8A0; --hadith-color: #50A070;
+  background: linear-gradient(135deg, #040E08 0%, #061408 50%, #040C08 100%);
+  background-attachment: fixed;
+}
+body.night[data-color-theme2="verre"] .deen-card,
+body.night[data-color-theme2="verre"] .accordion,
+body.night[data-color-theme2="verre"] .cat-card,
+body.night[data-color-theme2="verre"] .sub-card,
+body.night[data-color-theme2="verre"] .bottom-sheet {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(8,30,16,0.55) !important;
+  border: 1px solid rgba(42,128,96,0.18);
+  border-radius: 24px !important;
+}
+
+/* ================================================================
+   4. MANUSCRIPT
+   Parchemin vieilli · encre sépia · calligraphie ancienne
+   ================================================================ */
+body[data-color-theme2="manuscript"] {
+  --ac: #5A3A18; --ac-light: #7A5830; --ac-dark: #3A2008; --ac-shine: #D0A870;
+  --acr: 90,58,24;
+  --icon-filter: sepia(1) saturate(0.8) hue-rotate(5deg) brightness(0.6);
+}
+body.day[data-color-theme2="manuscript"] {
+  --bg: #F8F0D8; --bg2: #F0E4C0;
+  --text: #1A1008; --text2: #2E2010; --text3: #443018;
+  --card-bg: rgba(248,244,224,0.90); --card-border: rgba(90,58,24,0.20);
+  --card-shadow: 2px 3px 12px rgba(90,58,24,0.15), inset 0 1px 0 rgba(255,255,250,0.8);
+  --arabic-color: #3A2008; --phonetic-color: #5A3A18; --hadith-color: #443018;
+  background-color: #F5EBC8;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"),
+                    repeating-linear-gradient(0deg, transparent 0, transparent 28px, rgba(90,58,24,0.04) 28px, rgba(90,58,24,0.04) 29px);
+}
+body.day[data-color-theme2="manuscript"] .arabic-text { font-size: 2.4em !important; letter-spacing: 0.05em; }
+body.day[data-color-theme2="manuscript"] .deen-card,
+body.day[data-color-theme2="manuscript"] .accordion {
+  border-radius: 4px !important;
+  border-left: 3px solid var(--ac) !important;
+  border-top: none !important; border-right: none !important; border-bottom: none !important;
+  box-shadow: 2px 3px 12px rgba(90,58,24,0.15) !important;
+}
+body.night[data-color-theme2="manuscript"] {
+  --bg: #100C06; --bg2: #1A1408;
+  --text: #F0E0B8; --text2: #C8A870; --text3: #988048;
+  --card-bg: rgba(20,16,8,0.92); --card-border: rgba(160,120,60,0.25);
+  --card-shadow: 2px 3px 12px rgba(0,0,0,0.5);
+  --arabic-color: #C8A870; --phonetic-color: #C8A870; --hadith-color: #988048;
+  background: #100C06;
+}
+body.night[data-color-theme2="manuscript"] .deen-card,
+body.night[data-color-theme2="manuscript"] .accordion {
+  border-radius: 4px !important;
+  border-left: 3px solid var(--ac) !important;
+  border-top: none !important; border-right: none !important; border-bottom: none !important;
+}
+
+/* ================================================================
+   5. AURORA
+   Aurore boréale · dégradé mesh · vert teal mystique
+   ================================================================ */
+body[data-color-theme2="aurora"] {
+  --ac: #28B890; --ac-light: #40D8A8; --ac-dark: #189870; --ac-shine: #A0F0D8;
+  --acr: 40,184,144;
+  --icon-filter: sepia(1) saturate(3.5) hue-rotate(115deg) brightness(0.82);
+}
+body.day[data-color-theme2="aurora"] {
+  --bg: #EBF9F5; --bg2: #D8F4EC;
+  --text: #041410; --text2: #082820; --text3: #103C2C;
+  --card-bg: rgba(255,255,255,0.75); --card-border: rgba(40,184,144,0.18);
+  --card-shadow: 0 4px 24px rgba(40,184,144,0.10);
+  --arabic-color: #189870; --phonetic-color: #28B890; --hadith-color: #0A6048;
+  background-color: #EBF9F5;
+  background-image: radial-gradient(at 20% 20%, rgba(40,200,160,0.15) 0px, transparent 50%),
+                    radial-gradient(at 80% 80%, rgba(20,160,120,0.10) 0px, transparent 50%),
+                    radial-gradient(at 50% 50%, rgba(80,220,180,0.06) 0px, transparent 60%);
+  background-attachment: fixed;
+}
+body.day[data-color-theme2="aurora"] .deen-card,
+body.day[data-color-theme2="aurora"] .accordion {
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 20px !important;
+}
+body.night[data-color-theme2="aurora"] {
+  --bg: #020C08; --bg2: #04140C;
+  --text: #A0F0D8; --text2: #58D0A8; --text3: #28B890;
+  --card-bg: rgba(4,20,12,0.80); --card-border: rgba(40,184,144,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color: #58D0A8; --phonetic-color: #58D0A8; --hadith-color: #28B890;
+  background-color: #020C08;
+  background-image: radial-gradient(at 20% 30%, rgba(20,120,90,0.20) 0px, transparent 50%),
+                    radial-gradient(at 80% 70%, rgba(40,80,60,0.15) 0px, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* ================================================================
+   6. MONO GREEN
+   Monochrome vert · une seule couleur · typographie géante
+   ================================================================ */
+body[data-color-theme2="mono-green"] {
+  --ac: #008844; --ac-light: #00AA55; --ac-dark: #006633; --ac-shine: #88DDAA;
+  --acr: 0,136,68;
+  --icon-filter: sepia(1) saturate(4) hue-rotate(90deg) brightness(0.70);
+}
+body.day[data-color-theme2="mono-green"] {
+  --bg: #F0FAF4; --bg2: #E0F5EC;
+  --text: #002210; --text2: #003818; --text3: #005020;
+  --card-bg: #FAFFF8; --card-border: rgba(0,136,68,0.15);
+  --card-shadow: 0 2px 0 rgba(0,136,68,0.10), 0 8px 24px rgba(0,136,68,0.06);
+  --arabic-color: #006633; --phonetic-color: #008844; --hadith-color: #004422;
+  background: #F0FAF4;
+}
+body.day[data-color-theme2="mono-green"] .deen-card,
+body.day[data-color-theme2="mono-green"] .accordion {
+  border-top: 3px solid var(--ac) !important;
+  border-left: none !important; border-right: none !important; border-bottom: none !important;
+  border-radius: 0 0 12px 12px !important;
+  box-shadow: 0 8px 32px rgba(0,136,68,0.06) !important;
+}
+body.day[data-color-theme2="mono-green"] .arabic-text { font-size: 2.6em !important; }
+body.day[data-color-theme2="mono-green"] .index-brand { font-size: 28px !important; letter-spacing: 0.6em; }
+body.night[data-color-theme2="mono-green"] {
+  --bg: #021006; --bg2: #041A0A;
+  --text: #88DDAA; --text2: #44BB77; --text3: #00AA55;
+  --card-bg: #041A0A; --card-border: rgba(0,136,68,0.20);
+  --card-shadow: 0 2px 0 rgba(0,136,68,0.15), 0 8px 24px rgba(0,0,0,0.55);
+  --arabic-color: #44BB77; --phonetic-color: #44BB77; --hadith-color: #00AA55;
+  background: #021006;
+}
+body.night[data-color-theme2="mono-green"] .deen-card,
+body.night[data-color-theme2="mono-green"] .accordion {
+  border-top: 3px solid var(--ac) !important;
+  border-left: none !important; border-right: none !important; border-bottom: none !important;
+  border-radius: 0 0 12px 12px !important;
+}
+
+/* ================================================================
+   7. MARBLE
+   Marbre blanc vert · lignes organiques · luxe naturel
+   ================================================================ */
+body[data-color-theme2="marble"] {
+  --ac: #2A6A50; --ac-light: #3A8A68; --ac-dark: #184A38; --ac-shine: #A8D8C0;
+  --acr: 42,106,80;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(120deg) brightness(0.72);
+}
+body.day[data-color-theme2="marble"] {
+  --bg: #F4F8F6; --bg2: #E8F2EE;
+  --text: #080E0C; --text2: #121E18; --text3: #1C2E28;
+  --card-bg: rgba(255,255,255,0.85); --card-border: rgba(42,106,80,0.14);
+  --card-shadow: 0 4px 24px rgba(42,106,80,0.08), inset 0 1px 0 rgba(255,255,255,1);
+  --arabic-color: #2A6A50; --phonetic-color: #2A6A50; --hadith-color: #184A38;
+  background-color: #F0F6F3;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.015' numOctaves='4' seed='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.3'/%3E%3C/filter%3E%3Crect width='600' height='600' filter='url(%23m)' opacity='0.06'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+}
+body.day[data-color-theme2="marble"] .deen-card,
+body.day[data-color-theme2="marble"] .accordion {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 20px !important;
+}
+body.night[data-color-theme2="marble"] {
+  --bg: #060C08; --bg2: #0A1410;
+  --text: #C0D8C8; --text2: #80B098; --text3: #508070;
+  --card-bg: rgba(10,20,14,0.88); --card-border: rgba(42,106,80,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  --arabic-color: #80B098; --phonetic-color: #80B098; --hadith-color: #508070;
+  background: #060C08;
+}
+
+/* ================================================================
+   8. TERMINAL
+   CLI vert · fond noir console · monospace pur
+   ================================================================ */
+body[data-color-theme2="terminal"] {
+  --ac: #00CC44; --ac-light: #00FF55; --ac-dark: #009933; --ac-shine: #88FF99;
+  --acr: 0,204,68;
+  --icon-filter: sepia(1) saturate(5) hue-rotate(92deg) brightness(1.3);
+}
+body.day[data-color-theme2="terminal"] {
+  --bg: #F0FFF4; --bg2: #E0FFE8;
+  --text: #002208; --text2: #003810; --text3: #004C18;
+  --card-bg: rgba(0,255,68,0.04); --card-border: rgba(0,204,68,0.25);
+  --card-shadow: 0 0 0 1px rgba(0,204,68,0.15), 2px 2px 0 rgba(0,204,68,0.10);
+  --arabic-color: #009933; --phonetic-color: #00CC44; --hadith-color: #007722;
+  background: #F0FFF4;
+}
+body.night[data-color-theme2="terminal"] {
+  --bg: #020802; --bg2: #040F04;
+  --text: #00FF55; --text2: #00CC44; --text3: #009933;
+  --card-bg: rgba(0,15,4,0.95); --card-border: rgba(0,204,68,0.18);
+  --card-shadow: 0 0 12px rgba(0,204,68,0.08), 0 2px 8px rgba(0,0,0,0.8);
+  --arabic-color: #00FF55; --phonetic-color: #00CC44; --hadith-color: #009933;
+  background: #020802;
+  background-image: repeating-linear-gradient(0deg, transparent 0, transparent 3px, rgba(0,204,68,0.03) 3px, rgba(0,204,68,0.03) 4px);
+}
+body[data-color-theme2="terminal"] .arabic-text,
+body[data-color-theme2="terminal"] .phonetic-text,
+body[data-color-theme2="terminal"] .hadith-text,
+body[data-color-theme2="terminal"] .index-brand,
+body[data-color-theme2="terminal"] .brand-script { font-family: 'Courier New', monospace !important; }
+body[data-color-theme2="terminal"] .deen-card,
+body[data-color-theme2="terminal"] .accordion {
+  border-radius: 4px !important;
+  border: 1px solid var(--ac) !important;
+}
+body.night[data-color-theme2="terminal"] .index-brand {
+  text-shadow: 0 0 10px rgba(0,255,68,0.6);
+  animation: termBlink 1.5s step-end infinite;
+}
+@keyframes termBlink { 0%,100%{opacity:1} 50%{opacity:0.7} }
+
+/* ================================================================
+   9. DUSK
+   Crépuscule violet-vert · dégradé ciel · instant suspendu
+   ================================================================ */
+body[data-color-theme2="dusk"] {
+  --ac: #5A9870; --ac-light: #78B888; --ac-dark: #387850; --ac-shine: #B8DCC0;
+  --acr: 90,152,112;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(88deg) brightness(0.82);
+}
+body.day[data-color-theme2="dusk"] {
+  --bg: #F2EFF8; --bg2: #E8E0F4;
+  --text: #0C0818; --text2: #181028; --text3: #241838;
+  --card-bg: rgba(255,253,255,0.85); --card-border: rgba(90,152,112,0.18);
+  --card-shadow: 0 4px 24px rgba(90,152,112,0.10);
+  --arabic-color: #387850; --phonetic-color: #5A9870; --hadith-color: #285840;
+  background: linear-gradient(160deg, #EEE8F8 0%, #E8F4EC 60%, #F0EEF8 100%);
+  background-attachment: fixed;
+}
+body.night[data-color-theme2="dusk"] {
+  --bg: #060410; --bg2: #0A0820;
+  --text: #D0E8D8; --text2: #90C8A0; --text3: #60A078;
+  --card-bg: rgba(10,8,24,0.88); --card-border: rgba(90,152,112,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color: #90C8A0; --phonetic-color: #90C8A0; --hadith-color: #60A078;
+  background: linear-gradient(160deg, #080418 0%, #040C08 60%, #060418 100%);
+  background-attachment: fixed;
+}
+
+/* ================================================================
+   10. PAPER
+   Papier recyclé · grain naturel · encre verte douce
+   ================================================================ */
+body[data-color-theme2="paper"] {
+  --ac: #4A7040; --ac-light: #6A9060; --ac-dark: #2C5028; --ac-shine: #B0D0A8;
+  --acr: 74,112,64;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(78deg) brightness(0.78);
+}
+body.day[data-color-theme2="paper"] {
+  --bg: #F8F4EC; --bg2: #F0E8D8;
+  --text: #141008; --text2: #221C10; --text3: #342C18;
+  --card-bg: #FDFAF4; --card-border: rgba(74,112,64,0.18);
+  --card-shadow: 0 1px 3px rgba(74,112,64,0.08), 0 8px 28px rgba(74,112,64,0.06);
+  --arabic-color: #2C5028; --phonetic-color: #4A7040; --hadith-color: #344030;
+  background-color: #F5F0E4;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+}
+body.day[data-color-theme2="paper"] .deen-card,
+body.day[data-color-theme2="paper"] .accordion,
+body.day[data-color-theme2="paper"] .concept-step {
+  border-radius: 6px !important;
+  border: 1px solid rgba(74,112,64,0.20);
+  box-shadow: 0 1px 3px rgba(74,112,64,0.08), 0 8px 28px rgba(74,112,64,0.06) !important;
+}
+body.night[data-color-theme2="paper"] {
+  --bg: #0C0A06; --bg2: #141008;
+  --text: #F0E8D0; --text2: #C0B080; --text3: #908050;
+  --card-bg: #141008; --card-border: rgba(74,112,64,0.20);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.55);
+  --arabic-color: #C0B080; --phonetic-color: #C0B080; --hadith-color: #908050;
+  background: #0C0A06;
+}
+
+/* ================================================================
+   11. CARBON
+   Carbon fiber · noir profond · accent vert lime
+   ================================================================ */
+body[data-color-theme2="carbon"] {
+  --ac: #78CC44; --ac-light: #98EC64; --ac-dark: #58A828; --ac-shine: #C8F0A0;
+  --acr: 120,204,68;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(70deg) brightness(1.1);
+}
+body.day[data-color-theme2="carbon"] {
+  --bg: #F0F0EC; --bg2: #E4E4DE;
+  --text: #0C0C0A; --text2: #181814; --text3: #282820;
+  --card-bg: #FAFAF8; --card-border: rgba(120,204,68,0.18);
+  --card-shadow: 0 2px 8px rgba(0,0,0,0.06), 0 12px 32px rgba(0,0,0,0.08);
+  --arabic-color: #58A828; --phonetic-color: #78CC44; --hadith-color: #408010;
+  background: #EEEEE8;
+  background-image: repeating-linear-gradient(45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 4px),
+                    repeating-linear-gradient(-45deg, rgba(0,0,0,0.02) 0px, rgba(0,0,0,0.02) 1px, transparent 1px, transparent 4px);
+  background-attachment: fixed;
+}
+body.night[data-color-theme2="carbon"] {
+  --bg: #080808; --bg2: #101010;
+  --text: #E8E8E0; --text2: #A0A090; --text3: #606050;
+  --card-bg: #101010; --card-border: rgba(120,204,68,0.18);
+  --card-shadow: 0 2px 0 rgba(120,204,68,0.06), 0 12px 32px rgba(0,0,0,0.6);
+  --arabic-color: #98EC64; --phonetic-color: #78CC44; --hadith-color: #58A828;
+  background: #080808;
+  background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 4px),
+                    repeating-linear-gradient(-45deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 1px, transparent 1px, transparent 4px);
+  background-attachment: fixed;
+}
+body.night[data-color-theme2="carbon"] .deen-card,
+body.night[data-color-theme2="carbon"] .accordion {
+  box-shadow: 0 2px 0 rgba(120,204,68,0.08), 0 12px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+/* ================================================================
+   12. ZELLIJ
+   Géométrie islamique · bleu-vert Ottoman · mosaïque
+   ================================================================ */
+body[data-color-theme2="zellij"] {
+  --ac: #1A7890; --ac-light: #2898B0; --ac-dark: #0A5868; --ac-shine: #90D0E0;
+  --acr: 26,120,144;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(165deg) brightness(0.72);
+}
+body.day[data-color-theme2="zellij"] {
+  --bg: #EAF5F8; --bg2: #D8EEF5;
+  --text: #041014; --text2: #081E28; --text3: #0C303A;
+  --card-bg: #F4FBFC; --card-border: rgba(26,120,144,0.18);
+  --card-shadow: 0 4px 20px rgba(26,120,144,0.10);
+  --arabic-color: #0A5868; --phonetic-color: #1A7890; --hadith-color: #064050;
+  background-color: #E8F3F8;
+  background-image: repeating-linear-gradient(60deg, transparent 0, transparent 18px, rgba(26,120,144,0.04) 18px, rgba(26,120,144,0.04) 19px),
+                    repeating-linear-gradient(-60deg, transparent 0, transparent 18px, rgba(26,120,144,0.04) 18px, rgba(26,120,144,0.04) 19px),
+                    repeating-linear-gradient(0deg, transparent 0, transparent 18px, rgba(26,120,144,0.03) 18px, rgba(26,120,144,0.03) 19px);
+  background-attachment: fixed;
+}
+body.night[data-color-theme2="zellij"] {
+  --bg: #030A0C; --bg2: #061218;
+  --text: #A0D8E8; --text2: #60B0C8; --text3: #3A90A8;
+  --card-bg: #081418; --card-border: rgba(26,120,144,0.20);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  --arabic-color: #60B0C8; --phonetic-color: #60B0C8; --hadith-color: #3A90A8;
+  background: #030A0C;
+  background-image: repeating-linear-gradient(60deg, transparent 0, transparent 18px, rgba(26,120,144,0.05) 18px, rgba(26,120,144,0.05) 19px),
+                    repeating-linear-gradient(-60deg, transparent 0, transparent 18px, rgba(26,120,144,0.05) 18px, rgba(26,120,144,0.05) 19px);
+}
+
+/* ================================================================
+   13. ROSE GOLD
+   Rose gold · chaleur rosée · accent vert discret
+   ================================================================ */
+body[data-color-theme2="rose-gold"] {
+  --ac: #3A7858; --ac-light: #589878; --ac-dark: #205838; --ac-shine: #A8D8B8;
+  --acr: 58,120,88;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(88deg) brightness(0.78);
+}
+body.day[data-color-theme2="rose-gold"] {
+  --bg: #FEF5F0; --bg2: #FCE8E0;
+  --text: #160808; --text2: #281410; --text3: #3C1E18;
+  --card-bg: rgba(255,252,250,0.88); --card-border: rgba(200,100,80,0.15);
+  --card-shadow: 0 4px 24px rgba(200,100,80,0.08), inset 0 1px 0 rgba(255,255,255,0.9);
+  --arabic-color: #3A7858; --phonetic-color: #589878; --hadith-color: #205838;
+  background: #FEF0E8;
+  background-image: radial-gradient(ellipse 80% 50% at 100% 0%, rgba(220,120,90,0.06) 0%, transparent 60%);
+}
+body.day[data-color-theme2="rose-gold"] .deen-card,
+body.day[data-color-theme2="rose-gold"] .accordion {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 22px !important;
+}
+body.night[data-color-theme2="rose-gold"] {
+  --bg: #100608; --bg2: #1A0C10;
+  --text: #F8D8C8; --text2: #D0A098; --text3: #A87068;
+  --card-bg: rgba(20,10,12,0.90); --card-border: rgba(180,100,80,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.60);
+  --arabic-color: #A8D8B8; --phonetic-color: #A8D8B8; --hadith-color: #78B890;
+  background: #100608;
+}
+
+/* ================================================================
+   14. VOID
+   Noir absolu · violet infrarouge · minimalisme extrême
+   ================================================================ */
+body[data-color-theme2="void"] {
+  --ac: #6038C8; --ac-light: #8058E8; --ac-dark: #4020A0; --ac-shine: #C0A8F0;
+  --acr: 96,56,200;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(240deg) brightness(0.70);
+}
+body.day[data-color-theme2="void"] {
+  --bg: #F4F0FF; --bg2: #EAE4FF;
+  --text: #060410; --text2: #0E0A20; --text3: #160E30;
+  --card-bg: rgba(250,248,255,0.90); --card-border: rgba(96,56,200,0.12);
+  --card-shadow: 0 4px 20px rgba(96,56,200,0.08);
+  --arabic-color: #4020A0; --phonetic-color: #6038C8; --hadith-color: #2A1080;
+  background: #F2EEF8;
+}
+body.night[data-color-theme2="void"] {
+  --bg: #020008; --bg2: #050010;
+  --text: #C8B8F8; --text2: #8868D8; --text3: #5838A8;
+  --card-bg: rgba(4,0,16,0.97); --card-border: rgba(96,56,200,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.85), 0 0 40px rgba(96,56,200,0.04);
+  --arabic-color: #8868D8; --phonetic-color: #8868D8; --hadith-color: #5838A8;
+  background: #020008;
+}
+body.night[data-color-theme2="void"] .index-brand,
+body.night[data-color-theme2="void"] .inv-header-name {
+  text-shadow: 0 0 30px rgba(96,56,200,0.5);
+}
+
+/* ================================================================
+   15. SAGE MILK
+   Vert lait · ultra doux · fond blanc cassé
+   ================================================================ */
+body[data-color-theme2="sage-milk"] {
+  --ac: #5A8860; --ac-light: #78A878; --ac-dark: #386840; --ac-shine: #B8D8B8;
+  --acr: 90,136,96;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(80deg) brightness(0.82);
+}
+body.day[data-color-theme2="sage-milk"] {
+  --bg: #FAFDF8; --bg2: #F2F8F0;
+  --text: #0C140C; --text2: #182418; --text3: #243424;
+  --card-bg: rgba(255,255,253,0.92); --card-border: rgba(90,136,96,0.14);
+  --card-shadow: 0 2px 4px rgba(90,136,96,0.06), 0 12px 40px rgba(90,136,96,0.06);
+  --arabic-color: #386840; --phonetic-color: #5A8860; --hadith-color: #284C30;
+  background: #F8FCF6;
+}
+body.day[data-color-theme2="sage-milk"] .deen-card,
+body.day[data-color-theme2="sage-milk"] .accordion {
+  border-radius: 28px !important;
+  border: none !important;
+  box-shadow: 0 2px 4px rgba(90,136,96,0.06), 0 12px 40px rgba(90,136,96,0.08) !important;
+}
+body.day[data-color-theme2="sage-milk"] .cat-card,
+body.day[data-color-theme2="sage-milk"] .sub-card { border-radius: 24px !important; border: none !important; }
+body.night[data-color-theme2="sage-milk"] {
+  --bg: #060A06; --bg2: #0A100A;
+  --text: #D8F0D8; --text2: #98C898; --text3: #68A868;
+  --card-bg: rgba(10,18,10,0.92); --card-border: rgba(90,136,96,0.15);
+  --card-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 12px 40px rgba(0,0,0,0.45);
+  --arabic-color: #98C898; --phonetic-color: #98C898; --hadith-color: #68A868;
+  background: #060A06;
+}
+body.night[data-color-theme2="sage-milk"] .deen-card,
+body.night[data-color-theme2="sage-milk"] .accordion {
+  border-radius: 28px !important;
+  border: none !important;
+}
+
+/* ================================================================
+   16. INK WASH
+   Encre lavis · aquarelle sombre · peinture zen
+   ================================================================ */
+body[data-color-theme2="ink-wash"] {
+  --ac: #3A6848; --ac-light: #589868; --ac-dark: #1E4828; --ac-shine: #A8C8B0;
+  --acr: 58,104,72;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(85deg) brightness(0.68);
+}
+body.day[data-color-theme2="ink-wash"] {
+  --bg: #F0F4F0; --bg2: #E4EAE4;
+  --text: #080E08; --text2: #141E14; --text3: #1E2E1E;
+  --card-bg: rgba(248,252,248,0.85); --card-border: rgba(58,104,72,0.16);
+  --card-shadow: 0 4px 20px rgba(58,104,72,0.10);
+  --arabic-color: #1E4828; --phonetic-color: #3A6848; --hadith-color: #143020;
+  background: #ECF2EC;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.02' numOctaves='3' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+body.day[data-color-theme2="ink-wash"] .deen-card,
+body.day[data-color-theme2="ink-wash"] .accordion {
+  border-radius: 4px !important;
+  border: none !important;
+  border-left: 2px solid rgba(58,104,72,0.30) !important;
+  box-shadow: 0 4px 20px rgba(58,104,72,0.08) !important;
+}
+body.night[data-color-theme2="ink-wash"] {
+  --bg: #060808; --bg2: #0A0E0A;
+  --text: #C8D8C8; --text2: #88A888; --text3: #587858;
+  --card-bg: rgba(10,14,10,0.92); --card-border: rgba(58,104,72,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.55);
+  --arabic-color: #88A888; --phonetic-color: #88A888; --hadith-color: #587858;
+  background: #060808;
+}
+body.night[data-color-theme2="ink-wash"] .deen-card,
+body.night[data-color-theme2="ink-wash"] .accordion {
+  border-radius: 4px !important;
+  border: none !important;
+  border-left: 2px solid rgba(88,168,104,0.25) !important;
+}
+
+/* ================================================================
+   17. COPPER
+   Cuivre islamique · métal antique · reflets chauds
+   ================================================================ */
+body[data-color-theme2="copper"] {
+  --ac: #2A7850; --ac-light: #3A9868; --ac-dark: #185838; --ac-shine: #A0D0B8;
+  --acr: 42,120,80;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(95deg) brightness(0.72);
+}
+body.day[data-color-theme2="copper"] {
+  --bg: #F8F2E8; --bg2: #F0E8D8;
+  --text: #160C04; --text2: #2A1C0C; --text3: #3E2C18;
+  --card-bg: rgba(255,250,242,0.88); --card-border: rgba(180,110,50,0.18);
+  --card-shadow: 0 4px 20px rgba(180,110,50,0.10), inset 0 1px 0 rgba(255,255,255,0.8);
+  --arabic-color: #185838; --phonetic-color: #2A7850; --hadith-color: #103828;
+  background-color: #F5ECD8;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+body.night[data-color-theme2="copper"] {
+  --bg: #0E0804; --bg2: #180E06;
+  --text: #F0E0C0; --text2: #C8A070; --text3: #987040;
+  --card-bg: rgba(18,12,6,0.92); --card-border: rgba(180,110,50,0.20);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.58);
+  --arabic-color: #A0D0B8; --phonetic-color: #A0D0B8; --hadith-color: #70B090;
+  background: #0E0804;
+}
+
+/* ================================================================
+   18. FROST
+   Givre · bleu-vert arctique · froid cristallin
+   ================================================================ */
+body[data-color-theme2="frost"] {
+  --ac: #1A8888; --ac-light: #28A8A8; --ac-dark: #0A6060; --ac-shine: #90D8D8;
+  --acr: 26,136,136;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(155deg) brightness(0.72);
+}
+body.day[data-color-theme2="frost"] {
+  --bg: #F0FAFA; --bg2: #E0F4F4;
+  --text: #041010; --text2: #082020; --text3: #103030;
+  --card-bg: rgba(240,252,252,0.75); --card-border: rgba(26,136,136,0.18);
+  --card-shadow: 0 4px 24px rgba(26,136,136,0.08);
+  --arabic-color: #0A6060; --phonetic-color: #1A8888; --hadith-color: #064848;
+  background: #ECF8F8;
+  background-image: radial-gradient(ellipse 100% 50% at 50% -10%, rgba(26,136,136,0.06) 0%, transparent 60%),
+                    radial-gradient(ellipse 60% 40% at 0% 100%, rgba(26,136,136,0.04) 0%, transparent 60%);
+}
+body.day[data-color-theme2="frost"] .deen-card,
+body.day[data-color-theme2="frost"] .accordion {
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-radius: 20px !important;
+  background: rgba(240,252,252,0.75) !important;
+}
+body.night[data-color-theme2="frost"] {
+  --bg: #020C0C; --bg2: #041414;
+  --text: #A0E0E0; --text2: #58C0C0; --text3: #28A0A0;
+  --card-bg: rgba(4,18,18,0.80); --card-border: rgba(26,136,136,0.20);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color: #58C0C0; --phonetic-color: #58C0C0; --hadith-color: #28A0A0;
+  background: #020C0C;
+  background-image: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(26,136,136,0.10) 0%, transparent 60%);
+}
+body.night[data-color-theme2="frost"] .deen-card,
+body.night[data-color-theme2="frost"] .accordion {
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-radius: 20px !important;
+}
+
+/* ================================================================
+   19. OBSIDIAN
+   Obsidienne · violet-noir profond · tranchant
+   ================================================================ */
+body[data-color-theme2="obsidian"] {
+  --ac: #5A48A8; --ac-light: #7868C8; --ac-dark: #3A2888; --ac-shine: #C0B0F0;
+  --acr: 90,72,168;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(240deg) brightness(0.65);
+}
+body.day[data-color-theme2="obsidian"] {
+  --bg: #F2F0FA; --bg2: #E8E4F8;
+  --text: #08061A; --text2: #10102A; --text3: #1A183A;
+  --card-bg: rgba(250,248,255,0.88); --card-border: rgba(90,72,168,0.14);
+  --card-shadow: 0 4px 20px rgba(90,72,168,0.08);
+  --arabic-color: #3A2888; --phonetic-color: #5A48A8; --hadith-color: #281868;
+  background: #EEEAF8;
+}
+body.night[data-color-theme2="obsidian"] {
+  --bg: #08060E; --bg2: #100C1A;
+  --text: #D8D0F8; --text2: #9888D8; --text3: #6858A8;
+  --card-bg: rgba(14,10,22,0.95); --card-border: rgba(90,72,168,0.20);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.75), inset 0 1px 0 rgba(90,72,168,0.08);
+  --arabic-color: #9888D8; --phonetic-color: #9888D8; --hadith-color: #6858A8;
+  background: #08060E;
+  background-image: repeating-linear-gradient(60deg, transparent 0, transparent 30px, rgba(90,72,168,0.03) 30px, rgba(90,72,168,0.03) 31px);
+}
+
+/* ================================================================
+   20. MATCHA
+   Thé matcha · vert jaune vif · énergie pure
+   ================================================================ */
+body[data-color-theme2="matcha"] {
+  --ac: #5A9830; --ac-light: #78B848; --ac-dark: #3A7818; --ac-shine: #C0E880;
+  --acr: 90,152,48;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(68deg) brightness(0.76);
+}
+body.day[data-color-theme2="matcha"] {
+  --bg: #F4FAF0; --bg2: #E8F5E0;
+  --text: #0C1808; --text2: #182E10; --text3: #243E18;
+  --card-bg: #FAFDF8; --card-border: rgba(90,152,48,0.16);
+  --card-shadow: 0 4px 20px rgba(90,152,48,0.08);
+  --arabic-color: #3A7818; --phonetic-color: #5A9830; --hadith-color: #285810;
+  background: #F0F8E8;
+  background-image: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(90,152,48,0.06) 0%, transparent 60%);
+}
+body.night[data-color-theme2="matcha"] {
+  --bg: #080E04; --bg2: #0C1608;
+  --text: #D0F0A0; --text2: #A0D060; --text3: #78B038;
+  --card-bg: #0C1608; --card-border: rgba(90,152,48,0.20);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.55);
+  --arabic-color: #A0D060; --phonetic-color: #A0D060; --hadith-color: #78B038;
+  background: #080E04;
+}
+
+/* ================================================================
+   21. CINEMA
+   Cinéma noir · 35mm · grain film · titre blanc
+   ================================================================ */
+body[data-color-theme2="cinema"] {
+  --ac: #50A870; --ac-light: #70C890; --ac-dark: #308850; --ac-shine: #B0E8C8;
+  --acr: 80,168,112;
+  --icon-filter: sepia(0.5) saturate(1.5) hue-rotate(88deg) brightness(0.85);
+}
+body.day[data-color-theme2="cinema"] {
+  --bg: #F2F2F0; --bg2: #E8E8E4;
+  --text: #0A0A08; --text2: #181816; --text3: #282824;
+  --card-bg: rgba(255,255,252,0.88); --card-border: rgba(80,168,112,0.14);
+  --card-shadow: 0 2px 4px rgba(0,0,0,0.06), 0 12px 36px rgba(0,0,0,0.08);
+  --arabic-color: #308850; --phonetic-color: #50A870; --hadith-color: #206830;
+  background: #EEEEE8;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+body.night[data-color-theme2="cinema"] {
+  --bg: #050505; --bg2: #0A0A0A;
+  --text: #F0F0E8; --text2: #C0C0B8; --text3: #808078;
+  --card-bg: #0F0F0D; --card-border: rgba(80,168,112,0.14);
+  --card-shadow: 0 2px 0 rgba(255,255,255,0.02), 0 12px 40px rgba(0,0,0,0.65);
+  --arabic-color: #70C890; --phonetic-color: #50A870; --hadith-color: #808078;
+  background: #050505;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+}
+
+/* ================================================================
+   22. SAND DUNE
+   Dune de sable · abstrait · vent et lumière
+   ================================================================ */
+body[data-color-theme2="sand-dune"] {
+  --ac: #888020; --ac-light: #A8A030; --ac-dark: #606010; --ac-shine: #E0D880;
+  --acr: 136,128,32;
+  --icon-filter: sepia(1) saturate(2) hue-rotate(52deg) brightness(0.72);
+}
+body.day[data-color-theme2="sand-dune"] {
+  --bg: #FAF6E0; --bg2: #F4EEC8;
+  --text: #161208; --text2: #281E0C; --text3: #3C2E12;
+  --card-bg: #FFFEF2; --card-border: rgba(136,128,32,0.18);
+  --card-shadow: 0 4px 20px rgba(136,128,32,0.10);
+  --arabic-color: #606010; --phonetic-color: #888020; --hadith-color: #484808;
+  background: #F8F2D8;
+  background-image: radial-gradient(ellipse 100% 50% at 0% 50%, rgba(220,180,40,0.06) 0%, transparent 60%),
+                    radial-gradient(ellipse 80% 40% at 100% 50%, rgba(200,160,20,0.04) 0%, transparent 60%);
+}
+body.night[data-color-theme2="sand-dune"] {
+  --bg: #0E0C04; --bg2: #181408;
+  --text: #F0E890; --text2: #C8C050; --text3: #A0A030;
+  --card-bg: #181408; --card-border: rgba(136,128,32,0.20);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.55);
+  --arabic-color: #C8C050; --phonetic-color: #C8C050; --hadith-color: #A0A030;
+  background: #0E0C04;
+}
+
+/* ================================================================
+   23. DEEP SEA
+   Fond marin · bleu abyssal · bioluminescence verte
+   ================================================================ */
+body[data-color-theme2="deep-sea"] {
+  --ac: #00A878; --ac-light: #00C890; --ac-dark: #008858; --ac-shine: #80F0D0;
+  --acr: 0,168,120;
+  --icon-filter: sepia(1) saturate(4) hue-rotate(120deg) brightness(0.85);
+}
+body.day[data-color-theme2="deep-sea"] {
+  --bg: #E8F4F8; --bg2: #D8EEF8;
+  --text: #041018; --text2: #082028; --text3: #0C3040;
+  --card-bg: #F2FAFC; --card-border: rgba(0,168,120,0.18);
+  --card-shadow: 0 4px 20px rgba(0,80,120,0.08);
+  --arabic-color: #008858; --phonetic-color: #00A878; --hadith-color: #006840;
+  background: #E0F0F8;
+  background-image: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(0,60,100,0.06) 0%, transparent 60%);
+}
+body.night[data-color-theme2="deep-sea"] {
+  --bg: #020A10; --bg2: #041018;
+  --text: #80F0D0; --text2: #40D0A0; --text3: #00B080;
+  --card-bg: rgba(4,16,24,0.92); --card-border: rgba(0,168,120,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.7), 0 0 40px rgba(0,168,120,0.04);
+  --arabic-color: #40D0A0; --phonetic-color: #40D0A0; --hadith-color: #00B080;
+  background: #020A10;
+  background-image: radial-gradient(ellipse 100% 60% at 50% 100%, rgba(0,40,80,0.30) 0%, transparent 60%),
+                    radial-gradient(ellipse 60% 40% at 50% 50%, rgba(0,80,60,0.08) 0%, transparent 70%);
+}
+body.night[data-color-theme2="deep-sea"] .index-brand,
+body.night[data-color-theme2="deep-sea"] .inv-header-name {
+  text-shadow: 0 0 20px rgba(0,168,120,0.5);
+}
+
+/* ================================================================
+   24. SPRING
+   Printemps · vert frais éclatant · joie pure
+   ================================================================ */
+body[data-color-theme2="spring"] {
+  --ac: #38A840; --ac-light: #58C858; --ac-dark: #208830; --ac-shine: #B0F0B0;
+  --acr: 56,168,64;
+  --icon-filter: sepia(1) saturate(4) hue-rotate(88deg) brightness(0.80);
+}
+body.day[data-color-theme2="spring"] {
+  --bg: #F2FDF2; --bg2: #E4FBE4;
+  --text: #041008; --text2: #082010; --text3: #0C3018;
+  --card-bg: rgba(248,255,248,0.90); --card-border: rgba(56,168,64,0.16);
+  --card-shadow: 0 4px 20px rgba(56,168,64,0.08);
+  --arabic-color: #208830; --phonetic-color: #38A840; --hadith-color: #106820;
+  background: #EEF8EE;
+  background-image: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(56,168,64,0.06) 0%, transparent 60%);
+}
+body.day[data-color-theme2="spring"] .deen-card,
+body.day[data-color-theme2="spring"] .accordion {
+  border-radius: 24px !important;
+  border: none !important;
+  box-shadow: 0 4px 20px rgba(56,168,64,0.10) !important;
+}
+body.night[data-color-theme2="spring"] {
+  --bg: #040C04; --bg2: #081408;
+  --text: #B0F0B0; --text2: #70D070; --text3: #40B040;
+  --card-bg: rgba(8,20,8,0.92); --card-border: rgba(56,168,64,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.55);
+  --arabic-color: #70D070; --phonetic-color: #70D070; --hadith-color: #40B040;
+  background: #040C04;
+}
+
+/* ================================================================
+   25. CHARCOAL ROSE
+   Charbon rose · contraste dramatique · rouge rosé
+   ================================================================ */
+body[data-color-theme2="charcoal-rose"] {
+  --ac: #3A8858; --ac-light: #58A878; --ac-dark: #206838; --ac-shine: #A8D8B8;
+  --acr: 58,136,88;
+  --icon-filter: sepia(1) saturate(2.5) hue-rotate(92deg) brightness(0.76);
+}
+body.day[data-color-theme2="charcoal-rose"] {
+  --bg: #FDF4F6; --bg2: #F8E8EC;
+  --text: #160810; --text2: #28141E; --text3: #3C202C;
+  --card-bg: rgba(255,250,252,0.88); --card-border: rgba(200,80,100,0.14);
+  --card-shadow: 0 4px 20px rgba(200,80,100,0.08);
+  --arabic-color: #206838; --phonetic-color: #3A8858; --hadith-color: #104828;
+  background: #FAF0F4;
+}
+body.night[data-color-theme2="charcoal-rose"] {
+  --bg: #0C0608; --bg2: #160A0E;
+  --text: #F8E0E8; --text2: #D0A0B0; --text3: #A86878;
+  --card-bg: rgba(18,8,12,0.92); --card-border: rgba(180,60,80,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color: #A8D8B8; --phonetic-color: #A8D8B8; --hadith-color: #78B890;
+  background: #0C0608;
+}
+
+/* ================================================================
+   26. SOLAR
+   Solaire · orange soleil · énergie maximale
+   ================================================================ */
+body[data-color-theme2="solar"] {
+  --ac: #287858; --ac-light: #389870; --ac-dark: #185838; --ac-shine: #A0D0B8;
+  --acr: 40,120,88;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(95deg) brightness(0.72);
+}
+body.day[data-color-theme2="solar"] {
+  --bg: #FFFAF0; --bg2: #FFF4D8;
+  --text: #1A0E00; --text2: #2E1C00; --text3: #422C00;
+  --card-bg: rgba(255,252,240,0.88); --card-border: rgba(240,160,0,0.18);
+  --card-shadow: 0 4px 20px rgba(240,160,0,0.10);
+  --arabic-color: #185838; --phonetic-color: #287858; --hadith-color: #0C3828;
+  background: #FFF8E0;
+  background-image: radial-gradient(ellipse 80% 40% at 100% 0%, rgba(255,180,0,0.08) 0%, transparent 60%);
+}
+body.night[data-color-theme2="solar"] {
+  --bg: #0E0900; --bg2: #1A1000;
+  --text: #FFE880; --text2: #F0C030; --text3: #D09000;
+  --card-bg: rgba(20,14,0,0.92); --card-border: rgba(240,160,0,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.60), 0 0 40px rgba(240,160,0,0.03);
+  --arabic-color: #A0D0B8; --phonetic-color: #A0D0B8; --hadith-color: #70B090;
+  background: #0E0900;
+  background-image: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(200,100,0,0.10) 0%, transparent 60%);
+}
+
+/* ================================================================
+   27. PEWTER
+   Étain · gris-vert neutre · élégance industrielle
+   ================================================================ */
+body[data-color-theme2="pewter"] {
+  --ac: #4A7860; --ac-light: #689878; --ac-dark: #2C5840; --ac-shine: #B0D0C0;
+  --acr: 74,120,96;
+  --icon-filter: sepia(1) saturate(1.8) hue-rotate(110deg) brightness(0.78);
+}
+body.day[data-color-theme2="pewter"] {
+  --bg: #F2F4F2; --bg2: #E8ECE8;
+  --text: #0C1010; --text2: #181C18; --text3: #262A26;
+  --card-bg: rgba(255,255,254,0.90); --card-border: rgba(74,120,96,0.14);
+  --card-shadow: 0 1px 3px rgba(74,120,96,0.06), 0 8px 28px rgba(74,120,96,0.08);
+  --arabic-color: #2C5840; --phonetic-color: #4A7860; --hadith-color: #1C3828;
+  background: #EEF0EE;
+  background-image: repeating-linear-gradient(90deg, transparent 0, transparent 80px, rgba(74,120,96,0.03) 80px, rgba(74,120,96,0.03) 81px),
+                    repeating-linear-gradient(0deg, transparent 0, transparent 80px, rgba(74,120,96,0.03) 80px, rgba(74,120,96,0.03) 81px);
+}
+body.night[data-color-theme2="pewter"] {
+  --bg: #0A0C0A; --bg2: #101410;
+  --text: #D8E4D8; --text2: #98B898; --text3: #688868;
+  --card-bg: rgba(14,18,14,0.92); --card-border: rgba(74,120,96,0.14);
+  --card-shadow: 0 1px 0 rgba(74,120,96,0.06), 0 8px 28px rgba(0,0,0,0.5);
+  --arabic-color: #98B898; --phonetic-color: #98B898; --hadith-color: #688868;
+  background: #0A0C0A;
+}
+
+/* ================================================================
+   28. ABYSSAL
+   Abyssal · noir bleu absolu · fond de l'océan
+   ================================================================ */
+body[data-color-theme2="abyssal"] {
+  --ac: #00D090; --ac-light: #00F0A8; --ac-dark: #00A870; --ac-shine: #80FFD8;
+  --acr: 0,208,144;
+  --icon-filter: sepia(1) saturate(4) hue-rotate(118deg) brightness(1.2);
+}
+body.day[data-color-theme2="abyssal"] {
+  --bg: #E8F4F8; --bg2: #D8EEF8;
+  --text: #020810; --text2: #041018; --text3: #081828;
+  --card-bg: rgba(248,252,255,0.88); --card-border: rgba(0,80,120,0.12);
+  --card-shadow: 0 4px 20px rgba(0,80,120,0.08);
+  --arabic-color: #00A870; --phonetic-color: #00D090; --hadith-color: #008858;
+  background: #E0EEF8;
+}
+body.night[data-color-theme2="abyssal"] {
+  --bg: #010408; --bg2: #020810;
+  --text: #80FFD8; --text2: #40E0B0; --text3: #00C090;
+  --card-bg: rgba(2,8,16,0.97); --card-border: rgba(0,208,144,0.14);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.85), 0 0 60px rgba(0,208,144,0.03);
+  --arabic-color: #40E0B0; --phonetic-color: #40E0B0; --hadith-color: #00C090;
+  background: #010408;
+  background-image: radial-gradient(ellipse 100% 60% at 50% 100%, rgba(0,30,60,0.40) 0%, transparent 70%);
+}
+body.night[data-color-theme2="abyssal"] .index-brand {
+  text-shadow: 0 0 20px rgba(0,208,144,0.4);
+}
+
+/* ================================================================
+   29. CLAY MINT
+   Argile menthe · terracotta & fraîcheur · contraste chaud-froid
+   ================================================================ */
+body[data-color-theme2="clay-mint"] {
+  --ac: #2A9870; --ac-light: #40B888; --ac-dark: #187850; --ac-shine: #A0E0C8;
+  --acr: 42,152,112;
+  --icon-filter: sepia(1) saturate(3) hue-rotate(110deg) brightness(0.78);
+}
+body.day[data-color-theme2="clay-mint"] {
+  --bg: #FAF4EE; --bg2: #F2E8DC;
+  --text: #160C08; --text2: #281810; --text3: #3C2818;
+  --card-bg: rgba(255,252,248,0.88); --card-border: rgba(42,152,112,0.16);
+  --card-shadow: 0 4px 20px rgba(42,152,112,0.08);
+  --arabic-color: #187850; --phonetic-color: #2A9870; --hadith-color: #0E5838;
+  background: #F8F0E4;
+  background-image: radial-gradient(ellipse 60% 40% at 0% 100%, rgba(200,120,80,0.06) 0%, transparent 60%),
+                    radial-gradient(ellipse 60% 40% at 100% 0%, rgba(42,152,112,0.05) 0%, transparent 60%);
+}
+body.night[data-color-theme2="clay-mint"] {
+  --bg: #0C0804; --bg2: #181008;
+  --text: #E8F8F0; --text2: #A0D8C0; --text3: #60B898;
+  --card-bg: rgba(16,12,6,0.92); --card-border: rgba(42,152,112,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.58);
+  --arabic-color: #A0D8C0; --phonetic-color: #A0D8C0; --hadith-color: #60B898;
+  background: #0C0804;
+}
+
+/* ================================================================
+   30. CELESTIAL
+   Céleste · bleu nuit étoilé · vert lumière divine
+   ================================================================ */
+body[data-color-theme2="celestial"] {
+  --ac: #28A888; --ac-light: #40C8A0; --ac-dark: #188870; --ac-shine: #A0E8D8;
+  --acr: 40,168,136;
+  --icon-filter: sepia(1) saturate(3.5) hue-rotate(120deg) brightness(0.82);
+}
+body.day[data-color-theme2="celestial"] {
+  --bg: #EEF4FC; --bg2: #E0ECFA;
+  --text: #040C14; --text2: #081828; --text3: #0C2840;
+  --card-bg: rgba(248,252,255,0.85); --card-border: rgba(40,168,136,0.16);
+  --card-shadow: 0 4px 24px rgba(40,168,136,0.08);
+  --arabic-color: #188870; --phonetic-color: #28A888; --hadith-color: #0C6858;
+  background: #EAF2FC;
+  background-image: radial-gradient(ellipse 80% 50% at 50% 0%, rgba(40,100,200,0.06) 0%, transparent 60%),
+                    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(40,168,136,0.04) 0%, transparent 60%);
+}
+body.day[data-color-theme2="celestial"] .deen-card,
+body.day[data-color-theme2="celestial"] .accordion {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 22px !important;
+}
+body.night[data-color-theme2="celestial"] {
+  --bg: #030610; --bg2: #060C1C;
+  --text: #A8E8D8; --text2: #60C8A8; --text3: #30A888;
+  --card-bg: rgba(6,10,24,0.88); --card-border: rgba(40,168,136,0.18);
+  --card-shadow: 0 4px 24px rgba(0,0,0,0.70), 0 0 80px rgba(20,60,120,0.08);
+  --arabic-color: #60C8A8; --phonetic-color: #60C8A8; --hadith-color: #30A888;
+  background: #030610;
+  background-image: radial-gradient(ellipse 100% 60% at 50% 0%, rgba(20,60,120,0.20) 0%, transparent 60%),
+                    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(40,168,136,0.06) 0%, transparent 60%);
+}
+body.night[data-color-theme2="celestial"] .deen-card,
+body.night[data-color-theme2="celestial"] .accordion {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 22px !important;
+}
+body.night[data-color-theme2="celestial"] .index-brand {
+  text-shadow: 0 0 30px rgba(40,168,136,0.4), 0 0 60px rgba(20,60,120,0.3);
+}
+/* ================================================================
+   DEENTAG — THEMES-TEST-BOOST.CSS
+   Extensions morphologiques des 30 thèmes originaux
+   Chaque thème reçoit sa propre forme, pas juste sa couleur
+   ================================================================ */
+
+/* ================================================================
+   1. ISLAM — Liquid Glass
+   Cartes verre dépoli · boutons pill fluides · coins 28px
+   ================================================================ */
+body[data-color-theme="islam"] .deen-card,
+body[data-color-theme="islam"] .accordion,
+body[data-color-theme="islam"] .cat-card,
+body[data-color-theme="islam"] .sub-card,
+body[data-color-theme="islam"] .concept-step,
+body[data-color-theme="islam"] .bottom-sheet,
+body[data-color-theme="islam"] .pack-single {
+  border-radius: 28px !important;
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+}
+body[data-color-theme="islam"] .deen-card::after { display: none; }
+body[data-color-theme="islam"] .circle-btn,
+body[data-color-theme="islam"] .back-arrow { border-radius: 50% !important; }
+body[data-color-theme="islam"] .lang-btn,
+body[data-color-theme="islam"] .dua-back,
+body[data-color-theme="islam"] .back-pill { border-radius: 30px !important; }
+body[data-color-theme="islam"] .arabic-text { letter-spacing: 0.06em; }
+
+/* ================================================================
+   2. FORÊT — Flat Editorial
+   Zéro bordure · ombres seules · coins arrondis 20px
+   ================================================================ */
+body[data-color-theme="foret"] .deen-card,
+body[data-color-theme="foret"] .accordion,
+body[data-color-theme="foret"] .cat-card,
+body[data-color-theme="foret"] .sub-card,
+body[data-color-theme="foret"] .concept-step {
+  border: none !important;
+  border-radius: 20px !important;
+  box-shadow: 0 2px 4px rgba(45,90,61,0.06), 0 16px 40px rgba(45,90,61,0.10) !important;
+}
+body[data-color-theme="foret"] .deen-card::after { display: none; }
+body[data-color-theme="foret"] .cat-card::after,
+body[data-color-theme="foret"] .sub-card::after { display: none; }
+body[data-color-theme="foret"] .index-brand { letter-spacing: 0.4em; font-size: 20px; }
+
+/* ================================================================
+   3. JADE — Deep Material
+   Cartes avec micro-relief · coins 16px · bords lumineux
+   ================================================================ */
+body[data-color-theme="jade"] .deen-card,
+body[data-color-theme="jade"] .accordion,
+body[data-color-theme="jade"] .cat-card,
+body[data-color-theme="jade"] .sub-card {
+  border-radius: 16px !important;
+  border: 1px solid var(--card-border) !important;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.8), 0 4px 16px rgba(58,122,104,0.08), inset 0 1px 0 rgba(255,255,255,0.9) !important;
+}
+body.night[data-color-theme="jade"] .deen-card,
+body.night[data-color-theme="jade"] .accordion {
+  box-shadow: 0 1px 0 rgba(90,160,136,0.15), 0 4px 16px rgba(0,0,0,0.5), inset 0 1px 0 rgba(90,160,136,0.08) !important;
+}
+body[data-color-theme="jade"] .circle-btn,
+body[data-color-theme="jade"] .back-arrow { border-radius: 10px !important; }
+
+/* ================================================================
+   4. SAUGE — Soft Bubble
+   Coins ultra-arrondis 32px · tout mou et doux · sans bordure
+   ================================================================ */
+body[data-color-theme="sauge"] .deen-card,
+body[data-color-theme="sauge"] .accordion,
+body[data-color-theme="sauge"] .cat-card,
+body[data-color-theme="sauge"] .sub-card,
+body[data-color-theme="sauge"] .concept-step,
+body[data-color-theme="sauge"] .pack-single {
+  border-radius: 32px !important;
+  border: none !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+body[data-color-theme="sauge"] .deen-card::after,
+body[data-color-theme="sauge"] .cat-card::after,
+body[data-color-theme="sauge"] .sub-card::after { display: none; }
+body[data-color-theme="sauge"] .circle-btn,
+body[data-color-theme="sauge"] .back-arrow { border-radius: 14px !important; }
+body[data-color-theme="sauge"] .lang-btn { border-radius: 16px !important; }
+
+/* ================================================================
+   5. ÉMERAUDE — Neon Edge
+   Bordure lumineuse fine · coins nets 12px · glow intérieur
+   ================================================================ */
+body[data-color-theme="emeraude"] .deen-card,
+body[data-color-theme="emeraude"] .accordion,
+body[data-color-theme="emeraude"] .cat-card,
+body[data-color-theme="emeraude"] .sub-card {
+  border-radius: 12px !important;
+  border: 1px solid rgba(13,128,96,0.25) !important;
+  box-shadow: 0 0 0 1px rgba(13,128,96,0.08), 0 8px 32px rgba(13,128,96,0.10) !important;
+}
+body.night[data-color-theme="emeraude"] .deen-card,
+body.night[data-color-theme="emeraude"] .accordion {
+  border: 1px solid rgba(24,168,120,0.20) !important;
+  box-shadow: 0 0 20px rgba(24,168,120,0.06), 0 8px 32px rgba(0,0,0,0.6), inset 0 1px 0 rgba(24,168,120,0.10) !important;
+}
+body.night[data-color-theme="emeraude"] .index-brand,
+body.night[data-color-theme="emeraude"] .inv-header-name {
+  text-shadow: 0 0 20px rgba(24,168,120,0.5);
+}
+
+/* ================================================================
+   6. SABLE — Parchemin Minimaliste
+   Bordure gauche seule · coins 6px · style manuscrit
+   ================================================================ */
+body[data-color-theme="sable"] .deen-card,
+body[data-color-theme="sable"] .accordion,
+body[data-color-theme="sable"] .concept-step {
+  border-radius: 6px !important;
+  border: none !important;
+  border-left: 3px solid rgba(160,120,64,0.35) !important;
+  box-shadow: 0 2px 12px rgba(160,120,64,0.10) !important;
+}
+body[data-color-theme="sable"] .deen-card::after { display: none; }
+body[data-color-theme="sable"] .cat-card,
+body[data-color-theme="sable"] .sub-card {
+  border-radius: 10px !important;
+  border: 1px solid rgba(160,120,64,0.18) !important;
+}
+body[data-color-theme="sable"] .arabic-text { font-size: 2.3em !important; }
+body[data-color-theme="sable"] .index-brand { font-style: italic; letter-spacing: 0.3em; }
+
+/* ================================================================
+   7. ARGILE — Wabi-sabi Brut
+   Coins asymétriques simulés · texture de poterie
+   ================================================================ */
+body[data-color-theme="argile"] .deen-card,
+body[data-color-theme="argile"] .accordion,
+body[data-color-theme="argile"] .concept-step {
+  border-radius: 4px 18px 4px 18px !important;
+  border: 1px solid rgba(138,88,64,0.22) !important;
+  box-shadow: 3px 3px 0 rgba(138,88,64,0.12), 0 8px 28px rgba(138,88,64,0.08) !important;
+}
+body[data-color-theme="argile"] .cat-card,
+body[data-color-theme="argile"] .sub-card {
+  border-radius: 4px 16px 4px 16px !important;
+}
+body[data-color-theme="argile"] .deen-card::after,
+body[data-color-theme="argile"] .cat-card::after { display: none; }
+body[data-color-theme="argile"] .circle-btn,
+body[data-color-theme="argile"] .back-arrow { border-radius: 4px 16px !important; }
+
+/* ================================================================
+   8. DUNE — Cinématique
+   Cartes full-bleed · coins 0 en bas · dégradé bas
+   ================================================================ */
+body[data-color-theme="dune"] .deen-card,
+body[data-color-theme="dune"] .accordion {
+  border-radius: 18px !important;
+  border-top: 3px solid var(--ac) !important;
+  border-left: none !important; border-right: none !important; border-bottom: none !important;
+  box-shadow: 0 12px 40px rgba(200,120,48,0.12) !important;
+}
+body[data-color-theme="dune"] .cat-card,
+body[data-color-theme="dune"] .sub-card {
+  border-radius: 16px !important;
+  border-top: 2px solid rgba(200,120,48,0.30) !important;
+  border-left: none !important; border-right: none !important; border-bottom: none !important;
+}
+body[data-color-theme="dune"] .deen-card::after,
+body[data-color-theme="dune"] .cat-card::after { display: none; }
+
+/* ================================================================
+   9. OCRE — Brutalisme Doux
+   Ombres décalées · coins 0 · contraste fort
+   ================================================================ */
+body[data-color-theme="ocre"] .deen-card,
+body[data-color-theme="ocre"] .accordion,
+body[data-color-theme="ocre"] .cat-card,
+body[data-color-theme="ocre"] .sub-card,
+body[data-color-theme="ocre"] .concept-step {
+  border-radius: 0 !important;
+  border: 2px solid var(--card-border) !important;
+  box-shadow: 5px 5px 0 rgba(184,104,32,0.18) !important;
+}
+body.night[data-color-theme="ocre"] .deen-card,
+body.night[data-color-theme="ocre"] .accordion {
+  box-shadow: 5px 5px 0 rgba(216,136,56,0.20) !important;
+}
+body[data-color-theme="ocre"] .deen-card::after,
+body[data-color-theme="ocre"] .cat-card::after { display: none; }
+body[data-color-theme="ocre"] .circle-btn,
+body[data-color-theme="ocre"] .back-arrow,
+body[data-color-theme="ocre"] .lang-btn,
+body[data-color-theme="ocre"] .dua-back { border-radius: 0 !important; }
+
+/* ================================================================
+   10. SILEX — Ultra Minimaliste
+   Cartes sans bordure ni ombre · séparateurs seuls
+   ================================================================ */
+body[data-color-theme="silex"] .deen-card,
+body[data-color-theme="silex"] .accordion,
+body[data-color-theme="silex"] .concept-step {
+  border: none !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid rgba(90,104,72,0.15) !important;
+  box-shadow: none !important;
+  background: transparent !important;
+}
+body.night[data-color-theme="silex"] .deen-card,
+body.night[data-color-theme="silex"] .accordion {
+  border-bottom: 1px solid rgba(120,136,96,0.12) !important;
+  background: transparent !important;
+}
+body[data-color-theme="silex"] .deen-card::after { display: none; }
+body[data-color-theme="silex"] .cat-card,
+body[data-color-theme="silex"] .sub-card {
+  border-radius: 8px !important;
+  border: 1px solid rgba(90,104,72,0.12) !important;
+  box-shadow: none !important;
+}
+body[data-color-theme="silex"] .index-brand { font-weight: 300; letter-spacing: 0.5em; }
+
+/* ================================================================
+   11. NUIT — Starfield Immersif
+   Cartes glass sombre · halo étoilé · fond points
+   ================================================================ */
+body[data-color-theme="nuit"] .deen-card,
+body[data-color-theme="nuit"] .accordion,
+body[data-color-theme="nuit"] .cat-card {
+  border-radius: 20px !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+body.night[data-color-theme="nuit"] {
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(42,74,138,0.15) 0%, transparent 70%),
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.03) 1px, transparent 1px),
+    radial-gradient(circle at 80% 60%, rgba(255,255,255,0.02) 1px, transparent 1px),
+    radial-gradient(circle at 60% 20%, rgba(255,255,255,0.025) 1px, transparent 1px),
+    radial-gradient(circle at 40% 80%, rgba(255,255,255,0.02) 1px, transparent 1px);
+}
+body.night[data-color-theme="nuit"] .index-brand,
+body.night[data-color-theme="nuit"] .inv-header-name {
+  text-shadow: 0 0 20px rgba(88,120,200,0.6), 0 0 40px rgba(88,120,200,0.3);
+}
+
+/* ================================================================
+   12. MOSQUÉE — Zellige Géométrique
+   Cartes octogonales simulées · coins coupés
+   ================================================================ */
+body[data-color-theme="mosquee"] .deen-card,
+body[data-color-theme="mosquee"] .accordion,
+body[data-color-theme="mosquee"] .concept-step {
+  border-radius: 4px !important;
+  clip-path: polygon(12px 0%, calc(100% - 12px) 0%, 100% 12px, 100% calc(100% - 12px), calc(100% - 12px) 100%, 12px 100%, 0% calc(100% - 12px), 0% 12px);
+  border: none !important;
+  box-shadow: 0 4px 24px rgba(26,90,138,0.12) !important;
+}
+body[data-color-theme="mosquee"] .deen-card::after { display: none; }
+body[data-color-theme="mosquee"] .cat-card,
+body[data-color-theme="mosquee"] .sub-card {
+  clip-path: polygon(8px 0%, calc(100% - 8px) 0%, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0% calc(100% - 8px), 0% 8px);
+  border-radius: 0 !important;
+  border: none !important;
+}
+body[data-color-theme="mosquee"] .circle-btn,
+body[data-color-theme="mosquee"] .back-arrow { border-radius: 4px !important; }
+
+/* ================================================================
+   13. LAPIS — Luxe Absolu
+   Glassmorphism profond · coins 24px · double bordure
+   ================================================================ */
+body[data-color-theme="lapis"] .deen-card,
+body[data-color-theme="lapis"] .accordion,
+body[data-color-theme="lapis"] .concept-step {
+  border-radius: 24px !important;
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(26,58,120,0.20) !important;
+  outline: 1px solid rgba(255,255,255,0.4);
+  outline-offset: -3px;
+}
+body.night[data-color-theme="lapis"] .deen-card,
+body.night[data-color-theme="lapis"] .accordion {
+  outline-color: rgba(72,104,200,0.12);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.7), inset 0 1px 0 rgba(72,104,200,0.12) !important;
+}
+
+/* ================================================================
+   14. TURQUOISE — Méditerranéen Frais
+   Coins 22px · bordure bas colorée · style beach
+   ================================================================ */
+body[data-color-theme="turquoise"] .deen-card,
+body[data-color-theme="turquoise"] .accordion,
+body[data-color-theme="turquoise"] .cat-card {
+  border-radius: 22px !important;
+  border: none !important;
+  border-bottom: 3px solid rgba(10,120,120,0.25) !important;
+  box-shadow: 0 8px 32px rgba(10,120,120,0.10) !important;
+}
+body[data-color-theme="turquoise"] .deen-card::after,
+body[data-color-theme="turquoise"] .cat-card::after { display: none; }
+body.night[data-color-theme="turquoise"] .deen-card,
+body.night[data-color-theme="turquoise"] .accordion {
+  border-bottom-color: rgba(24,168,168,0.25) !important;
+}
+
+/* ================================================================
+   15. FAJR — Aurore Vaporeuse
+   Cartes très arrondies · flou subtil · douceur
+   ================================================================ */
+body[data-color-theme="fajr"] .deen-card,
+body[data-color-theme="fajr"] .accordion,
+body[data-color-theme="fajr"] .cat-card,
+body[data-color-theme="fajr"] .sub-card {
+  border-radius: 26px !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(74,104,136,0.14) !important;
+}
+body[data-color-theme="fajr"] .deen-card::after,
+body[data-color-theme="fajr"] .cat-card::after { display: none; }
+body[data-color-theme="fajr"] .circle-btn,
+body[data-color-theme="fajr"] .back-arrow { border-radius: 14px !important; }
+
+/* ================================================================
+   16. ENCRE — Ink on Paper
+   Cartes avec seul coin supérieur gauche plié simulé
+   ================================================================ */
+body[data-color-theme="encre"] .deen-card,
+body[data-color-theme="encre"] .accordion,
+body[data-color-theme="encre"] .cat-card,
+body[data-color-theme="encre"] .sub-card {
+  border-radius: 0 14px 14px 14px !important;
+  border: 1px solid rgba(26,26,42,0.12) !important;
+}
+body.night[data-color-theme="encre"] .deen-card,
+body.night[data-color-theme="encre"] .accordion {
+  border: 1px solid rgba(208,208,232,0.10) !important;
+}
+body[data-color-theme="encre"] .circle-btn,
+body[data-color-theme="encre"] .back-arrow,
+body[data-color-theme="encre"] .lang-btn { border-radius: 4px !important; }
+body[data-color-theme="encre"] .index-brand { font-weight: 700; letter-spacing: 0.2em; }
+body.day[data-color-theme="encre"] .arabic-text { color: #080808 !important; }
+
+/* ================================================================
+   17. CHARBON — Chaleur Imperceptible
+   Cartes légèrement arrondies · ton sur ton · minimal
+   ================================================================ */
+body[data-color-theme="charbon"] .deen-card,
+body[data-color-theme="charbon"] .accordion,
+body[data-color-theme="charbon"] .cat-card {
+  border-radius: 10px !important;
+  border: 1px solid var(--card-border) !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06) !important;
+}
+body.night[data-color-theme="charbon"] .deen-card,
+body.night[data-color-theme="charbon"] .accordion {
+  box-shadow: 0 1px 0 rgba(255,255,255,0.03), 0 8px 24px rgba(0,0,0,0.5) !important;
+}
+
+/* ================================================================
+   18. ÉBÈNE — Luxe Végétal
+   Cartes pill larges · coins 40px · très organique
+   ================================================================ */
+body[data-color-theme="ebene"] .deen-card,
+body[data-color-theme="ebene"] .accordion,
+body[data-color-theme="ebene"] .concept-step {
+  border-radius: 40px !important;
+  border: none !important;
+  box-shadow: 0 4px 32px rgba(24,48,32,0.10) !important;
+  padding: 4px !important;
+}
+body.night[data-color-theme="ebene"] .deen-card,
+body.night[data-color-theme="ebene"] .accordion {
+  box-shadow: 0 4px 32px rgba(0,0,0,0.55) !important;
+}
+body[data-color-theme="ebene"] .deen-card::after { display: none; }
+body[data-color-theme="ebene"] .circle-btn,
+body[data-color-theme="ebene"] .back-arrow { border-radius: 20px !important; width: 44px !important; height: 44px !important; }
+
+/* ================================================================
+   19. ANTHRACITE — Acier Brossé
+   Lignes horizontales · cartes avec header coloré
+   ================================================================ */
+body[data-color-theme="anthracite"] .deen-card,
+body[data-color-theme="anthracite"] .accordion,
+body[data-color-theme="anthracite"] .concept-step {
+  border-radius: 12px !important;
+  border: none !important;
+  border-top: 2px solid var(--ac) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(58,72,72,0.08) !important;
+}
+body[data-color-theme="anthracite"] .deen-card::after { display: none; }
+body[data-color-theme="anthracite"] .cat-card,
+body[data-color-theme="anthracite"] .sub-card {
+  border-radius: 10px !important;
+  border-top: 2px solid var(--ac) !important;
+  border-left: none !important; border-right: none !important; border-bottom: none !important;
+}
+
+/* ================================================================
+   20. QADR — Nuit du Destin
+   Cartes avec aura violette · coins nets · halo spirituel
+   ================================================================ */
+body[data-color-theme="qadr"] .deen-card,
+body[data-color-theme="qadr"] .accordion {
+  border-radius: 20px !important;
+}
+body.night[data-color-theme="qadr"] .deen-card,
+body.night[data-color-theme="qadr"] .accordion {
+  background: rgba(8,4,18,0.90) !important;
+  border: 1px solid rgba(136,104,200,0.18) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.7), 0 0 40px rgba(136,104,200,0.06), inset 0 1px 0 rgba(136,104,200,0.10) !important;
+}
+body.night[data-color-theme="qadr"] .index-brand,
+body.night[data-color-theme="qadr"] .inv-header-name {
+  text-shadow: 0 0 30px rgba(136,104,200,0.6), 0 0 60px rgba(136,104,200,0.3);
+}
+body.night[data-color-theme="qadr"] .cat-card,
+body.night[data-color-theme="qadr"] .sub-card {
+  border: 1px solid rgba(136,104,200,0.20) !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.6), 0 0 20px rgba(136,104,200,0.04) !important;
+  border-radius: 18px !important;
+}
+
+/* ================================================================
+   21. SOUFI — Velvet Mystique
+   Cartes avec coins coupés · style diamant
+   ================================================================ */
+body[data-color-theme="soufi"] .deen-card,
+body[data-color-theme="soufi"] .accordion,
+body[data-color-theme="soufi"] .concept-step {
+  border-radius: 0 !important;
+  clip-path: polygon(16px 0%, 100% 0%, 100% calc(100% - 16px), calc(100% - 16px) 100%, 0% 100%, 0% 16px);
+  border: 1px solid rgba(90,42,122,0.18) !important;
+  box-shadow: 0 4px 24px rgba(90,42,122,0.12) !important;
+}
+body[data-color-theme="soufi"] .deen-card::after { display: none; }
+body.night[data-color-theme="soufi"] .deen-card,
+body.night[data-color-theme="soufi"] .accordion {
+  border: 1px solid rgba(152,96,200,0.20) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.65), inset 0 1px 0 rgba(152,96,200,0.08) !important;
+}
+
+/* ================================================================
+   22. AMÉTHYSTE — Crystal Glass
+   Double glassmorphism · coins 28px · reflets
+   ================================================================ */
+body[data-color-theme="amethyste"] .deen-card,
+body[data-color-theme="amethyste"] .accordion,
+body[data-color-theme="amethyste"] .cat-card {
+  border-radius: 28px !important;
+  backdrop-filter: blur(16px) saturate(200%) brightness(105%);
+  -webkit-backdrop-filter: blur(16px) saturate(200%) brightness(105%);
+  border: 1px solid rgba(255,255,255,0.5) !important;
+}
+body.night[data-color-theme="amethyste"] .deen-card,
+body.night[data-color-theme="amethyste"] .accordion {
+  border: 1px solid rgba(184,136,232,0.20) !important;
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+}
+body[data-color-theme="amethyste"] .deen-card::after { display: none; }
+
+/* ================================================================
+   23. PRUNE — Velours Dramatique
+   Cartes avec ligne gauche épaisse · coins 8px
+   ================================================================ */
+body[data-color-theme="prune"] .deen-card,
+body[data-color-theme="prune"] .accordion,
+body[data-color-theme="prune"] .concept-step {
+  border-radius: 8px !important;
+  border: none !important;
+  border-left: 4px solid rgba(106,40,88,0.40) !important;
+  box-shadow: 0 4px 24px rgba(106,40,88,0.10) !important;
+}
+body.night[data-color-theme="prune"] .deen-card,
+body.night[data-color-theme="prune"] .accordion {
+  border-left-color: rgba(192,120,152,0.35) !important;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.60) !important;
+}
+body[data-color-theme="prune"] .deen-card::after { display: none; }
+body[data-color-theme="prune"] .cat-card,
+body[data-color-theme="prune"] .sub-card {
+  border-radius: 12px !important;
+  border-left: 3px solid rgba(106,40,88,0.30) !important;
+  border-top: none !important; border-right: none !important; border-bottom: none !important;
+}
+
+/* ================================================================
+   24. LAVANDE — Airy Bubble
+   Coins 36px · ultra léger · presque pas de bordure
+   ================================================================ */
+body[data-color-theme="lavande"] .deen-card,
+body[data-color-theme="lavande"] .accordion,
+body[data-color-theme="lavande"] .cat-card,
+body[data-color-theme="lavande"] .sub-card {
+  border-radius: 36px !important;
+  border: none !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 32px rgba(120,104,168,0.08) !important;
+}
+body[data-color-theme="lavande"] .deen-card::after,
+body[data-color-theme="lavande"] .cat-card::after { display: none; }
+body[data-color-theme="lavande"] .circle-btn,
+body[data-color-theme="lavande"] .back-arrow { border-radius: 16px !important; }
+
+/* ================================================================
+   25. INDIGO — Bold Lines
+   Bordure droite · coins 0 en haut · style editorial
+   ================================================================ */
+body[data-color-theme="indigo"] .deen-card,
+body[data-color-theme="indigo"] .accordion,
+body[data-color-theme="indigo"] .concept-step {
+  border-radius: 0 0 16px 16px !important;
+  border: none !important;
+  border-top: 4px solid var(--ac) !important;
+  box-shadow: 0 8px 32px rgba(42,30,120,0.10) !important;
+}
+body[data-color-theme="indigo"] .deen-card::after { display: none; }
+body[data-color-theme="indigo"] .cat-card,
+body[data-color-theme="indigo"] .sub-card {
+  border-radius: 0 0 12px 12px !important;
+  border-top: 3px solid rgba(42,30,120,0.30) !important;
+  border-left: none !important; border-right: none !important; border-bottom: none !important;
+}
+body[data-color-theme="indigo"] .circle-btn,
+body[data-color-theme="indigo"] .lang-btn { border-radius: 4px !important; }
+
+/* ================================================================
+   26. NACRE — Pure Minimal
+   Glassmorphism blanc · coins 20px · presque invisible
+   ================================================================ */
+body[data-color-theme="nacre"] .deen-card,
+body[data-color-theme="nacre"] .accordion,
+body[data-color-theme="nacre"] .concept-step {
+  border-radius: 20px !important;
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(42,104,64,0.10) !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04), 0 16px 48px rgba(42,104,64,0.06), inset 0 1px 0 rgba(255,255,255,0.9) !important;
+}
+body[data-color-theme="nacre"] .deen-card::after { display: none; }
+
+/* ================================================================
+   27. AURORE — Warmth Glow
+   Cartes avec lueur intérieure rose · coins 22px
+   ================================================================ */
+body[data-color-theme="aurore"] .deen-card,
+body[data-color-theme="aurore"] .accordion,
+body[data-color-theme="aurore"] .cat-card {
+  border-radius: 22px !important;
+  border: 1px solid rgba(152,88,72,0.14) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+body[data-color-theme="aurore"] .deen-card::after,
+body[data-color-theme="aurore"] .cat-card::after { display: none; }
+body.night[data-color-theme="aurore"] .deen-card,
+body.night[data-color-theme="aurore"] .accordion {
+  box-shadow: 0 4px 24px rgba(0,0,0,0.60), inset 0 1px 0 rgba(208,136,120,0.08) !important;
+}
+
+/* ================================================================
+   28. PÊCHE — Warmth Soft
+   Coins 30px · fond légèrement coloré · chaleur
+   ================================================================ */
+body[data-color-theme="peche"] .deen-card,
+body[data-color-theme="peche"] .accordion,
+body[data-color-theme="peche"] .cat-card,
+body[data-color-theme="peche"] .sub-card {
+  border-radius: 30px !important;
+  border: none !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 24px rgba(184,120,64,0.10) !important;
+}
+body[data-color-theme="peche"] .deen-card::after,
+body[data-color-theme="peche"] .cat-card::after { display: none; }
+body[data-color-theme="peche"] .circle-btn,
+body[data-color-theme="peche"] .back-arrow { border-radius: 14px !important; }
+
+/* ================================================================
+   29. IVOIRE — Manuscrit Sacré
+   Style parchemin · lignes réglées · coins 4px
+   ================================================================ */
+body[data-color-theme="ivoire"] .deen-card,
+body[data-color-theme="ivoire"] .accordion,
+body[data-color-theme="ivoire"] .concept-step {
+  border-radius: 4px !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(56,112,72,0.18) !important;
+  background-image: repeating-linear-gradient(0deg, transparent 0, transparent 27px, rgba(56,112,72,0.05) 27px, rgba(56,112,72,0.05) 28px) !important;
+  box-shadow: 0 2px 12px rgba(56,112,72,0.08) !important;
+}
+body[data-color-theme="ivoire"] .deen-card::after { display: none; }
+body[data-color-theme="ivoire"] .arabic-text { font-size: 2.5em !important; line-height: 1.8 !important; }
+body[data-color-theme="ivoire"] .index-brand { font-style: italic; }
+
+/* ================================================================
+   30. OR BLANC — Platine Premium
+   Double bordure fine · coins 18px · ultra raffiné
+   ================================================================ */
+body[data-color-theme="or-blanc"] .deen-card,
+body[data-color-theme="or-blanc"] .accordion,
+body[data-color-theme="or-blanc"] .concept-step {
+  border-radius: 18px !important;
+  border: 1px solid rgba(74,120,88,0.14) !important;
+  outline: 1px solid rgba(74,120,88,0.06);
+  outline-offset: 3px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03), 0 8px 32px rgba(74,120,88,0.06), inset 0 1px 0 rgba(255,255,255,1) !important;
+}
+body[data-color-theme="or-blanc"] .deen-card::after { display: none; }
+body.night[data-color-theme="or-blanc"] .deen-card,
+body.night[data-color-theme="or-blanc"] .accordion {
+  outline-color: rgba(122,184,152,0.08);
+  box-shadow: 0 1px 0 rgba(122,184,152,0.06), 0 8px 32px rgba(0,0,0,0.55), inset 0 1px 0 rgba(122,184,152,0.04) !important;
+}
