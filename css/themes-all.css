@@ -1,0 +1,1510 @@
+/* ================================================================
+   DEENTAG — THEMES-ALL.CSS
+   60 thèmes — approche 2026 — designs radicalement distincts
+   Fichier temporaire test — supprimer après choix du thème final
+   ================================================================ */
+
+/* ── Picker UI ─────────────────────────────────────────────── */
+.ct-wrap {
+  width: 100%;
+  background: var(--bg, #0F0D08);
+  border-bottom: 1px solid rgba(128,128,128,0.15);
+  padding: 8px 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  position: sticky;
+  top: 57px;
+  z-index: 190;
+}
+.ct-wrap::-webkit-scrollbar { display: none; }
+.ct-picker {
+  display: flex;
+  gap: 6px;
+  width: max-content;
+  padding: 2px 0;
+  align-items: center;
+}
+.ct-dot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.18s, box-shadow 0.18s;
+  padding: 0;
+}
+.ct-dot:active { transform: scale(0.85) !important; }
+.ct-dot.active {
+  transform: scale(1.25) !important;
+  box-shadow: 0 0 0 2px var(--bg,#0F0D08), 0 0 0 4px rgba(255,255,255,0.6) !important;
+}
+
+/* ── Macro commune — remplace le doré partout ──────────────── */
+[data-color-theme], [data-color-theme2] {
+  --gold: var(--ac);
+  --gold-light: var(--ac-light);
+  --gold-dark: var(--ac-dark);
+  --gold-shine: var(--ac-shine);
+}
+[data-color-theme] .circle-btn,
+[data-color-theme2] .circle-btn { border-color: var(--ac); color: var(--ac); }
+[data-color-theme] .circle-btn:active,
+[data-color-theme2] .circle-btn:active { background: var(--ac); color: var(--bg); }
+[data-color-theme] .lang-btn,
+[data-color-theme2] .lang-btn { color: var(--ac); border-color: var(--ac); }
+[data-color-theme] .lang-btn:hover,
+[data-color-theme2] .lang-btn:hover { background: var(--ac); color: var(--bg); }
+[data-color-theme] .lang-option:hover, [data-color-theme] .lang-option.active,
+[data-color-theme2] .lang-option:hover, [data-color-theme2] .lang-option.active { background: var(--ac); }
+[data-color-theme] .lang-menu,
+[data-color-theme2] .lang-menu { background: var(--card-bg); border-color: var(--card-border); }
+[data-color-theme] .back-arrow,
+[data-color-theme2] .back-arrow { border-color: var(--ac); color: var(--ac); }
+[data-color-theme] .deen-card,
+[data-color-theme2] .deen-card { border-color: var(--card-border); box-shadow: var(--card-shadow); background: var(--card-bg); }
+[data-color-theme] .deen-card::after,
+[data-color-theme2] .deen-card::after { border-top-color: var(--ac); border-right-color: var(--ac); }
+[data-color-theme] .ornament-line, [data-color-theme] .index-ornament-line,
+[data-color-theme] .shop-hero-line, [data-color-theme] .shop-footer-line,
+[data-color-theme] .section-line, [data-color-theme] .audio-line-left,
+[data-color-theme] .audio-line-right,
+[data-color-theme2] .ornament-line, [data-color-theme2] .index-ornament-line,
+[data-color-theme2] .shop-hero-line, [data-color-theme2] .shop-footer-line,
+[data-color-theme2] .section-line, [data-color-theme2] .audio-line-left,
+[data-color-theme2] .audio-line-right { background: linear-gradient(90deg, transparent, var(--ac), transparent); }
+[data-color-theme] .ornament-diamond, [data-color-theme] .ornament-star,
+[data-color-theme2] .ornament-diamond, [data-color-theme2] .ornament-star { color: var(--ac); }
+[data-color-theme] .pack-feature-dot, [data-color-theme] .free-badge-dot,
+[data-color-theme2] .pack-feature-dot, [data-color-theme2] .free-badge-dot { background: var(--ac); }
+[data-color-theme] .brand-script, [data-color-theme] .index-brand,
+[data-color-theme] .inv-header-name, [data-color-theme] .shop-brand,
+[data-color-theme] .inv-script, [data-color-theme] .section-title,
+[data-color-theme] .closing-dua, [data-color-theme] .sunnah-title,
+[data-color-theme] .direct-acc-title, [data-color-theme] .bs-header-title,
+[data-color-theme] .sub-card-sub, [data-color-theme] .step-number,
+[data-color-theme] .pack-qty-num, [data-color-theme] .pack-name,
+[data-color-theme] .shop-sep-title, [data-color-theme] .free-badge-text,
+[data-color-theme2] .brand-script, [data-color-theme2] .index-brand,
+[data-color-theme2] .inv-header-name, [data-color-theme2] .shop-brand,
+[data-color-theme2] .inv-script, [data-color-theme2] .section-title,
+[data-color-theme2] .closing-dua, [data-color-theme2] .sunnah-title,
+[data-color-theme2] .direct-acc-title, [data-color-theme2] .bs-header-title,
+[data-color-theme2] .sub-card-sub, [data-color-theme2] .step-number,
+[data-color-theme2] .pack-qty-num, [data-color-theme2] .pack-name,
+[data-color-theme2] .shop-sep-title, [data-color-theme2] .free-badge-text { color: var(--ac); }
+[data-color-theme] .accordion,
+[data-color-theme2] .accordion { border-color: var(--card-border); background: var(--card-bg); }
+[data-color-theme] .accordion-header::after,
+[data-color-theme2] .accordion-header::after { border-top-color: var(--ac); border-right-color: var(--ac); }
+[data-color-theme] .accordion-arrow,
+[data-color-theme2] .accordion-arrow { border-color: var(--ac); color: var(--ac); }
+[data-color-theme] .accordion.open .accordion-arrow,
+[data-color-theme2] .accordion.open .accordion-arrow { background: var(--ac); color: var(--bg); }
+[data-color-theme] .phonetic-block,
+[data-color-theme2] .phonetic-block { color: var(--ac); background: rgba(var(--acr),0.07); }
+[data-color-theme] .social-icon,
+[data-color-theme2] .social-icon { border-color: var(--ac); }
+[data-color-theme] .social-icon svg,
+[data-color-theme2] .social-icon svg { fill: var(--ac); }
+[data-color-theme] .audio-player-circle,
+[data-color-theme2] .audio-player-circle { border-color: var(--ac); }
+[data-color-theme] .audio-player-btn.playing .audio-player-circle,
+[data-color-theme2] .audio-player-btn.playing .audio-player-circle { background: var(--ac); }
+[data-color-theme] .audio-solo-btn,
+[data-color-theme2] .audio-solo-btn { border-color: var(--ac); color: var(--ac); }
+[data-color-theme] .tts-btn,
+[data-color-theme2] .tts-btn { border-color: var(--ac); color: var(--ac); }
+[data-color-theme] .tts-btn:hover, [data-color-theme] .tts-btn.playing,
+[data-color-theme2] .tts-btn:hover, [data-color-theme2] .tts-btn.playing { background: var(--ac); color: var(--bg); }
+[data-color-theme] .share-btn, [data-color-theme] .acc-back-circle,
+[data-color-theme] .acc-settings-btn, [data-color-theme] .direct-close-btn,
+[data-color-theme] .reorder-circle, [data-color-theme] .dua-back,
+[data-color-theme] .back-pill,
+[data-color-theme2] .share-btn, [data-color-theme2] .acc-back-circle,
+[data-color-theme2] .acc-settings-btn, [data-color-theme2] .direct-close-btn,
+[data-color-theme2] .reorder-circle, [data-color-theme2] .dua-back,
+[data-color-theme2] .back-pill { border-color: var(--ac); color: var(--ac); }
+[data-color-theme] .size-pill.active,
+[data-color-theme2] .size-pill.active { background: var(--ac); border-color: var(--ac); }
+[data-color-theme] .settings-panel,
+[data-color-theme2] .settings-panel { border-color: var(--ac); background: var(--card-bg); }
+[data-color-theme] .cat-icon-circle,
+[data-color-theme2] .cat-icon-circle { border-color: var(--card-border); background: rgba(var(--acr),0.08); }
+[data-color-theme] .pack-single,
+[data-color-theme2] .pack-single { border-color: var(--ac); }
+[data-color-theme] .pack-cta,
+[data-color-theme2] .pack-cta { border-color: var(--ac); color: var(--ac); }
+[data-color-theme] .pack-cta:hover,
+[data-color-theme2] .pack-cta:hover { background: var(--ac); color: var(--bg); }
+[data-color-theme] .soon-modal,
+[data-color-theme2] .soon-modal { border-color: var(--ac); background: var(--card-bg); }
+[data-color-theme] .soon-title, [data-color-theme] .soon-close,
+[data-color-theme2] .soon-title, [data-color-theme2] .soon-close { color: var(--ac); border-color: var(--ac); }
+[data-color-theme] .bottom-sheet,
+[data-color-theme2] .bottom-sheet { border-top-color: var(--ac); }
+[data-color-theme] .inv-header-icon,
+[data-color-theme2] .inv-header-icon { border-color: var(--ac); background: rgba(var(--acr),0.10); }
+[data-color-theme] .word-highlight.active-word,
+[data-color-theme2] .word-highlight.active-word { background: rgba(var(--acr),0.30); }
+[data-color-theme] ::-webkit-scrollbar-thumb,
+[data-color-theme2] ::-webkit-scrollbar-thumb { background: var(--ac-dark); }
+[data-color-theme] .ct-wrap,
+[data-color-theme2] .ct-wrap { background: var(--bg); }
+[data-color-theme] .logo-img, [data-color-theme] .inv-logo,
+[data-color-theme] .index-logo, [data-color-theme] .shop-logo,
+[data-color-theme] .cat-icon, [data-color-theme] .cat-icon-img,
+[data-color-theme] .inv-header-icon img, [data-color-theme] .icon-img,
+[data-color-theme] #bsIcon, [data-color-theme] #duaCatIcon,
+[data-color-theme2] .logo-img, [data-color-theme2] .inv-logo,
+[data-color-theme2] .index-logo, [data-color-theme2] .shop-logo,
+[data-color-theme2] .cat-icon, [data-color-theme2] .cat-icon-img,
+[data-color-theme2] .inv-header-icon img, [data-color-theme2] .icon-img,
+[data-color-theme2] #bsIcon, [data-color-theme2] #duaCatIcon { filter: var(--icon-filter); }
+
+/* ════════════════════════════════════════════════════════════════
+   SÉRIE 1 — 30 THÈMES
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── 1. ISLAM — Liquid Glass Parchemin ──────────────────────── */
+body.day[data-color-theme="islam"] {
+  --ac:#1B6B3A; --ac-light:#2E9B58; --ac-dark:#0D4020; --ac-shine:#A8D8B8; --acr:27,107,58;
+  --bg:#F5F0E8; --bg2:#EDE8D8; --text:#0A160C; --text2:#1A3020; --text3:#2A4830;
+  --card-bg:rgba(255,255,255,0.65); --card-border:rgba(27,107,58,0.18); --card-shadow:0 8px 32px rgba(27,107,58,0.10);
+  --arabic-color:#1B6B3A; --phonetic-color:#2E8048; --hadith-color:#1C4228;
+  --icon-filter:sepia(1) saturate(3.5) hue-rotate(88deg) brightness(0.73);
+  background:#F5F0E8 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+}
+body.night[data-color-theme="islam"] {
+  --ac:#2E9B58; --ac-light:#4ABB74; --ac-dark:#1B6B3A; --ac-shine:#B8ECC8; --acr:46,155,88;
+  --bg:#060D08; --bg2:#0A1510; --text:#B8ECC8; --text2:#78C890; --text3:#4AA864;
+  --card-bg:rgba(10,22,12,0.82); --card-border:rgba(46,155,88,0.22); --card-shadow:0 8px 32px rgba(0,0,0,0.55);
+  --arabic-color:#78C890; --phonetic-color:#78C890; --hadith-color:#4AA864;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(95deg) brightness(1.0);
+  background:#060D08; background-image:radial-gradient(ellipse 80% 50% at 50% 0%, rgba(27,107,58,0.12) 0%, transparent 70%);
+}
+[data-color-theme="islam"] .deen-card,
+[data-color-theme="islam"] .accordion,
+[data-color-theme="islam"] .cat-card,
+[data-color-theme="islam"] .sub-card { border-radius:28px !important; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.3) !important; }
+[data-color-theme="islam"] .deen-card::after,
+[data-color-theme="islam"] .cat-card::after { display:none; }
+
+/* ── 2. FORÊT — Editorial Flat ──────────────────────────────── */
+body.day[data-color-theme="foret"] {
+  --ac:#2D5A3D; --ac-light:#4A8060; --ac-dark:#183828; --ac-shine:#A0C8B0; --acr:45,90,61;
+  --bg:#F2F6F2; --bg2:#E4EEE4; --text:#060E06; --text2:#101C10; --text3:#1C2E1C;
+  --card-bg:#FFFFFF; --card-border:rgba(45,90,61,0.10); --card-shadow:0 2px 4px rgba(45,90,61,0.05),0 16px 40px rgba(45,90,61,0.08);
+  --arabic-color:#2D5A3D; --phonetic-color:#2D5A3D; --hadith-color:#183828;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(75deg) brightness(0.68);
+  background:#F2F6F2;
+}
+body.night[data-color-theme="foret"] {
+  --ac:#4A8060; --ac-light:#68A880; --ac-dark:#2D5A3D; --ac-shine:#A8D8B8; --acr:74,128,96;
+  --bg:#060A06; --bg2:#0A1009; --text:#C8E8D0; --text2:#88C8A0; --text3:#5A9870;
+  --card-bg:#101810; --card-border:rgba(74,128,96,0.13); --card-shadow:0 2px 4px rgba(0,0,0,0.3),0 16px 40px rgba(0,0,0,0.4);
+  --arabic-color:#88C8A0; --phonetic-color:#88C8A0; --hadith-color:#5A9870;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(80deg) brightness(0.92);
+  background:#060A06;
+}
+[data-color-theme="foret"] .deen-card,
+[data-color-theme="foret"] .accordion,
+[data-color-theme="foret"] .cat-card,
+[data-color-theme="foret"] .sub-card { border:none !important; border-radius:20px !important; }
+[data-color-theme="foret"] .deen-card::after,
+[data-color-theme="foret"] .cat-card::after { display:none; }
+[data-color-theme="foret"] .arabic-block { font-size:34px !important; letter-spacing:0.05em; }
+[data-color-theme="foret"] .index-brand { letter-spacing:0.45em; font-size:19px; }
+
+/* ── 3. JADE — Material Relief ──────────────────────────────── */
+body.day[data-color-theme="jade"] {
+  --ac:#3A7A68; --ac-light:#5AA088; --ac-dark:#1E5248; --ac-shine:#B0D8CC; --acr:58,122,104;
+  --bg:#EEF4F2; --bg2:#E0EDE8; --text:#060E0C; --text2:#102826; --text3:#1A3C38;
+  --card-bg:#F8FCFA; --card-border:rgba(58,122,104,0.16); --card-shadow:0 1px 0 rgba(255,255,255,0.9),0 4px 16px rgba(58,122,104,0.08),inset 0 1px 0 rgba(255,255,255,0.9);
+  --arabic-color:#3A7A68; --phonetic-color:#3A7A68; --hadith-color:#1E5248;
+  --icon-filter:sepia(1) saturate(2.2) hue-rotate(130deg) brightness(0.82);
+  background:#EEF4F2; background-image:repeating-linear-gradient(135deg,transparent 0,transparent 40px,rgba(58,122,104,0.03) 40px,rgba(58,122,104,0.03) 41px);
+}
+body.night[data-color-theme="jade"] {
+  --ac:#5AA088; --ac-light:#7ABCA8; --ac-dark:#3A7A68; --ac-shine:#B8DDD5; --acr:90,160,136;
+  --bg:#04100C; --bg2:#081814; --text:#B8DDD5; --text2:#78B8A8; --text3:#508070;
+  --card-bg:#0C1A16; --card-border:rgba(90,160,136,0.16); --card-shadow:0 1px 0 rgba(90,160,136,0.10),0 8px 24px rgba(0,0,0,0.5);
+  --arabic-color:#78B8A8; --phonetic-color:#78B8A8; --hadith-color:#508070;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(135deg) brightness(1.08);
+  background:#04100C;
+}
+[data-color-theme="jade"] .deen-card,
+[data-color-theme="jade"] .accordion,
+[data-color-theme="jade"] .cat-card { border-radius:16px !important; }
+[data-color-theme="jade"] .circle-btn,
+[data-color-theme="jade"] .back-arrow { border-radius:10px !important; }
+
+/* ── 4. SAUGE — Soft Bubble 32px ───────────────────────────── */
+body.day[data-color-theme="sauge"] {
+  --ac:#6A9468; --ac-light:#8AB888; --ac-dark:#486048; --ac-shine:#C4DCC2; --acr:106,148,104;
+  --bg:#F0F6EF; --bg2:#E4EEE3; --text:#0E1A0D; --text2:#1E2E1D; --text3:#304830;
+  --card-bg:rgba(240,250,240,0.80); --card-border:rgba(106,148,104,0.14); --card-shadow:0 4px 24px rgba(106,148,104,0.10);
+  --arabic-color:#4A7848; --phonetic-color:#4A7848; --hadith-color:#304E2E;
+  --icon-filter:sepia(1) saturate(1.8) hue-rotate(68deg) brightness(0.88);
+  background:#ECF4EB; background-image:radial-gradient(ellipse 120% 80% at 50% -20%,rgba(106,148,104,0.08) 0%,transparent 60%);
+}
+body.night[data-color-theme="sauge"] {
+  --ac:#7D9E7A; --ac-light:#A0C09C; --ac-dark:#4A7848; --ac-shine:#C4DCC2; --acr:125,158,122;
+  --bg:#080E08; --bg2:#0C1410; --text:#C4DCC2; --text2:#90B88C; --text3:#6E9468;
+  --card-bg:rgba(16,28,16,0.85); --card-border:rgba(125,158,122,0.14); --card-shadow:0 4px 24px rgba(0,0,0,0.5);
+  --arabic-color:#90B88C; --phonetic-color:#90B88C; --hadith-color:#6E9468;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(68deg) brightness(1.08);
+  background:#080E08;
+}
+[data-color-theme="sauge"] .deen-card,
+[data-color-theme="sauge"] .accordion,
+[data-color-theme="sauge"] .cat-card,
+[data-color-theme="sauge"] .sub-card { border-radius:32px !important; border:none !important; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+[data-color-theme="sauge"] .deen-card::after,
+[data-color-theme="sauge"] .cat-card::after { display:none; }
+[data-color-theme="sauge"] .circle-btn,
+[data-color-theme="sauge"] .back-arrow { border-radius:14px !important; }
+
+/* ── 5. ÉMERAUDE — Neon Edge ────────────────────────────────── */
+body.day[data-color-theme="emeraude"] {
+  --ac:#0D8060; --ac-light:#18A878; --ac-dark:#065840; --ac-shine:#90D8C0; --acr:13,128,96;
+  --bg:#EDF8F4; --bg2:#DCF0E8; --text:#041410; --text2:#0A2820; --text3:#103C30;
+  --card-bg:#F5FCF9; --card-border:rgba(13,128,96,0.18); --card-shadow:0 4px 20px rgba(13,128,96,0.12),0 0 0 1px rgba(13,128,96,0.06);
+  --arabic-color:#0D8060; --phonetic-color:#0D8060; --hadith-color:#065840;
+  --icon-filter:sepia(1) saturate(3.5) hue-rotate(108deg) brightness(0.76);
+  background:#EDF8F4; background-image:radial-gradient(ellipse 60% 40% at 50% 100%,rgba(13,128,96,0.06) 0%,transparent 70%);
+}
+body.night[data-color-theme="emeraude"] {
+  --ac:#18A878; --ac-light:#30C890; --ac-dark:#0D8060; --ac-shine:#A0E8D0; --acr:24,168,120;
+  --bg:#020C08; --bg2:#061410; --text:#A0E8D0; --text2:#58C8A0; --text3:#28A878;
+  --card-bg:#081410; --card-border:rgba(24,168,120,0.15); --card-shadow:0 4px 24px rgba(0,0,0,0.6),0 0 20px rgba(24,168,120,0.05);
+  --arabic-color:#58C8A0; --phonetic-color:#58C8A0; --hadith-color:#28A878;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(113deg) brightness(1.05);
+  background:#020C08; background-image:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(24,168,120,0.08) 0%,transparent 60%);
+}
+body.night[data-color-theme="emeraude"] .index-brand,
+body.night[data-color-theme="emeraude"] .inv-header-name { text-shadow:0 0 20px rgba(24,168,120,0.5); }
+
+/* ── 6. SABLE — Manuscrit Lignes ───────────────────────────── */
+body.day[data-color-theme="sable"] {
+  --ac:#A07840; --ac-light:#C09858; --ac-dark:#705820; --ac-shine:#E0C898; --acr:160,120,64;
+  --bg:#FAF5E8; --bg2:#F2EAD8; --text:#180E04; --text2:#2E200A; --text3:#483418;
+  --card-bg:#FFFDF5; --card-border:rgba(160,120,64,0.18); --card-shadow:0 2px 12px rgba(160,120,64,0.10);
+  --arabic-color:#A07840; --phonetic-color:#A07840; --hadith-color:#705820;
+  --icon-filter:sepia(1) saturate(1.5) hue-rotate(10deg) brightness(0.85);
+  background:#F5F0E4 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E"),repeating-linear-gradient(0deg,transparent 0,transparent 27px,rgba(160,120,64,0.05) 27px,rgba(160,120,64,0.05) 28px);
+}
+body.night[data-color-theme="sable"] {
+  --ac:#C09858; --ac-light:#E0B870; --ac-dark:#A07840; --ac-shine:#F0D8A8; --acr:192,152,88;
+  --bg:#100A04; --bg2:#1A1208; --text:#F0D8A8; --text2:#C8A870; --text3:#A08040;
+  --card-bg:#1A1408; --card-border:rgba(192,152,88,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.55);
+  --arabic-color:#C8A870; --phonetic-color:#C8A870; --hadith-color:#A08040;
+  --icon-filter:sepia(1) saturate(1.8) hue-rotate(10deg) brightness(1.05);
+  background:#100A04;
+}
+[data-color-theme="sable"] .deen-card,
+[data-color-theme="sable"] .accordion { border-radius:4px !important; border:none !important; border-left:3px solid rgba(160,120,64,0.35) !important; box-shadow:0 2px 12px rgba(160,120,64,0.08) !important; }
+[data-color-theme="sable"] .deen-card::after { display:none; }
+[data-color-theme="sable"] .arabic-block { font-size:36px !important; }
+
+/* ── 7. ARGILE — Wabi-Sabi Asymétrique ─────────────────────── */
+body.day[data-color-theme="argile"] {
+  --ac:#8A5840; --ac-light:#AA7858; --ac-dark:#5C3820; --ac-shine:#D8B8A0; --acr:138,88,64;
+  --bg:#F5EDE4; --bg2:#EDE0D4; --text:#180C08; --text2:#2E1C14; --text3:#482C20;
+  --card-bg:#FDF8F4; --card-border:rgba(138,88,64,0.18); --card-shadow:3px 3px 0 rgba(138,88,64,0.12),0 8px 28px rgba(138,88,64,0.08);
+  --arabic-color:#8A5840; --phonetic-color:#8A5840; --hadith-color:#5C3820;
+  --icon-filter:sepia(1) saturate(1.2) hue-rotate(8deg) brightness(0.82);
+  background:#F0E6D8; background-image:repeating-linear-gradient(45deg,transparent 0,transparent 6px,rgba(138,88,64,0.04) 6px,rgba(138,88,64,0.04) 7px),repeating-linear-gradient(-45deg,transparent 0,transparent 6px,rgba(138,88,64,0.04) 6px,rgba(138,88,64,0.04) 7px);
+}
+body.night[data-color-theme="argile"] {
+  --ac:#AA7858; --ac-light:#C89870; --ac-dark:#8A5840; --ac-shine:#E0C0A0; --acr:170,120,88;
+  --bg:#0E0804; --bg2:#180E08; --text:#F0D8C0; --text2:#C8A888; --text3:#A07850;
+  --card-bg:#1A1008; --card-border:rgba(170,120,88,0.18); --card-shadow:3px 3px 0 rgba(170,120,88,0.15),0 8px 24px rgba(0,0,0,0.55);
+  --arabic-color:#C8A888; --phonetic-color:#C8A888; --hadith-color:#A07850;
+  --icon-filter:sepia(1) saturate(1.5) hue-rotate(8deg) brightness(1.05);
+  background:#0E0804;
+}
+[data-color-theme="argile"] .deen-card,
+[data-color-theme="argile"] .accordion,
+[data-color-theme="argile"] .cat-card { border-radius:4px 18px 4px 18px !important; }
+[data-color-theme="argile"] .deen-card::after,
+[data-color-theme="argile"] .cat-card::after { display:none; }
+[data-color-theme="argile"] .circle-btn,
+[data-color-theme="argile"] .back-arrow { border-radius:4px 16px !important; }
+
+/* ── 8. DUNE — Cinématique Border-Top ───────────────────────── */
+body.day[data-color-theme="dune"] {
+  --ac:#C87830; --ac-light:#E09848; --ac-dark:#905818; --ac-shine:#F0C888; --acr:200,120,48;
+  --bg:#FBF2E4; --bg2:#F2E4CC; --text:#180C04; --text2:#2E1C08; --text3:#4A2C10;
+  --card-bg:#FFFDF6; --card-border:rgba(200,120,48,0.18); --card-shadow:0 12px 40px rgba(200,120,48,0.12);
+  --arabic-color:#C87830; --phonetic-color:#C87830; --hadith-color:#905818;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(18deg) brightness(0.88);
+  background:#FBF2E4; background-image:linear-gradient(180deg,rgba(200,120,48,0.04) 0%,transparent 40%);
+}
+body.night[data-color-theme="dune"] {
+  --ac:#E09848; --ac-light:#F8B860; --ac-dark:#C87830; --ac-shine:#F8D8A0; --acr:224,152,72;
+  --bg:#120804; --bg2:#1E1008; --text:#F8D8A0; --text2:#D0A860; --text3:#A87830;
+  --card-bg:#1E1408; --card-border:rgba(224,152,72,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.55),0 0 40px rgba(224,152,72,0.03);
+  --arabic-color:#D0A860; --phonetic-color:#D0A860; --hadith-color:#A87830;
+  --icon-filter:sepia(1) saturate(2.2) hue-rotate(18deg) brightness(1.08);
+  background:#120804; background-image:radial-gradient(ellipse 100% 60% at 50% 100%,rgba(200,80,0,0.08) 0%,transparent 60%);
+}
+[data-color-theme="dune"] .deen-card,
+[data-color-theme="dune"] .accordion,
+[data-color-theme="dune"] .cat-card { border-radius:18px !important; border:none !important; border-top:3px solid var(--ac) !important; }
+[data-color-theme="dune"] .deen-card::after,
+[data-color-theme="dune"] .cat-card::after { display:none; }
+
+/* ── 9. OCRE — Brutalisme Ombre Décalée ─────────────────────── */
+body.day[data-color-theme="ocre"] {
+  --ac:#B86820; --ac-light:#D88838; --ac-dark:#804810; --ac-shine:#E8B880; --acr:184,104,32;
+  --bg:#F8F0E4; --bg2:#EEE0CC; --text:#160A04; --text2:#2A1608; --text3:#402410;
+  --card-bg:#FFFFFF; --card-border:#1A1A1A; --card-shadow:5px 5px 0 rgba(184,104,32,0.20);
+  --arabic-color:#B86820; --phonetic-color:#B86820; --hadith-color:#804810;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(22deg) brightness(0.82);
+  background:#F8F0E4;
+}
+body.night[data-color-theme="ocre"] {
+  --ac:#D88838; --ac-light:#F0A850; --ac-dark:#B86820; --ac-shine:#F8D090; --acr:216,136,56;
+  --bg:#100804; --bg2:#1C1008; --text:#F8D090; --text2:#D09050; --text3:#A86828;
+  --card-bg:#1C1408; --card-border:rgba(216,136,56,0.40); --card-shadow:5px 5px 0 rgba(216,136,56,0.15);
+  --arabic-color:#D09050; --phonetic-color:#D09050; --hadith-color:#A86828;
+  --icon-filter:sepia(1) saturate(2.2) hue-rotate(22deg) brightness(1.05);
+  background:#100804;
+}
+[data-color-theme="ocre"] .deen-card,
+[data-color-theme="ocre"] .accordion,
+[data-color-theme="ocre"] .cat-card,
+[data-color-theme="ocre"] .sub-card { border-radius:0 !important; border:2px solid var(--card-border) !important; box-shadow:5px 5px 0 rgba(184,104,32,0.20) !important; }
+[data-color-theme="ocre"] .deen-card::after,
+[data-color-theme="ocre"] .cat-card::after { display:none; }
+[data-color-theme="ocre"] .circle-btn,
+[data-color-theme="ocre"] .back-arrow,
+[data-color-theme="ocre"] .lang-btn,
+[data-color-theme="ocre"] .dua-back { border-radius:0 !important; }
+
+/* ── 10. SILEX — Séparateurs Seuls ─────────────────────────── */
+body.day[data-color-theme="silex"] {
+  --ac:#5A6848; --ac-light:#788860; --ac-dark:#384828; --ac-shine:#B8C8A0; --acr:90,104,72;
+  --bg:#F6F4F0; --bg2:#ECEAE4; --text:#141210; --text2:#282420; --text3:#403C38;
+  --card-bg:transparent; --card-border:rgba(90,104,72,0.15); --card-shadow:none;
+  --arabic-color:#5A6848; --phonetic-color:#5A6848; --hadith-color:#384828;
+  --icon-filter:sepia(1) saturate(1.4) hue-rotate(50deg) brightness(0.82);
+  background:#F6F4F0;
+}
+body.night[data-color-theme="silex"] {
+  --ac:#788860; --ac-light:#98A878; --ac-dark:#5A6848; --ac-shine:#C8D8B0; --acr:120,136,96;
+  --bg:#0E0E0C; --bg2:#181814; --text:#E8E4DC; --text2:#B8B4A8; --text3:#888478;
+  --card-bg:transparent; --card-border:rgba(120,136,96,0.12); --card-shadow:none;
+  --arabic-color:#B8B4A8; --phonetic-color:#B8B4A8; --hadith-color:#888478;
+  --icon-filter:sepia(1) saturate(1.4) hue-rotate(50deg) brightness(1.05);
+  background:#0E0E0C;
+}
+[data-color-theme="silex"] .deen-card,
+[data-color-theme="silex"] .accordion { border:none !important; border-radius:0 !important; border-bottom:1px solid var(--card-border) !important; box-shadow:none !important; background:transparent !important; }
+[data-color-theme="silex"] .deen-card::after { display:none; }
+[data-color-theme="silex"] .cat-card,
+[data-color-theme="silex"] .sub-card { border-radius:8px !important; border:1px solid rgba(90,104,72,0.12) !important; box-shadow:none !important; }
+[data-color-theme="silex"] .index-brand { font-weight:300; letter-spacing:0.5em; }
+
+/* ── 11. NUIT — Starfield Glow ──────────────────────────────── */
+body.day[data-color-theme="nuit"] {
+  --ac:#2A4A8A; --ac-light:#4868A8; --ac-dark:#142860; --ac-shine:#A0B4D8; --acr:42,74,138;
+  --bg:#EEF0F8; --bg2:#E0E4F4; --text:#080C1A; --text2:#101828; --text3:#1C2840;
+  --card-bg:#FAFBFF; --card-border:rgba(42,74,138,0.14); --card-shadow:0 4px 20px rgba(42,74,138,0.10);
+  --arabic-color:#2A4A8A; --phonetic-color:#2A4A8A; --hadith-color:#142860;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(200deg) brightness(0.75);
+  background:#EEF0F8;
+}
+body.night[data-color-theme="nuit"] {
+  --ac:#5878C8; --ac-light:#7898E0; --ac-dark:#2A4A8A; --ac-shine:#B0C0E8; --acr:88,120,200;
+  --bg:#04060F; --bg2:#080C1A; --text:#C0CCEE; --text2:#8898CC; --text3:#5868A0;
+  --card-bg:#0A0E1C; --card-border:rgba(88,120,200,0.16); --card-shadow:0 4px 24px rgba(0,0,0,0.6),0 0 60px rgba(88,120,200,0.04);
+  --arabic-color:#8898CC; --phonetic-color:#8898CC; --hadith-color:#5868A0;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(205deg) brightness(1.1);
+  background:#04060F; background-image:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(42,74,138,0.15) 0%,transparent 70%),radial-gradient(circle at 20% 30%,rgba(255,255,255,0.025) 1px,transparent 1px),radial-gradient(circle at 75% 20%,rgba(255,255,255,0.02) 1px,transparent 1px),radial-gradient(circle at 55% 70%,rgba(255,255,255,0.018) 1px,transparent 1px);
+}
+body.night[data-color-theme="nuit"] .index-brand,
+body.night[data-color-theme="nuit"] .inv-header-name { text-shadow:0 0 20px rgba(88,120,200,0.6),0 0 40px rgba(88,120,200,0.3); }
+[data-color-theme="nuit"] .deen-card,
+[data-color-theme="nuit"] .accordion { border-radius:20px !important; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); }
+
+/* ── 12. MOSQUÉE — Clip-Path Octogonal ──────────────────────── */
+body.day[data-color-theme="mosquee"] {
+  --ac:#1A5A8A; --ac-light:#2E78A8; --ac-dark:#0A3860; --ac-shine:#90C0E0; --acr:26,90,138;
+  --bg:#EDF4FA; --bg2:#DCE8F4; --text:#060E18; --text2:#0E1C2E; --text3:#183048;
+  --card-bg:#F5FBFF; --card-border:rgba(26,90,138,0.16); --card-shadow:0 4px 20px rgba(26,90,138,0.10);
+  --arabic-color:#1A5A8A; --phonetic-color:#1A5A8A; --hadith-color:#0A3860;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(195deg) brightness(0.72);
+  background:#EDF4FA; background-image:repeating-linear-gradient(60deg,transparent 0,transparent 20px,rgba(26,90,138,0.04) 20px,rgba(26,90,138,0.04) 21px),repeating-linear-gradient(-60deg,transparent 0,transparent 20px,rgba(26,90,138,0.04) 20px,rgba(26,90,138,0.04) 21px);
+}
+body.night[data-color-theme="mosquee"] {
+  --ac:#3A90C8; --ac-light:#58B0E8; --ac-dark:#1A5A8A; --ac-shine:#A8D8F8; --acr:58,144,200;
+  --bg:#040810; --bg2:#080E1C; --text:#B0D8F8; --text2:#70A8D8; --text3:#4080B8;
+  --card-bg:#0A1020; --card-border:rgba(58,144,200,0.16); --card-shadow:0 4px 24px rgba(0,0,0,0.6);
+  --arabic-color:#70A8D8; --phonetic-color:#70A8D8; --hadith-color:#4080B8;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(198deg) brightness(1.1);
+  background:#040810; background-image:repeating-linear-gradient(60deg,transparent 0,transparent 20px,rgba(58,144,200,0.05) 20px,rgba(58,144,200,0.05) 21px),repeating-linear-gradient(-60deg,transparent 0,transparent 20px,rgba(58,144,200,0.05) 20px,rgba(58,144,200,0.05) 21px);
+}
+[data-color-theme="mosquee"] .deen-card,
+[data-color-theme="mosquee"] .accordion { border-radius:4px !important; clip-path:polygon(12px 0%,calc(100% - 12px) 0%,100% 12px,100% calc(100% - 12px),calc(100% - 12px) 100%,12px 100%,0% calc(100% - 12px),0% 12px); border:none !important; }
+[data-color-theme="mosquee"] .deen-card::after { display:none; }
+[data-color-theme="mosquee"] .cat-card { clip-path:polygon(8px 0%,calc(100% - 8px) 0%,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0% calc(100% - 8px),0% 8px); border-radius:0 !important; border:none !important; }
+[data-color-theme="mosquee"] .cat-card::after { display:none; }
+[data-color-theme="mosquee"] .circle-btn,
+[data-color-theme="mosquee"] .back-arrow { border-radius:4px !important; }
+
+/* ── 13. LAPIS — Double Bordure Glassmorphism ───────────────── */
+body.day[data-color-theme="lapis"] {
+  --ac:#1A3A78; --ac-light:#2C5898; --ac-dark:#0A2050; --ac-shine:#90A8D8; --acr:26,58,120;
+  --bg:#F0F2F8; --bg2:#E0E4F4; --text:#080C1C; --text2:#101828; --text3:#1C2840;
+  --card-bg:rgba(255,255,255,0.78); --card-border:rgba(26,58,120,0.14); --card-shadow:0 8px 40px rgba(26,58,120,0.12),inset 0 1px 0 rgba(255,255,255,0.9);
+  --arabic-color:#1A3A78; --phonetic-color:#1A3A78; --hadith-color:#0A2050;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(210deg) brightness(0.68);
+  background:#EEF0F8;
+}
+body.night[data-color-theme="lapis"] {
+  --ac:#4868C8; --ac-light:#6888E8; --ac-dark:#1A3A78; --ac-shine:#A8B8E8; --acr:72,104,200;
+  --bg:#020408; --bg2:#060A14; --text:#C0C8F0; --text2:#8090D0; --text3:#5060A8;
+  --card-bg:rgba(6,10,24,0.88); --card-border:rgba(72,104,200,0.18); --card-shadow:0 8px 40px rgba(0,0,0,0.7),inset 0 1px 0 rgba(72,104,200,0.08);
+  --arabic-color:#8090D0; --phonetic-color:#8090D0; --hadith-color:#5060A8;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(215deg) brightness(1.1);
+  background:#020408; background-image:radial-gradient(ellipse 100% 60% at 20% 50%,rgba(26,58,120,0.12) 0%,transparent 60%),radial-gradient(ellipse 80% 60% at 80% 50%,rgba(72,104,200,0.08) 0%,transparent 60%);
+}
+[data-color-theme="lapis"] .deen-card,
+[data-color-theme="lapis"] .accordion { border-radius:24px !important; backdrop-filter:blur(20px) saturate(180%); -webkit-backdrop-filter:blur(20px) saturate(180%); outline:1px solid rgba(255,255,255,0.4); outline-offset:-3px; }
+body.night[data-color-theme="lapis"] .deen-card,
+body.night[data-color-theme="lapis"] .accordion { outline-color:rgba(72,104,200,0.12); }
+
+/* ── 14. TURQUOISE — Border-Bottom Colorée ──────────────────── */
+body.day[data-color-theme="turquoise"] {
+  --ac:#0A7878; --ac-light:#189898; --ac-dark:#045050; --ac-shine:#88D0D0; --acr:10,120,120;
+  --bg:#EBF7F7; --bg2:#D8F0F0; --text:#041010; --text2:#082020; --text3:#103434;
+  --card-bg:#F5FCFC; --card-border:rgba(10,120,120,0.16); --card-shadow:0 8px 32px rgba(10,120,120,0.10);
+  --arabic-color:#0A7878; --phonetic-color:#0A7878; --hadith-color:#045050;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(155deg) brightness(0.72);
+  background:#EBF7F7; background-image:radial-gradient(ellipse 80% 60% at 0% 0%,rgba(10,120,120,0.06) 0%,transparent 60%),radial-gradient(ellipse 80% 60% at 100% 100%,rgba(10,120,120,0.06) 0%,transparent 60%);
+}
+body.night[data-color-theme="turquoise"] {
+  --ac:#18A8A8; --ac-light:#30C8C8; --ac-dark:#0A7878; --ac-shine:#A0E0E0; --acr:24,168,168;
+  --bg:#020C0C; --bg2:#061414; --text:#A0E0E0; --text2:#60C0C0; --text3:#30A0A0;
+  --card-bg:#081818; --card-border:rgba(24,168,168,0.16); --card-shadow:0 4px 24px rgba(0,0,0,0.6);
+  --arabic-color:#60C0C0; --phonetic-color:#60C0C0; --hadith-color:#30A0A0;
+  --icon-filter:sepia(1) saturate(3.5) hue-rotate(158deg) brightness(1.08);
+  background:#020C0C;
+}
+[data-color-theme="turquoise"] .deen-card,
+[data-color-theme="turquoise"] .accordion,
+[data-color-theme="turquoise"] .cat-card { border-radius:22px !important; border:none !important; border-bottom:3px solid rgba(10,120,120,0.25) !important; }
+[data-color-theme="turquoise"] .deen-card::after,
+[data-color-theme="turquoise"] .cat-card::after { display:none; }
+
+/* ── 15. FAJR — Vapeur Douce 26px ───────────────────────────── */
+body.day[data-color-theme="fajr"] {
+  --ac:#4A6888; --ac-light:#6888A8; --ac-dark:#2A4868; --ac-shine:#A8C0D8; --acr:74,104,136;
+  --bg:#F2F5FA; --bg2:#E4EAF4; --text:#0A0E18; --text2:#141C2C; --text3:#202C40;
+  --card-bg:rgba(250,252,255,0.85); --card-border:rgba(74,104,136,0.14); --card-shadow:0 4px 24px rgba(74,104,136,0.10);
+  --arabic-color:#4A6888; --phonetic-color:#4A6888; --hadith-color:#2A4868;
+  --icon-filter:sepia(1) saturate(1.8) hue-rotate(195deg) brightness(0.85);
+  background:#F0F4FA; background-image:linear-gradient(180deg,rgba(74,104,136,0.06) 0%,transparent 50%);
+}
+body.night[data-color-theme="fajr"] {
+  --ac:#7898C8; --ac-light:#98B8E8; --ac-dark:#4A6888; --ac-shine:#C0D4F0; --acr:120,152,200;
+  --bg:#060810; --bg2:#0A0E1A; --text:#C8D8F0; --text2:#8898C8; --text3:#5868A0;
+  --card-bg:rgba(10,14,26,0.88); --card-border:rgba(120,152,200,0.14); --card-shadow:0 4px 24px rgba(0,0,0,0.6);
+  --arabic-color:#8898C8; --phonetic-color:#8898C8; --hadith-color:#5868A0;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(200deg) brightness(1.1);
+  background:#060810; background-image:linear-gradient(180deg,rgba(74,104,136,0.12) 0%,transparent 40%);
+}
+[data-color-theme="fajr"] .deen-card,
+[data-color-theme="fajr"] .accordion,
+[data-color-theme="fajr"] .cat-card,
+[data-color-theme="fajr"] .sub-card { border-radius:26px !important; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border:1px solid rgba(74,104,136,0.14) !important; }
+[data-color-theme="fajr"] .deen-card::after,
+[data-color-theme="fajr"] .cat-card::after { display:none; }
+
+/* ── 16. ENCRE — Coin Plié ──────────────────────────────────── */
+body.day[data-color-theme="encre"] {
+  --ac:#1A1A2A; --ac-light:#302A40; --ac-dark:#080810; --ac-shine:#A0A0C0; --acr:26,26,42;
+  --bg:#FAFAFA; --bg2:#F4F4F8; --text:#080810; --text2:#18181E; --text3:#282830;
+  --card-bg:#FFFFFF; --card-border:rgba(26,26,42,0.10); --card-shadow:0 2px 4px rgba(0,0,0,0.04),0 12px 40px rgba(0,0,0,0.08);
+  --arabic-color:#1A1A2A; --phonetic-color:#383848; --hadith-color:#282830;
+  --icon-filter:sepia(0) saturate(0) brightness(0.15);
+  background:#FAFAFA;
+}
+body.night[data-color-theme="encre"] {
+  --ac:#D0D0E8; --ac-light:#E8E8FF; --ac-dark:#A0A0C0; --ac-shine:#F0F0FF; --acr:208,208,232;
+  --bg:#080808; --bg2:#101010; --text:#F0F0F8; --text2:#C0C0D8; --text3:#909098;
+  --card-bg:#101010; --card-border:rgba(208,208,232,0.10); --card-shadow:0 2px 0 rgba(255,255,255,0.03),0 12px 40px rgba(0,0,0,0.5);
+  --arabic-color:#D0D0E8; --phonetic-color:#C0C0D8; --hadith-color:#909098;
+  --icon-filter:sepia(0) saturate(0) brightness(0.85);
+  background:#080808;
+}
+[data-color-theme="encre"] .deen-card,
+[data-color-theme="encre"] .accordion,
+[data-color-theme="encre"] .cat-card,
+[data-color-theme="encre"] .sub-card { border-radius:0 14px 14px 14px !important; border:1px solid var(--card-border) !important; }
+[data-color-theme="encre"] .circle-btn,
+[data-color-theme="encre"] .back-arrow,
+[data-color-theme="encre"] .lang-btn { border-radius:4px !important; }
+
+/* ── 17. CHARBON — Ton sur Ton Minimal ──────────────────────── */
+body.day[data-color-theme="charbon"] {
+  --ac:#383830; --ac-light:#504848; --ac-dark:#181810; --ac-shine:#B0A898; --acr:56,56,48;
+  --bg:#F8F6F2; --bg2:#EEE8E0; --text:#0C0C0A; --text2:#181816; --text3:#282824;
+  --card-bg:#FFFEFC; --card-border:rgba(56,56,48,0.12); --card-shadow:0 2px 8px rgba(56,56,48,0.06),0 16px 40px rgba(56,56,48,0.08);
+  --arabic-color:#383830; --phonetic-color:#504848; --hadith-color:#282820;
+  --icon-filter:sepia(0.5) saturate(0.5) brightness(0.3);
+  background:#F5F3EE;
+}
+body.night[data-color-theme="charbon"] {
+  --ac:#C8C0B0; --ac-light:#E0D8C8; --ac-dark:#A09880; --ac-shine:#F0E8D8; --acr:200,192,176;
+  --bg:#0A0A08; --bg2:#141410; --text:#F0E8D8; --text2:#C8C0B0; --text3:#988878;
+  --card-bg:#141410; --card-border:rgba(200,192,176,0.12); --card-shadow:0 2px 0 rgba(255,255,255,0.02),0 12px 40px rgba(0,0,0,0.5);
+  --arabic-color:#C8C0B0; --phonetic-color:#C8C0B0; --hadith-color:#988878;
+  --icon-filter:sepia(0.3) saturate(0.5) brightness(0.75);
+  background:#0A0A08;
+}
+[data-color-theme="charbon"] .deen-card,
+[data-color-theme="charbon"] .accordion,
+[data-color-theme="charbon"] .cat-card { border-radius:10px !important; }
+
+/* ── 18. ÉBÈNE — Pill 40px Organique ───────────────────────── */
+body.day[data-color-theme="ebene"] {
+  --ac:#183020; --ac-light:#284830; --ac-dark:#081808; --ac-shine:#90A890; --acr:24,48,32;
+  --bg:#F2F5F2; --bg2:#E4EAE4; --text:#060E06; --text2:#101C10; --text3:#1C2E1C;
+  --card-bg:#FAFCFA; --card-border:rgba(24,48,32,0.12); --card-shadow:0 4px 32px rgba(24,48,32,0.08);
+  --arabic-color:#183020; --phonetic-color:#284830; --hadith-color:#102018;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(88deg) brightness(0.35);
+  background:#F2F5F2;
+}
+body.night[data-color-theme="ebene"] {
+  --ac:#7AAA88; --ac-light:#98C8A8; --ac-dark:#4A7858; --ac-shine:#C0D8C8; --acr:122,170,136;
+  --bg:#040804; --bg2:#080E08; --text:#D8ECD8; --text2:#98C898; --text3:#609860;
+  --card-bg:#080E08; --card-border:rgba(122,170,136,0.14); --card-shadow:0 4px 32px rgba(0,0,0,0.55);
+  --arabic-color:#98C898; --phonetic-color:#98C898; --hadith-color:#609860;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(92deg) brightness(0.95);
+  background:#040804;
+}
+[data-color-theme="ebene"] .deen-card,
+[data-color-theme="ebene"] .accordion { border-radius:40px !important; border:none !important; }
+[data-color-theme="ebene"] .deen-card::after { display:none; }
+[data-color-theme="ebene"] .cat-card,
+[data-color-theme="ebene"] .sub-card { border-radius:32px !important; }
+
+/* ── 19. ANTHRACITE — Border-Top Acier ──────────────────────── */
+body.day[data-color-theme="anthracite"] {
+  --ac:#3A4848; --ac-light:#506060; --ac-dark:#202E2E; --ac-shine:#A8B8B8; --acr:58,72,72;
+  --bg:#F2F4F4; --bg2:#E4E8E8; --text:#080C0C; --text2:#141C1C; --text3:#202C2C;
+  --card-bg:rgba(255,255,255,0.88); --card-border:rgba(58,72,72,0.12); --card-shadow:0 2px 8px rgba(58,72,72,0.06),0 12px 36px rgba(58,72,72,0.08);
+  --arabic-color:#3A4848; --phonetic-color:#506060; --hadith-color:#202E2E;
+  --icon-filter:sepia(0.3) saturate(0.8) hue-rotate(160deg) brightness(0.4);
+  background:#ECEEF0; background-image:repeating-linear-gradient(0deg,transparent 0,transparent 40px,rgba(58,72,72,0.03) 40px,rgba(58,72,72,0.03) 41px);
+}
+body.night[data-color-theme="anthracite"] {
+  --ac:#90AAAA; --ac-light:#B0C8C8; --ac-dark:#3A4848; --ac-shine:#D0E0E0; --acr:144,170,170;
+  --bg:#080C0C; --bg2:#101818; --text:#E0ECEC; --text2:#A8C0C0; --text3:#708888;
+  --card-bg:rgba(16,24,24,0.90); --card-border:rgba(144,170,170,0.12); --card-shadow:0 2px 0 rgba(144,170,170,0.06),0 12px 40px rgba(0,0,0,0.55);
+  --arabic-color:#A8C0C0; --phonetic-color:#A8C0C0; --hadith-color:#708888;
+  --icon-filter:sepia(0.3) saturate(0.8) hue-rotate(165deg) brightness(0.85);
+  background:#080C0C; background-image:repeating-linear-gradient(0deg,transparent 0,transparent 40px,rgba(144,170,170,0.04) 40px,rgba(144,170,170,0.04) 41px);
+}
+[data-color-theme="anthracite"] .deen-card,
+[data-color-theme="anthracite"] .accordion { border-radius:12px !important; border:none !important; border-top:2px solid var(--ac) !important; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+[data-color-theme="anthracite"] .deen-card::after { display:none; }
+[data-color-theme="anthracite"] .cat-card,
+[data-color-theme="anthracite"] .sub-card { border-radius:10px !important; border-top:2px solid var(--ac) !important; border-left:none !important; border-right:none !important; border-bottom:none !important; }
+
+/* ── 20. QADR — Nuit des Nuits ──────────────────────────────── */
+body.day[data-color-theme="qadr"] {
+  --ac:#2A1A4A; --ac-light:#402868; --ac-dark:#140A28; --ac-shine:#A090C8; --acr:42,26,74;
+  --bg:#F4F0FA; --bg2:#EAE4F4; --text:#080410; --text2:#140A20; --text3:#201430;
+  --card-bg:#FDFAFF; --card-border:rgba(42,26,74,0.12); --card-shadow:0 4px 20px rgba(42,26,74,0.10);
+  --arabic-color:#2A1A4A; --phonetic-color:#402868; --hadith-color:#140A28;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(255deg) brightness(0.55);
+  background:#F2EEF8;
+}
+body.night[data-color-theme="qadr"] {
+  --ac:#8868C8; --ac-light:#A888E8; --ac-dark:#5840A0; --ac-shine:#C8B0F0; --acr:136,104,200;
+  --bg:#020108; --bg2:#06040E; --text:#C8B0F0; --text2:#9878D0; --text3:#7050A8;
+  --card-bg:rgba(8,4,18,0.95); --card-border:rgba(136,104,200,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.7),0 0 60px rgba(136,104,200,0.05);
+  --arabic-color:#9878D0; --phonetic-color:#9878D0; --hadith-color:#7050A8;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(260deg) brightness(1.05);
+  background:#020108; background-image:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(42,26,74,0.25) 0%,transparent 70%);
+}
+body.night[data-color-theme="qadr"] .index-brand,
+body.night[data-color-theme="qadr"] .inv-header-name { text-shadow:0 0 30px rgba(136,104,200,0.6),0 0 60px rgba(136,104,200,0.3); }
+
+/* ── 21. SOUFI — Coin Coupé Diagonal ────────────────────────── */
+body.day[data-color-theme="soufi"] {
+  --ac:#5A2A7A; --ac-light:#7A4898; --ac-dark:#380A58; --ac-shine:#C0A0D8; --acr:90,42,122;
+  --bg:#F6F0FA; --bg2:#EDE4F4; --text:#0C0410; --text2:#1A0C22; --text3:#281434;
+  --card-bg:#FDF8FF; --card-border:rgba(90,42,122,0.14); --card-shadow:0 4px 20px rgba(90,42,122,0.10);
+  --arabic-color:#5A2A7A; --phonetic-color:#7A4898; --hadith-color:#380A58;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(255deg) brightness(0.65);
+  background:#F2EAF8; background-image:radial-gradient(ellipse 60% 50% at 50% 0%,rgba(90,42,122,0.06) 0%,transparent 70%);
+}
+body.night[data-color-theme="soufi"] {
+  --ac:#9860C8; --ac-light:#B880E8; --ac-dark:#6838A0; --ac-shine:#D0B0F0; --acr:152,96,200;
+  --bg:#06020C; --bg2:#0C0618; --text:#D0B0F0; --text2:#A078D0; --text3:#7850A8;
+  --card-bg:#0C0818; --card-border:rgba(152,96,200,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color:#A078D0; --phonetic-color:#A078D0; --hadith-color:#7850A8;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(260deg) brightness(1.05);
+  background:#06020C; background-image:radial-gradient(ellipse 80% 50% at 50% 50%,rgba(90,42,122,0.10) 0%,transparent 70%);
+}
+[data-color-theme="soufi"] .deen-card,
+[data-color-theme="soufi"] .accordion { border-radius:0 !important; clip-path:polygon(16px 0%,100% 0%,100% calc(100% - 16px),calc(100% - 16px) 100%,0% 100%,0% 16px); border:1px solid rgba(90,42,122,0.18) !important; }
+[data-color-theme="soufi"] .deen-card::after { display:none; }
+body.night[data-color-theme="soufi"] .deen-card,
+body.night[data-color-theme="soufi"] .accordion { border:1px solid rgba(152,96,200,0.20) !important; }
+
+/* ── 22. AMÉTHYSTE — Crystal Glass Double ───────────────────── */
+body.day[data-color-theme="amethyste"] {
+  --ac:#7848A8; --ac-light:#9868C8; --ac-dark:#502878; --ac-shine:#D0B8E8; --acr:120,72,168;
+  --bg:#F8F2FF; --bg2:#F0E8F8; --text:#0E0818; --text2:#1C1028; --text3:#2A1838;
+  --card-bg:rgba(255,250,255,0.85); --card-border:rgba(120,72,168,0.14); --card-shadow:0 4px 24px rgba(120,72,168,0.10);
+  --arabic-color:#7848A8; --phonetic-color:#9868C8; --hadith-color:#502878;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(258deg) brightness(0.75);
+  background:#F5EEFF; background-image:radial-gradient(ellipse 80% 60% at 100% 0%,rgba(120,72,168,0.07) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 0% 100%,rgba(120,72,168,0.05) 0%,transparent 60%);
+}
+body.night[data-color-theme="amethyste"] {
+  --ac:#B888E8; --ac-light:#D0A8FF; --ac-dark:#8858C0; --ac-shine:#E8D0FF; --acr:184,136,232;
+  --bg:#060210; --bg2:#0C0820; --text:#E8D0FF; --text2:#C0A0F0; --text3:#9878D0;
+  --card-bg:rgba(12,8,32,0.90); --card-border:rgba(184,136,232,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color:#C0A0F0; --phonetic-color:#C0A0F0; --hadith-color:#9878D0;
+  --icon-filter:sepia(1) saturate(3.5) hue-rotate(262deg) brightness(1.1);
+  background:#060210;
+}
+[data-color-theme="amethyste"] .deen-card,
+[data-color-theme="amethyste"] .accordion,
+[data-color-theme="amethyste"] .cat-card { border-radius:28px !important; backdrop-filter:blur(16px) saturate(200%); -webkit-backdrop-filter:blur(16px) saturate(200%); border:1px solid rgba(255,255,255,0.5) !important; }
+[data-color-theme="amethyste"] .deen-card::after { display:none; }
+body.night[data-color-theme="amethyste"] .deen-card,
+body.night[data-color-theme="amethyste"] .accordion { border:1px solid rgba(184,136,232,0.20) !important; }
+
+/* ── 23. PRUNE — Ligne Gauche Velours ───────────────────────── */
+body.day[data-color-theme="prune"] {
+  --ac:#6A2858; --ac-light:#884878; --ac-dark:#440838; --ac-shine:#C8A0B8; --acr:106,40,88;
+  --bg:#FAF0F6; --bg2:#F2E4EE; --text:#100610; --text2:#1E0E1C; --text3:#2C1628;
+  --card-bg:#FFF8FC; --card-border:rgba(106,40,88,0.14); --card-shadow:0 4px 20px rgba(106,40,88,0.10);
+  --arabic-color:#6A2858; --phonetic-color:#884878; --hadith-color:#440838;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(285deg) brightness(0.65);
+  background:#F8EEF4;
+}
+body.night[data-color-theme="prune"] {
+  --ac:#C07898; --ac-light:#E098B8; --ac-dark:#9A5878; --ac-shine:#F0C8DC; --acr:192,120,152;
+  --bg:#080410; --bg2:#100818; --text:#F0C8DC; --text2:#D098B8; --text3:#A86888;
+  --card-bg:#100818; --card-border:rgba(192,120,152,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color:#D098B8; --phonetic-color:#D098B8; --hadith-color:#A86888;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(288deg) brightness(1.05);
+  background:#080410;
+}
+[data-color-theme="prune"] .deen-card,
+[data-color-theme="prune"] .accordion { border-radius:8px !important; border:none !important; border-left:4px solid rgba(106,40,88,0.40) !important; }
+[data-color-theme="prune"] .deen-card::after { display:none; }
+body.night[data-color-theme="prune"] .deen-card,
+body.night[data-color-theme="prune"] .accordion { border-left-color:rgba(192,120,152,0.35) !important; }
+[data-color-theme="prune"] .cat-card,
+[data-color-theme="prune"] .sub-card { border-radius:12px !important; border-left:3px solid rgba(106,40,88,0.30) !important; border-top:none !important; border-right:none !important; border-bottom:none !important; }
+
+/* ── 24. LAVANDE — Bubble 36px Aérien ──────────────────────── */
+body.day[data-color-theme="lavande"] {
+  --ac:#7868A8; --ac-light:#9888C8; --ac-dark:#504878; --ac-shine:#D0C8E8; --acr:120,104,168;
+  --bg:#F6F4FF; --bg2:#EEEAFF; --text:#0C0A18; --text2:#181428; --text3:#241E38;
+  --card-bg:rgba(255,254,255,0.90); --card-border:rgba(120,104,168,0.14); --card-shadow:0 4px 24px rgba(120,104,168,0.08);
+  --arabic-color:#7868A8; --phonetic-color:#9888C8; --hadith-color:#504878;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(248deg) brightness(0.78);
+  background:#F4F2FF; background-image:radial-gradient(ellipse 100% 60% at 50% 0%,rgba(120,104,168,0.06) 0%,transparent 60%);
+}
+body.night[data-color-theme="lavande"] {
+  --ac:#A898D8; --ac-light:#C8B8F0; --ac-dark:#7868A8; --ac-shine:#E0D8FF; --acr:168,152,216;
+  --bg:#060410; --bg2:#0C0A1C; --text:#E0D8FF; --text2:#B8A8E8; --text3:#9078C8;
+  --card-bg:rgba(12,10,28,0.90); --card-border:rgba(168,152,216,0.14); --card-shadow:0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color:#B8A8E8; --phonetic-color:#B8A8E8; --hadith-color:#9078C8;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(250deg) brightness(1.08);
+  background:#060410;
+}
+[data-color-theme="lavande"] .deen-card,
+[data-color-theme="lavande"] .accordion,
+[data-color-theme="lavande"] .cat-card,
+[data-color-theme="lavande"] .sub-card { border-radius:36px !important; border:none !important; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); }
+[data-color-theme="lavande"] .deen-card::after,
+[data-color-theme="lavande"] .cat-card::after { display:none; }
+[data-color-theme="lavande"] .circle-btn,
+[data-color-theme="lavande"] .back-arrow { border-radius:16px !important; }
+
+/* ── 25. INDIGO — Editorial Header Bold ─────────────────────── */
+body.day[data-color-theme="indigo"] {
+  --ac:#2A1E78; --ac-light:#4838A0; --ac-dark:#100A50; --ac-shine:#9888D8; --acr:42,30,120;
+  --bg:#F0EEF8; --bg2:#E0DCF4; --text:#06041A; --text2:#100C28; --text3:#1A1438;
+  --card-bg:#FAFAFF; --card-border:rgba(42,30,120,0.14); --card-shadow:0 8px 32px rgba(42,30,120,0.10);
+  --arabic-color:#2A1E78; --phonetic-color:#4838A0; --hadith-color:#100A50;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(228deg) brightness(0.62);
+  background:#EEEAF8; background-image:repeating-linear-gradient(90deg,transparent 0,transparent 60px,rgba(42,30,120,0.03) 60px,rgba(42,30,120,0.03) 61px);
+}
+body.night[data-color-theme="indigo"] {
+  --ac:#6858D8; --ac-light:#8878F0; --ac-dark:#2A1E78; --ac-shine:#C0B0F8; --acr:104,88,216;
+  --bg:#04020E; --bg2:#08060C; --text:#C0B0F8; --text2:#8878D0; --text3:#6050A8;
+  --card-bg:#080618; --card-border:rgba(104,88,216,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.7);
+  --arabic-color:#8878D0; --phonetic-color:#8878D0; --hadith-color:#6050A8;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(232deg) brightness(1.05);
+  background:#04020E; background-image:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(42,30,120,0.20) 0%,transparent 70%);
+}
+[data-color-theme="indigo"] .deen-card,
+[data-color-theme="indigo"] .accordion { border-radius:0 0 16px 16px !important; border:none !important; border-top:4px solid var(--ac) !important; }
+[data-color-theme="indigo"] .deen-card::after { display:none; }
+[data-color-theme="indigo"] .cat-card,
+[data-color-theme="indigo"] .sub-card { border-radius:0 0 12px 12px !important; border-top:3px solid rgba(42,30,120,0.30) !important; border-left:none !important; border-right:none !important; border-bottom:none !important; }
+[data-color-theme="indigo"] .circle-btn,
+[data-color-theme="indigo"] .lang-btn { border-radius:4px !important; }
+
+/* ── 26. NACRE — Pure Glass Blanc ───────────────────────────── */
+body.day[data-color-theme="nacre"] {
+  --ac:#2A6840; --ac-light:#409858; --ac-dark:#104828; --ac-shine:#A0D0B0; --acr:42,104,64;
+  --bg:#FDFCFA; --bg2:#F8F5F0; --text:#0A100C; --text2:#14201A; --text3:#203028;
+  --card-bg:rgba(255,255,255,0.95); --card-border:rgba(42,104,64,0.10); --card-shadow:0 2px 4px rgba(0,0,0,0.04),0 12px 48px rgba(0,0,0,0.06),inset 0 1px 0 rgba(255,255,255,1);
+  --arabic-color:#2A6840; --phonetic-color:#409858; --hadith-color:#104828;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(88deg) brightness(0.72);
+  background:#FAFCF8; background-image:linear-gradient(135deg,rgba(42,104,64,0.02) 0%,transparent 50%);
+}
+body.night[data-color-theme="nacre"] {
+  --ac:#48A868; --ac-light:#68C888; --ac-dark:#2A6840; --ac-shine:#B8E8C8; --acr:72,168,104;
+  --bg:#060A06; --bg2:#0A100A; --text:#E8F8EC; --text2:#A8D8B0; --text3:#70A878;
+  --card-bg:rgba(10,16,10,0.92); --card-border:rgba(72,168,104,0.14); --card-shadow:0 2px 0 rgba(72,168,104,0.06),0 12px 48px rgba(0,0,0,0.55);
+  --arabic-color:#A8D8B0; --phonetic-color:#A8D8B0; --hadith-color:#70A878;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(92deg) brightness(1.0);
+  background:#060A06;
+}
+[data-color-theme="nacre"] .deen-card,
+[data-color-theme="nacre"] .accordion { border-radius:20px !important; backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%); border:1px solid rgba(42,104,64,0.08) !important; }
+[data-color-theme="nacre"] .deen-card::after { display:none; }
+
+/* ── 27. AURORE — Warm Glow Blur ────────────────────────────── */
+body.day[data-color-theme="aurore"] {
+  --ac:#985848; --ac-light:#B87868; --ac-dark:#683828; --ac-shine:#E0C0B0; --acr:152,88,72;
+  --bg:#FFF4F0; --bg2:#F8E8E0; --text:#180C08; --text2:#2A1814; --text3:#402820;
+  --card-bg:rgba(255,250,248,0.90); --card-border:rgba(152,88,72,0.14); --card-shadow:0 4px 24px rgba(152,88,72,0.10);
+  --arabic-color:#985848; --phonetic-color:#B87868; --hadith-color:#683828;
+  --icon-filter:sepia(1) saturate(1.8) hue-rotate(350deg) brightness(0.82);
+  background:#FFF0EC; background-image:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(200,100,60,0.06) 0%,transparent 60%);
+}
+body.night[data-color-theme="aurore"] {
+  --ac:#D08878; --ac-light:#F0A898; --ac-dark:#985848; --ac-shine:#F8D0C0; --acr:208,136,120;
+  --bg:#100604; --bg2:#1C0E08; --text:#F8D0C0; --text2:#D0A090; --text3:#A87060;
+  --card-bg:rgba(20,10,8,0.90); --card-border:rgba(208,136,120,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.60);
+  --arabic-color:#D0A090; --phonetic-color:#D0A090; --hadith-color:#A87060;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(352deg) brightness(1.05);
+  background:#100604; background-image:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(152,48,20,0.12) 0%,transparent 60%);
+}
+[data-color-theme="aurore"] .deen-card,
+[data-color-theme="aurore"] .accordion,
+[data-color-theme="aurore"] .cat-card { border-radius:22px !important; border:1px solid rgba(152,88,72,0.14) !important; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+[data-color-theme="aurore"] .deen-card::after,
+[data-color-theme="aurore"] .cat-card::after { display:none; }
+
+/* ── 28. PÊCHE — Bubble 30px Chaleur ───────────────────────── */
+body.day[data-color-theme="peche"] {
+  --ac:#B87840; --ac-light:#D89860; --ac-dark:#805020; --ac-shine:#F0C890; --acr:184,120,64;
+  --bg:#FFF8F0; --bg2:#FFF0E0; --text:#180E04; --text2:#2C1E0A; --text3:#442E14;
+  --card-bg:rgba(255,253,248,0.88); --card-border:rgba(184,120,64,0.14); --card-shadow:0 4px 24px rgba(184,120,64,0.10);
+  --arabic-color:#B87840; --phonetic-color:#D89860; --hadith-color:#805020;
+  --icon-filter:sepia(1) saturate(1.8) hue-rotate(15deg) brightness(0.84);
+  background:#FFF5E8; background-image:radial-gradient(ellipse 60% 40% at 80% 20%,rgba(240,160,80,0.06) 0%,transparent 60%);
+}
+body.night[data-color-theme="peche"] {
+  --ac:#E0A060; --ac-light:#F8C080; --ac-dark:#B87840; --ac-shine:#F8D8A8; --acr:224,160,96;
+  --bg:#100806; --bg2:#1C1008; --text:#F8D8A8; --text2:#D0A868; --text3:#A07838;
+  --card-bg:rgba(20,12,8,0.90); --card-border:rgba(224,160,96,0.16); --card-shadow:0 4px 24px rgba(0,0,0,0.58);
+  --arabic-color:#D0A868; --phonetic-color:#D0A868; --hadith-color:#A07838;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(15deg) brightness(1.06);
+  background:#100806;
+}
+[data-color-theme="peche"] .deen-card,
+[data-color-theme="peche"] .accordion,
+[data-color-theme="peche"] .cat-card,
+[data-color-theme="peche"] .sub-card { border-radius:30px !important; border:none !important; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+[data-color-theme="peche"] .deen-card::after,
+[data-color-theme="peche"] .cat-card::after { display:none; }
+
+/* ── 29. IVOIRE — Lignes Réglées ────────────────────────────── */
+body.day[data-color-theme="ivoire"] {
+  --ac:#387048; --ac-light:#508860; --ac-dark:#1E4828; --ac-shine:#A8C8B0; --acr:56,112,72;
+  --bg:#FEFCF4; --bg2:#F8F4E8; --text:#0C0C06; --text2:#1A1A0E; --text3:#2A2A1A;
+  --card-bg:rgba(254,252,244,0.95); --card-border:rgba(56,112,72,0.14); --card-shadow:0 2px 8px rgba(56,112,72,0.06),0 16px 48px rgba(56,112,72,0.08);
+  --arabic-color:#387048; --phonetic-color:#508860; --hadith-color:#1E4828;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(88deg) brightness(0.76);
+  background:#FEFAF0 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"),repeating-linear-gradient(0deg,transparent 0,transparent 27px,rgba(56,112,72,0.05) 27px,rgba(56,112,72,0.05) 28px);
+}
+body.night[data-color-theme="ivoire"] {
+  --ac:#60A878; --ac-light:#80C898; --ac-dark:#387048; --ac-shine:#C0E8D0; --acr:96,168,120;
+  --bg:#080806; --bg2:#10100A; --text:#F0ECD8; --text2:#C0C4A0; --text3:#909060;
+  --card-bg:#10100A; --card-border:rgba(96,168,120,0.14); --card-shadow:0 2px 0 rgba(96,168,120,0.05),0 12px 40px rgba(0,0,0,0.55);
+  --arabic-color:#C0C4A0; --phonetic-color:#C0C4A0; --hadith-color:#909060;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(90deg) brightness(0.98);
+  background:#080806;
+}
+[data-color-theme="ivoire"] .deen-card,
+[data-color-theme="ivoire"] .accordion { border-radius:4px !important; border:none !important; border-bottom:1px solid rgba(56,112,72,0.18) !important; background-image:repeating-linear-gradient(0deg,transparent 0,transparent 27px,rgba(56,112,72,0.05) 27px,rgba(56,112,72,0.05) 28px) !important; }
+[data-color-theme="ivoire"] .deen-card::after { display:none; }
+[data-color-theme="ivoire"] .arabic-block { font-size:38px !important; }
+
+/* ── 30. OR BLANC — Platine Double Bordure ──────────────────── */
+body.day[data-color-theme="or-blanc"] {
+  --ac:#4A7858; --ac-light:#6A9878; --ac-dark:#285838; --ac-shine:#B8D8C0; --acr:74,120,88;
+  --bg:#FAFAF6; --bg2:#F4F4EE; --text:#0C0E0A; --text2:#181C14; --text3:#24281E;
+  --card-bg:rgba(255,255,254,0.92); --card-border:rgba(74,120,88,0.12); --card-shadow:0 1px 2px rgba(0,0,0,0.03),0 8px 32px rgba(0,0,0,0.06),inset 0 1px 0 rgba(255,255,255,1);
+  --arabic-color:#4A7858; --phonetic-color:#6A9878; --hadith-color:#285838;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(88deg) brightness(0.76);
+  background:#F8F8F4; background-image:linear-gradient(135deg,rgba(74,120,88,0.02) 25%,transparent 25%) -10px 0,linear-gradient(225deg,rgba(74,120,88,0.02) 25%,transparent 25%) -10px 0,linear-gradient(315deg,rgba(74,120,88,0.02) 25%,transparent 25%),linear-gradient(45deg,rgba(74,120,88,0.02) 25%,transparent 25%); background-size:20px 20px;
+}
+body.night[data-color-theme="or-blanc"] {
+  --ac:#7AB898; --ac-light:#9AD8B8; --ac-dark:#4A7858; --ac-shine:#C8ECD8; --acr:122,184,152;
+  --bg:#080A08; --bg2:#0C100C; --text:#F0F8F2; --text2:#C0D8C8; --text3:#88A890;
+  --card-bg:rgba(12,16,12,0.94); --card-border:rgba(122,184,152,0.12); --card-shadow:0 1px 0 rgba(122,184,152,0.06),0 8px 32px rgba(0,0,0,0.55);
+  --arabic-color:#C0D8C8; --phonetic-color:#C0D8C8; --hadith-color:#88A890;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(90deg) brightness(1.0);
+  background:#080A08;
+}
+[data-color-theme="or-blanc"] .deen-card,
+[data-color-theme="or-blanc"] .accordion { border-radius:18px !important; backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border:1px solid rgba(74,120,88,0.14) !important; outline:1px solid rgba(74,120,88,0.06); outline-offset:3px; }
+[data-color-theme="or-blanc"] .deen-card::after { display:none; }
+
+/* ════════════════════════════════════════════════════════════════
+   SÉRIE 2 — 30 THÈMES RADICAUX
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── 31. BRUTALIST — Carré Zéro Arrondi ─────────────────────── */
+body.day[data-color-theme2="brutalist"] {
+  --ac:#1A8A4A; --ac-light:#2AAA5A; --ac-dark:#0A6030; --ac-shine:#80D0A0; --acr:26,138,74;
+  --bg:#F5F5F0; --bg2:#E8E8E0; --text:#080808; --text2:#181818; --text3:#282828;
+  --card-bg:#FFFFFF; --card-border:#1A1A1A; --card-shadow:4px 4px 0 #1A1A1A;
+  --arabic-color:#0A6030; --phonetic-color:#0A6030; --hadith-color:#282828;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(88deg) brightness(0.72);
+  background:#F5F5F0;
+}
+body.night[data-color-theme2="brutalist"] {
+  --ac:#2AAA5A; --ac-light:#40CC70; --ac-dark:#1A8A4A; --ac-shine:#88EEA8; --acr:42,170,90;
+  --bg:#0A0A0A; --bg2:#141414; --text:#F0F0F0; --text2:#C0C0C0; --text3:#888888;
+  --card-bg:#141414; --card-border:#2AAA5A; --card-shadow:4px 4px 0 #2AAA5A;
+  --arabic-color:#2AAA5A; --phonetic-color:#2AAA5A; --hadith-color:#888888;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(92deg) brightness(1.1);
+  background:#0A0A0A;
+}
+[data-color-theme2="brutalist"] .deen-card,
+[data-color-theme2="brutalist"] .accordion,
+[data-color-theme2="brutalist"] .cat-card,
+[data-color-theme2="brutalist"] .sub-card { border-radius:0 !important; border:2px solid var(--card-border) !important; box-shadow:4px 4px 0 var(--card-border) !important; }
+[data-color-theme2="brutalist"] .deen-card::after,
+[data-color-theme2="brutalist"] .cat-card::after { display:none; }
+[data-color-theme2="brutalist"] .circle-btn,
+[data-color-theme2="brutalist"] .back-arrow,
+[data-color-theme2="brutalist"] .lang-btn,
+[data-color-theme2="brutalist"] .dua-back { border-radius:0 !important; }
+[data-color-theme2="brutalist"] .arabic-block { font-size:38px !important; font-weight:700; }
+[data-color-theme2="brutalist"] .index-brand { letter-spacing:0.5em; font-size:22px; }
+
+/* ── 32. NEON MOSQUE — Cyberpunk Islamique ──────────────────── */
+body.day[data-color-theme2="neon-mosque"] {
+  --ac:#007744; --ac-light:#009955; --ac-dark:#005530; --ac-shine:#88DDAA; --acr:0,119,68;
+  --bg:#F0FFF8; --bg2:#D8FFF0; --text:#002210; --text2:#003818; --text3:#005020;
+  --card-bg:rgba(0,255,136,0.05); --card-border:rgba(0,119,68,0.30); --card-shadow:0 0 20px rgba(0,119,68,0.15);
+  --arabic-color:#007744; --phonetic-color:#009955; --hadith-color:#005030;
+  --icon-filter:sepia(1) saturate(4) hue-rotate(100deg) brightness(0.85);
+  background:#F0FFF8;
+}
+body.night[data-color-theme2="neon-mosque"] {
+  --ac:#00FF88; --ac-light:#40FFAA; --ac-dark:#00CC66; --ac-shine:#AAFFDD; --acr:0,255,136;
+  --bg:#020A04; --bg2:#041008; --text:#AAFFDD; --text2:#55FFAA; --text3:#00DD77;
+  --card-bg:rgba(0,20,10,0.90); --card-border:rgba(0,255,136,0.18); --card-shadow:0 0 30px rgba(0,255,136,0.10),0 4px 24px rgba(0,0,0,0.8);
+  --arabic-color:#55FFAA; --phonetic-color:#55FFAA; --hadith-color:#00DD77;
+  --icon-filter:sepia(1) saturate(5) hue-rotate(100deg) brightness(1.4);
+  background:#020A04; background-image:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(0,255,136,0.06) 0%,transparent 70%);
+}
+body.night[data-color-theme2="neon-mosque"] .index-brand,
+body.night[data-color-theme2="neon-mosque"] .inv-header-name { text-shadow:0 0 20px rgba(0,255,136,0.7),0 0 40px rgba(0,255,136,0.4); }
+body.night[data-color-theme2="neon-mosque"] .circle-btn,
+body.night[data-color-theme2="neon-mosque"] .audio-player-circle { box-shadow:0 0 12px rgba(0,255,136,0.4); }
+
+/* ── 33. VERRE — Pure Glassmorphism ─────────────────────────── */
+body.day[data-color-theme2="verre"] {
+  --ac:#2A8060; --ac-light:#40A878; --ac-dark:#186048; --ac-shine:#A0D8C0; --acr:42,128,96;
+  --bg:#EEF8F4; --bg2:#DCF0E8; --text:#061410; --text2:#0E2820; --text3:#183C2C;
+  --card-bg:rgba(255,255,255,0.40); --card-border:rgba(255,255,255,0.65); --card-shadow:0 8px 32px rgba(42,128,96,0.08);
+  --arabic-color:#2A8060; --phonetic-color:#2A8060; --hadith-color:#186048;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(95deg) brightness(0.76);
+  background:linear-gradient(135deg,#DCF8EC 0%,#E8F8F0 40%,#D8F0EC 100%) fixed;
+}
+body.night[data-color-theme2="verre"] {
+  --ac:#40A878; --ac-light:#60C898; --ac-dark:#2A8060; --ac-shine:#A8E8D0; --acr:64,168,120;
+  --bg:#040E08; --bg2:#081610; --text:#C0E8D0; --text2:#80C8A0; --text3:#50A070;
+  --card-bg:rgba(8,30,16,0.50); --card-border:rgba(64,168,120,0.22); --card-shadow:0 8px 32px rgba(0,0,0,0.5);
+  --arabic-color:#80C8A0; --phonetic-color:#80C8A0; --hadith-color:#50A070;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(97deg) brightness(1.0);
+  background:linear-gradient(135deg,#040E08 0%,#061408 50%,#040C08 100%) fixed;
+}
+[data-color-theme2="verre"] .deen-card,
+[data-color-theme2="verre"] .accordion,
+[data-color-theme2="verre"] .cat-card,
+[data-color-theme2="verre"] .sub-card,
+[data-color-theme2="verre"] .bottom-sheet { border-radius:24px !important; backdrop-filter:blur(22px) saturate(200%); -webkit-backdrop-filter:blur(22px) saturate(200%); border:1px solid rgba(255,255,255,0.55) !important; box-shadow:0 8px 32px rgba(42,128,96,0.08),inset 0 1px 0 rgba(255,255,255,0.7) !important; }
+[data-color-theme2="verre"] .deen-card::after,
+[data-color-theme2="verre"] .cat-card::after { display:none; }
+body.night[data-color-theme2="verre"] .deen-card,
+body.night[data-color-theme2="verre"] .accordion,
+body.night[data-color-theme2="verre"] .cat-card { border:1px solid rgba(64,168,120,0.22) !important; box-shadow:0 8px 32px rgba(0,0,0,0.5),inset 0 1px 0 rgba(64,168,120,0.10) !important; }
+
+/* ── 34. MANUSCRIPT — Parchemin Calligraphie ────────────────── */
+body.day[data-color-theme2="manuscript"] {
+  --ac:#5A3A18; --ac-light:#7A5830; --ac-dark:#3A2008; --ac-shine:#D0A870; --acr:90,58,24;
+  --bg:#F8F0D8; --bg2:#F0E4C0; --text:#1A1008; --text2:#2E2010; --text3:#443018;
+  --card-bg:rgba(248,244,224,0.90); --card-border:rgba(90,58,24,0.20); --card-shadow:2px 3px 12px rgba(90,58,24,0.15);
+  --arabic-color:#3A2008; --phonetic-color:#5A3A18; --hadith-color:#443018;
+  --icon-filter:sepia(1) saturate(0.8) hue-rotate(5deg) brightness(0.6);
+  background:#F5EBC8 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"),repeating-linear-gradient(0deg,transparent 0,transparent 28px,rgba(90,58,24,0.04) 28px,rgba(90,58,24,0.04) 29px);
+}
+body.night[data-color-theme2="manuscript"] {
+  --ac:#C89858; --ac-light:#E8B870; --ac-dark:#A07838; --ac-shine:#F0D898; --acr:200,152,88;
+  --bg:#100C06; --bg2:#1A1408; --text:#F0E0B8; --text2:#C8A870; --text3:#988048;
+  --card-bg:rgba(20,16,8,0.92); --card-border:rgba(200,152,88,0.22); --card-shadow:2px 3px 12px rgba(0,0,0,0.5);
+  --arabic-color:#C8A870; --phonetic-color:#C8A870; --hadith-color:#988048;
+  --icon-filter:sepia(1) saturate(1.5) hue-rotate(8deg) brightness(1.0);
+  background:#100C06;
+}
+[data-color-theme2="manuscript"] .deen-card,
+[data-color-theme2="manuscript"] .accordion { border-radius:4px !important; border:none !important; border-left:3px solid var(--ac) !important; box-shadow:2px 3px 12px rgba(90,58,24,0.12) !important; }
+[data-color-theme2="manuscript"] .deen-card::after { display:none; }
+[data-color-theme2="manuscript"] .arabic-block { font-size:40px !important; line-height:2.0; letter-spacing:0.06em; }
+[data-color-theme2="manuscript"] .cat-card,
+[data-color-theme2="manuscript"] .sub-card { border-radius:2px !important; border-left:2px solid rgba(90,58,24,0.30) !important; border-top:none !important; border-right:none !important; border-bottom:none !important; }
+
+/* ── 35. AURORA — Mesh Gradient Bioluminescent ──────────────── */
+body.day[data-color-theme2="aurora"] {
+  --ac:#18B890; --ac-light:#30D8A8; --ac-dark:#0A9870; --ac-shine:#90F0D8; --acr:24,184,144;
+  --bg:#EBF9F5; --bg2:#D8F4EC; --text:#041410; --text2:#082820; --text3:#103C2C;
+  --card-bg:rgba(255,255,255,0.72); --card-border:rgba(24,184,144,0.18); --card-shadow:0 4px 24px rgba(24,184,144,0.10);
+  --arabic-color:#0A9870; --phonetic-color:#18B890; --hadith-color:#067050;
+  --icon-filter:sepia(1) saturate(3.5) hue-rotate(115deg) brightness(0.82);
+  background:#EBF9F5; background-image:radial-gradient(at 20% 20%,rgba(40,200,160,0.15) 0px,transparent 50%),radial-gradient(at 80% 80%,rgba(20,160,120,0.10) 0px,transparent 50%),radial-gradient(at 50% 50%,rgba(80,220,180,0.06) 0px,transparent 60%);
+}
+body.night[data-color-theme2="aurora"] {
+  --ac:#28D8A8; --ac-light:#50F8C8; --ac-dark:#18B890; --ac-shine:#A8FFE8; --acr:40,216,168;
+  --bg:#020C08; --bg2:#04140C; --text:#A8FFE8; --text2:#60E8C0; --text3:#30C898;
+  --card-bg:rgba(4,20,12,0.78); --card-border:rgba(40,216,168,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color:#60E8C0; --phonetic-color:#60E8C0; --hadith-color:#30C898;
+  --icon-filter:sepia(1) saturate(4) hue-rotate(118deg) brightness(1.1);
+  background:#020C08; background-image:radial-gradient(at 20% 30%,rgba(20,120,90,0.22) 0px,transparent 50%),radial-gradient(at 80% 70%,rgba(40,80,60,0.18) 0px,transparent 50%),radial-gradient(at 50% 50%,rgba(0,100,70,0.08) 0px,transparent 60%);
+}
+[data-color-theme2="aurora"] .deen-card,
+[data-color-theme2="aurora"] .accordion { border-radius:20px !important; backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); }
+body.night[data-color-theme2="aurora"] .index-brand,
+body.night[data-color-theme2="aurora"] .inv-header-name { text-shadow:0 0 20px rgba(40,216,168,0.6); }
+
+/* ── 36. MONO GREEN — Typographie Géante ────────────────────── */
+body.day[data-color-theme2="mono-green"] {
+  --ac:#008844; --ac-light:#00AA55; --ac-dark:#006633; --ac-shine:#88DDAA; --acr:0,136,68;
+  --bg:#F0FAF4; --bg2:#E0F5EC; --text:#002210; --text2:#003818; --text3:#005020;
+  --card-bg:#FAFFF8; --card-border:rgba(0,136,68,0.14); --card-shadow:0 2px 0 rgba(0,136,68,0.10),0 8px 24px rgba(0,136,68,0.06);
+  --arabic-color:#006633; --phonetic-color:#008844; --hadith-color:#004422;
+  --icon-filter:sepia(1) saturate(4) hue-rotate(90deg) brightness(0.70);
+  background:#F0FAF4;
+}
+body.night[data-color-theme2="mono-green"] {
+  --ac:#00CC66; --ac-light:#00EE88; --ac-dark:#00AA44; --ac-shine:#88FFCC; --acr:0,204,102;
+  --bg:#021006; --bg2:#041A0A; --text:#88FFCC; --text2:#44EE88; --text3:#00CC66;
+  --card-bg:#041A0A; --card-border:rgba(0,204,102,0.18); --card-shadow:0 2px 0 rgba(0,204,102,0.12),0 8px 24px rgba(0,0,0,0.55);
+  --arabic-color:#44EE88; --phonetic-color:#44EE88; --hadith-color:#00CC66;
+  --icon-filter:sepia(1) saturate(5) hue-rotate(92deg) brightness(1.2);
+  background:#021006;
+}
+[data-color-theme2="mono-green"] .deen-card,
+[data-color-theme2="mono-green"] .accordion { border-top:3px solid var(--ac) !important; border-left:none !important; border-right:none !important; border-bottom:none !important; border-radius:0 0 12px 12px !important; }
+[data-color-theme2="mono-green"] .deen-card::after { display:none; }
+[data-color-theme2="mono-green"] .arabic-block { font-size:44px !important; line-height:1.9; }
+[data-color-theme2="mono-green"] .index-brand { font-size:28px !important; letter-spacing:0.6em; }
+
+/* ── 37. MARBLE — Marbre Veiné CSS ──────────────────────────── */
+body.day[data-color-theme2="marble"] {
+  --ac:#2A6A50; --ac-light:#3A8A68; --ac-dark:#184A38; --ac-shine:#A8D8C0; --acr:42,106,80;
+  --bg:#F4F8F6; --bg2:#E8F2EE; --text:#080E0C; --text2:#121E18; --text3:#1C2E28;
+  --card-bg:rgba(255,255,255,0.85); --card-border:rgba(42,106,80,0.14); --card-shadow:0 4px 24px rgba(42,106,80,0.08),inset 0 1px 0 rgba(255,255,255,1);
+  --arabic-color:#2A6A50; --phonetic-color:#2A6A50; --hadith-color:#184A38;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(120deg) brightness(0.72);
+  background:#F0F6F3 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.012' numOctaves='4' seed='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0.2'/%3E%3C/filter%3E%3Crect width='600' height='600' filter='url(%23m)' opacity='0.06'/%3E%3C/svg%3E") fixed;
+}
+body.night[data-color-theme2="marble"] {
+  --ac:#4A9070; --ac-light:#68B090; --ac-dark:#2A6A50; --ac-shine:#A8D8C0; --acr:74,144,112;
+  --bg:#060C08; --bg2:#0A1410; --text:#C0D8C8; --text2:#80B098; --text3:#508070;
+  --card-bg:rgba(10,20,14,0.88); --card-border:rgba(74,144,112,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.6);
+  --arabic-color:#80B098; --phonetic-color:#80B098; --hadith-color:#508070;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(122deg) brightness(1.0);
+  background:#060C08;
+}
+[data-color-theme2="marble"] .deen-card,
+[data-color-theme2="marble"] .accordion { border-radius:20px !important; backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+
+/* ── 38. TERMINAL — Console Verte Monospace ─────────────────── */
+body.day[data-color-theme2="terminal"] {
+  --ac:#009933; --ac-light:#00BB44; --ac-dark:#007722; --ac-shine:#88DD99; --acr:0,153,51;
+  --bg:#F0FFF4; --bg2:#E0FFE8; --text:#002208; --text2:#003810; --text3:#004C18;
+  --card-bg:rgba(0,255,68,0.04); --card-border:rgba(0,153,51,0.25); --card-shadow:0 0 0 1px rgba(0,153,51,0.15),2px 2px 0 rgba(0,153,51,0.10);
+  --arabic-color:#009933; --phonetic-color:#00BB44; --hadith-color:#007722;
+  --icon-filter:sepia(1) saturate(4) hue-rotate(92deg) brightness(0.85);
+  background:#F0FFF4;
+}
+body.night[data-color-theme2="terminal"] {
+  --ac:#00FF55; --ac-light:#44FF88; --ac-dark:#00CC44; --ac-shine:#AAFFCC; --acr:0,255,85;
+  --bg:#020802; --bg2:#040F04; --text:#00FF55; --text2:#00CC44; --text3:#009933;
+  --card-bg:rgba(0,15,4,0.95); --card-border:rgba(0,255,85,0.18); --card-shadow:0 0 12px rgba(0,255,85,0.08),0 2px 8px rgba(0,0,0,0.8);
+  --arabic-color:#00FF55; --phonetic-color:#00CC44; --hadith-color:#009933;
+  --icon-filter:sepia(1) saturate(5) hue-rotate(93deg) brightness(1.4);
+  background:#020802; background-image:repeating-linear-gradient(0deg,transparent 0,transparent 3px,rgba(0,255,85,0.025) 3px,rgba(0,255,85,0.025) 4px);
+}
+[data-color-theme2="terminal"] .arabic-block,
+[data-color-theme2="terminal"] .phonetic-block,
+[data-color-theme2="terminal"] .index-brand,
+[data-color-theme2="terminal"] .accordion-title { font-family:'Courier New',monospace !important; letter-spacing:0.05em; }
+[data-color-theme2="terminal"] .deen-card,
+[data-color-theme2="terminal"] .accordion { border-radius:4px !important; border:1px solid var(--card-border) !important; }
+body.night[data-color-theme2="terminal"] .index-brand { text-shadow:0 0 10px rgba(0,255,85,0.7); }
+
+/* ── 39. DUSK — Gradient Crépuscule ─────────────────────────── */
+body.day[data-color-theme2="dusk"] {
+  --ac:#5A9870; --ac-light:#78B888; --ac-dark:#387850; --ac-shine:#B8DCC0; --acr:90,152,112;
+  --bg:#F2EFF8; --bg2:#E8E0F4; --text:#0C0818; --text2:#181028; --text3:#241838;
+  --card-bg:rgba(255,253,255,0.85); --card-border:rgba(90,152,112,0.18); --card-shadow:0 4px 24px rgba(90,152,112,0.10);
+  --arabic-color:#387850; --phonetic-color:#5A9870; --hadith-color:#285840;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(88deg) brightness(0.82);
+  background:linear-gradient(160deg,#EEE8F8 0%,#E8F4EC 60%,#F0EEF8 100%) fixed;
+}
+body.night[data-color-theme2="dusk"] {
+  --ac:#78B888; --ac-light:#98D8A8; --ac-dark:#5A9870; --ac-shine:#C0EEC8; --acr:120,184,136;
+  --bg:#060410; --bg2:#0A0820; --text:#D0E8D8; --text2:#90C8A0; --text3:#60A078;
+  --card-bg:rgba(10,8,24,0.88); --card-border:rgba(120,184,136,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color:#90C8A0; --phonetic-color:#90C8A0; --hadith-color:#60A078;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(90deg) brightness(1.0);
+  background:linear-gradient(160deg,#080418 0%,#040C08 60%,#060418 100%) fixed;
+}
+[data-color-theme2="dusk"] .deen-card,
+[data-color-theme2="dusk"] .accordion { border-radius:22px !important; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); }
+
+/* ── 40. PAPER — Papier Recyclé ─────────────────────────────── */
+body.day[data-color-theme2="paper"] {
+  --ac:#4A7040; --ac-light:#6A9060; --ac-dark:#2C5028; --ac-shine:#B0D0A8; --acr:74,112,64;
+  --bg:#F8F4EC; --bg2:#F0E8D8; --text:#141008; --text2:#221C10; --text3:#342C18;
+  --card-bg:#FDFAF4; --card-border:rgba(74,112,64,0.18); --card-shadow:0 1px 3px rgba(74,112,64,0.08),0 8px 28px rgba(74,112,64,0.06);
+  --arabic-color:#2C5028; --phonetic-color:#4A7040; --hadith-color:#344030;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(78deg) brightness(0.78);
+  background:#F5F0E4 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.055'/%3E%3C/svg%3E");
+}
+body.night[data-color-theme2="paper"] {
+  --ac:#6A9060; --ac-light:#8AB080; --ac-dark:#4A7040; --ac-shine:#C0D8B8; --acr:106,144,96;
+  --bg:#0C0A06; --bg2:#141008; --text:#F0E8D0; --text2:#C0B080; --text3:#908050;
+  --card-bg:#141008; --card-border:rgba(106,144,96,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.55);
+  --arabic-color:#C0B080; --phonetic-color:#C0B080; --hadith-color:#908050;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(80deg) brightness(1.0);
+  background:#0C0A06;
+}
+[data-color-theme2="paper"] .deen-card,
+[data-color-theme2="paper"] .accordion { border-radius:6px !important; border:1px solid rgba(74,112,64,0.20) !important; }
+
+/* ── 41. CARBON — Fibre Carbone + Lime ──────────────────────── */
+body.day[data-color-theme2="carbon"] {
+  --ac:#58A828; --ac-light:#78CC48; --ac-dark:#388010; --ac-shine:#C0E898; --acr:88,168,40;
+  --bg:#EEEEE8; --bg2:#E4E4DC; --text:#0C0C0A; --text2:#181814; --text3:#282820;
+  --card-bg:#FAFAF8; --card-border:rgba(88,168,40,0.18); --card-shadow:0 2px 8px rgba(0,0,0,0.06),0 12px 32px rgba(0,0,0,0.08);
+  --arabic-color:#388010; --phonetic-color:#58A828; --hadith-color:#286800;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(70deg) brightness(0.80);
+  background:#EAEAE4; background-image:repeating-linear-gradient(45deg,rgba(0,0,0,0.02) 0px,rgba(0,0,0,0.02) 1px,transparent 1px,transparent 4px),repeating-linear-gradient(-45deg,rgba(0,0,0,0.02) 0px,rgba(0,0,0,0.02) 1px,transparent 1px,transparent 4px);
+}
+body.night[data-color-theme2="carbon"] {
+  --ac:#88EE44; --ac-light:#AAFF66; --ac-dark:#66CC22; --ac-shine:#CCFF99; --acr:136,238,68;
+  --bg:#080808; --bg2:#101010; --text:#E8E8E0; --text2:#A8A890; --text3:#686858;
+  --card-bg:#101010; --card-border:rgba(136,238,68,0.18); --card-shadow:0 2px 0 rgba(136,238,68,0.06),0 12px 32px rgba(0,0,0,0.6);
+  --arabic-color:#AAFF66; --phonetic-color:#88EE44; --hadith-color:#66CC22;
+  --icon-filter:sepia(1) saturate(4) hue-rotate(72deg) brightness(1.2);
+  background:#080808; background-image:repeating-linear-gradient(45deg,rgba(255,255,255,0.01) 0px,rgba(255,255,255,0.01) 1px,transparent 1px,transparent 4px),repeating-linear-gradient(-45deg,rgba(255,255,255,0.01) 0px,rgba(255,255,255,0.01) 1px,transparent 1px,transparent 4px);
+}
+
+/* ── 42. ZELLIJ — Géométrie Islamique ───────────────────────── */
+body.day[data-color-theme2="zellij"] {
+  --ac:#1A7890; --ac-light:#2898B0; --ac-dark:#0A5868; --ac-shine:#90D0E0; --acr:26,120,144;
+  --bg:#E8F3F8; --bg2:#D8EEF5; --text:#041014; --text2:#081E28; --text3:#0C303A;
+  --card-bg:#F4FBFC; --card-border:rgba(26,120,144,0.18); --card-shadow:0 4px 20px rgba(26,120,144,0.10);
+  --arabic-color:#0A5868; --phonetic-color:#1A7890; --hadith-color:#064050;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(165deg) brightness(0.72);
+  background:#E8F3F8; background-image:repeating-linear-gradient(60deg,transparent 0,transparent 18px,rgba(26,120,144,0.05) 18px,rgba(26,120,144,0.05) 19px),repeating-linear-gradient(-60deg,transparent 0,transparent 18px,rgba(26,120,144,0.05) 18px,rgba(26,120,144,0.05) 19px),repeating-linear-gradient(0deg,transparent 0,transparent 18px,rgba(26,120,144,0.03) 18px,rgba(26,120,144,0.03) 19px);
+}
+body.night[data-color-theme2="zellij"] {
+  --ac:#3AAAC8; --ac-light:#58C8E8; --ac-dark:#1A7890; --ac-shine:#A8E8F8; --acr:58,170,200;
+  --bg:#030A0C; --bg2:#061218; --text:#A0D8E8; --text2:#60B0C8; --text3:#3A90A8;
+  --card-bg:#081418; --card-border:rgba(58,170,200,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.6);
+  --arabic-color:#60B0C8; --phonetic-color:#60B0C8; --hadith-color:#3A90A8;
+  --icon-filter:sepia(1) saturate(3.5) hue-rotate(168deg) brightness(1.1);
+  background:#030A0C; background-image:repeating-linear-gradient(60deg,transparent 0,transparent 18px,rgba(58,170,200,0.05) 18px,rgba(58,170,200,0.05) 19px),repeating-linear-gradient(-60deg,transparent 0,transparent 18px,rgba(58,170,200,0.05) 18px,rgba(58,170,200,0.05) 19px);
+}
+[data-color-theme2="zellij"] .deen-card,
+[data-color-theme2="zellij"] .accordion { clip-path:polygon(12px 0%,calc(100% - 12px) 0%,100% 12px,100% calc(100% - 12px),calc(100% - 12px) 100%,12px 100%,0% calc(100% - 12px),0% 12px); border-radius:0 !important; border:none !important; }
+[data-color-theme2="zellij"] .deen-card::after { display:none; }
+[data-color-theme2="zellij"] .cat-card { clip-path:polygon(8px 0%,calc(100% - 8px) 0%,100% 8px,100% calc(100% - 8px),calc(100% - 8px) 100%,8px 100%,0% calc(100% - 8px),0% 8px); border-radius:0 !important; border:none !important; }
+[data-color-theme2="zellij"] .cat-card::after { display:none; }
+
+/* ── 43. ROSE GOLD — Chaleur Rosée ──────────────────────────── */
+body.day[data-color-theme2="rose-gold"] {
+  --ac:#3A7858; --ac-light:#589878; --ac-dark:#205838; --ac-shine:#A8D8B8; --acr:58,120,88;
+  --bg:#FEF5F0; --bg2:#FCE8E0; --text:#160808; --text2:#281410; --text3:#3C1E18;
+  --card-bg:rgba(255,252,250,0.88); --card-border:rgba(200,100,80,0.14); --card-shadow:0 4px 24px rgba(200,100,80,0.08),inset 0 1px 0 rgba(255,255,255,0.9);
+  --arabic-color:#3A7858; --phonetic-color:#589878; --hadith-color:#205838;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(88deg) brightness(0.78);
+  background:#FEF0E8; background-image:radial-gradient(ellipse 80% 50% at 100% 0%,rgba(220,120,90,0.06) 0%,transparent 60%);
+}
+body.night[data-color-theme2="rose-gold"] {
+  --ac:#58A878; --ac-light:#78C898; --ac-dark:#3A7858; --ac-shine:#B8E8C8; --acr:88,168,120;
+  --bg:#100608; --bg2:#1A0C10; --text:#F8D8C8; --text2:#D0A098; --text3:#A87068;
+  --card-bg:rgba(20,10,12,0.90); --card-border:rgba(180,100,80,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.60);
+  --arabic-color:#B8E8C8; --phonetic-color:#B8E8C8; --hadith-color:#78C898;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(90deg) brightness(1.0);
+  background:#100608;
+}
+[data-color-theme2="rose-gold"] .deen-card,
+[data-color-theme2="rose-gold"] .accordion,
+[data-color-theme2="rose-gold"] .cat-card { border-radius:22px !important; backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border:1px solid rgba(200,100,80,0.14) !important; }
+[data-color-theme2="rose-gold"] .deen-card::after,
+[data-color-theme2="rose-gold"] .cat-card::after { display:none; }
+
+/* ── 44. VOID — Noir Abyssal Violet ─────────────────────────── */
+body.day[data-color-theme2="void"] {
+  --ac:#6038C8; --ac-light:#8058E8; --ac-dark:#4020A0; --ac-shine:#C0A8F0; --acr:96,56,200;
+  --bg:#F4F0FF; --bg2:#EAE4FF; --text:#060410; --text2:#0E0A20; --text3:#160E30;
+  --card-bg:rgba(250,248,255,0.90); --card-border:rgba(96,56,200,0.12); --card-shadow:0 4px 20px rgba(96,56,200,0.08);
+  --arabic-color:#4020A0; --phonetic-color:#6038C8; --hadith-color:#2A1080;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(240deg) brightness(0.70);
+  background:#F2EEF8;
+}
+body.night[data-color-theme2="void"] {
+  --ac:#A880F0; --ac-light:#C8A8FF; --ac-dark:#8060D0; --ac-shine:#E0D0FF; --acr:168,128,240;
+  --bg:#020008; --bg2:#050010; --text:#E0D0FF; --text2:#A880F0; --text3:#7860C8;
+  --card-bg:rgba(4,0,16,0.97); --card-border:rgba(168,128,240,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.85),0 0 40px rgba(168,128,240,0.04);
+  --arabic-color:#C8A8FF; --phonetic-color:#A880F0; --hadith-color:#7860C8;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(243deg) brightness(1.1);
+  background:#020008;
+}
+body.night[data-color-theme2="void"] .index-brand,
+body.night[data-color-theme2="void"] .inv-header-name { text-shadow:0 0 30px rgba(168,128,240,0.6); }
+
+/* ── 45. SAGE MILK — Ultra Doux Sans Bordure ────────────────── */
+body.day[data-color-theme2="sage-milk"] {
+  --ac:#5A8860; --ac-light:#78A878; --ac-dark:#386840; --ac-shine:#B8D8B8; --acr:90,136,96;
+  --bg:#FAFDF8; --bg2:#F2F8F0; --text:#0C140C; --text2:#182418; --text3:#243424;
+  --card-bg:rgba(255,255,253,0.92); --card-border:rgba(90,136,96,0.12); --card-shadow:0 2px 4px rgba(90,136,96,0.06),0 12px 40px rgba(90,136,96,0.06);
+  --arabic-color:#386840; --phonetic-color:#5A8860; --hadith-color:#284C30;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(80deg) brightness(0.82);
+  background:#F8FCF6;
+}
+body.night[data-color-theme2="sage-milk"] {
+  --ac:#78A878; --ac-light:#98C898; --ac-dark:#5A8860; --ac-shine:#C8E8C8; --acr:120,168,120;
+  --bg:#060A06; --bg2:#0A100A; --text:#D8F0D8; --text2:#98C898; --text3:#68A868;
+  --card-bg:rgba(10,18,10,0.92); --card-border:rgba(120,168,120,0.14); --card-shadow:0 2px 4px rgba(0,0,0,0.3),0 12px 40px rgba(0,0,0,0.45);
+  --arabic-color:#98C898; --phonetic-color:#98C898; --hadith-color:#68A868;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(82deg) brightness(1.08);
+  background:#060A06;
+}
+[data-color-theme2="sage-milk"] .deen-card,
+[data-color-theme2="sage-milk"] .accordion,
+[data-color-theme2="sage-milk"] .cat-card,
+[data-color-theme2="sage-milk"] .sub-card { border-radius:28px !important; border:none !important; box-shadow:0 2px 4px rgba(90,136,96,0.06),0 12px 40px rgba(90,136,96,0.08) !important; }
+[data-color-theme2="sage-milk"] .deen-card::after,
+[data-color-theme2="sage-milk"] .cat-card::after { display:none; }
+
+/* ── 46. INK WASH — Lavis Zen ───────────────────────────────── */
+body.day[data-color-theme2="ink-wash"] {
+  --ac:#3A6848; --ac-light:#589868; --ac-dark:#1E4828; --ac-shine:#A8C8B0; --acr:58,104,72;
+  --bg:#ECF2EC; --bg2:#E0EAE0; --text:#080E08; --text2:#141E14; --text3:#1E2E1E;
+  --card-bg:rgba(248,252,248,0.85); --card-border:rgba(58,104,72,0.16); --card-shadow:0 4px 20px rgba(58,104,72,0.10);
+  --arabic-color:#1E4828; --phonetic-color:#3A6848; --hadith-color:#143020;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(85deg) brightness(0.68);
+  background:#ECF2EC url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='turbulence' baseFrequency='0.02' numOctaves='3' seed='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+body.night[data-color-theme2="ink-wash"] {
+  --ac:#589868; --ac-light:#78B888; --ac-dark:#3A6848; --ac-shine:#B8D8C0; --acr:88,152,104;
+  --bg:#060808; --bg2:#0A0E0A; --text:#C8D8C8; --text2:#88A888; --text3:#587858;
+  --card-bg:rgba(10,14,10,0.92); --card-border:rgba(88,152,104,0.16); --card-shadow:0 4px 24px rgba(0,0,0,0.55);
+  --arabic-color:#88A888; --phonetic-color:#88A888; --hadith-color:#587858;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(87deg) brightness(0.95);
+  background:#060808;
+}
+[data-color-theme2="ink-wash"] .deen-card,
+[data-color-theme2="ink-wash"] .accordion { border-radius:4px !important; border:none !important; border-left:2px solid rgba(58,104,72,0.30) !important; box-shadow:0 4px 20px rgba(58,104,72,0.08) !important; }
+[data-color-theme2="ink-wash"] .deen-card::after { display:none; }
+body.night[data-color-theme2="ink-wash"] .deen-card,
+body.night[data-color-theme2="ink-wash"] .accordion { border-left-color:rgba(88,152,104,0.25) !important; }
+[data-color-theme2="ink-wash"] .arabic-block { font-size:36px !important; }
+
+/* ── 47. COPPER — Métal Antique ─────────────────────────────── */
+body.day[data-color-theme2="copper"] {
+  --ac:#2A7850; --ac-light:#3A9868; --ac-dark:#185838; --ac-shine:#A0D0B8; --acr:42,120,80;
+  --bg:#F8F2E8; --bg2:#F0E8D8; --text:#160C04; --text2:#2A1C0C; --text3:#3E2C18;
+  --card-bg:rgba(255,250,242,0.88); --card-border:rgba(180,110,50,0.18); --card-shadow:0 4px 20px rgba(180,110,50,0.10),inset 0 1px 0 rgba(255,255,255,0.8);
+  --arabic-color:#185838; --phonetic-color:#2A7850; --hadith-color:#103828;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(95deg) brightness(0.72);
+  background:#F5ECD8 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+body.night[data-color-theme2="copper"] {
+  --ac:#48A870; --ac-light:#68C890; --ac-dark:#2A7850; --ac-shine:#A8E8C8; --acr:72,168,112;
+  --bg:#0E0804; --bg2:#180E06; --text:#F0E0C0; --text2:#C8A070; --text3:#987040;
+  --card-bg:rgba(18,12,6,0.92); --card-border:rgba(180,110,50,0.20); --card-shadow:0 4px 24px rgba(0,0,0,0.58);
+  --arabic-color:#A8E8C8; --phonetic-color:#A8E8C8; --hadith-color:#70C898;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(97deg) brightness(1.0);
+  background:#0E0804;
+}
+
+/* ── 48. FROST — Givre Arctique ─────────────────────────────── */
+body.day[data-color-theme2="frost"] {
+  --ac:#1A8888; --ac-light:#28A8A8; --ac-dark:#0A6060; --ac-shine:#90D8D8; --acr:26,136,136;
+  --bg:#F0FAFA; --bg2:#E0F4F4; --text:#041010; --text2:#082020; --text3:#103030;
+  --card-bg:rgba(240,252,252,0.72); --card-border:rgba(26,136,136,0.18); --card-shadow:0 4px 24px rgba(26,136,136,0.08);
+  --arabic-color:#0A6060; --phonetic-color:#1A8888; --hadith-color:#064848;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(155deg) brightness(0.72);
+  background:#ECF8F8; background-image:radial-gradient(ellipse 100% 50% at 50% -10%,rgba(26,136,136,0.06) 0%,transparent 60%);
+}
+body.night[data-color-theme2="frost"] {
+  --ac:#28C8C8; --ac-light:#48E8E8; --ac-dark:#1A8888; --ac-shine:#A8F8F8; --acr:40,200,200;
+  --bg:#020C0C; --bg2:#041414; --text:#A8F8F8; --text2:#60E0E0; --text3:#30B8B8;
+  --card-bg:rgba(4,18,18,0.80); --card-border:rgba(40,200,200,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color:#60E0E0; --phonetic-color:#60E0E0; --hadith-color:#30B8B8;
+  --icon-filter:sepia(1) saturate(4) hue-rotate(158deg) brightness(1.2);
+  background:#020C0C; background-image:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(26,136,136,0.10) 0%,transparent 60%);
+}
+[data-color-theme2="frost"] .deen-card,
+[data-color-theme2="frost"] .accordion,
+[data-color-theme2="frost"] .cat-card { border-radius:20px !important; backdrop-filter:blur(16px) saturate(160%); -webkit-backdrop-filter:blur(16px) saturate(160%); }
+
+/* ── 49. OBSIDIAN — Tranchant Violet-Noir ───────────────────── */
+body.day[data-color-theme2="obsidian"] {
+  --ac:#5A48A8; --ac-light:#7868C8; --ac-dark:#3A2888; --ac-shine:#C0B0F0; --acr:90,72,168;
+  --bg:#F2F0FA; --bg2:#E8E4F8; --text:#08061A; --text2:#10102A; --text3:#1A183A;
+  --card-bg:rgba(250,248,255,0.88); --card-border:rgba(90,72,168,0.14); --card-shadow:0 4px 20px rgba(90,72,168,0.08);
+  --arabic-color:#3A2888; --phonetic-color:#5A48A8; --hadith-color:#281868;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(240deg) brightness(0.65);
+  background:#EEEAF8;
+}
+body.night[data-color-theme2="obsidian"] {
+  --ac:#8878D8; --ac-light:#A898F8; --ac-dark:#6858B8; --ac-shine:#D0C8FF; --acr:136,120,216;
+  --bg:#08060E; --bg2:#100C1A; --text:#D8D0F8; --text2:#9888D8; --text3:#6858A8;
+  --card-bg:rgba(14,10,22,0.95); --card-border:rgba(136,120,216,0.20); --card-shadow:0 4px 24px rgba(0,0,0,0.75),inset 0 1px 0 rgba(136,120,216,0.08);
+  --arabic-color:#9888D8; --phonetic-color:#9888D8; --hadith-color:#6858A8;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(242deg) brightness(1.0);
+  background:#08060E; background-image:repeating-linear-gradient(60deg,transparent 0,transparent 30px,rgba(90,72,168,0.03) 30px,rgba(90,72,168,0.03) 31px);
+}
+
+/* ── 50. MATCHA — Énergie Thé Vert ──────────────────────────── */
+body.day[data-color-theme2="matcha"] {
+  --ac:#5A9830; --ac-light:#78B848; --ac-dark:#3A7818; --ac-shine:#C0E880; --acr:90,152,48;
+  --bg:#F4FAF0; --bg2:#E8F5E0; --text:#0C1808; --text2:#182E10; --text3:#243E18;
+  --card-bg:#FAFDF8; --card-border:rgba(90,152,48,0.16); --card-shadow:0 4px 20px rgba(90,152,48,0.08);
+  --arabic-color:#3A7818; --phonetic-color:#5A9830; --hadith-color:#285810;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(68deg) brightness(0.76);
+  background:#F0F8E8; background-image:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(90,152,48,0.06) 0%,transparent 60%);
+}
+body.night[data-color-theme2="matcha"] {
+  --ac:#88CC40; --ac-light:#AAEE60; --ac-dark:#66AA20; --ac-shine:#CCEE88; --acr:136,204,64;
+  --bg:#080E04; --bg2:#0C1608; --text:#D0F0A0; --text2:#A0D060; --text3:#78B038;
+  --card-bg:#0C1608; --card-border:rgba(136,204,64,0.20); --card-shadow:0 4px 24px rgba(0,0,0,0.55);
+  --arabic-color:#A0D060; --phonetic-color:#A0D060; --hadith-color:#78B038;
+  --icon-filter:sepia(1) saturate(3.5) hue-rotate(70deg) brightness(1.15);
+  background:#080E04;
+}
+
+/* ── 51. CINEMA — Grain Film 35mm ───────────────────────────── */
+body.day[data-color-theme2="cinema"] {
+  --ac:#309850; --ac-light:#48B868; --ac-dark:#187830; --ac-shine:#A0D8B0; --acr:48,152,80;
+  --bg:#EEEEE8; --bg2:#E4E4DC; --text:#0A0A08; --text2:#161614; --text3:#242420;
+  --card-bg:rgba(255,255,252,0.88); --card-border:rgba(48,152,80,0.14); --card-shadow:0 2px 4px rgba(0,0,0,0.06),0 12px 36px rgba(0,0,0,0.08);
+  --arabic-color:#187830; --phonetic-color:#309850; --hadith-color:#106020;
+  --icon-filter:sepia(0.5) saturate(1.5) hue-rotate(88deg) brightness(0.85);
+  background:#EAEAE4 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+}
+body.night[data-color-theme2="cinema"] {
+  --ac:#48C870; --ac-light:#68E890; --ac-dark:#30A050; --ac-shine:#A8F8C8; --acr:72,200,112;
+  --bg:#050505; --bg2:#0A0A0A; --text:#F0F0E8; --text2:#C0C0B8; --text3:#808078;
+  --card-bg:#0F0F0D; --card-border:rgba(72,200,112,0.14); --card-shadow:0 2px 0 rgba(255,255,255,0.02),0 12px 40px rgba(0,0,0,0.65);
+  --arabic-color:#68E890; --phonetic-color:#48C870; --hadith-color:#808078;
+  --icon-filter:sepia(0.3) saturate(2) hue-rotate(90deg) brightness(1.0);
+  background:#050505 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.07'/%3E%3C/svg%3E");
+}
+
+/* ── 52. SAND DUNE — Abstraite Désert ───────────────────────── */
+body.day[data-color-theme2="sand-dune"] {
+  --ac:#808020; --ac-light:#A0A030; --ac-dark:#585808; --ac-shine:#D8D870; --acr:128,128,32;
+  --bg:#F8F2D8; --bg2:#F0E8C0; --text:#161208; --text2:#281E0C; --text3:#3C2E12;
+  --card-bg:#FFFEF2; --card-border:rgba(128,128,32,0.18); --card-shadow:0 4px 20px rgba(128,128,32,0.10);
+  --arabic-color:#585808; --phonetic-color:#808020; --hadith-color:#404008;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(52deg) brightness(0.72);
+  background:#F8F2D8; background-image:radial-gradient(ellipse 100% 50% at 0% 50%,rgba(220,180,40,0.06) 0%,transparent 60%),radial-gradient(ellipse 80% 40% at 100% 50%,rgba(200,160,20,0.04) 0%,transparent 60%);
+}
+body.night[data-color-theme2="sand-dune"] {
+  --ac:#C0C040; --ac-light:#E0E060; --ac-dark:#A0A020; --ac-shine:#F0F098; --acr:192,192,64;
+  --bg:#0E0C04; --bg2:#181408; --text:#F0E890; --text2:#C8C050; --text3:#A0A030;
+  --card-bg:#181408; --card-border:rgba(192,192,64,0.20); --card-shadow:0 4px 24px rgba(0,0,0,0.55);
+  --arabic-color:#C8C050; --phonetic-color:#C8C050; --hadith-color:#A0A030;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(54deg) brightness(1.1);
+  background:#0E0C04;
+}
+
+/* ── 53. DEEP SEA — Bioluminescence ─────────────────────────── */
+body.day[data-color-theme2="deep-sea"] {
+  --ac:#008858; --ac-light:#00A870; --ac-dark:#006840; --ac-shine:#80E8C0; --acr:0,136,88;
+  --bg:#E8F4F8; --bg2:#D8EEF8; --text:#041018; --text2:#082028; --text3:#0C3040;
+  --card-bg:#F2FAFC; --card-border:rgba(0,136,88,0.18); --card-shadow:0 4px 20px rgba(0,80,120,0.08);
+  --arabic-color:#006840; --phonetic-color:#008858; --hadith-color:#005030;
+  --icon-filter:sepia(1) saturate(4) hue-rotate(120deg) brightness(0.85);
+  background:#E0F0F8; background-image:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(0,60,100,0.06) 0%,transparent 60%);
+}
+body.night[data-color-theme2="deep-sea"] {
+  --ac:#00E898; --ac-light:#40FFB8; --ac-dark:#00C070; --ac-shine:#A0FFD8; --acr:0,232,152;
+  --bg:#020A10; --bg2:#041018; --text:#A0FFD8; --text2:#50E8B0; --text3:#00C888;
+  --card-bg:rgba(4,16,24,0.92); --card-border:rgba(0,232,152,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.7),0 0 40px rgba(0,232,152,0.04);
+  --arabic-color:#50E8B0; --phonetic-color:#50E8B0; --hadith-color:#00C888;
+  --icon-filter:sepia(1) saturate(5) hue-rotate(122deg) brightness(1.3);
+  background:#020A10; background-image:radial-gradient(ellipse 100% 60% at 50% 100%,rgba(0,40,80,0.30) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 50% 50%,rgba(0,80,60,0.08) 0%,transparent 70%);
+}
+body.night[data-color-theme2="deep-sea"] .index-brand,
+body.night[data-color-theme2="deep-sea"] .inv-header-name { text-shadow:0 0 20px rgba(0,232,152,0.5); }
+
+/* ── 54. SPRING — Fraîcheur Printanière ─────────────────────── */
+body.day[data-color-theme2="spring"] {
+  --ac:#28A838; --ac-light:#48C858; --ac-dark:#108820; --ac-shine:#A8F0A8; --acr:40,168,56;
+  --bg:#F2FDF2; --bg2:#E4FBE4; --text:#041008; --text2:#082010; --text3:#0C3018;
+  --card-bg:rgba(248,255,248,0.90); --card-border:rgba(40,168,56,0.14); --card-shadow:0 4px 20px rgba(40,168,56,0.08);
+  --arabic-color:#108820; --phonetic-color:#28A838; --hadith-color:#086818;
+  --icon-filter:sepia(1) saturate(4) hue-rotate(88deg) brightness(0.80);
+  background:#EEF8EE; background-image:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(40,168,56,0.06) 0%,transparent 60%);
+}
+body.night[data-color-theme2="spring"] {
+  --ac:#50E870; --ac-light:#78FF98; --ac-dark:#28C848; --ac-shine:#B8FFD0; --acr:80,232,112;
+  --bg:#040C04; --bg2:#081408; --text:#B8FFD0; --text2:#78F898; --text3:#48E068;
+  --card-bg:rgba(8,20,8,0.92); --card-border:rgba(80,232,112,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.55);
+  --arabic-color:#78F898; --phonetic-color:#78F898; --hadith-color:#48E068;
+  --icon-filter:sepia(1) saturate(5) hue-rotate(90deg) brightness(1.25);
+  background:#040C04;
+}
+[data-color-theme2="spring"] .deen-card,
+[data-color-theme2="spring"] .accordion,
+[data-color-theme2="spring"] .cat-card { border-radius:24px !important; border:none !important; }
+[data-color-theme2="spring"] .deen-card::after,
+[data-color-theme2="spring"] .cat-card::after { display:none; }
+
+/* ── 55. CHARCOAL ROSE — Charbon & Rose ─────────────────────── */
+body.day[data-color-theme2="charcoal-rose"] {
+  --ac:#3A8858; --ac-light:#58A878; --ac-dark:#206838; --ac-shine:#A8D8B8; --acr:58,136,88;
+  --bg:#FDF4F6; --bg2:#F8E8EC; --text:#160810; --text2:#28141E; --text3:#3C202C;
+  --card-bg:rgba(255,250,252,0.88); --card-border:rgba(200,80,100,0.14); --card-shadow:0 4px 20px rgba(200,80,100,0.08);
+  --arabic-color:#206838; --phonetic-color:#3A8858; --hadith-color:#104828;
+  --icon-filter:sepia(1) saturate(2.5) hue-rotate(92deg) brightness(0.76);
+  background:#FAF0F4;
+}
+body.night[data-color-theme2="charcoal-rose"] {
+  --ac:#58C888; --ac-light:#78E8A8; --ac-dark:#3A9868; --ac-shine:#B8F8D8; --acr:88,200,136;
+  --bg:#0C0608; --bg2:#160A0E; --text:#F8E0E8; --text2:#D0A0B0; --text3:#A86878;
+  --card-bg:rgba(18,8,12,0.92); --card-border:rgba(180,60,80,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.65);
+  --arabic-color:#B8F8D8; --phonetic-color:#B8F8D8; --hadith-color:#78E8A8;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(94deg) brightness(1.1);
+  background:#0C0608;
+}
+
+/* ── 56. SOLAR — Soleil Orange Vert ─────────────────────────── */
+body.day[data-color-theme2="solar"] {
+  --ac:#187858; --ac-light:#289870; --ac-dark:#085838; --ac-shine:#90D8B8; --acr:24,120,88;
+  --bg:#FFFAF0; --bg2:#FFF4D8; --text:#1A0E00; --text2:#2E1C00; --text3:#422C00;
+  --card-bg:rgba(255,252,240,0.88); --card-border:rgba(240,160,0,0.18); --card-shadow:0 4px 20px rgba(240,160,0,0.10);
+  --arabic-color:#085838; --phonetic-color:#187858; --hadith-color:#043828;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(95deg) brightness(0.72);
+  background:#FFF8E0; background-image:radial-gradient(ellipse 80% 40% at 100% 0%,rgba(255,180,0,0.08) 0%,transparent 60%);
+}
+body.night[data-color-theme2="solar"] {
+  --ac:#28E8A0; --ac-light:#50FFC0; --ac-dark:#18C880; --ac-shine:#A0FFE0; --acr:40,232,160;
+  --bg:#0E0900; --bg2:#1A1000; --text:#FFE880; --text2:#F0C030; --text3:#D09000;
+  --card-bg:rgba(20,14,0,0.92); --card-border:rgba(240,160,0,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.60);
+  --arabic-color:#A0FFE0; --phonetic-color:#A0FFE0; --hadith-color:#50FFC0;
+  --icon-filter:sepia(1) saturate(4) hue-rotate(98deg) brightness(1.2);
+  background:#0E0900; background-image:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(200,100,0,0.10) 0%,transparent 60%);
+}
+
+/* ── 57. PEWTER — Étain Industriel ──────────────────────────── */
+body.day[data-color-theme2="pewter"] {
+  --ac:#4A7860; --ac-light:#689878; --ac-dark:#2C5840; --ac-shine:#B0D0C0; --acr:74,120,96;
+  --bg:#F2F4F2; --bg2:#E8ECE8; --text:#0C1010; --text2:#181C18; --text3:#262A26;
+  --card-bg:rgba(255,255,254,0.90); --card-border:rgba(74,120,96,0.14); --card-shadow:0 1px 3px rgba(74,120,96,0.06),0 8px 28px rgba(74,120,96,0.08);
+  --arabic-color:#2C5840; --phonetic-color:#4A7860; --hadith-color:#1C3828;
+  --icon-filter:sepia(1) saturate(1.8) hue-rotate(110deg) brightness(0.78);
+  background:#EEF0EE; background-image:repeating-linear-gradient(90deg,transparent 0,transparent 80px,rgba(74,120,96,0.03) 80px,rgba(74,120,96,0.03) 81px),repeating-linear-gradient(0deg,transparent 0,transparent 80px,rgba(74,120,96,0.03) 80px,rgba(74,120,96,0.03) 81px);
+}
+body.night[data-color-theme2="pewter"] {
+  --ac:#68A888; --ac-light:#88C8A8; --ac-dark:#4A7860; --ac-shine:#C0E8D0; --acr:104,168,136;
+  --bg:#0A0C0A; --bg2:#101410; --text:#D8E4D8; --text2:#98B898; --text3:#688868;
+  --card-bg:rgba(14,18,14,0.92); --card-border:rgba(104,168,136,0.14); --card-shadow:0 1px 0 rgba(104,168,136,0.06),0 8px 28px rgba(0,0,0,0.5);
+  --arabic-color:#98B898; --phonetic-color:#98B898; --hadith-color:#688868;
+  --icon-filter:sepia(1) saturate(2) hue-rotate(112deg) brightness(1.0);
+  background:#0A0C0A;
+}
+
+/* ── 58. ABYSSAL — Océan Profond ────────────────────────────── */
+body.day[data-color-theme2="abyssal"] {
+  --ac:#008858; --ac-light:#00A870; --ac-dark:#006840; --ac-shine:#80E8C0; --acr:0,136,88;
+  --bg:#E8EFF8; --bg2:#D8E8F8; --text:#020810; --text2:#041018; --text3:#081828;
+  --card-bg:rgba(248,252,255,0.88); --card-border:rgba(0,80,120,0.12); --card-shadow:0 4px 20px rgba(0,80,120,0.08);
+  --arabic-color:#006840; --phonetic-color:#008858; --hadith-color:#004830;
+  --icon-filter:sepia(1) saturate(4) hue-rotate(120deg) brightness(0.82);
+  background:#E0EEF8;
+}
+body.night[data-color-theme2="abyssal"] {
+  --ac:#00F0A8; --ac-light:#40FFD0; --ac-dark:#00C888; --ac-shine:#A0FFE8; --acr:0,240,168;
+  --bg:#010408; --bg2:#020810; --text:#A0FFE8; --text2:#50F0C0; --text3:#00D898;
+  --card-bg:rgba(2,8,16,0.97); --card-border:rgba(0,240,168,0.14); --card-shadow:0 4px 24px rgba(0,0,0,0.85),0 0 60px rgba(0,240,168,0.03);
+  --arabic-color:#50F0C0; --phonetic-color:#50F0C0; --hadith-color:#00D898;
+  --icon-filter:sepia(1) saturate(5) hue-rotate(122deg) brightness(1.4);
+  background:#010408; background-image:radial-gradient(ellipse 100% 60% at 50% 100%,rgba(0,30,60,0.40) 0%,transparent 70%);
+}
+body.night[data-color-theme2="abyssal"] .index-brand { text-shadow:0 0 20px rgba(0,240,168,0.4); }
+
+/* ── 59. CLAY MINT — Argile & Menthe ───────────────────────── */
+body.day[data-color-theme2="clay-mint"] {
+  --ac:#2A9870; --ac-light:#40B888; --ac-dark:#187850; --ac-shine:#A0E0C8; --acr:42,152,112;
+  --bg:#FAF4EE; --bg2:#F2E8DC; --text:#160C08; --text2:#281810; --text3:#3C2818;
+  --card-bg:rgba(255,252,248,0.88); --card-border:rgba(42,152,112,0.16); --card-shadow:0 4px 20px rgba(42,152,112,0.08);
+  --arabic-color:#187850; --phonetic-color:#2A9870; --hadith-color:#0E5838;
+  --icon-filter:sepia(1) saturate(3) hue-rotate(110deg) brightness(0.78);
+  background:#F8F0E4; background-image:radial-gradient(ellipse 60% 40% at 0% 100%,rgba(200,120,80,0.06) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 100% 0%,rgba(42,152,112,0.05) 0%,transparent 60%);
+}
+body.night[data-color-theme2="clay-mint"] {
+  --ac:#40C890; --ac-light:#60E8B0; --ac-dark:#28A070; --ac-shine:#A8F8D8; --acr:64,200,144;
+  --bg:#0C0804; --bg2:#181008; --text:#E8F8F0; --text2:#A0D8C0; --text3:#60B898;
+  --card-bg:rgba(16,12,6,0.92); --card-border:rgba(64,200,144,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.58);
+  --arabic-color:#A0D8C0; --phonetic-color:#A0D8C0; --hadith-color:#60B898;
+  --icon-filter:sepia(1) saturate(3.5) hue-rotate(112deg) brightness(1.1);
+  background:#0C0804;
+}
+
+/* ── 60. CELESTIAL — Nuit Céleste ───────────────────────────── */
+body.day[data-color-theme2="celestial"] {
+  --ac:#18A888; --ac-light:#30C8A0; --ac-dark:#0A7860; --ac-shine:#90E8D8; --acr:24,168,136;
+  --bg:#EEF4FC; --bg2:#E0ECFA; --text:#040C14; --text2:#081828; --text3:#0C2840;
+  --card-bg:rgba(248,252,255,0.85); --card-border:rgba(24,168,136,0.16); --card-shadow:0 4px 24px rgba(24,168,136,0.08);
+  --arabic-color:#0A7860; --phonetic-color:#18A888; --hadith-color:#065840;
+  --icon-filter:sepia(1) saturate(3.5) hue-rotate(120deg) brightness(0.82);
+  background:#EAF2FC; background-image:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(40,100,200,0.06) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(24,168,136,0.04) 0%,transparent 60%);
+}
+body.night[data-color-theme2="celestial"] {
+  --ac:#30D8A8; --ac-light:#58F8C8; --ac-dark:#18A888; --ac-shine:#A8FFE8; --acr:48,216,168;
+  --bg:#030610; --bg2:#060C1C; --text:#A8FFE8; --text2:#60E8C8; --text3:#30C8A8;
+  --card-bg:rgba(6,10,24,0.88); --card-border:rgba(48,216,168,0.18); --card-shadow:0 4px 24px rgba(0,0,0,0.70),0 0 80px rgba(20,60,120,0.08);
+  --arabic-color:#60E8C8; --phonetic-color:#60E8C8; --hadith-color:#30C8A8;
+  --icon-filter:sepia(1) saturate(4) hue-rotate(122deg) brightness(1.2);
+  background:#030610; background-image:radial-gradient(ellipse 100% 60% at 50% 0%,rgba(20,60,120,0.20) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 50% 100%,rgba(48,216,168,0.06) 0%,transparent 60%);
+}
+[data-color-theme2="celestial"] .deen-card,
+[data-color-theme2="celestial"] .accordion,
+[data-color-theme2="celestial"] .cat-card { border-radius:22px !important; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); }
+body.night[data-color-theme2="celestial"] .index-brand,
+body.night[data-color-theme2="celestial"] .inv-header-name { text-shadow:0 0 30px rgba(48,216,168,0.4),0 0 60px rgba(20,60,120,0.3); }
