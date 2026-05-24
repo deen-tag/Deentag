@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Deentag</title>
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/themes-all.css">
+<link rel="stylesheet" href="css/themes-60.css">
 <link rel="icon" href="favicon.png" type="image/png">
 <style>
 /* ===== LANG BLOCKS ===== */
@@ -262,7 +262,7 @@ body.night .shop-link-label { color:var(--gold); }
 }
 .social-icon svg { fill:var(--gold); }
 
-/* ===== BOUTON FERMER VUE DUA ===== */
+/* Bouton fermer vue DUA */
 .dua-close-btn {
   width:36px; height:36px; border-radius:50%;
   border:1.5px solid var(--gold); background:transparent;
@@ -278,15 +278,13 @@ body.night .shop-link-label { color:var(--gold); }
   transform:scale(0.92);
 }
 
-/* ===== BOUTON MENU ⋮ ===== */
 .dua-menu-btn { font-size:18px; letter-spacing:0; }
 .dua-menu-dots { color:var(--gold); font-size:18px; line-height:1; }
 
-
-
+/* Styles additionnels pour thèmes (nuit etc.) – gardez votre code existant */
 </style>
 </head>
-<body class="day">
+<body class="day theme-1">
 
 <!-- TOPBAR -->
 <div class="index-topbar">
@@ -450,7 +448,10 @@ body.night .shop-link-label { color:var(--gold); }
 <script src="js/duas.js"></script>
 <script src="js/main.js"></script>
 <script src="js/index.js"></script>
-
 <script src="js/themes-test.js"></script>
-</body>
-</html>
+
+<!-- Sélecteur flottant 60 thèmes -->
+<div style="position: fixed; bottom: 20px; right: 20px; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); padding: 8px 12px; border-radius: 40px; z-index: 9999; display: flex; gap: 8px; font-family: monospace;">
+  <button id="prevTheme" style="background: white; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-weight: bold;">◀</button>
+  <span id="themeCounter" style="color: white; min-width: 50px; text-align: center; line-height: 36px;">1/60</span>
+  <button id="nextTheme" 
