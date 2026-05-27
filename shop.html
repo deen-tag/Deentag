@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="Boutique Deentag — Tags NFC islamiques pour lire vos invocations d'un simple scan. Application gratuite et illimitée à vie.">
+<meta property="og:title" content="Deentag — Boutique NFC">
+<meta property="og:description" content="Tags NFC pour vos duas quotidiennes. Scannez et lisez instantanément. Application gratuite, sans abonnement.">
+<meta property="og:url" content="https://deentag.vercel.app/shop.html">
+<meta property="og:image" content="https://deentag.vercel.app/images/logo.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0F0D08">
+<title>Deentag — Boutique</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="favicon.png" type="image/png">
+</head>
+<body class="day shop-page">
+
+<!-- TOPBAR -->
+<div class="inv-topbar">
+  <button class="circle-btn kids-circle-btn" onclick="toggleKidsMode()" title="Mode enfants">👶</button>
+  <div class="lang-wrapper">
+    <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()">FR &#9662;</button>
+    <div class="lang-menu" id="lang-menu">
+      <span class="lang-option" data-lang="fr" onclick="setLang('fr')">Fran&#231;ais</span>
+      <span class="lang-option" data-lang="en" onclick="setLang('en')">English</span>
+      <span class="lang-option" data-lang="es" onclick="setLang('es')">Espa&#241;ol</span>
+    </div>
+  </div>
+  <button class="circle-btn" id="theme-circle-btn" onclick="toggleTheme()">☀️</button>
+</div>
+
+<!-- HERO -->
+<div class="shop-hero">
+  <img src="images/logo.png" class="shop-logo" alt="Deentag">
+  <div class="shop-brand">DEENTAG</div>
+  <div class="shop-hero-ornament">
+    <div class="shop-hero-line"></div>
+    <div class="ornament-center">
+      <div class="ornament-diamond"></div>
+      <span class="ornament-star">&#10022;</span>
+      <div class="ornament-diamond"></div>
+    </div>
+    <div class="shop-hero-line"></div>
+  </div>
+  <div class="shop-hero-tagline">
+    <span class="lang-block" data-lang-block="fr">L&#8217;invocation au bout des doigts</span>
+    <span class="lang-block" data-lang-block="en">Supplication at your fingertips</span>
+    <span class="lang-block" data-lang-block="es">La invocaci&#243;n al alcance de tus dedos</span>
+  </div>
+  <div class="shop-hero-sub">
+    <span class="lang-block" data-lang-block="fr">Tags NFC &mdash; Application gratuite &amp; illimit&#233;e</span>
+    <span class="lang-block" data-lang-block="en">NFC Tags &mdash; Free &amp; unlimited app</span>
+    <span class="lang-block" data-lang-block="es">Tags NFC &mdash; App gratuita e ilimitada</span>
+  </div>
+  <div class="free-badge">
+    <div class="free-badge-dot"></div>
+    <span class="free-badge-text">
+      <span class="lang-block" data-lang-block="fr">Application gratuite &amp; illimit&#233;e &#224; vie</span>
+      <span class="lang-block" data-lang-block="en">Free &amp; unlimited app for life</span>
+      <span class="lang-block" data-lang-block="es">App gratuita e ilimitada de por vida</span>
+    </span>
+  </div>
+</div>
+
+<!-- CONCEPT -->
+<div class="shop-concept">
+  <div class="concept-steps">
+    <div class="concept-step">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <div class="step-title">
+          <span class="lang-block" data-lang-block="fr">Placez vos tags</span>
+          <span class="lang-block" data-lang-block="en">Place your tags</span>
+          <span class="lang-block" data-lang-block="es">Coloca tus tags</span>
+        </div>
+        <div class="step-desc">
+          <span class="lang-block" data-lang-block="fr">Collez chaque tag NFC l&#224; o&#249; l&#8217;invocation s&#8217;impose&#160;: entr&#233;e, cuisine, voiture, chambre&#8230;</span>
+          <span class="lang-block" data-lang-block="en">Stick each NFC tag where the supplication belongs: entrance, kitchen, car, bedroom…</span>
+          <span class="lang-block" data-lang-block="es">Pega cada tag NFC donde corresponda: entrada, cocina, coche, dormitorio&#8230;</span>
+        </div>
+      </div>
+    </div>
+    <div class="concept-step">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <div class="step-title">
+          <span class="lang-block" data-lang-block="fr">Approchez votre t&#233;l&#233;phone</span>
+          <span class="lang-block" data-lang-block="en">Tap your phone</span>
+          <span class="lang-block" data-lang-block="es">Acerca tu tel&#233;fono</span>
+        </div>
+        <div class="step-desc">
+          <span class="lang-block" data-lang-block="fr">Un simple scan NFC ouvre instantan&#233;ment l&#8217;invocation du moment.</span>
+          <span class="lang-block" data-lang-block="en">A simple NFC scan instantly opens the right supplication.</span>
+          <span class="lang-block" data-lang-block="es">Un simple escaneo NFC abre instant&#225;neamente la invocaci&#243;n del momento.</span>
+        </div>
+      </div>
+    </div>
+    <div class="concept-step">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <div class="step-title">
+          <span class="lang-block" data-lang-block="fr">Lisez, &#233;coutez, apprenez</span>
+          <span class="lang-block" data-lang-block="en">Read, listen, learn</span>
+          <span class="lang-block" data-lang-block="es">Lee, escucha, aprende</span>
+        </div>
+        <div class="step-desc">
+          <span class="lang-block" data-lang-block="fr">Arabe, phon&#233;tique, traduction &mdash; en fran&#231;ais, anglais ou espagnol. Avec audio int&#233;gr&#233;.</span>
+          <span class="lang-block" data-lang-block="en">Arabic, phonetics, translation &mdash; in French, English or Spanish. With built-in audio.</span>
+          <span class="lang-block" data-lang-block="es">&#193;rabe, fon&#233;tica, traducci&#243;n &mdash; en 3 idiomas. Con audio integrado.</span>
+        </div>
+      </div>
+    </div>
+    <div class="concept-step">
+      <div class="step-number">&#10022;</div>
+      <div class="step-content">
+        <div class="step-title">
+          <span class="lang-block" data-lang-block="fr">Application 100% gratuite</span>
+          <span class="lang-block" data-lang-block="en">100% free app</span>
+          <span class="lang-block" data-lang-block="es">App 100% gratuita</span>
+        </div>
+        <div class="step-desc">
+          <span class="lang-block" data-lang-block="fr">Achetez le tag une seule fois. L&#8217;interface est <strong class="text-gold">gratuite et illimit&#233;e &#224; vie</strong>, sans abonnement.</span>
+          <span class="lang-block" data-lang-block="en">Buy the tag once. The app is <strong class="text-gold">free and unlimited for life</strong>, no subscription.</span>
+          <span class="lang-block" data-lang-block="es">Compra el tag una vez. La app es <strong class="text-gold">gratuita e ilimitada de por vida</strong>, sin suscripci&#243;n.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Image téléphone après les étapes, réduite -->
+  <div class="concept-phone-wrap">
+    <img src="images/app-phone.jpg" class="concept-phone-img" alt="Deentag App">
+  </div>
+</div>
+
+<!-- SÉPARATEUR -->
+<div class="shop-sep">
+  <div class="shop-sep-line"></div>
+  <div class="shop-sep-title">
+    <span class="lang-block" data-lang-block="fr">Choisissez votre pack</span>
+    <span class="lang-block" data-lang-block="en">Choose your pack</span>
+    <span class="lang-block" data-lang-block="es">Elige tu pack</span>
+  </div>
+  <div class="shop-sep-line"></div>
+</div>
+
+<!-- PACK UNIQUE avec sélecteur quantité -->
+<div class="shop-packs">
+  <div class="pack-single">
+
+    <div class="pack-img-wrap">
+      <img src="images/pack-4tags.jpg" class="pack-img" id="packImg" alt="Pack Deentag">
+    </div>
+
+    <!-- Sélecteur quantité -->
+    <div class="pack-qty-wrap">
+      <div class="pack-qty-label">
+        <span class="lang-block" data-lang-block="fr">Choisissez votre pack</span>
+        <span class="lang-block" data-lang-block="en">Choose your pack</span>
+        <span class="lang-block" data-lang-block="es">Elige tu pack</span>
+      </div>
+      <div class="pack-qty-btns">
+        <button class="pack-qty-btn active" onclick="selectPack(4, 'pack-4tags.jpg', this)">
+          <span class="pack-qty-num">4</span>
+          <span class="pack-qty-sub">tags</span>
+        </button>
+        <button class="pack-qty-btn popular" onclick="selectPack(6, 'pack-6tags.jpg', this)">
+          <span class="pack-qty-num">6</span>
+          <span class="pack-qty-sub">tags</span>
+          <span class="pack-qty-badge">
+            <span class="lang-block" data-lang-block="fr">Populaire</span>
+            <span class="lang-block" data-lang-block="en">Popular</span>
+            <span class="lang-block" data-lang-block="es">Popular</span>
+          </span>
+        </button>
+        <button class="pack-qty-btn" onclick="selectPack(9, 'pack-9tags.jpg', this)">
+          <span class="pack-qty-num">9</span>
+          <span class="pack-qty-sub">tags</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="pack-body">
+      <div class="pack-name" id="packName">
+        <span class="lang-block" data-lang-block="fr">Pack Essentiel</span>
+        <span class="lang-block" data-lang-block="en">Essential Pack</span>
+        <span class="lang-block" data-lang-block="es">Pack Esencial</span>
+      </div>
+      <div class="pack-subtitle" id="packSub">
+        <span class="lang-block" data-lang-block="fr">4 Tags NFC inclus</span>
+        <span class="lang-block" data-lang-block="en">4 NFC Tags included</span>
+        <span class="lang-block" data-lang-block="es">4 Tags NFC incluidos</span>
+      </div>
+      <div class="pack-features">
+        <div class="pack-feature"><div class="pack-feature-dot"></div><div class="pack-feature-text" id="packFeat1">
+          <span class="lang-block" data-lang-block="fr">4 tags pour les lieux essentiels du quotidien</span>
+          <span class="lang-block" data-lang-block="en">4 tags for the essential daily places</span>
+          <span class="lang-block" data-lang-block="es">4 tags para los lugares esenciales del d&#237;a</span>
+        </div></div>
+        <div class="pack-feature"><div class="pack-feature-dot"></div><div class="pack-feature-text">
+          <span class="lang-block" data-lang-block="fr">Compatible tous smartphones NFC</span>
+          <span class="lang-block" data-lang-block="en">Compatible with all NFC smartphones</span>
+          <span class="lang-block" data-lang-block="es">Compatible con todos los smartphones NFC</span>
+        </div></div>
+        <div class="pack-feature"><div class="pack-feature-dot"></div><div class="pack-feature-text"><strong>
+          <span class="lang-block" data-lang-block="fr">App gratuite &amp; illimit&#233;e &#224; vie</span>
+          <span class="lang-block" data-lang-block="en">Free &amp; unlimited app for life</span>
+          <span class="lang-block" data-lang-block="es">App gratuita e ilimitada de por vida</span>
+        </strong></div></div>
+      </div>
+      <div class="pack-price-row">
+        <div class="pack-price">
+          <span class="lang-block" data-lang-block="fr">Prix bient&#244;t disponible</span>
+          <span class="lang-block" data-lang-block="en">Price coming soon</span>
+          <span class="lang-block" data-lang-block="es">Precio pr&#243;ximamente</span>
+        </div>
+        <div class="pack-app-free">
+          <span class="lang-block" data-lang-block="fr">App offerte</span>
+          <span class="lang-block" data-lang-block="en">Free app</span>
+          <span class="lang-block" data-lang-block="es">App incluida</span>
+        </div>
+      </div>
+      <button class="pack-cta" onclick="showSoon()">
+        <span class="lang-block" data-lang-block="fr">Bient&#244;t disponible</span>
+        <span class="lang-block" data-lang-block="en">Coming soon</span>
+        <span class="lang-block" data-lang-block="es">Pr&#243;ximamente</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="shop-footer">
+  <div class="shop-footer-ornament">
+    <div class="shop-footer-line"></div>
+    <div class="ornament-center">
+      <div class="ornament-diamond"></div>
+      <span class="ornament-star">&#10022;</span>
+      <div class="ornament-diamond"></div>
+    </div>
+    <div class="shop-footer-line"></div>
+  </div>
+  <div class="shop-footer-text">
+    <span class="lang-block" data-lang-block="fr">Chaque instant a son invocation.<br>Deentag vous accompagne &#224; chaque pas.</span>
+    <span class="lang-block" data-lang-block="en">Every moment has its supplication.<br>Deentag accompanies you at every step.</span>
+    <span class="lang-block" data-lang-block="es">Cada momento tiene su invocaci&#243;n.<br>Deentag te acompa&#241;a en cada paso.</span>
+  </div>
+  <a href="index.html" class="back-pill">
+    <div class="back-pill-arrow">&#8592;</div>
+    <span class="back-pill-txt">
+      <span class="lang-block" data-lang-block="fr">Retour &#224; l&#8217;app</span>
+      <span class="lang-block" data-lang-block="en">Back to app</span>
+      <span class="lang-block" data-lang-block="es">Volver a la app</span>
+    </span>
+  </a>
+</div>
+
+<!-- MODAL BIENTÔT -->
+<div class="soon-overlay" id="soon-overlay" onclick="hideSoon(event)">
+  <div class="soon-modal">
+    <span class="soon-icon">&#x1F54C;</span>
+    <div class="soon-title">
+      <span class="lang-block" data-lang-block="fr">Bient&#244;t disponible</span>
+      <span class="lang-block" data-lang-block="en">Coming soon</span>
+      <span class="lang-block" data-lang-block="es">Pr&#243;ximamente</span>
+    </div>
+    <div class="soon-text">
+      <span class="lang-block" data-lang-block="fr">La boutique Deentag ouvrira tr&#232;s prochainement.<br>Revenez nous voir bient&#244;t&#160;!</span>
+      <span class="lang-block" data-lang-block="en">The Deentag shop will open very soon.<br>Come back soon!</span>
+      <span class="lang-block" data-lang-block="es">La tienda Deentag abrir&#225; muy pronto.<br>&#161;Vuelve pronto!</span>
+    </div>
+    <button class="soon-close" onclick="hideSoon()">
+      <span class="lang-block" data-lang-block="fr">Compris</span>
+      <span class="lang-block" data-lang-block="en">Got it</span>
+      <span class="lang-block" data-lang-block="es">Entendido</span>
+    </button>
+  </div>
+</div>
+
+<script src="js/duas.js"></script>
+<script src="js/app.js"></script>
+<script>
+/* MODAL */
+function showSoon(){document.getElementById('soon-overlay').classList.add('open');}
+function hideSoon(e){if(!e||e.target===document.getElementById('soon-overlay')||e.target.classList.contains('soon-close')){document.getElementById('soon-overlay').classList.remove('open');}}
+
+/* PACK SÉLECTEUR */
+const packData = {
+  4: {
+    img: 'images/pack-4tags.jpg',
+    name: { fr: 'Pack Essentiel', en: 'Essential Pack', es: 'Pack Esencial' },
+    sub:  { fr: '4 Tags NFC inclus', en: '4 NFC Tags included', es: '4 Tags NFC incluidos' },
+    feat: { fr: '4 tags pour les lieux essentiels du quotidien', en: '4 tags for the essential daily places', es: '4 tags para los lugares esenciales del día' }
+  },
+  6: {
+    img: 'images/pack-6tags.jpg',
+    name: { fr: 'Pack Famille', en: 'Family Pack', es: 'Pack Familia' },
+    sub:  { fr: '6 Tags NFC inclus', en: '6 NFC Tags included', es: '6 Tags NFC incluidos' },
+    feat: { fr: 'Couvrez toute la maison et la voiture', en: 'Cover the whole house and car', es: 'Cubre toda la casa y el coche' }
+  },
+  9: {
+    img: 'images/pack-9tags.jpg',
+    name: { fr: 'Pack Complet', en: 'Complete Pack', es: 'Pack Completo' },
+    sub:  { fr: '9 Tags NFC inclus', en: '9 NFC Tags included', es: '9 Tags NFC incluidos' },
+    feat: { fr: 'Couvrez chaque invocation de la journée', en: 'Cover every supplication of the day', es: 'Cubre cada invocación del día' }
+  }
+};
+
+function selectPack(qty, img, btn) {
+  const packImg = document.getElementById('packImg');
+  if (packImg) { packImg.style.opacity = '0'; setTimeout(() => { packImg.src = 'images/' + img; packImg.style.opacity = '1'; }, 200); }
+  document.querySelectorAll('.pack-qty-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const data = packData[qty];
+  const lang = currentLang || 'fr';
+  const nameEl = document.getElementById('packName');
+  const subEl = document.getElementById('packSub');
+  const featEl = document.getElementById('packFeat1');
+  if (nameEl) nameEl.textContent = data.name[lang] || data.name['fr'];
+  if (subEl)  subEl.textContent  = data.sub[lang]  || data.sub['fr'];
+  if (featEl) featEl.textContent = data.feat[lang] || data.feat['fr'];
+}
+
+/* TRANSITION IMAGE */
+document.addEventListener('DOMContentLoaded', () => {
+  const img = document.getElementById('packImg');
+  if (img) img.style.transition = 'opacity 0.2s ease';
+
+});
+</script>
+</body>
+</html>
