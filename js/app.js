@@ -39,7 +39,7 @@ const i18n = {
     "audio-mode":"Audiowiedergabe","audio-auto":"Auto","audio-manual":"Manuell",
   },
   it: {
-    "listen":"Ascolta","tracks":"l'audio",
+    "listen":"Ascolta","tracks":"audio",
     "size-title":"Dimensione testo",
     "size-fr":"Traduzione","size-ph":"Fonetica","size-ar":"Arabo",
     "size-small":"Piccolo","size-medium":"Medio","size-large":"Grande",
@@ -53,19 +53,19 @@ const i18n = {
     "audio-mode":"Audioweergave","audio-auto":"Auto","audio-manual":"Handmatig",
   },
   pt: {
-    "listen":"Ouvir","tracks":"o áudio",
+    "listen":"Ouvir","tracks":"áudio",
     "size-title":"Tamanho do texto",
     "size-fr":"Tradução","size-ph":"Fonética","size-ar":"Árabe",
-    "size-small":"Peq.","size-medium":"Med.","size-large":"Grande",
+    "size-small":"Pequeno","size-medium":"Médio","size-large":"Grande",
     "audio-mode":"Reprodução","audio-auto":"Auto","audio-manual":"Manual",
   },
   tr: {
     "listen":"Dinle","tracks":"sesi",
-    "size-title":"Yazı boyutu",
+    "size-title":"Metin boyutu",
     "size-fr":"Çeviri","size-ph":"Fonetik","size-ar":"Arapça",
     "size-small":"Küçük","size-medium":"Orta","size-large":"Büyük",
     "audio-mode":"Ses oynatma","audio-auto":"Otomatik","audio-manual":"Manuel",
-  },
+  }
 };
 
 
@@ -337,13 +337,7 @@ function buildPillsHTML(types) {
         '<button class="size-pill audio-mode-pill' + (!isAuto ? ' active' : '') + '" data-audio-val="manual" onclick="event.stopPropagation();setAudioAutoPlay(false)">' + (i18n[currentLang]['audio-manual'] || 'Manuel') + '</button>' +
       '</div>' +
     '</div>' +
-    '<div class="size-row" style="border-top:1px solid rgba(201,168,76,0.15);margin-top:6px;padding-top:6px">' +
-      '<span class="size-row-label">Police</span>' +
-      '<div class="size-pills">' +
-        '<button class="size-pill font-pill' + (!isDyslexic ? ' active' : '') + '" data-font="default"  onclick="event.stopPropagation();applyFont(\'default\')">Standard</button>' +
-        '<button class="size-pill font-pill' + (isDyslexic  ? ' active' : '') + '" data-font="dyslexic" onclick="event.stopPropagation();applyFont(\'dyslexic\')">Adaptée</button>' +
-      '</div>' +
-    '</div>';
+
 
   return html;
 }
