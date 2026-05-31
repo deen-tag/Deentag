@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="Deentag — Lisez et apprenez les invocations islamiques (duas) en arabe, phonétique et traduction. Application gratuite et illimitée.">
+<meta property="og:title" content="Deentag — Invocations islamiques">
+<meta property="og:description" content="Lisez et apprenez les duas en arabe, phonétique et traduction. Application gratuite, sans abonnement.">
+<meta property="og:url" content="https://deentag.vercel.app">
+<meta property="og:image" content="https://deentag.vercel.app/images/logo.png">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0F0D08">
+<title>Deentag</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="favicon.png" type="image/png">
+<script>
+(function(){
+  var t=localStorage.getItem('deentag_theme')||'day';
+  var l=localStorage.getItem('deentag_lang')||'fr';
+  var k=localStorage.getItem('deentag_kids')==='on';
+  document.documentElement.setAttribute('data-theme',t);
+  document.documentElement.setAttribute('data-lang',l);
+  if(k) document.documentElement.setAttribute('data-kids','on');
+  document.addEventListener('DOMContentLoaded',function(){
+    var b=document.body;
+    b.classList.remove('day','night');
+    b.classList.add(t);
+    if(k) b.classList.add('kids');
+    var btn=document.getElementById('lang-btn');
+    if(btn) btn.textContent=l.toUpperCase()+' ▾';
+  });
+})();
+</script>
+</head>
+<body class="day">
+
+<!-- TOPBAR -->
+<div class="index-topbar">
+  <button class="circle-btn" onclick="toggleKidsMode()">👶</button>
+  <div class="lang-wrapper">
+    <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()">FR ▾</button>
+    <div class="lang-menu" id="lang-menu">
+      <span class="lang-option" data-lang="fr" onclick="setLang('fr')"><span class="lang-flag">🇫🇷</span>Français</span>
+      <span class="lang-option" data-lang="en" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span>English</span>
+      <span class="lang-option" data-lang="es" onclick="setLang('es')"><span class="lang-flag">🇪🇸</span>Español</span>
+      <span class="lang-option" data-lang="de" onclick="setLang('de')"><span class="lang-flag">🇩🇪</span>Deutsch</span>
+      <span class="lang-option" data-lang="it" onclick="setLang('it')"><span class="lang-flag">🇮🇹</span>Italiano</span>
+      <span class="lang-option" data-lang="nl" onclick="setLang('nl')"><span class="lang-flag">🇳🇱</span>Nederlands</span>
+      <span class="lang-option" data-lang="pt" onclick="setLang('pt')"><span class="lang-flag">🇵🇹</span>Português</span>
+      <span class="lang-option" data-lang="tr" onclick="setLang('tr')"><span class="lang-flag">🇹🇷</span>Türkçe</span>
+    </div>
+  </div>
+  <button class="circle-btn" id="theme-circle-btn" onclick="toggleTheme()">☀️</button>
+</div>
+
+<!-- HEADER -->
+<div class="index-header">
+  <img src="images/logo.png" class="index-logo" alt="Deentag">
+  <div class="index-brand">DEENTAG</div>
+  <div class="index-ornament">
+    <div class="index-ornament-line"></div>
+    <span class="ornament-star">✦</span>
+    <div class="index-ornament-line"></div>
+  </div>
+  <div class="index-tagline">
+    <span class="lang-block" data-lang-block="fr">Chaque instant a son invocation</span>
+    <span class="lang-block" data-lang-block="en">Every moment has its supplication</span>
+    <span class="lang-block" data-lang-block="es">Cada momento tiene su invocación</span>
+    <span class="lang-block" data-lang-block="de">Jeder Moment hat seine Bitte</span>
+    <span class="lang-block" data-lang-block="it">Ogni momento ha la sua invocazione</span>
+    <span class="lang-block" data-lang-block="nl">Elk moment heeft zijn smeekgebed</span>
+    <span class="lang-block" data-lang-block="pt">Cada momento tem a sua invocação</span>
+    <span class="lang-block" data-lang-block="tr">Her anın bir duası vardır</span>
+  </div>
+</div>
+
+<!-- GRILLE -->
+<div class="cat-grid">
+  <div class="cat-card" onclick="openSheet('repas')">
+    <div class="cat-icon-circle"><img src="images/repas.png" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Repas</span>
+      <span class="lang-block" data-lang-block="en">Meals</span>
+      <span class="lang-block" data-lang-block="es">Comidas</span>
+      <span class="lang-block" data-lang-block="de">Mahlzeiten</span>
+      <span class="lang-block" data-lang-block="it">Pasti</span>
+      <span class="lang-block" data-lang-block="nl">Maaltijden</span>
+      <span class="lang-block" data-lang-block="pt">Refeições</span>
+      <span class="lang-block" data-lang-block="tr">Yemekler</span>
+    </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('reveil')">
+    <div class="cat-icon-circle"><img src="images/lit.png" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Réveil &amp; Couché</span>
+      <span class="lang-block" data-lang-block="en">Wake &amp; Sleep</span>
+      <span class="lang-block" data-lang-block="es">Despertar &amp; Dormir</span>
+      <span class="lang-block" data-lang-block="de">Aufwachen &amp; Schlafen</span>
+      <span class="lang-block" data-lang-block="it">Sveglio &amp; Sonno</span>
+      <span class="lang-block" data-lang-block="nl">Wakker &amp; Slapen</span>
+      <span class="lang-block" data-lang-block="pt">Acordar &amp; Dormir</span>
+      <span class="lang-block" data-lang-block="tr">Uyanış &amp; Uyku</span>
+    </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('ablution')">
+    <div class="cat-icon-circle"><img src="images/ablution.png" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Ablution</span>
+      <span class="lang-block" data-lang-block="en">Ablution</span>
+      <span class="lang-block" data-lang-block="es">Ablución</span>
+      <span class="lang-block" data-lang-block="de">Ablution</span>
+      <span class="lang-block" data-lang-block="it">Abluzione</span>
+      <span class="lang-block" data-lang-block="nl">Reiniging</span>
+      <span class="lang-block" data-lang-block="pt">Ablução</span>
+      <span class="lang-block" data-lang-block="tr">Abdest</span>
+    </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('toilettes')">
+    <div class="cat-icon-circle"><img src="images/wc.png" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Toilettes</span>
+      <span class="lang-block" data-lang-block="en">Restroom</span>
+      <span class="lang-block" data-lang-block="es">Baño</span>
+      <span class="lang-block" data-lang-block="de">Toilette</span>
+      <span class="lang-block" data-lang-block="it">Bagno</span>
+      <span class="lang-block" data-lang-block="nl">Toilet</span>
+      <span class="lang-block" data-lang-block="pt">Casa de Banho</span>
+      <span class="lang-block" data-lang-block="tr">Tuvalet</span>
+    </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('maison')">
+    <div class="cat-icon-circle"><img src="images/maison.png" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Maison</span>
+      <span class="lang-block" data-lang-block="en">Home</span>
+      <span class="lang-block" data-lang-block="es">Casa</span>
+      <span class="lang-block" data-lang-block="de">Zuhause</span>
+      <span class="lang-block" data-lang-block="it">Casa</span>
+      <span class="lang-block" data-lang-block="nl">Thuis</span>
+      <span class="lang-block" data-lang-block="pt">Casa</span>
+      <span class="lang-block" data-lang-block="tr">Ev</span>
+    </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('tristesse')">
+    <div class="cat-icon-circle"><img src="images/tristesse.png" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Tristesse</span>
+      <span class="lang-block" data-lang-block="en">Sadness</span>
+      <span class="lang-block" data-lang-block="es">Tristeza</span>
+      <span class="lang-block" data-lang-block="de">Traurigkeit</span>
+      <span class="lang-block" data-lang-block="it">Tristezza</span>
+      <span class="lang-block" data-lang-block="nl">Verdriet</span>
+      <span class="lang-block" data-lang-block="pt">Tristeza</span>
+      <span class="lang-block" data-lang-block="tr">Üzüntü</span>
+    </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('enfants')">
+    <div class="cat-icon-circle"><img src="images/enfants.png" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Enfants</span>
+      <span class="lang-block" data-lang-block="en">Children</span>
+      <span class="lang-block" data-lang-block="es">Niños</span>
+      <span class="lang-block" data-lang-block="de">Kinder</span>
+      <span class="lang-block" data-lang-block="it">Bambini</span>
+      <span class="lang-block" data-lang-block="nl">Kinderen</span>
+      <span class="lang-block" data-lang-block="pt">Crianças</span>
+      <span class="lang-block" data-lang-block="tr">Çocuklar</span>
+    </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('transport')">
+    <div class="cat-icon-circle"><img src="images/voiture.png" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Transport</span>
+      <span class="lang-block" data-lang-block="en">Transport</span>
+      <span class="lang-block" data-lang-block="es">Transporte</span>
+      <span class="lang-block" data-lang-block="de">Transport</span>
+      <span class="lang-block" data-lang-block="it">Trasporto</span>
+      <span class="lang-block" data-lang-block="nl">Transport</span>
+      <span class="lang-block" data-lang-block="pt">Transporte</span>
+      <span class="lang-block" data-lang-block="tr">Ulaşım</span>
+    </div>
+  </div>
+</div>
+
+<!-- SEPARATEUR -->
+<div class="ornament-row">
+  <div class="ornament-row-line"></div>
+  <span class="ornament-star">✦</span>
+  <div class="ornament-row-line"></div>
+</div>
+
+<!-- BOUTIQUE -->
+<a href="shop.html" class="shop-link-btn">
+  <span class="shop-link-label">🏷️ BOUTIQUE</span>
+</a>
+
+<!-- SOCIAL -->
+<div class="social-bar">
+  <a href="https://tiktok.com/@deentag" class="social-icon" target="_blank">
+    <svg viewBox="0 0 24 24" width="19" height="19"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>
+  </a>
+  <a href="https://instagram.com/deentag" class="social-icon" target="_blank">
+    <svg viewBox="0 0 24 24" width="19" height="19"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+  </a>
+</div>
+<div class="spacer-sm"></div>
+
+<!-- OVERLAY -->
+<div class="bs-overlay" id="bsOverlay" onclick="closeSheet()"></div>
+
+<!-- BOTTOM SHEET -->
+<div class="bottom-sheet" id="bottomSheet">
+  <div class="bs-handle"><div class="bs-handle-bar"></div></div>
+
+  <!-- VUE LISTE -->
+  <div id="listView">
+    <div class="bs-header">
+      <div class="bs-header-icon"><img id="bsIcon" src="" alt=""></div>
+      <div class="bs-header-title" id="bsTitle"></div>
+    </div>
+    <div class="bs-ornament">
+      <div class="bs-ornament-line"></div>
+      <span class="ornament-star">✦</span>
+      <div class="bs-ornament-line"></div>
+    </div>
+    <div class="bs-subtitle">
+      <span class="lang-block" data-lang-block="fr">Sélectionnez votre invocation</span>
+      <span class="lang-block" data-lang-block="en">Select your supplication</span>
+      <span class="lang-block" data-lang-block="es">Seleccione su invocación</span>
+      <span class="lang-block" data-lang-block="de">Wählen Sie Ihr Bittgebet</span>
+      <span class="lang-block" data-lang-block="it">Seleziona la tua invocazione</span>
+      <span class="lang-block" data-lang-block="nl">Selecteer uw smeekgebed</span>
+      <span class="lang-block" data-lang-block="pt">Selecione a sua invocação</span>
+      <span class="lang-block" data-lang-block="tr">Duanızı seçin</span>
+    </div>
+    <div class="bs-grid" id="bsList"></div>
+  </div>
+
+  <!-- VUE DUA -->
+  <div id="duaView">
+    <div class="dua-topbar">
+      <button class="circle-btn dua-back-btn" onclick="backToList()" aria-label="Retour">✕</button>
+      <img id="duaCatIcon" src="" alt="" class="dua-cat-icon">
+      <button class="circle-btn" onclick="toggleTheme()">☀️</button>
+    </div>
+    <!-- Menu taille texte -->
+    <div id="duaScroll"></div>
+  </div>
+</div>
+
+<script src="js/duas.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
