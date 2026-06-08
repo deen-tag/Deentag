@@ -1,0 +1,390 @@
+/* ===== DEENTAG CORAN ENFANTS — STYLES SPÉCIFIQUES ===== */
+
+/* Grille des Juz en mode enfant */
+.kids-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.kids-juz-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  position: relative;
+  background: white;
+  border: 3px solid #E0D0FF;
+  border-radius: 24px;
+  padding: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.kids-juz-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.kids-juz-card:active {
+  transform: scale(0.95);
+}
+
+.kids-juz-number {
+  font-family: 'Baloo 2', cursive;
+  font-size: 48px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FF6B6B, #6C63FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.kids-juz-label {
+  font-family: 'Baloo 2', cursive;
+  font-size: 14px;
+  font-weight: 700;
+  color: #2D2D2D;
+  text-align: center;
+}
+
+/* Header de catégorie */
+.kids-cat-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: white;
+  border-bottom: 2px solid #E0D0FF;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.kids-cat-title {
+  flex: 1;
+  font-family: 'Baloo 2', cursive;
+  font-size: 20px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FF6B6B, #6C63FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Contenu de catégorie */
+.kids-cat-content {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.kids-ayah-card {
+  background: white;
+  border: 2px solid #E0D0FF;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.kids-ayah-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.kids-ayah-card:active {
+  transform: scale(0.98);
+}
+
+.kids-ayah-number {
+  font-family: 'Baloo 2', cursive;
+  font-size: 12px;
+  font-weight: 700;
+  color: #6C63FF;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+}
+
+.kids-ayah-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 28px;
+  line-height: 2;
+  color: #2D2D2D;
+  direction: rtl;
+  text-align: right;
+  margin: 12px 0;
+}
+
+.kids-ayah-translation {
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #555;
+  margin: 8px 0;
+}
+
+.kids-ayah-audio-btn {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 3px solid #6C63FF;
+  background: white;
+  color: #6C63FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 24px;
+  margin-top: 12px;
+  box-shadow: 0 2px 8px rgba(108, 99, 255, 0.2);
+}
+
+.kids-ayah-audio-btn:hover {
+  background: #6C63FF;
+  color: white;
+  box-shadow: 0 4px 16px rgba(108, 99, 255, 0.4);
+}
+
+.kids-ayah-audio-btn:active {
+  transform: scale(0.92);
+}
+
+.kids-ayah-audio-btn.playing {
+  background: #6C63FF;
+  color: white;
+  animation: pulse 0.6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 4px 16px rgba(108, 99, 255, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 24px rgba(108, 99, 255, 0.6);
+  }
+}
+
+/* Barre de progression */
+.kids-progress {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px 16px;
+  background: white;
+  border-top: 2px solid #E0D0FF;
+  position: sticky;
+  bottom: 0;
+}
+
+#progressStars {
+  display: flex;
+  gap: 8px;
+}
+
+.progress-star {
+  font-size: 28px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.progress-star.active {
+  animation: starPulse 0.5s ease-out;
+}
+
+@keyframes starPulse {
+  0% {
+    transform: scale(0.5);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Modal Bravo */
+.kids-bravo-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.kids-bravo-content {
+  background: white;
+  border-radius: 32px;
+  padding: 32px 24px;
+  text-align: center;
+  max-width: 320px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.kids-bravo-emoji {
+  font-size: 64px;
+  margin-bottom: 16px;
+  animation: bounce 0.6s ease-out;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-16px);
+  }
+}
+
+.kids-bravo-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 28px;
+  font-weight: 800;
+  color: #2D2D2D;
+  margin-bottom: 12px;
+}
+
+.kids-bravo-text {
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.kids-bravo-btn {
+  font-family: 'Baloo 2', cursive;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 14px 32px;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(135deg, #FF6B6B, #6C63FF);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(108, 99, 255, 0.3);
+}
+
+.kids-bravo-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(108, 99, 255, 0.4);
+}
+
+.kids-bravo-btn:active {
+  transform: scale(0.98);
+}
+
+/* Confettis */
+#confettiContainer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: #6C63FF;
+  animation: confettiFall 3s ease-out forwards;
+}
+
+@keyframes confettiFall {
+  to {
+    transform: translateY(100vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .kids-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .kids-juz-number {
+    font-size: 40px;
+  }
+
+  .kids-juz-label {
+    font-size: 12px;
+  }
+
+  .kids-cat-content {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .kids-ayah-card {
+    padding: 14px;
+  }
+
+  .kids-ayah-arabic {
+    font-size: 24px;
+    line-height: 1.8;
+  }
+
+  .kids-ayah-translation {
+    font-size: 13px;
+  }
+
+  .kids-bravo-content {
+    max-width: 280px;
+    padding: 24px 20px;
+  }
+
+  .kids-bravo-emoji {
+    font-size: 56px;
+  }
+
+  .kids-bravo-title {
+    font-size: 24px;
+  }
+}
