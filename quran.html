@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="Deentag Coran — Lisez et écoutez le Coran en arabe avec traductions en 8 langues. Choisissez vos récitateurs et explorez les 30 Juz.">
+<meta property="og:title" content="Deentag Coran">
+<meta property="og:description" content="Lisez et écoutez le Coran avec traductions multilingues et choix de récitateurs.">
+<meta property="og:url" content="https://deentag.vercel.app/quran">
+<meta property="og:image" content="https://deentag.vercel.app/images/logo.webp">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0F0D08">
+<title>Deentag Coran</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/quran.css">
+<link rel="icon" href="favicon.png" type="image/png">
+<script>
+(function(){
+  var t=localStorage.getItem('deentag_theme')||'day';
+  var l=localStorage.getItem('deentag_lang')||'fr';
+  var k=localStorage.getItem('deentag_kids')==='on';
+  document.documentElement.setAttribute('data-theme',t);
+  document.documentElement.setAttribute('data-lang',l);
+  if(k) document.documentElement.setAttribute('data-kids','on');
+  document.addEventListener('DOMContentLoaded',function(){
+    var b=document.body;
+    b.classList.remove('day','night');
+    b.classList.add(t);
+    if(k) b.classList.add('kids');
+    var btn=document.getElementById('lang-btn');
+    if(btn) btn.textContent=l.toUpperCase()+' ▾';
+  });
+})();
+</script>
+</head>
+<body class="day">
+
+<!-- TOPBAR -->
+<div class="index-topbar">
+  <!-- GAUCHE : mode enfant -->
+  <a href="quran-kids.html" class="circle-btn kids-circle" style="text-decoration:none;display:flex;align-items:center;justify-content:center;">👶</a>
+
+  <!-- CENTRE : logo seul -->
+  <div class="index-topbar-center">
+    <img src="images/logo.webp" class="index-topbar-logo" alt="Deentag">
+  </div>
+
+  <!-- DROITE : thème + langue -->
+  <div class="index-topbar-right">
+    <button class="circle-btn" id="theme-circle-btn" onclick="toggleTheme()">☀️</button>
+    <div class="lang-wrapper">
+      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()">FR ▾</button>
+      <div class="lang-menu" id="lang-menu">
+        <span class="lang-option" data-lang="de" onclick="setLang('de')"><span class="lang-flag">🇩🇪</span>Deutsch</span>
+        <span class="lang-option" data-lang="en" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span>English</span>
+        <span class="lang-option" data-lang="es" onclick="setLang('es')"><span class="lang-flag">🇪🇸</span>Español</span>
+        <span class="lang-option" data-lang="fr" onclick="setLang('fr')"><span class="lang-flag">🇫🇷</span>Français</span>
+        <span class="lang-option" data-lang="it" onclick="setLang('it')"><span class="lang-flag">🇮🇹</span>Italiano</span>
+        <span class="lang-option" data-lang="nl" onclick="setLang('nl')"><span class="lang-flag">🇳🇱</span>Nederlands</span>
+        <span class="lang-option" data-lang="pt" onclick="setLang('pt')"><span class="lang-flag">🇵🇹</span>Português</span>
+        <span class="lang-option" data-lang="tr" onclick="setLang('tr')"><span class="lang-flag">🇹🇷</span>Türkçe</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER (nom + tagline) -->
+<div class="index-header">
+  <div class="index-brand">DEENTAG CORAN</div>
+  <div class="index-ornament">
+    <div class="index-ornament-line"></div>
+    <span class="ornament-star">✦</span>
+    <div class="index-ornament-line"></div>
+  </div>
+  <div class="index-tagline">
+    <span class="lang-block" data-lang-block="fr">La parole d'Allah, toujours avec toi</span>
+    <span class="lang-block" data-lang-block="en">The word of Allah, always with you</span>
+    <span class="lang-block" data-lang-block="es">La palabra de Allah, siempre contigo</span>
+    <span class="lang-block" data-lang-block="de">Allahs Wort, immer bei dir</span>
+    <span class="lang-block" data-lang-block="it">La parola di Allah, sempre con te</span>
+    <span class="lang-block" data-lang-block="nl">Allahs woord, altijd bij je</span>
+    <span class="lang-block" data-lang-block="pt">A palavra de Allah, sempre com você</span>
+    <span class="lang-block" data-lang-block="tr">Allah'ın sözü, her zaman seninle</span>
+  </div>
+</div>
+
+<!-- GRILLE DES 30 JUZ -->
+<div class="cat-grid">
+  <div id="juzContainer"></div>
+</div>
+
+<!-- SEPARATEUR -->
+<div class="ornament-row">
+  <div class="ornament-row-line"></div>
+  <span class="ornament-star">✦</span>
+  <div class="ornament-row-line"></div>
+</div>
+
+<!-- SOCIAL -->
+<div class="social-bar">
+  <a href="https://tiktok.com/@deentag" class="social-icon" target="_blank">
+    <svg viewBox="0 0 24 24" width="19" height="19"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>
+  </a>
+  <a href="https://instagram.com/deentag" class="social-icon" target="_blank">
+    <svg viewBox="0 0 24 24" width="19" height="19"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+  </a>
+</div>
+<div class="spacer-sm"></div>
+
+<!-- OVERLAY -->
+<div class="bs-overlay" id="bsOverlay" onclick="closeSheet()"></div>
+
+<!-- BOTTOM SHEET -->
+<div class="bottom-sheet" id="bottomSheet">
+  <div class="bs-handle"><div class="bs-handle-bar"></div></div>
+
+  <!-- VUE LISTE SOURATES -->
+  <div id="listView">
+    <div class="bs-header">
+      <div class="bs-header-icon">📖</div>
+      <div class="bs-header-title" id="bsTitle"></div>
+    </div>
+    <div class="bs-ornament">
+      <div class="bs-ornament-line"></div>
+      <span class="ornament-star">✦</span>
+      <div class="bs-ornament-line"></div>
+    </div>
+    <div class="bs-subtitle">
+      <span class="lang-block" data-lang-block="fr">Sélectionnez une sourate</span>
+      <span class="lang-block" data-lang-block="en">Select a surah</span>
+      <span class="lang-block" data-lang-block="es">Seleccione una surah</span>
+      <span class="lang-block" data-lang-block="de">Wählen Sie eine Surah</span>
+      <span class="lang-block" data-lang-block="it">Seleziona una surah</span>
+      <span class="lang-block" data-lang-block="nl">Selecteer een surah</span>
+      <span class="lang-block" data-lang-block="pt">Selecione uma surah</span>
+      <span class="lang-block" data-lang-block="tr">Bir surah seçin</span>
+    </div>
+    <div class="bs-grid" id="bsList"></div>
+  </div>
+
+  <!-- VUE SOURATE -->
+  <div id="surahView">
+    <div class="dua-topbar">
+      <button class="circle-btn dua-back-btn" onclick="backToList()" aria-label="Retour">✕</button>
+      <div class="surah-header-info">
+        <div class="surah-number" id="surahNumber"></div>
+        <div class="surah-name" id="surahName"></div>
+      </div>
+      <button class="circle-btn" onclick="toggleTheme()">☀️</button>
+    </div>
+    
+    <!-- Sélecteur de traduction et récitateur -->
+    <div class="quran-controls">
+      <div class="control-group">
+        <label class="control-label">
+          <span class="lang-block" data-lang-block="fr">Traduction</span>
+          <span class="lang-block" data-lang-block="en">Translation</span>
+          <span class="lang-block" data-lang-block="es">Traducción</span>
+          <span class="lang-block" data-lang-block="de">Übersetzung</span>
+          <span class="lang-block" data-lang-block="it">Traduzione</span>
+          <span class="lang-block" data-lang-block="nl">Vertaling</span>
+          <span class="lang-block" data-lang-block="pt">Tradução</span>
+          <span class="lang-block" data-lang-block="tr">Çeviri</span>
+        </label>
+        <select id="translationSelect" onchange="updateTranslation()"></select>
+      </div>
+      <div class="control-group">
+        <label class="control-label">
+          <span class="lang-block" data-lang-block="fr">Récitateur</span>
+          <span class="lang-block" data-lang-block="en">Reciter</span>
+          <span class="lang-block" data-lang-block="es">Recitador</span>
+          <span class="lang-block" data-lang-block="de">Rezitator</span>
+          <span class="lang-block" data-lang-block="it">Recitatore</span>
+          <span class="lang-block" data-lang-block="nl">Voordracht</span>
+          <span class="lang-block" data-lang-block="pt">Recitador</span>
+          <span class="lang-block" data-lang-block="tr">Kari</span>
+        </label>
+        <select id="reciterSelect" onchange="updateReciter()"></select>
+      </div>
+    </div>
+
+    <!-- Contenu des versets -->
+    <div id="surahScroll"></div>
+  </div>
+</div>
+
+<script src="js/quran-config.js"></script>
+<script src="js/juz-data.js"></script>
+<script src="js/quran.js"></script>
+
+</body>
+</html>
