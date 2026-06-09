@@ -1,0 +1,521 @@
+/* ===== DEENTAG KIDS — KIDS.CSS ===== */
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@400;600;700;800&display=swap');
+
+/* ===== VARIABLES ===== */
+:root {
+  --kids-bg: #1A2A4A;
+  --kids-radius: 24px;
+  --kids-shadow: 0 8px 32px rgba(0,0,0,0.10);
+  --kids-shadow-card: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: linear-gradient(
+    180deg,
+    #1A2A4A 0%,
+    #2E4A7A 25%,
+    #5B82C4 55%,
+    #A8C8F0 75%,
+    #E8F4FF 90%,
+    #FFFBF5 100%
+  );
+  background-attachment: fixed;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Étoiles */
+body::before {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  background-image:
+    radial-gradient(circle, white 1.5px, transparent 1.5px),
+    radial-gradient(circle, rgba(255,255,255,0.75) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,220,0.9) 1.5px, transparent 1.5px),
+    radial-gradient(circle, white 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1px);
+  background-size: 120px 80px, 90px 70px, 150px 100px, 80px 60px, 110px 90px;
+  background-position: 10px 8px, 55px 20px, 30px 45px, 75px 12px, 20px 60px;
+  mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 78%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 78%);
+  animation: twinkleStars 3s ease-in-out infinite alternate;
+}
+
+/* Lune */
+body::after {
+  content: '🌙'; position: fixed; top: 22px; right: 28px;
+  font-size: 34px; pointer-events: none; z-index: 1;
+  filter: drop-shadow(0 0 10px rgba(255,220,100,0.5));
+  animation: moonFloat 5s ease-in-out infinite alternate;
+}
+
+@keyframes twinkleStars {
+  from { opacity: 0.6; }
+  to   { opacity: 1; }
+}
+@keyframes moonFloat {
+  from { transform: translateY(0px) rotate(-5deg); }
+  to   { transform: translateY(-6px) rotate(5deg); }
+}
+
+/* ===== TOPBAR ===== */
+.kids-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(26, 42, 74, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.kids-back-btn {
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  border: 2.5px solid #E0D0FF;
+  background: white;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: transform 0.15s;
+  text-decoration: none;
+  align-self: flex-start;
+  margin-top: 6px;
+}
+.kids-back-btn:active { transform: scale(0.93); }
+
+.kids-topbar-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 22px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #FF6B6B, #6C63FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ===== HEADER ACCUEIL ===== */
+.kids-header {
+  text-align: center;
+  padding: 10px 20px 24px;
+}
+
+.kids-header-emoji {
+  font-size: 56px;
+  display: block;
+  margin-bottom: 8px;
+  animation: bounce 2s infinite;
+}
+
+.kids-topbar-logo {
+  height: 102px;
+  width: auto;
+  display: block;
+}
+
+.kids-topbar {
+  align-items: center;
+}
+
+.kids-header-logo {
+  width: 200px;
+  height: auto;
+  display: block;
+  margin: 0 auto 8px;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.kids-header-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 32px;
+  font-weight: 800;
+  color: #2D2D2D;
+  line-height: 1.1;
+}
+
+.kids-header-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.55);
+  margin-top: 6px;
+  font-weight: 600;
+}
+
+/* ===== GRILLE CATÉGORIES ===== */
+.kids-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 0 16px 32px;
+}
+
+.kids-cat-card {
+  border-radius: var(--kids-radius);
+  padding: 24px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  border: none;
+  box-shadow: var(--kids-shadow-card);
+  transition: transform 0.18s, box-shadow 0.18s;
+  position: relative;
+  overflow: hidden;
+  text-decoration: none;
+  /* Le fond couleurLight est appliqué via JS */
+}
+
+.kids-cat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  border-radius: var(--kids-radius) var(--kids-radius) 0 0;
+}
+
+.kids-cat-card:active {
+  transform: scale(0.96);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.kids-cat-emoji {
+  font-size: 44px;
+  line-height: 1;
+}
+
+/* Image illustrée à la place de l'emoji */
+.kids-cat-img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 18px;
+  display: block;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+  transition: transform 0.18s;
+}
+.kids-cat-card:active .kids-cat-img {
+  transform: scale(0.94);
+}
+
+.kids-cat-label {
+  font-family: 'Baloo 2', cursive;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2D2D2D;
+  text-align: center;
+}
+
+.kids-cat-count {
+  font-size: 12px;
+  color: #AAA;
+  font-weight: 600;
+}
+
+/* Couleurs par catégorie */
+.kids-cat-card[data-cat="repas"]::before     { background: #FF6B6B; }
+.kids-cat-card[data-cat="dodo"]::before      { background: #6C63FF; }
+.kids-cat-card[data-cat="ablution"]::before  { background: #00B4D8; }
+.kids-cat-card[data-cat="toilettes"]::before { background: #52B788; }
+.kids-cat-card[data-cat="maison"]::before    { background: #F4A261; }
+.kids-cat-card[data-cat="transport"]::before { background: #E76F51; }
+
+/* ===== PAGE CATÉGORIE ===== */
+.kids-cat-header {
+  padding: 16px 20px 20px;
+  border-radius: 0 0 32px 32px;
+  margin-bottom: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.kids-cat-header-emoji {
+  font-size: 52px;
+  display: block;
+  margin-bottom: 8px;
+  cursor: pointer;
+  display: inline-block;
+  transition: transform 0.2s;
+}
+
+.kids-cat-header-emoji.jump {
+  animation: emoji-jump 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes emoji-jump {
+  0%   { transform: scale(1) rotate(0deg); }
+  30%  { transform: scale(1.35) rotate(-12deg); }
+  60%  { transform: scale(1.2) rotate(10deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+.kids-cat-header-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 26px;
+  font-weight: 800;
+  color: white;
+}
+
+/* ===== CARTES DUA ===== */
+.kids-dua-list {
+  padding: 0 16px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.kids-dua-card {
+  background: white;
+  border-radius: var(--kids-radius);
+  box-shadow: var(--kids-shadow-card);
+  overflow: hidden;
+  border: 2.5px solid transparent;
+  transition: transform 0.15s;
+}
+
+.kids-dua-card:active { transform: scale(0.98); }
+
+.kids-dua-moment {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 13px 17px 11px;
+  border-bottom: 1.5px solid #F5F5F5;
+}
+
+.kids-dua-moment-emoji { font-size: 21px; }
+
+.kids-dua-moment-text {
+  font-family: 'Baloo 2', cursive;
+  font-size: 13px;
+  font-weight: 700;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.kids-dua-body {
+  padding: 17px 17px 13px;
+}
+
+/* Traduction plus grande et colorée */
+.kids-dua-traduction {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 13px;
+  line-height: 1.4;
+}
+
+.kids-dua-phonetique {
+  font-size: 16px;
+  font-weight: 600;
+  color: #666;
+  margin-bottom: 15px;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.kids-dua-arabe {
+  font-size: 26px;
+  text-align: right;
+  direction: rtl;
+  line-height: 1.8;
+  color: #2D2D2D;
+  margin-bottom: 17px;
+  font-family: 'Traditional Arabic', 'Scheherazade New', serif;
+}
+
+/* ===== CONSEIL ISLAMIQUE ===== */
+.kids-dua-conseil {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: #FFFBF0;
+  border-radius: 14px;
+  padding: 10px 14px;
+  margin-top: 4px;
+  margin-bottom: 10px;
+  border-left: 3px solid currentColor;
+}
+
+.kids-dua-conseil-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.kids-dua-conseil-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+/* ===== BOUTON AUDIO ===== */
+.kids-audio-bar {
+  display: flex;
+  justify-content: center;
+  padding: 6px 0 4px;
+}
+
+.kids-audio-btn {
+  width: 51px; height: 51px;
+  border-radius: 50%;
+  border: 3px solid currentColor;
+  background: white;
+  font-size: 21px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.15s, background 0.15s;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.10);
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+/* Animation heartbeat sur le bouton audio au repos */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  14%       { transform: scale(1.08); }
+  28%       { transform: scale(1); }
+  42%       { transform: scale(1.05); }
+  56%       { transform: scale(1); }
+}
+
+.kids-audio-btn:active { transform: scale(0.92); }
+.kids-audio-btn.playing {
+  background: currentColor;
+  animation: none; /* stop heartbeat quand il joue */
+}
+.kids-audio-btn.playing span {
+  filter: brightness(10);
+}
+
+/* ===== STAR ANIMATION (succès audio) ===== */
+@keyframes star-pop {
+  0%   { transform: scale(0) rotate(-20deg); opacity: 0; }
+  60%  { transform: scale(1.3) rotate(10deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.kids-star {
+  display: inline-block;
+  animation: star-pop 0.4s ease forwards;
+}
+
+/* ===== PROGRESS STARS ===== */
+.kids-progress {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 0 16px 20px;
+  flex-wrap: wrap;
+}
+
+.kids-star-badge {
+  font-size: 24px;
+  opacity: 0.3;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.kids-star-badge.earned {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* ===== CONFETTIS ===== */
+.confetti-container {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 10px; height: 10px;
+  border-radius: 2px;
+  animation: confetti-fall 2.5s ease-in forwards;
+}
+
+@keyframes confetti-fall {
+  0%   { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ===== BRAVO MODAL ===== */
+.kids-bravo {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 500;
+  animation: fade-in 0.3s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.kids-bravo-box {
+  background: white;
+  border-radius: 32px;
+  padding: 36px 32px;
+  text-align: center;
+  max-width: 300px;
+  width: 88%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  animation: pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes pop-in {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.kids-bravo-emoji { font-size: 64px; display: block; margin-bottom: 12px; }
+.kids-bravo-title {
+  font-family: 'Baloo 2', cursive;
+  font-size: 28px;
+  font-weight: 800;
+  color: #2D2D2D;
+  margin-bottom: 8px;
+}
+.kids-bravo-sub {
+  font-size: 15px;
+  color: #888;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+.kids-bravo-btn {
+  padding: 14px 32px;
+  border-radius: 50px;
+  border: none;
+  font-family: 'Baloo 2', cursive;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  cursor: pointer;
+  background: linear-gradient(135deg, #FF6B6B, #6C63FF);
+  transition: transform 0.15s;
+  box-shadow: 0 4px 14px rgba(108,99,255,0.3);
+}
+.kids-bravo-btn:active { transform: scale(0.96); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 360px) {
+  .kids-header-title { font-size: 26px; }
+  .kids-cat-emoji { font-size: 36px; }
+  .kids-dua-arabe { font-size: 24px; }
+}
