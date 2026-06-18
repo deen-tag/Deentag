@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Deentag Kids</title>
+<link rel="stylesheet" href="css/kids.css">
+<link rel="icon" href="favicon.png" type="image/png">
+</head>
+<body>
+
+<!-- PAGE ACCUEIL -->
+<div id="page-home">
+  <div class="kids-topbar">
+    <a href="index.html" class="kids-back-btn" title="Retour">🏠</a>
+    <img src="images/kids_logo.webp" alt="Deentag Kids" class="kids-topbar-logo">
+    <div style="width:44px"></div>
+  </div>
+
+  <div class="kids-header">
+    <div class="kids-header-sub">Choisis une catégorie !</div>
+  </div>
+
+  <div class="kids-grid" id="kidsGrid"></div>
+</div>
+
+<!-- PAGE CATÉGORIE -->
+<div id="page-cat" style="display:none">
+  <div class="kids-topbar">
+    <button class="kids-back-btn" onclick="showHome()">←</button>
+    <div class="kids-topbar-title" id="catPageTitle"></div>
+    <div style="width:44px"></div>
+  </div>
+
+  <div class="kids-cat-header" id="catHeader">
+    <span class="kids-cat-header-emoji" id="catHeaderEmoji"></span>
+    <div class="kids-cat-header-title" id="catHeaderTitle"></div>
+  </div>
+
+  <div class="kids-progress" id="kidsProgress"></div>
+  <div class="kids-dua-list" id="kidsDuaList"></div>
+</div>
+
+<!-- MODAL BRAVO -->
+<div class="kids-bravo" id="bravoModal" style="display:none" onclick="closeBravo()">
+  <div class="kids-bravo-box" onclick="event.stopPropagation()">
+    <span class="kids-bravo-emoji">🌟</span>
+    <div class="kids-bravo-title">Bravo !</div>
+    <div class="kids-bravo-sub">Tu as écouté toutes les invocations !</div>
+    <button class="kids-bravo-btn" onclick="closeBravo()">Continuer 🎉</button>
+  </div>
+</div>
+
+<!-- CONFETTIS -->
+<div class="confetti-container" id="confettiContainer"></div>
+
+<script src="js/kids-duas.js"></script>
+<script src="js/kids.js"></script>
+</body>
+</html>
