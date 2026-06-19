@@ -1,0 +1,805 @@
+/* ============================================================
+   DEENTAG KIDS — DESIGN SYSTEM "STORYBOOK PREMIUM"
+   Partagé par kids.html (invocations) et quran-kids.html (Coran)
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@500;600;700;800&family=Amiri:wght@400;700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+:root{
+  /* Ciel nocturne -> aube dorée -> aube crème (signature de la marque : le doré) */
+  --sky-1:#11163A;
+  --sky-2:#222F63;
+  --sky-3:#4A5FA0;
+  --sky-4:#8FAEE2;
+  --sky-5:#FFD9A0;   /* lueur d'aube doré */
+  --sky-6:#FFF3DC;
+  --sky-7:#FFFBF5;
+
+  --gold:       #E8B84B;
+  --gold-light: #FFE9B0;
+  --gold-deep:  #B8852E;
+  --violet:     #6C63FF;
+
+  --ink:    #262B45;
+  --ink-60: rgba(38,43,69,.6);
+  --paper:  #FFFFFF;
+  --paper-warm: #FFFCF6;
+
+  --line:      rgba(232,184,75,.32);   /* trait neutre doré, remplace l'ancien violet clair */
+  --line-soft: rgba(232,184,75,.18);
+  --tint:      rgba(232,184,75,.13);   /* fond neutre doré (hover/active) */
+
+  --kids-radius: 22px;
+  --kids-shadow-card: 0 1px 2px rgba(20,24,50,.05), 0 10px 24px -6px rgba(20,24,50,.16), 0 26px 46px -18px rgba(20,24,50,.18);
+  --kids-shadow-press: 0 1px 2px rgba(20,24,50,.06), 0 4px 10px rgba(20,24,50,.10);
+  --kids-shadow: 0 14px 38px rgba(10,12,30,.20);
+}
+
+/* ============================================================
+   FOND — ciel étoilé + lune + lueur d'aube
+   ============================================================ */
+
+body.page-kids, body.page-quran-kids{
+  min-height: 100vh;
+  font-family: 'Nunito', sans-serif;
+  color: var(--ink);
+  overflow-x: hidden;
+  position: relative;
+  background:
+    radial-gradient(2px 2px at 8% 12%, rgba(255,255,255,.9), transparent),
+    radial-gradient(1.5px 1.5px at 22% 24%, rgba(255,255,255,.7), transparent),
+    radial-gradient(2px 2px at 38% 8%, rgba(255,233,176,.85), transparent),
+    radial-gradient(1.5px 1.5px at 52% 18%, rgba(255,255,255,.6), transparent),
+    radial-gradient(2px 2px at 68% 10%, rgba(255,255,255,.85), transparent),
+    radial-gradient(1.5px 1.5px at 82% 22%, rgba(255,233,176,.7), transparent),
+    radial-gradient(2px 2px at 92% 6%, rgba(255,255,255,.8), transparent),
+    radial-gradient(1.5px 1.5px at 14% 34%, rgba(255,255,255,.55), transparent),
+    radial-gradient(1.5px 1.5px at 74% 32%, rgba(255,255,255,.5), transparent),
+    linear-gradient(180deg,
+      var(--sky-1) 0%, var(--sky-2) 24%, var(--sky-3) 46%,
+      var(--sky-4) 64%, var(--sky-5) 82%, var(--sky-6) 92%, var(--sky-7) 100%);
+  background-attachment: fixed;
+}
+
+/* Lune dessinée en CSS (pas d'emoji, rendu cohérent partout) */
+body.page-kids::after, body.page-quran-kids::after{
+  content:'';
+  position: fixed;
+  top: 22px; right: 26px;
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 38% 35%, #FFFBEA 0%, #FFE9B0 55%, #F0CC7E 100%);
+  box-shadow:
+    -15px 5px 0 -3px var(--sky-1),
+    0 0 26px rgba(255,231,170,.55);
+  z-index: 1;
+  pointer-events: none;
+  animation: moonFloat 6s ease-in-out infinite alternate;
+}
+@keyframes moonFloat{ from{ transform: translateY(0); } to{ transform: translateY(7px); } }
+
+@media (prefers-reduced-motion: reduce){
+  body.page-kids::after, body.page-quran-kids::after{ animation: none; }
+}
+
+/* ============================================================
+   TOPBAR
+   ============================================================ */
+
+.kids-topbar{
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px 10px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.kids-topbar-logo{
+  height: 40px;
+  filter: drop-shadow(0 2px 10px rgba(232,184,75,.35));
+}
+.kids-topbar-actions{ display:flex; align-items:center; gap:10px; }
+.kids-topbar-left, .kids-topbar-right{ display:flex; align-items:center; gap:8px; min-width:44px; }
+.kids-topbar-right{ justify-content:flex-end; }
+.kids-topbar-center{ display:flex; align-items:center; justify-content:center; flex:1; min-width:0; }
+.kids-topbar-title{
+  font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 15px;
+  color: #FFF8EC; text-align:center;
+  overflow:hidden; text-overflow:ellipsis; white-space:nowrap;
+}
+
+.kids-back-btn{
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  background: rgba(255,255,255,.10);
+  backdrop-filter: blur(6px);
+  color: #FFF8EC;
+  font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: transform .15s ease, background .15s ease;
+}
+.kids-back-btn:active{ transform: scale(.92); background: rgba(255,255,255,.18); }
+
+/* Sélecteur de langue */
+.kids-lang-wrap{ position: relative; }
+.kids-lang-btn{
+  height: 40px; padding: 0 14px;
+  border-radius: 50px;
+  border: 1.5px solid var(--line);
+  background: rgba(255,255,255,.10);
+  backdrop-filter: blur(6px);
+  color: #FFF8EC;
+  font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 13px;
+  cursor: pointer;
+}
+.lang-menu{
+  position: absolute; top: 48px; right: 0;
+  background: var(--paper);
+  border-radius: 16px;
+  border: 1.5px solid var(--line);
+  box-shadow: var(--kids-shadow-card);
+  padding: 6px;
+  min-width: 150px;
+  display: none;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 30;
+}
+.lang-menu.open{ display: flex; animation: menuPop .16s ease; }
+@keyframes menuPop{ from{ opacity:0; transform: translateY(-6px) scale(.97); } to{ opacity:1; transform: translateY(0) scale(1); } }
+.lang-option{
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 10px;
+  border-radius: 11px;
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 13.5px;
+  color: var(--ink);
+  cursor: pointer;
+}
+.lang-option:hover{ background: var(--tint); }
+.lang-option.active{ background: var(--tint); color: var(--gold-deep); }
+.lang-flag{ font-size: 16px; }
+
+/* Bouton réglages (page de lecture) */
+.kids-settings-btn{
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+  background: rgba(255,255,255,.10);
+  backdrop-filter: blur(6px);
+  color: #FFF8EC;
+  font-size: 17px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+}
+
+/* ============================================================
+   EN-TÊTE D'ACCUEIL
+   ============================================================ */
+
+.kids-header{
+  position: relative; z-index: 4;
+  text-align: center;
+  padding: 8px 20px 16px;
+}
+.kids-header-arabic{
+  display: block;
+  font-family: 'Amiri', serif;
+  font-size: 18px;
+  color: rgba(255,233,176,.65);
+}
+.kids-header-title{
+  font-family: 'Baloo 2', cursive;
+  font-weight: 800;
+  font-size: 24px;
+  color: #FFF8EC;
+  text-shadow: 0 2px 14px rgba(0,0,0,.25);
+  letter-spacing: .01em;
+  margin-top: 2px;
+}
+.kids-header-sub{
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 13.5px;
+  color: rgba(255,248,236,.78);
+  margin-top: 4px;
+}
+
+/* ============================================================
+   COLLECTION (badges / pièces dorées) — NOUVEAU
+   ============================================================ */
+
+.kids-collection{
+  position: relative; z-index: 4;
+  padding: 2px 18px 16px;
+}
+.kids-collection-head{
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 10px; padding: 0 2px;
+}
+.kids-collection-title{
+  font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 13px;
+  color: rgba(255,248,236,.88);
+}
+.kids-collection-count{
+  font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 11.5px;
+  color: var(--gold-light);
+  background: rgba(255,255,255,.08);
+  border: 1px solid var(--line);
+  padding: 3px 10px;
+  border-radius: 50px;
+}
+.kids-collection-row{
+  display: flex; gap: 13px;
+  overflow-x: auto;
+  padding: 4px 2px 8px;
+  scrollbar-width: none;
+}
+.kids-collection-row::-webkit-scrollbar{ display: none; }
+.kids-collection-item{
+  flex-shrink: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  width: 62px;
+}
+.kids-collection-label{
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 9px;
+  color: rgba(255,248,236,.45);
+  text-align: center; line-height: 1.15;
+  max-width: 62px;
+}
+.kids-collection-item.unlocked .kids-collection-label{ color: rgba(255,248,236,.85); }
+
+/* ----- Pièce dorée (composant signature, réutilisé partout) ----- */
+.kids-coin{
+  position: relative;
+  width: 58px; height: 58px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 17px;
+  color: #7A5419;
+  background: radial-gradient(circle at 32% 26%, #FFF6DC 0%, #F3CE7C 55%, #C99A3E 100%);
+  border: 2.5px solid var(--coin-c, var(--gold-light));
+  box-shadow:
+    0 3px 9px rgba(184,133,46,.38),
+    inset 0 2px 3px rgba(255,255,255,.65),
+    inset 0 -3px 6px rgba(120,80,20,.22);
+}
+.kids-coin.locked{
+  background: linear-gradient(150deg, #E7E9F2, #CBD0E2);
+  border-color: #D7DAE8;
+  box-shadow: inset 0 2px 4px rgba(20,24,50,.10);
+  color: #AEB3C9;
+}
+.kids-coin-icon{
+  width: 60%; height: 60%;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,.18));
+}
+.kids-coin.locked .kids-coin-icon{ filter: grayscale(1) opacity(.55); }
+.kids-coin-lock{
+  position: absolute; bottom: -3px; right: -3px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--paper);
+  font-size: 10px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 1px 5px rgba(0,0,0,.22);
+}
+.kids-coin-earned{
+  width: 86px; height: 86px;
+  font-size: 30px;
+  margin: 0 auto 6px;
+  animation: coinPop .55s cubic-bezier(.34,1.56,.64,1), coinShine 2.4s ease-in-out .55s infinite;
+}
+@keyframes coinPop{ from{ transform: scale(.25) rotate(-18deg); opacity: 0; } to{ transform: scale(1) rotate(0); opacity: 1; } }
+@keyframes coinShine{ 0%,100%{ filter: brightness(1); } 50%{ filter: brightness(1.18); } }
+
+/* ============================================================
+   GRILLE CATÉGORIES (invocations) + carte
+   ============================================================ */
+
+.kids-grid{
+  position: relative; z-index: 3;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  padding: 6px 18px 28px;
+}
+.kids-cat-card{
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--kids-radius);
+  border: 2.5px solid transparent;
+  padding: 20px 12px 16px;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: var(--kids-shadow-card);
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+.kids-cat-card:active{ transform: scale(.96); box-shadow: var(--kids-shadow-press); }
+
+.kids-cat-icon-wrap{
+  width: 84px; height: 84px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(circle at 34% 30%, #FFFFFF, #FFFFFF 55%, rgba(255,255,255,.35) 100%);
+  box-shadow: 0 6px 16px rgba(20,24,50,.12), inset 0 2px 3px rgba(255,255,255,.9);
+  margin-bottom: 2px;
+}
+.kids-cat-img{ width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
+.kids-cat-emoji{ font-size: 34px; }
+
+.kids-cat-label{
+  font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 14.5px;
+  color: var(--ink);
+  line-height: 1.2;
+}
+.kids-cat-count{
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 11px;
+  color: var(--ink-60);
+}
+.kids-cat-card.done::after{
+  content:'✓'; position: absolute; top: 10px; right: 10px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #3FAE6A; color: #fff; font-size: 12px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,.25); z-index: 2;
+}
+
+/* Couleur d'accent douce en haut de carte, par catégorie */
+.kids-cat-card::before{
+  content:''; position: absolute; top: 0; left: 18%; right: 18%; height: 6px;
+  border-radius: 0 0 8px 8px;
+  opacity: .85;
+}
+.kids-cat-card[data-cat="repas"]::before     { background: linear-gradient(90deg, transparent, #FF6B6B, transparent); }
+.kids-cat-card[data-cat="dodo"]::before      { background: linear-gradient(90deg, transparent, #6C63FF, transparent); }
+.kids-cat-card[data-cat="ablution"]::before  { background: linear-gradient(90deg, transparent, #00B4D8, transparent); }
+.kids-cat-card[data-cat="toilettes"]::before { background: linear-gradient(90deg, transparent, #52B788, transparent); }
+.kids-cat-card[data-cat="maison"]::before    { background: linear-gradient(90deg, transparent, #F4A261, transparent); }
+.kids-cat-card[data-cat="transport"]::before { background: linear-gradient(90deg, transparent, #E76F51, transparent); }
+
+/* ============================================================
+   EN-TÊTE PAGE CATÉGORIE / SOURATE
+   ============================================================ */
+
+.kids-cat-header{
+  position: relative; z-index: 4;
+  padding: 16px 18px 26px;
+  border-radius: 0 0 28px 28px;
+  text-align: center;
+  background: radial-gradient(circle at 50% -20%, rgba(255,255,255,.30), transparent 60%), var(--cat-c, var(--violet));
+  box-shadow: 0 14px 28px -10px rgba(0,0,0,.30);
+}
+.kids-cat-header-emoji{
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #fff, #fff 55%, rgba(255,255,255,.4) 100%);
+  display: flex; align-items: center; justify-content: center;
+  margin: 4px auto 10px;
+  box-shadow: 0 6px 16px rgba(0,0,0,.18), inset 0 2px 3px rgba(255,255,255,.9);
+  font-size: 30px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.kids-cat-header-emoji img{ width: 46px; height: 46px; object-fit: contain; }
+.kids-cat-header-emoji.jump{ animation: emojiJump .4s ease; }
+@keyframes emojiJump{ 0%,100%{ transform: translateY(0) scale(1); } 40%{ transform: translateY(-10px) scale(1.08); } 70%{ transform: translateY(2px) scale(.97); } }
+.kids-cat-header-title{
+  font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 21px;
+  color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,.22);
+}
+
+/* Pastille compacte "sourate en cours" — vit dans la topbar, pas un grand bandeau */
+.surah-read-header{
+  display: flex; align-items: center; gap: 9px;
+  background: radial-gradient(circle at 30% 20%, rgba(255,255,255,.22), transparent 65%), var(--cat-c, var(--violet));
+  padding: 5px 16px 5px 6px;
+  border-radius: 50px;
+  box-shadow: 0 3px 10px rgba(0,0,0,.20);
+  max-width: 100%;
+}
+.surah-header-emoji{
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.92);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.surah-header-title{
+  font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 12.5px;
+  color: #fff; line-height: 1.15; text-align: left;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.surah-header-ar{
+  font-family: 'Amiri', serif; font-size: 12.5px;
+  color: rgba(255,255,255,.85); text-align: left;
+}
+
+/* Barre de progression (étoiles / compteur) */
+.kids-progress{
+  display: flex; align-items: center; justify-content: center;
+  gap: 6px; flex-wrap: wrap;
+  padding: 10px 18px 4px;
+  position: relative; z-index: 4;
+}
+.kids-star-badge{
+  font-size: 18px;
+  filter: grayscale(1) opacity(.4);
+  transition: transform .25s ease, filter .25s ease;
+}
+.kids-star-badge.earned{
+  filter: none;
+  animation: star-pop .4s ease forwards;
+}
+@keyframes star-pop{ 0%{ transform: scale(.5); } 60%{ transform: scale(1.3); } 100%{ transform: scale(1); } }
+.kids-verse-counter{
+  font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 15px;
+  color: #FFF8EC;
+  background: rgba(255,255,255,.10);
+  border: 1px solid var(--line);
+  padding: 5px 16px;
+  border-radius: 50px;
+}
+
+/* ============================================================
+   CARTES DUA / VERSET
+   ============================================================ */
+
+.kids-dua-list, #surahScroll{
+  position: relative; z-index: 3;
+  display: flex; flex-direction: column; gap: 16px;
+  flex: 1;
+  overflow-y: auto;
+}
+.kids-dua-list{ padding: 18px 18px 32px; }
+
+.kids-dua-card{
+  background: var(--paper-warm);
+  border-radius: var(--kids-radius);
+  border: 2.5px solid transparent;
+  box-shadow: var(--kids-shadow-card);
+  overflow: hidden;
+}
+.verse-card-anim{ animation: cardSlideIn .28s ease; }
+@keyframes cardSlideIn{ from{ opacity: 0; transform: translateY(10px); } to{ opacity: 1; transform: translateY(0); } }
+
+.kids-dua-moment{
+  display: flex; align-items: center; gap: 8px;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--line-soft);
+  background: linear-gradient(180deg, rgba(232,184,75,.07), transparent);
+}
+.kids-dua-moment-emoji{ font-size: 17px; }
+.kids-dua-moment-text{
+  font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 13px;
+  color: var(--ink-60); letter-spacing: .01em;
+}
+
+.kids-dua-body{ padding: 18px 20px 22px; display: flex; flex-direction: column; gap: 12px; }
+.kids-dua-traduction{
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 15px;
+  line-height: 1.5;
+}
+.kids-dua-phonetique{
+  font-family: 'Nunito', sans-serif; font-weight: 600; font-style: italic; font-size: 14px;
+  color: var(--ink-60);
+}
+.kids-dua-arabe{
+  font-family: 'Amiri', serif; font-size: 26px; line-height: 1.7;
+  text-align: right; direction: rtl;
+  color: var(--ink);
+  padding: 4px 0;
+}
+.kids-dua-conseil{
+  display: flex; align-items: flex-start; gap: 8px;
+  background: var(--tint);
+  border-radius: 14px;
+  border-left: 3px solid transparent;
+  padding: 11px 13px;
+  margin-top: 2px;
+}
+.kids-dua-conseil-icon{ font-size: 16px; flex-shrink: 0; }
+.kids-dua-conseil-text{
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 12.5px;
+  color: var(--gold-deep); line-height: 1.4;
+}
+
+/* ----- Bouton audio + anneau de progression doré (NOUVEAU) ----- */
+.kids-audio-bar{ display: flex; justify-content: center; padding-top: 4px; }
+.kids-audio-btn{
+  position: relative;
+  width: 54px; height: 54px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  background: var(--paper);
+  font-size: 21px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.6), 0 4px 12px rgba(20,24,50,.12);
+  transition: transform .15s ease;
+}
+.kids-audio-btn:active{ transform: scale(.92); }
+.kids-audio-btn.playing{
+  background: currentColor;
+  color: #fff !important;
+  animation: none;
+}
+.kids-audio-btn.playing span{ filter: brightness(0) invert(1); }
+.kids-audio-btn::after{
+  content:'';
+  position: absolute; inset: -6px;
+  border-radius: 50%;
+  background: conic-gradient(currentColor calc(var(--p, 0) * 1%), rgba(0,0,0,0) 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 3px));
+  opacity: 0;
+  transition: opacity .2s ease;
+  pointer-events: none;
+}
+.kids-audio-btn.playing::after{ opacity: 1; }
+
+/* ============================================================
+   BRAVO / MODAL DE RÉCOMPENSE
+   ============================================================ */
+
+.kids-bravo{
+  position: fixed; inset: 0; z-index: 100;
+  background: rgba(17,22,58,.72);
+  backdrop-filter: blur(3px);
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 24px;
+}
+.kids-bravo-box{
+  position: relative;
+  width: 100%; max-width: 320px;
+  background: var(--paper);
+  border-radius: 28px;
+  border: 1.5px solid transparent;
+  background-image: linear-gradient(var(--paper), var(--paper)), linear-gradient(140deg, var(--gold) 0%, rgba(232,184,75,0) 58%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: var(--kids-shadow);
+  padding: 30px 26px 26px;
+  text-align: center;
+  animation: bravoPop .3s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes bravoPop{ from{ opacity: 0; transform: scale(.85) translateY(10px); } to{ opacity: 1; transform: scale(1) translateY(0); } }
+.kids-bravo-emoji{ font-size: 54px; display: block; margin-bottom: 8px; line-height: 1; }
+.kids-bravo-title{
+  font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 23px;
+  color: var(--ink); margin-bottom: 6px;
+}
+.kids-bravo-sub{
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 14px;
+  color: var(--ink-60); margin-bottom: 22px;
+}
+.kids-bravo-btn{
+  width: 100%;
+  padding: 14px;
+  border-radius: 50px;
+  border: none;
+  background: linear-gradient(135deg, #FF8A65, var(--violet));
+  color: #fff;
+  font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 15.5px;
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.35), 0 8px 20px rgba(108,99,255,.32);
+}
+.kids-bravo-btn:active{ transform: scale(.97); }
+
+/* Confettis */
+#confettiContainer, .confetti-container{ position: fixed; inset: 0; z-index: 110; pointer-events: none; overflow: hidden; }
+.confetti-piece{
+  position: absolute; top: -20px;
+  border-radius: 3px;
+  animation-name: confettiFall;
+  animation-timing-function: ease-in;
+  animation-fill-mode: forwards;
+}
+@keyframes confettiFall{
+  0%{ transform: translateY(0) rotate(0); opacity: 1; }
+  100%{ transform: translateY(110vh) rotate(540deg); opacity: .15; }
+}
+
+/* ============================================================
+   QURAN — GRILLE SOURATES
+   ============================================================ */
+
+#pageHome, #pageSurah, #pageAll{ position: relative; z-index: 3; }
+#pageSurah, #pageAll{ display: none; flex-direction: column; min-height: 100vh; }
+
+.kids-surah-grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  padding: 6px 18px 12px;
+}
+.spacer-sm{ height: 26px; }
+
+.kids-surah-card{
+  position: relative;
+  overflow: hidden;
+  background: var(--paper-warm);
+  border-radius: var(--kids-radius);
+  border: 1.5px solid transparent;
+  background-image: linear-gradient(var(--paper-warm), var(--paper-warm)), linear-gradient(140deg, var(--kc-light, rgba(232,184,75,.4)) 0%, rgba(232,184,75,0) 65%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  padding: 18px 10px 14px;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: var(--kids-shadow-card);
+  transition: transform .16s ease, box-shadow .16s ease;
+}
+.kids-surah-card:active{ transform: scale(.96); box-shadow: var(--kids-shadow-press); }
+.kids-surah-card.done::after{
+  content:'✓'; position: absolute; top: 9px; right: 9px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: #3FAE6A; color: #fff; font-size: 11px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,.25); z-index: 2;
+}
+.kids-card-emoji{ display: none; } /* remplacé par la pièce numérotée */
+.kids-coin-surah{
+  width: 50px; height: 50px;
+  font-size: 16px;
+  border-width: 3px;
+  border-color: var(--kc, var(--gold));
+  margin-bottom: 4px;
+}
+.kids-card-ar{
+  font-family: 'Amiri', serif; font-size: 18px;
+  color: var(--ink);
+}
+.kids-card-name{
+  font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 13px;
+  color: var(--ink); line-height: 1.2;
+}
+.kids-card-sub{
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 10.5px;
+  color: var(--ink-60);
+}
+
+/* Liste "Tout le Coran" */
+.all-surah-item{
+  display: flex; align-items: center; gap: 14px;
+  padding: 13px 18px;
+  cursor: pointer;
+  background: var(--paper-warm);
+}
+.all-surah-item:active{ background: var(--tint); }
+.all-surah-sep{ height: 1px; background: var(--line-soft); margin: 0 18px; }
+.all-surah-num{
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  color: #fff;
+  font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 3px 8px rgba(0,0,0,.18);
+}
+.all-surah-info{ flex: 1; }
+.all-surah-ar{ font-family: 'Amiri', serif; font-size: 17px; color: var(--ink); }
+.all-surah-fr{ font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 12.5px; color: var(--ink-60); margin-top: 1px; }
+.all-surah-verses{
+  font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 14px;
+  text-align: center; line-height: 1.1;
+}
+.all-surah-verses span{ font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 9px; color: var(--ink-60); }
+
+/* Navigation versets */
+.kids-verse-nav{
+  display: flex; justify-content: space-between; gap: 10px;
+  padding: 0 18px 24px;
+}
+.kids-nav-btn{
+  padding: 13px 18px;
+  border-radius: 50px;
+  border: 1.5px solid var(--line);
+  background: rgba(255,255,255,.08);
+  color: #FFF8EC;
+  font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 13.5px;
+  cursor: pointer;
+}
+.kids-nav-next, .kids-nav-done{
+  color: #fff; border: none;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.4), inset 0 -3px 8px rgba(0,0,0,.14), 0 6px 16px rgba(0,0,0,.20);
+  margin-left: auto;
+}
+.kids-nav-btn:active{ transform: scale(.96); }
+
+/* Chargement / erreur */
+.loading-block, .error-block{
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 12px; padding: 60px 24px;
+  color: rgba(255,248,236,.85);
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 14px;
+  text-align: center;
+}
+.loading-spinner{
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  border: 3.5px solid rgba(255,255,255,.2);
+  border-top-color: var(--gold);
+  animation: spin .8s linear infinite;
+}
+.loading-text{ font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 14px; }
+@keyframes spin{ to{ transform: rotate(360deg); } }
+
+/* ============================================================
+   PANNEAU RÉGLAGES
+   ============================================================ */
+
+.settings-panel{
+  position: fixed; top: 64px; right: 18px; z-index: 40;
+  width: 250px;
+  background: var(--paper);
+  border-radius: 20px;
+  border: 1.5px solid transparent;
+  background-image: linear-gradient(var(--paper), var(--paper)), linear-gradient(140deg, var(--gold) 0%, rgba(232,184,75,0) 60%);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: var(--kids-shadow-card);
+  padding: 16px 16px 14px;
+  display: none;
+  flex-direction: column; gap: 14px;
+}
+.settings-panel.open{ display: flex; animation: menuPop .16s ease; }
+.settings-panel-title{
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 14px;
+  color: var(--ink);
+}
+.settings-panel-close{ cursor: pointer; font-size: 16px; color: var(--ink-60); }
+.size-row{ margin-bottom: 2px; }
+.size-row-label, .toggle-label{
+  font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 12.5px;
+  color: var(--ink-60); margin-bottom: 6px; display: block;
+}
+.size-pills{ display: flex; gap: 6px; }
+.size-pill{
+  flex: 1; text-align: center; padding: 7px 0;
+  border-radius: 10px; border: 1.5px solid var(--line);
+  font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 12px;
+  color: var(--ink-60); cursor: pointer;
+}
+.size-pill.active{ background: var(--gold); border-color: var(--gold); color: #fff; }
+.toggle-row{ display: flex; align-items: center; justify-content: space-between; }
+.toggle-switch{
+  width: 40px; height: 23px; border-radius: 50px;
+  border: 1.5px solid var(--line);
+  background: #EDEFF6;
+  position: relative; cursor: pointer;
+  transition: background .15s ease;
+}
+.toggle-switch::after{
+  content:''; position: absolute; top: 2px; left: 2px;
+  width: 17px; height: 17px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  transition: transform .15s ease;
+}
+.toggle-switch.on{ background: var(--gold); border-color: var(--gold); }
+.toggle-switch.on::after{ transform: translateX(16px); }
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (min-width: 480px){
+  .kids-grid{ grid-template-columns: repeat(3, 1fr); max-width: 520px; margin: 0 auto; }
+  .kids-surah-grid{ grid-template-columns: repeat(3, 1fr); max-width: 560px; margin: 0 auto; }
+  .kids-dua-list, #surahScroll{ max-width: 480px; margin: 0 auto; width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
