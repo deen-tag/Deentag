@@ -337,8 +337,8 @@ body.night .night-stars { display:block; }
   overflow: hidden;
 }
 .kids-circle .kids-icon-img {
-  width: 90px;
-  height: 90px;
+  width: 84px;
+  height: 84px;
   object-fit: contain;
   display: block;
   transition: opacity 0.3s;
