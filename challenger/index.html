@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lueur — invocations & Coran</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Amiri:wght@400;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="accueil">
+<div class="lr-shell">
+
+  <header class="lr-header">
+    <div class="lr-brand">Lueur <small>v1 · démo</small></div>
+    <button class="lr-iconbtn" aria-label="Réglages">⚙</button>
+  </header>
+
+  <div class="lr-horizon-wrap lr-anim">
+    <div class="lr-horizon" id="lrHorizon"></div>
+    <div class="lr-horizon-caption">
+      <span>Cycle des prières</span>
+      <span>Prochain : <b id="lrHorizonNext">—</b> · dans <span class="lr-countdown" id="lrHorizonCountdown">—</span></span>
+    </div>
+  </div>
+
+  <section class="lr-hero lr-anim">
+    <div class="lr-hero-eyebrow" id="lrHeroEyebrow">Invocation du moment</div>
+    <p class="lr-hero-arabic" id="lrHeroArabic">—</p>
+    <p class="lr-hero-fr" id="lrHeroFr">—</p>
+    <div class="lr-hero-foot">
+      <span>D'après la tradition prophétique</span>
+      <button onclick="location.href='duas.html'">Toutes les duas →</button>
+    </div>
+  </section>
+
+  <section class="lr-section lr-anim">
+    <div class="lr-row">
+      <a class="lr-pill" href="duas.html">
+        <span class="lr-glyph">✦</span>
+        <span class="lr-label">Duas</span>
+      </a>
+      <a class="lr-pill" href="quran.html">
+        <span class="lr-glyph">▣</span>
+        <span class="lr-label">Coran</span>
+      </a>
+      <a class="lr-pill" href="#" onclick="return false;">
+        <span class="lr-glyph">◔</span>
+        <span class="lr-label">Tasbih</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="lr-section lr-anim">
+    <div class="lr-section-head">
+      <h2>Catégories</h2>
+      <a href="duas.html">Tout voir</a>
+    </div>
+    <div class="lr-grid" id="lrCatGrid"></div>
+  </section>
+
+</div>
+
+<nav class="lr-tabbar">
+  <div class="lr-tabbar-inner">
+    <a class="lr-tab" data-tab="accueil" href="index.html"><span class="lr-glyph">⌂</span>Accueil</a>
+    <a class="lr-tab" data-tab="duas" href="duas.html"><span class="lr-glyph">✦</span>Duas</a>
+    <a class="lr-tab" data-tab="quran" href="quran.html"><span class="lr-glyph">▣</span>Coran</a>
+  </div>
+</nav>
+
+<script src="js/duas-data.js"></script>
+<script src="js/app.js"></script>
+<script>
+  const grid = document.getElementById("lrCatGrid");
+  LR_CATEGORIES.forEach(c=>{
+    const count = LR_DUAS.filter(d=>d.cat===c.id).length;
+    const card = document.createElement("a");
+    card.href = "duas.html#"+c.id;
+    card.className = "lr-card";
+    card.innerHTML = `
+      <div class="lr-card-icon">${c.glyph}</div>
+      <div class="lr-card-title">${c.name}</div>
+      <div class="lr-card-count">${count} invocation${count>1?"s":""}</div>
+    `;
+    grid.appendChild(card);
+  });
+</script>
+</body>
+</html>
