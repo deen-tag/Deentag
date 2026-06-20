@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Deentag Kids v2 — Invocations et Coran pour enfants">
+  <title>Deentag Kids v2</title>
+  <link rel="stylesheet" href="css/style-v2.css">
+  <style>
+    /* Surcharges spécifiques pour le mode enfants */
+    body.theme-kids {
+      --gold: #FF6B9D;
+      --gold-light: #FFB3D9;
+      --gold-dark: #E63384;
+      --bg: #FFF5F8;
+      --bg2: #FFFBFD;
+      --text: #1E1A10;
+      --text2: #4A4030;
+      --text3: #6B5E48;
+      --card-bg: linear-gradient(160deg, #FFE5F0 0%, #FFF0F7 100%);
+      --card-border: rgba(255,107,157,0.20);
+      --shadow: rgba(255,107,157,0.10);
+    }
+    
+    .kids-brand {
+      font-size: 48px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 4px;
+      margin-bottom: 16px;
+      font-family: 'Cinzel', serif;
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    
+    .cat-card:hover {
+      transform: scale(1.05) translateY(-4px);
+      box-shadow: 0 12px 28px var(--shadow);
+    }
+  </style>
+</head>
+<body class="theme-kids">
+
+<!-- TOPBAR -->
+<div class="app-topbar">
+  <div class="kids-entry">
+    <a href="index-v2.html" class="btn-circle" style="text-decoration:none; color: var(--text);">
+      ← <span style="font-size: 12px; margin-left: 4px;">Adulte</span>
+    </a>
+  </div>
+
+  <div class="app-topbar-center">
+    <div class="kids-brand">DEENTAG</div>
+  </div>
+
+  <div class="app-topbar-right">
+    <div class="lang-wrapper">
+      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()">FR ▾</button>
+      <div class="lang-menu" id="lang-menu">
+        <span class="lang-option" onclick="setLang('fr')">🇫🇷 Français</span>
+        <span class="lang-option" onclick="setLang('en')">🇬🇧 English</span>
+        <span class="lang-option" onclick="setLang('es')">🇪🇸 Español</span>
+        <span class="lang-option" onclick="setLang('de')">🇩🇪 Deutsch</span>
+        <span class="lang-option" onclick="setLang('it')">🇮🇹 Italiano</span>
+        <span class="lang-option" onclick="setLang('nl')">🇳🇱 Nederlands</span>
+        <span class="lang-option" onclick="setLang('pt')">🇵🇹 Português</span>
+        <span class="lang-option" onclick="setLang('tr')">🇹🇷 Türkçe</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="index-header">
+  <div style="font-size: 48px; margin-bottom: 16px;">🌟</div>
+  <div class="index-brand" style="color: var(--gold);">POUR LES ENFANTS</div>
+  <div class="index-ornament">
+    <div class="index-ornament-line"></div>
+    <span class="ornament-star">✨</span>
+    <div class="index-ornament-line"></div>
+  </div>
+  <div class="index-tagline">
+    <span class="lang-block" data-lang-block="fr" style="display:block;">Apprends tes invocations en s'amusant !</span>
+    <span class="lang-block" data-lang-block="en" style="display:none;">Learn your supplications while having fun!</span>
+    <span class="lang-block" data-lang-block="es" style="display:none;">¡Aprende tus invocaciones divirtiéndote!</span>
+    <span class="lang-block" data-lang-block="de" style="display:none;">Lerne deine Bittgebete beim Spielen!</span>
+    <span class="lang-block" data-lang-block="it" style="display:none;">Impara le tue invocazioni divertendoti!</span>
+    <span class="lang-block" data-lang-block="nl" style="display:none;">Leer je smekingen terwijl je plezier hebt!</span>
+    <span class="lang-block" data-lang-block="pt" style="display:none;">Aprenda suas invocações se divertindo!</span>
+    <span class="lang-block" data-lang-block="tr" style="display:none;">Dualarını öğren ve eğlen!</span>
+  </div>
+</div>
+
+<!-- TABS NAVIGATION -->
+<div class="tabs-nav">
+  <button class="tab-btn active" data-tab="invocations">
+    <span class="lang-block" data-lang-block="fr">Invocations</span>
+    <span class="lang-block" data-lang-block="en" style="display:none;">Supplications</span>
+    <span class="lang-block" data-lang-block="es" style="display:none;">Invocaciones</span>
+    <span class="lang-block" data-lang-block="de" style="display:none;">Bittgebete</span>
+    <span class="lang-block" data-lang-block="it" style="display:none;">Invocazioni</span>
+    <span class="lang-block" data-lang-block="nl" style="display:none;">Smekingen</span>
+    <span class="lang-block" data-lang-block="pt" style="display:none;">Invocações</span>
+    <span class="lang-block" data-lang-block="tr" style="display:none;">Dualar</span>
+  </button>
+  <button class="tab-btn" data-tab="quran">
+    <span class="lang-block" data-lang-block="fr">Coran</span>
+    <span class="lang-block" data-lang-block="en" style="display:none;">Quran</span>
+    <span class="lang-block" data-lang-block="es" style="display:none;">Corán</span>
+    <span class="lang-block" data-lang-block="de" style="display:none;">Koran</span>
+    <span class="lang-block" data-lang-block="it" style="display:none;">Corano</span>
+    <span class="lang-block" data-lang-block="nl" style="display:none;">Koran</span>
+    <span class="lang-block" data-lang-block="pt" style="display:none;">Alcorão</span>
+    <span class="lang-block" data-lang-block="tr" style="display:none;">Kuran</span>
+  </button>
+</div>
+
+<!-- INVOCATIONS TAB -->
+<div class="tab-content active" data-tab="invocations">
+  <div class="cat-grid">
+    <div class="cat-card" data-category="repas">
+      <div class="cat-icon-circle"><img src="images/repas.webp" class="cat-icon" alt=""></div>
+      <div class="cat-label"><span class="lang-block" data-lang-block="fr">Repas</span><span class="lang-block" data-lang-block="en" style="display:none;">Meals</span></div>
+    </div>
+    <div class="cat-card" data-category="reveil">
+      <div class="cat-icon-circle"><img src="images/lit.webp" class="cat-icon" alt=""></div>
+      <div class="cat-label"><span class="lang-block" data-lang-block="fr">Réveil & Couché</span><span class="lang-block" data-lang-block="en" style="display:none;">Wake & Sleep</span></div>
+    </div>
+    <div class="cat-card" data-category="ablution">
+      <div class="cat-icon-circle"><img src="images/ablution.webp" class="cat-icon" alt=""></div>
+      <div class="cat-label"><span class="lang-block" data-lang-block="fr">Ablution</span><span class="lang-block" data-lang-block="en" style="display:none;">Ablution</span></div>
+    </div>
+    <div class="cat-card" data-category="toilettes">
+      <div class="cat-icon-circle"><img src="images/wc.webp" class="cat-icon" alt=""></div>
+      <div class="cat-label"><span class="lang-block" data-lang-block="fr">Toilettes</span><span class="lang-block" data-lang-block="en" style="display:none;">Restroom</span></div>
+    </div>
+    <div class="cat-card" data-category="maison">
+      <div class="cat-icon-circle"><img src="images/maison.webp" class="cat-icon" alt=""></div>
+      <div class="cat-label"><span class="lang-block" data-lang-block="fr">Maison</span><span class="lang-block" data-lang-block="en" style="display:none;">Home</span></div>
+    </div>
+    <div class="cat-card" data-category="tristesse">
+      <div class="cat-icon-circle"><img src="images/tristesse.webp" class="cat-icon" alt=""></div>
+      <div class="cat-label"><span class="lang-block" data-lang-block="fr">Tristesse</span><span class="lang-block" data-lang-block="en" style="display:none;">Sadness</span></div>
+    </div>
+    <div class="cat-card" data-category="transport">
+      <div class="cat-icon-circle"><img src="images/voiture.webp" class="cat-icon" alt=""></div>
+      <div class="cat-label"><span class="lang-block" data-lang-block="fr">Transport</span><span class="lang-block" data-lang-block="en" style="display:none;">Transport</span></div>
+    </div>
+    <div class="cat-card" data-category="enfants">
+      <div class="cat-icon-circle"><img src="images/enfants.webp" class="cat-icon" alt=""></div>
+      <div class="cat-label"><span class="lang-block" data-lang-block="fr">Enfants</span><span class="lang-block" data-lang-block="en" style="display:none;">Children</span></div>
+    </div>
+  </div>
+
+  <div class="ornament-row">
+    <div class="ornament-row-line"></div>
+    <span class="ornament-star">🎉</span>
+    <div class="ornament-row-line"></div>
+  </div>
+
+  <div style="text-align: center; padding: 20px; font-size: 14px; color: var(--text2);">
+    <span class="lang-block" data-lang-block="fr">Clique sur une catégorie pour apprendre ! 📚</span>
+    <span class="lang-block" data-lang-block="en" style="display:none;">Click on a category to learn! 📚</span>
+  </div>
+</div>
+
+<!-- QURAN TAB -->
+<div class="tab-content" data-tab="quran">
+  <div style="padding: 40px 20px; text-align: center;">
+    <p style="color: var(--text2); font-style: italic;">Coran à venir...</p>
+  </div>
+</div>
+
+<!-- BOTTOM SHEET OVERLAY -->
+<div class="bs-overlay" id="bsOverlay" onclick="closeSheet()"></div>
+
+<!-- BOTTOM SHEET -->
+<div class="bottom-sheet" id="bottomSheet">
+  <div class="bs-handle"><div class="bs-handle-bar"></div></div>
+  
+  <!-- LIST VIEW -->
+  <div id="listView">
+    <div class="bs-header">
+      <div class="bs-header-icon"><img id="bsIcon" src="" alt=""></div>
+      <div class="bs-header-title" id="bsTitle"></div>
+    </div>
+    <div class="bs-ornament">
+      <div class="bs-ornament-line"></div>
+      <span class="ornament-star">✨</span>
+      <div class="bs-ornament-line"></div>
+    </div>
+    <div class="bs-grid" id="bsList"></div>
+  </div>
+
+  <!-- DUA VIEW -->
+  <div id="duaView" class="dua-view">
+    <button class="dua-close-btn" onclick="backToList()">← <span class="lang-block" data-lang-block="fr">Retour</span><span class="lang-block" data-lang-block="en" style="display:none;">Back</span></button>
+    <div class="dua-card">
+      <div class="dua-title" id="duaTitle"></div>
+      <div class="dua-arabic" id="duaArabic"></div>
+      <div class="dua-phonetic" id="duaPhonetic"></div>
+      <div class="dua-translation" id="duaTranslation"></div>
+      <div class="audio-player">
+        <button class="audio-btn" id="audioBtn" onclick="playAudio()">🔊</button>
+        <div class="audio-info"><span class="lang-block" data-lang-block="fr">Écouter</span><span class="lang-block" data-lang-block="en" style="display:none;">Listen</span></div>
+      </div>
+      <div class="dua-hadith" id="duaHadith"></div>
+    </div>
+  </div>
+</div>
+
+<script src="js/duas.js"></script>
+<script src="js/app-v2.js"></script>
+<script>
+  // Force le thème enfants
+  AppState.isKids = true;
+  AppState.applyTheme();
+
+  // Tab switching
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+    });
+  });
+
+  // Category cards
+  document.querySelectorAll('.cat-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const category = card.dataset.category;
+      openSheet(category);
+    });
+  });
+
+  // Back to list
+  function backToList() {
+    document.getElementById('listView').classList.remove('hidden');
+    document.getElementById('duaView').classList.add('hidden');
+  }
+
+  // Play audio
+  let currentAudio = null;
+  function playAudio() {
+    const category = AppState.currentCategory;
+    const duaId = AppState.currentDua;
+    const dua = DUAS[category][duaId];
+    if (!dua || !dua.audio) return;
+    
+    if (currentAudio) currentAudio.pause();
+    currentAudio = new Audio(`Audio/${dua.audio}`);
+    currentAudio.play();
+  }
+</script>
+
+</body>
+</html>
