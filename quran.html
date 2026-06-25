@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="Deentag — Coran complet en arabe, phonétique et traduction. 8 langues.">
+<meta name="theme-color" content="#E9E6D3">
+<title>Deentag — Coran</title>
+<link rel="stylesheet" href="css/adult.css">
+<link rel="icon" href="favicon.png" type="image/png">
+<script>
+(function(){
+  var t=localStorage.getItem('deentag_theme')||'day';
+  var l=localStorage.getItem('deentag_lang')||'fr';
+  document.documentElement.setAttribute('data-theme',t);
+  document.documentElement.setAttribute('data-lang',l);
+  document.addEventListener('DOMContentLoaded',function(){
+    var b=document.body;
+    b.classList.remove('day','night');
+    b.classList.add(t);
+    var btn=document.getElementById('lang-btn');
+    if(btn) btn.textContent=l.toUpperCase()+' ▾';
+  });
+})();
+</script>
+</head>
+<body class="day page-quran" data-page="quran">
+
+<!-- TOPBAR -->
+<div class="app-topbar">
+  <!-- GAUCHE : langue -->
+  <div class="app-topbar-left">
+    <div class="lang-wrapper">
+      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()">FR ▾</button>
+      <div class="lang-menu" id="lang-menu">
+        <span class="lang-option" data-lang="de" onclick="setLang('de')"><span class="lang-flag">🇩🇪</span>Deutsch</span>
+        <span class="lang-option" data-lang="en" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span>English</span>
+        <span class="lang-option" data-lang="es" onclick="setLang('es')"><span class="lang-flag">🇪🇸</span>Español</span>
+        <span class="lang-option" data-lang="fr" onclick="setLang('fr')"><span class="lang-flag">🇫🇷</span>Français</span>
+        <span class="lang-option" data-lang="it" onclick="setLang('it')"><span class="lang-flag">🇮🇹</span>Italiano</span>
+        <span class="lang-option" data-lang="nl" onclick="setLang('nl')"><span class="lang-flag">🇳🇱</span>Nederlands</span>
+        <span class="lang-option" data-lang="pt" onclick="setLang('pt')"><span class="lang-flag">🇵🇹</span>Português</span>
+        <span class="lang-option" data-lang="tr" onclick="setLang('tr')"><span class="lang-flag">🇹🇷</span>Türkçe</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTRE : logo -->
+  <div class="app-topbar-center">
+    <img src="images/logo.webp" class="app-topbar-logo logo-day" alt="Deentag">
+    <img src="images/logo-night.webp" class="app-topbar-logo logo-night" alt="Deentag">
+  </div>
+
+  <!-- DROITE : thème -->
+  <div class="app-topbar-right">
+    <button class="theme-knob-btn" onclick="toggleTheme()" id="theme-circle-btn" aria-label="Changer le thème">
+      <div class="theme-knob-btn-inner">
+        <svg class="tt-sun" width="18" height="18" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="6" fill="#c8922a"/><g stroke="#c8922a" stroke-width="2.2" stroke-linecap="round"><line x1="16" y1="3" x2="16" y2="7"/><line x1="16" y1="25" x2="16" y2="29"/><line x1="3" y1="16" x2="7" y2="16"/><line x1="25" y1="16" x2="29" y2="16"/><line x1="6.9" y1="6.9" x2="9.8" y2="9.8"/><line x1="22.2" y1="22.2" x2="25.1" y2="25.1"/><line x1="25.1" y1="6.9" x2="22.2" y2="9.8"/><line x1="9.8" y1="22.2" x2="6.9" y2="25.1"/></g></svg>
+        <svg class="tt-moon" width="15" height="15" viewBox="0 0 28 28" fill="none"><path d="M22 17.5A10 10 0 0 1 10.5 6a10 10 0 1 0 11.5 11.5z" fill="#7abf95"/><circle cx="20" cy="8" r="1.5" fill="#c8d8b0" opacity="0.7"/><circle cx="23" cy="12" r="1" fill="#c8d8b0" opacity="0.5"/></svg>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="quran-header">
+  <div class="quran-brand">القرآن الكريم</div>
+  <div class="quran-ornament">
+    <div class="quran-ornament-line"></div>
+    <span class="ornament-star">✦</span>
+    <div class="quran-ornament-line"></div>
+  </div>
+  <div class="quran-tagline">
+    <span class="lang-block" data-lang-block="fr">30 Jouz · 114 Sourates · 6236 Versets</span>
+    <span class="lang-block" data-lang-block="en">30 Juz · 114 Surahs · 6236 Verses</span>
+    <span class="lang-block" data-lang-block="es">30 Yuz · 114 Suras · 6236 Versos</span>
+    <span class="lang-block" data-lang-block="de">30 Juz · 114 Suren · 6236 Verse</span>
+    <span class="lang-block" data-lang-block="it">30 Juz · 114 Sure · 6236 Versetti</span>
+    <span class="lang-block" data-lang-block="nl">30 Juz · 114 Soera's · 6236 Verzen</span>
+    <span class="lang-block" data-lang-block="pt">30 Juz · 114 Suras · 6236 Versos</span>
+    <span class="lang-block" data-lang-block="tr">30 Cüz · 114 Sure · 6236 Ayet</span>
+  </div>
+</div>
+
+<!-- GRILLE NAVIGATION CORAN -->
+<div class="cat-grid" id="quranNavGrid">
+
+  <!-- Coran complet -->
+  <div class="qnav-card" onclick="openNavSheet('full')">
+    <div class="qnav-card-corner"></div>
+    <div class="qnav-watermark">القرآن</div>
+    <div class="qnav-icon">
+      <img src="img/quran-full.webp" alt="Coran Complet" class="qnav-img">
+    </div>
+    <div class="qnav-label">
+      <span class="lang-block" data-lang-block="fr">Coran Complet</span>
+      <span class="lang-block" data-lang-block="en">Full Quran</span>
+      <span class="lang-block" data-lang-block="es">Corán Completo</span>
+      <span class="lang-block" data-lang-block="de">Vollständiger Koran</span>
+      <span class="lang-block" data-lang-block="it">Corano Completo</span>
+      <span class="lang-block" data-lang-block="nl">Volledige Koran</span>
+      <span class="lang-block" data-lang-block="pt">Alcorão Completo</span>
+      <span class="lang-block" data-lang-block="tr">Tam Kuran</span>
+    </div>
+    <div class="qnav-sub">
+      <span class="lang-block" data-lang-block="fr">114 sourates</span>
+      <span class="lang-block" data-lang-block="en">114 surahs</span>
+      <span class="lang-block" data-lang-block="es">114 suras</span>
+      <span class="lang-block" data-lang-block="de">114 Suren</span>
+      <span class="lang-block" data-lang-block="it">114 sure</span>
+      <span class="lang-block" data-lang-block="nl">114 soera's</span>
+      <span class="lang-block" data-lang-block="pt">114 suras</span>
+      <span class="lang-block" data-lang-block="tr">114 sure</span>
+    </div>
+  </div>
+
+  <!-- Par Jouz -->
+  <div class="qnav-card" onclick="openNavSheet('juz')">
+    <div class="qnav-card-corner"></div>
+    <div class="qnav-watermark">جزء</div>
+    <div class="qnav-icon">
+      <img src="img/quran-juz.webp" alt="Par Jouz" class="qnav-img">
+    </div>
+    <div class="qnav-label">
+      <span class="lang-block" data-lang-block="fr">Par Jouz</span>
+      <span class="lang-block" data-lang-block="en">By Juz</span>
+      <span class="lang-block" data-lang-block="es">Por Yuz</span>
+      <span class="lang-block" data-lang-block="de">Nach Juz</span>
+      <span class="lang-block" data-lang-block="it">Per Juz</span>
+      <span class="lang-block" data-lang-block="nl">Per Juz</span>
+      <span class="lang-block" data-lang-block="pt">Por Juz</span>
+      <span class="lang-block" data-lang-block="tr">Cüze Göre</span>
+    </div>
+    <div class="qnav-sub">
+      <span class="lang-block" data-lang-block="fr">30 parties</span>
+      <span class="lang-block" data-lang-block="en">30 parts</span>
+      <span class="lang-block" data-lang-block="es">30 partes</span>
+      <span class="lang-block" data-lang-block="de">30 Teile</span>
+      <span class="lang-block" data-lang-block="it">30 parti</span>
+      <span class="lang-block" data-lang-block="nl">30 delen</span>
+      <span class="lang-block" data-lang-block="pt">30 partes</span>
+      <span class="lang-block" data-lang-block="tr">30 bölüm</span>
+    </div>
+  </div>
+
+  <!-- Sourates célèbres -->
+  <div class="qnav-card" onclick="openNavSheet('famous')">
+    <div class="qnav-card-corner"></div>
+    <div class="qnav-watermark">سور</div>
+    <div class="qnav-icon">
+      <img src="img/quran-famous.webp" alt="Sourates Célèbres" class="qnav-img">
+    </div>
+    <div class="qnav-label">
+      <span class="lang-block" data-lang-block="fr">Sourates Célèbres</span>
+      <span class="lang-block" data-lang-block="en">Famous Surahs</span>
+      <span class="lang-block" data-lang-block="es">Suras Famosas</span>
+      <span class="lang-block" data-lang-block="de">Bekannte Suren</span>
+      <span class="lang-block" data-lang-block="it">Sure Famose</span>
+      <span class="lang-block" data-lang-block="nl">Bekende Soera's</span>
+      <span class="lang-block" data-lang-block="pt">Suras Famosas</span>
+      <span class="lang-block" data-lang-block="tr">Meşhur Sureler</span>
+    </div>
+    <div class="qnav-sub">
+      <span class="lang-block" data-lang-block="fr">Sélection</span>
+      <span class="lang-block" data-lang-block="en">Selection</span>
+      <span class="lang-block" data-lang-block="es">Selección</span>
+      <span class="lang-block" data-lang-block="de">Auswahl</span>
+      <span class="lang-block" data-lang-block="it">Selezione</span>
+      <span class="lang-block" data-lang-block="nl">Selectie</span>
+      <span class="lang-block" data-lang-block="pt">Seleção</span>
+      <span class="lang-block" data-lang-block="tr">Seçim</span>
+    </div>
+  </div>
+
+  <!-- Par Prophète -->
+  <div class="qnav-card" onclick="openNavSheet('prophet')">
+    <div class="qnav-card-corner"></div>
+    <div class="qnav-watermark">أنبياء</div>
+    <div class="qnav-icon">
+      <img src="img/quran-prophet.webp" alt="Par Prophète" class="qnav-img">
+    </div>
+    <div class="qnav-label">
+      <span class="lang-block" data-lang-block="fr">Par Prophète</span>
+      <span class="lang-block" data-lang-block="en">By Prophet</span>
+      <span class="lang-block" data-lang-block="es">Por Profeta</span>
+      <span class="lang-block" data-lang-block="de">Nach Prophet</span>
+      <span class="lang-block" data-lang-block="it">Per Profeta</span>
+      <span class="lang-block" data-lang-block="nl">Per Profeet</span>
+      <span class="lang-block" data-lang-block="pt">Por Profeta</span>
+      <span class="lang-block" data-lang-block="tr">Peygambere Göre</span>
+    </div>
+    <div class="qnav-sub">
+      <span class="lang-block" data-lang-block="fr">12 prophètes</span>
+      <span class="lang-block" data-lang-block="en">12 prophets</span>
+      <span class="lang-block" data-lang-block="es">12 profetas</span>
+      <span class="lang-block" data-lang-block="de">12 Propheten</span>
+      <span class="lang-block" data-lang-block="it">12 profeti</span>
+      <span class="lang-block" data-lang-block="nl">12 profeten</span>
+      <span class="lang-block" data-lang-block="pt">12 profetas</span>
+      <span class="lang-block" data-lang-block="tr">12 peygamber</span>
+    </div>
+  </div>
+
+  <!-- Par Thème -->
+  <div class="qnav-card qnav-card-full" onclick="openNavSheet('theme')">
+    <div class="qnav-card-corner"></div>
+    <div class="qnav-watermark">مواضيع</div>
+    <div class="qnav-icon">
+      <img src="img/quran-theme.webp" alt="Par Thème" class="qnav-img">
+    </div>
+    <div class="qnav-label">
+      <span class="lang-block" data-lang-block="fr">Par Thème</span>
+      <span class="lang-block" data-lang-block="en">By Theme</span>
+      <span class="lang-block" data-lang-block="es">Por Tema</span>
+      <span class="lang-block" data-lang-block="de">Nach Thema</span>
+      <span class="lang-block" data-lang-block="it">Per Tema</span>
+      <span class="lang-block" data-lang-block="nl">Per Thema</span>
+      <span class="lang-block" data-lang-block="pt">Por Tema</span>
+      <span class="lang-block" data-lang-block="tr">Temaya Göre</span>
+    </div>
+    <div class="qnav-sub">
+      <span class="lang-block" data-lang-block="fr">Matin · Soir · Vendredi · Protection · Épreuve · Guérison</span>
+      <span class="lang-block" data-lang-block="en">Morning · Evening · Friday · Protection · Trial · Healing</span>
+      <span class="lang-block" data-lang-block="es">Mañana · Tarde · Viernes · Protección · Prueba · Curación</span>
+      <span class="lang-block" data-lang-block="de">Morgen · Abend · Freitag · Schutz · Prüfung · Heilung</span>
+      <span class="lang-block" data-lang-block="it">Mattino · Sera · Venerdì · Protezione · Prova · Guarigione</span>
+      <span class="lang-block" data-lang-block="nl">Ochtend · Avond · Vrijdag · Bescherming · Beproeving · Genezing</span>
+      <span class="lang-block" data-lang-block="pt">Manhã · Noite · Sexta · Proteção · Provação · Cura</span>
+      <span class="lang-block" data-lang-block="tr">Sabah · Akşam · Cuma · Koruma · Sınav · Şifa</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="ornament-row">
+  <div class="ornament-row-line"></div>
+  <span class="ornament-star">✦</span>
+  <div class="ornament-row-line"></div>
+</div>
+<div class="spacer-sm"></div>
+
+
+
+<!-- OVERLAY -->
+<div class="bs-overlay" id="bsOverlay" onclick="closeSheet()"></div>
+
+<!-- BOTTOM SHEET -->
+<div class="bottom-sheet" id="bottomSheet">
+  <div class="bs-handle"><div class="bs-handle-bar"></div></div>
+
+  <!-- VUE NAVIGATION (grille Jouz / prophètes / thèmes) -->
+  <div id="navView" style="display:none;flex-direction:column;">
+    <div class="bs-header">
+      <div class="bs-header-ar" id="bsNavAr"></div>
+      <div class="bs-header-title" id="bsNavTitle"></div>
+      <div class="bs-header-sub" id="bsNavSub"></div>
+    </div>
+    <div class="bs-ornament">
+      <div class="bs-ornament-line"></div>
+      <span class="ornament-star">✦</span>
+      <div class="bs-ornament-line"></div>
+    </div>
+    <div class="bs-surah-list" id="navList">
+      <!-- Généré par JS -->
+    </div>
+  </div>
+
+  <!-- VUE LISTE SOURATES -->
+  <div id="listView" style="display:none;flex-direction:column;">
+    <div class="bs-header">
+      <div class="bs-header-ar" id="bsJuzAr">١</div>
+      <div class="bs-header-title" id="bsJuzTitle">Jouz 1</div>
+      <div class="bs-header-sub" id="bsJuzRange"></div>
+    </div>
+    <div class="bs-ornament">
+      <div class="bs-ornament-line"></div>
+      <span class="ornament-star">✦</span>
+      <div class="bs-ornament-line"></div>
+    </div>
+    <div class="bs-subtitle" id="bsSubtitle">Sélectionnez une sourate</div>
+    <div class="bs-search-wrap">
+      <input type="text" class="bs-search-input" id="bsSearch" placeholder="🔍 Rechercher une sourate...">
+    </div>
+    <div class="bs-surah-list" id="surahList">
+      <!-- Généré par JS -->
+    </div>
+  </div>
+
+  <!-- VUE SOURATE (karaoké) -->
+  <div id="surahView">
+
+    <!-- TOPBAR SOURATE -->
+    <div class="surah-topbar">
+      <button class="theme-knob-btn" id="surahBackBtn" onclick="backToList()" aria-label="Retour">
+        <div class="theme-knob-btn-inner">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </div>
+      </button>
+      <div class="surah-topbar-info">
+        <div class="surah-topbar-name-ar" id="surahTopbarAr"></div>
+        <div class="surah-topbar-name-fr" id="surahTopbarFr"></div>
+      </div>
+      <div class="surah-topbar-actions">
+        <button class="theme-knob-btn" onclick="openSettings()" title="Réglages">
+          <div class="theme-knob-btn-inner">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </div>
+        </button>
+        <button class="theme-knob-btn" onclick="toggleTheme()" aria-label="Changer le thème">
+          <div class="theme-knob-btn-inner">
+            <svg class="tt-sun" width="18" height="18" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="6" fill="#c8922a"/><g stroke="#c8922a" stroke-width="2.2" stroke-linecap="round"><line x1="16" y1="3" x2="16" y2="7"/><line x1="16" y1="25" x2="16" y2="29"/><line x1="3" y1="16" x2="7" y2="16"/><line x1="25" y1="16" x2="29" y2="16"/><line x1="6.9" y1="6.9" x2="9.8" y2="9.8"/><line x1="22.2" y1="22.2" x2="25.1" y2="25.1"/><line x1="25.1" y1="6.9" x2="22.2" y2="9.8"/><line x1="9.8" y1="22.2" x2="6.9" y2="25.1"/></g></svg>
+            <svg class="tt-moon" width="15" height="15" viewBox="0 0 28 28" fill="none"><path d="M22 17.5A10 10 0 0 1 10.5 6a10 10 0 1 0 11.5 11.5z" fill="#7abf95"/><circle cx="20" cy="8" r="1.5" fill="#c8d8b0" opacity="0.7"/><circle cx="23" cy="12" r="1" fill="#c8d8b0" opacity="0.5"/></svg>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- SCROLL VERSETS -->
+    <div id="surahScroll">
+      <!-- Généré par JS -->
+    </div>
+
+    <!-- BARRE AUDIO -->
+    <div class="surah-audio-bar">
+      <button class="audio-prev-btn" onclick="prevVerse()" title="Verset précédent">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
+      </button>
+
+      <button class="audio-play-btn" id="audioPlayBtn" onclick="toggleAudio()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      </button>
+
+      <div class="audio-verse-info">
+        <span class="audio-verse-label">
+          <span class="lang-block" data-lang-block="fr">Verset</span>
+          <span class="lang-block" data-lang-block="en">Verse</span>
+          <span class="lang-block" data-lang-block="es">Verso</span>
+          <span class="lang-block" data-lang-block="de">Vers</span>
+          <span class="lang-block" data-lang-block="it">Versetto</span>
+          <span class="lang-block" data-lang-block="nl">Vers</span>
+          <span class="lang-block" data-lang-block="pt">Verso</span>
+          <span class="lang-block" data-lang-block="tr">Ayet</span>
+        </span>
+        <span class="audio-verse-num" id="audioVerseNum">— / —</span>
+      </div>
+
+      <button class="audio-speed-btn" id="audioSpeedBtn" onclick="cycleSpeed()" title="Vitesse">1x</button>
+
+      <button class="audio-next-btn" onclick="nextVerse()" title="Verset suivant">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
+      </button>
+    </div>
+
+  </div><!-- fin surahView -->
+
+</div><!-- fin bottomSheet -->
+
+<!-- SETTINGS PANEL -->
+<div class="settings-panel" id="surahSettingsPanel">
+  <button class="theme-knob-btn settings-panel-close" onclick="closeSettings()" aria-label="Fermer">
+    <div class="theme-knob-btn-inner">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </div>
+  </button>
+  <div class="settings-panel-title">Réglages</div>
+
+  <!-- Taille arabe -->
+  <div class="size-row">
+    <span class="size-row-label">Arabe</span>
+    <div class="size-pills">
+      <button class="size-pill" data-type="ar" data-val="small"  onclick="event.stopPropagation();applySizeLevel('ar','small')">P</button>
+      <button class="size-pill active" data-type="ar" data-val="medium" onclick="event.stopPropagation();applySizeLevel('ar','medium')">M</button>
+      <button class="size-pill" data-type="ar" data-val="large"  onclick="event.stopPropagation();applySizeLevel('ar','large')">G</button>
+    </div>
+  </div>
+
+  <!-- Taille phonétique -->
+  <div class="size-row">
+    <span class="size-row-label">Phonétique</span>
+    <div class="size-pills">
+      <button class="size-pill" data-type="ph" data-val="small"  onclick="event.stopPropagation();applySizeLevel('ph','small')">P</button>
+      <button class="size-pill active" data-type="ph" data-val="medium" onclick="event.stopPropagation();applySizeLevel('ph','medium')">M</button>
+      <button class="size-pill" data-type="ph" data-val="large"  onclick="event.stopPropagation();applySizeLevel('ph','large')">G</button>
+    </div>
+  </div>
+
+  <!-- Taille traduction -->
+  <div class="size-row">
+    <span class="size-row-label">Traduction</span>
+    <div class="size-pills">
+      <button class="size-pill" data-type="tr" data-val="small"  onclick="event.stopPropagation();applySizeLevel('tr','small')">P</button>
+      <button class="size-pill active" data-type="tr" data-val="medium" onclick="event.stopPropagation();applySizeLevel('tr','medium')">M</button>
+      <button class="size-pill" data-type="tr" data-val="large"  onclick="event.stopPropagation();applySizeLevel('tr','large')">G</button>
+    </div>
+  </div>
+
+  <!-- Toggle phonétique -->
+  <div class="toggle-row">
+    <span class="toggle-label">Phonétique</span>
+    <div class="toggle-switch on" id="togglePhonetic" onclick="togglePhonetic(this)"></div>
+  </div>
+
+  <!-- Toggle traduction -->
+  <div class="toggle-row">
+    <span class="toggle-label">Traduction</span>
+    <div class="toggle-switch on" id="toggleTranslation" onclick="toggleTranslation(this)"></div>
+  </div>
+
+  <!-- Récitateur -->
+  <div class="size-row">
+    <span class="size-row-label">Récitateur</span>
+    <select id="reciterSelect" class="reciter-select" onchange="setReciter(this.value)" onclick="event.stopPropagation()">
+      <option value="ar.alafasy">Al-Afasy</option>
+      <option value="ar.abdulbasitmurattal">Abdul Basit</option>
+      <option value="ar.husary">Al-Husary</option>
+      <option value="ar.minshawi">Al-Minshawi</option>
+      <option value="ar.ahmedajamy">Ahmed Al-Ajamy</option>
+      <option value="ar.muhammadayyoub">Muhammad Ayyoub</option>
+      <option value="ar.abdurrahmaansudais">Sudais</option>
+    </select>
+  </div>
+
+</div>
+
+<script src="js/quran.js"></script>
+<script src="js/nav.js"></script>
+</body>
+</html>
