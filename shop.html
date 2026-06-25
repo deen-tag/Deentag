@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Deentag — Boutique</title>
+<link rel="stylesheet" href="css/adult.css">
+<link rel="icon" href="favicon.png" type="image/png">
+<script>
+(function(){
+  var t=localStorage.getItem('deentag_theme')||'day';
+  var l=localStorage.getItem('deentag_lang')||'fr';
+  document.documentElement.setAttribute('data-theme',t);
+  document.documentElement.setAttribute('data-lang',l);
+  document.addEventListener('DOMContentLoaded',function(){
+    document.body.classList.add(t);
+    var btn=document.getElementById('lang-btn');
+    if(btn) btn.textContent=l.toUpperCase()+' \u25be';
+  });
+})();
+</script>
+<style>
+/* ── CARROUSEL ── */
+.sh-gallery{padding:12px 0 0}
+.sh-carousel{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:0 14px 10px;scrollbar-width:none}
+.sh-carousel::-webkit-scrollbar{display:none}
+.sh-carousel-item{flex:0 0 82vw;max-width:320px;scroll-snap-align:start;border-radius:18px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;-webkit-tap-highlight-color:transparent;position:relative}
+.sh-carousel-item img{width:100%;height:100%;object-fit:cover;display:block}
+.sh-hero-overlay{position:absolute;left:0;right:0;bottom:0;padding:28px 18px 18px;background:linear-gradient(to top,rgba(10,10,8,0.72),rgba(10,10,8,0.32) 55%,transparent);pointer-events:none}
+.sh-hero-tagline{font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.04em;color:#fff;line-height:1.4;margin-bottom:8px;text-shadow:0 1px 6px rgba(0,0,0,0.4)}
+.sh-hero-scan{display:inline-flex;align-items:center;gap:6px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12.5px;color:#F0DDA0;background:rgba(0,0,0,0.28);border:1px solid rgba(240,221,160,0.35);border-radius:20px;padding:5px 12px}
+.sh-carousel-dots{display:flex;justify-content:center;gap:6px;padding:4px 0 10px}
+.sh-dot{width:5px;height:5px;border-radius:50%;background:rgba(201,168,76,0.25);transition:background 0.2s,width 0.2s;cursor:pointer}
+.sh-dot.active{background:var(--gold);width:18px;border-radius:3px}
+
+/* ── HEADER ── */
+.sh-header{padding:28px 20px 0}
+.sh-title{font-family:'Cinzel',serif;font-size:19px;letter-spacing:0.1em;color:var(--text);font-weight:600;line-height:1.25;margin-bottom:8px}
+.sh-subtitle{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--text3);line-height:1.6;margin-bottom:20px}
+
+/* ── BADGES ── */
+.sh-badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px}
+.sh-badge{font-family:'Cinzel',serif;font-size:7px;letter-spacing:0.2em;padding:5px 11px;border-radius:20px;border:1px solid rgba(201,168,76,0.2);color:var(--text3);text-transform:uppercase;background:transparent}
+.sh-badge.gold{color:var(--gold);border-color:rgba(201,168,76,0.4)}
+
+/* ── SEPARATEUR ── */
+.sh-sep{display:flex;align-items:center;gap:12px;padding:0 20px;margin:32px 0 20px}
+.sh-sep-line{flex:1;height:1px;background:var(--card-border);opacity:0.5}
+.sh-sep-label{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.4em;color:var(--text3);text-transform:uppercase;white-space:nowrap}
+
+/* ── OFFRES ── */
+.sh-offers{padding:0 20px;display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.sh-offer-card{border-radius:14px;padding:15px 16px;cursor:pointer;position:relative;background:var(--card-bg);border:1.5px solid transparent;transition:border-color 0.2s;-webkit-tap-highlight-color:transparent}
+.sh-offer-card.selected{border-color:var(--gold);background:rgba(201,168,76,0.04)}
+.sh-offer-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.sh-offer-radio{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--card-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color 0.2s}
+.sh-offer-card.selected .sh-offer-radio{border-color:var(--gold)}
+.sh-offer-radio-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);opacity:0;transform:scale(0.4);transition:opacity 0.2s,transform 0.2s}
+.sh-offer-card.selected .sh-offer-radio-dot{opacity:1;transform:scale(1)}
+.sh-offer-name{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.12em;color:var(--text);font-weight:600;flex:1;padding:0 12px}
+.sh-offer-price{font-family:'Cinzel',serif;font-size:15px;color:var(--text);font-weight:700}
+.sh-offer-card.selected .sh-offer-price{color:var(--gold)}
+.sh-offer-desc{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12.5px;color:var(--text3);padding-left:30px;line-height:1.5}
+.sh-offer-badge{position:absolute;top:-9px;right:12px;background:linear-gradient(135deg,var(--gold),#CEB060);color:var(--bg);font-family:'Cinzel',serif;font-size:7px;letter-spacing:0.13em;padding:3px 10px;border-radius:10px;text-transform:uppercase;font-weight:700}
+
+/* ── COLORIS ── */
+.sh-coloris-wrap{padding:0 20px 28px}
+.sh-coloris-label{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.3em;color:var(--text3);text-transform:uppercase;margin-bottom:12px}
+.sh-coloris-btns{display:flex;gap:8px}
+.sh-coloris-btn{flex:1;border-radius:12px;padding:12px 5px;background:var(--card-bg);border:1.5px solid transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;transition:border-color 0.2s;-webkit-tap-highlight-color:transparent}
+.sh-coloris-btn.active{border-color:var(--gold)}
+.sh-coloris-swatch{width:24px;height:24px;border-radius:50%}
+.sh-coloris-name{font-family:'Cormorant Garamond',serif;font-size:11.5px;color:var(--text2)}
+
+/* ── STICKY CTA ── */
+.sh-sticky{position:fixed;bottom:0;left:0;right:0;z-index:900;padding:8px 14px calc(env(safe-area-inset-bottom) + 10px);background:var(--bg);pointer-events:none}
+.sh-sticky-inner{pointer-events:all;display:flex;align-items:center;gap:10px;background:var(--bg);border-top:1px solid rgba(201,168,76,0.15);padding:9px 14px}
+.sh-sticky-info{flex:1}
+.sh-sticky-price{font-family:'Cinzel',serif;font-size:20px;color:var(--text);font-weight:700;line-height:1.1}
+.sh-sticky-label{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:var(--text3);margin-top:2px}
+.sh-sticky-btn{background:linear-gradient(135deg,var(--gold),#CEB060);color:#0e1a0f;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;border:none;border-radius:10px;padding:11px 20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity 0.2s,transform 0.15s;box-shadow:0 2px 10px rgba(201,168,76,0.2)}
+.sh-sticky-btn:active{opacity:0.88;transform:scale(0.97)}
+
+/* ── STEPS ── */
+.sh-steps{padding:0 20px 32px;display:flex;flex-direction:column;gap:24px}
+.sh-step{display:flex;gap:16px;align-items:flex-start}
+.sh-step-num{width:32px;height:32px;border-radius:50%;background:rgba(201,168,76,0.1);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:13px;color:var(--gold);font-weight:600;flex-shrink:0;margin-top:2px}
+.sh-step-title{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.18em;color:var(--text2);text-transform:uppercase;margin-bottom:5px}
+.sh-step-desc{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--text3);line-height:1.65}
+
+/* ── MOCKUPS ── */
+.sh-mockup-wrap{padding:0 10px 36px;display:flex;gap:10px;justify-content:center;align-items:flex-end}
+.sh-mockup{position:relative;flex:1;max-width:120px}
+.sh-mockup-frame{position:relative;border-radius:24px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.25);background:#111;aspect-ratio:9/19}
+.sh-mockup-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.sh-mockup-frame::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:32%;height:12px;background:#111;border-radius:0 0 8px 8px;z-index:2}
+.sh-mockup-caption{text-align:center;margin-top:10px;font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.2em;color:var(--text3);text-transform:uppercase}
+.sh-mockup.main-mock{max-width:155px;transform:translateY(-18px)}
+.sh-mockup.main-mock .sh-mockup-frame{box-shadow:0 24px 60px rgba(0,0,0,0.3),0 0 40px rgba(201,168,76,0.07)}
+
+/* ── CHECKLIST ── */
+.sh-checklist{padding:0 20px 32px;display:flex;flex-direction:column;gap:14px}
+.sh-check-item{display:flex;align-items:flex-start;gap:12px}
+.sh-check-icon{font-size:12px;line-height:1.6;flex-shrink:0;color:var(--gold);opacity:0.7}
+.sh-check-text{font-family:'Cormorant Garamond',serif;font-size:14px;color:var(--text3);line-height:1.55}
+.sh-check-text strong{font-weight:600;color:var(--text2)}
+
+/* ── ACCORDEONS ── */
+.sh-accordions{padding:0 20px 32px;display:flex;flex-direction:column;gap:0}
+.sh-accord{border-bottom:1px solid var(--card-border);overflow:hidden;background:transparent}
+.sh-accord:first-child{border-top:1px solid var(--card-border)}
+.sh-accord-header{display:flex;align-items:center;justify-content:space-between;padding:16px 0;cursor:pointer;-webkit-tap-highlight-color:transparent;gap:10px}
+.sh-accord-title{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.18em;color:var(--text2);text-transform:uppercase;flex:1}
+.sh-accord-icon{font-size:12px;color:var(--text3);transition:transform 0.3s;flex-shrink:0}
+.sh-accord.open .sh-accord-icon{transform:rotate(180deg)}
+.sh-accord-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease}
+.sh-accord.open .sh-accord-body{max-height:800px}
+.sh-accord-content{padding:0 0 18px;font-family:'Cormorant Garamond',serif;font-size:13.5px;color:var(--text3);line-height:1.75}
+.sh-accord-content ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+.sh-accord-content li{display:flex;gap:10px;align-items:flex-start}
+.sh-accord-content li::before{content:'–';color:var(--gold);opacity:0.6;flex-shrink:0}
+.sh-accord-stat{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.sh-accord-stat-item{background:rgba(201,168,76,0.06);border-radius:8px;padding:6px 12px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.12em;color:var(--text3);text-align:center}
+
+/* ── DIMENSIONS ── */
+.sh-dims{padding:0 20px 32px;display:flex;gap:12px}
+.sh-dim-item{flex:1;text-align:center;padding:16px 8px}
+.sh-dim-icon{font-size:20px;margin-bottom:4px}
+.sh-dim-val{font-family:'Cinzel',serif;font-size:26px;color:var(--text);font-weight:700;line-height:1;margin-bottom:5px}
+.sh-dim-unit{font-family:'Cormorant Garamond',serif;font-size:11.5px;color:var(--text3)}
+
+/* ── ACCORD HINT ── */
+.sh-accord-hint{font-family:'Cormorant Garamond',serif;font-size:11.5px;color:var(--text3);margin-top:3px;font-style:italic}
+
+/* ── TRUST ── */
+.sh-trust{padding:28px 20px;text-align:center;border-top:1px solid var(--card-border);border-bottom:1px solid var(--card-border);margin:0 0 8px}
+.sh-trust-stars{font-size:16px;letter-spacing:2px;margin-bottom:8px}
+.sh-trust-quote{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--text2);margin-bottom:20px}
+.sh-trust-items{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sh-trust-item{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.12em;color:var(--text3);line-height:1.8;text-transform:uppercase}
+.sh-trust-item br{display:block;margin-bottom:4px}
+
+.sh-scroll-pad{height:74px}
+</style>
+</head>
+<body class="day shop-page" data-page="shop">
+
+<!-- TOPBAR -->
+<div class="app-topbar">
+  <div class="app-topbar-left">
+    <div class="lang-wrapper">
+      <button class="lang-btn" id="lang-btn" onclick="toggleLangMenu()">FR &#9662;</button>
+      <div class="lang-menu" id="lang-menu">
+        <span class="lang-option" data-lang="de" onclick="setLang('de')"><span class="lang-flag">&#127465;&#127466;</span>Deutsch</span>
+        <span class="lang-option" data-lang="en" onclick="setLang('en')"><span class="lang-flag">&#127468;&#127463;</span>English</span>
+        <span class="lang-option" data-lang="es" onclick="setLang('es')"><span class="lang-flag">&#127466;&#127480;</span>Espa&#241;ol</span>
+        <span class="lang-option" data-lang="fr" onclick="setLang('fr')"><span class="lang-flag">&#127467;&#127479;</span>Fran&#231;ais</span>
+        <span class="lang-option" data-lang="it" onclick="setLang('it')"><span class="lang-flag">&#127470;&#127481;</span>Italiano</span>
+        <span class="lang-option" data-lang="nl" onclick="setLang('nl')"><span class="lang-flag">&#127475;&#127473;</span>Nederlands</span>
+        <span class="lang-option" data-lang="pt" onclick="setLang('pt')"><span class="lang-flag">&#127477;&#127481;</span>Portugu&#234;s</span>
+        <span class="lang-option" data-lang="tr" onclick="setLang('tr')"><span class="lang-flag">&#127481;&#127479;</span>T&#252;rk&#231;e</span>
+      </div>
+    </div>
+  </div>
+  <div class="app-topbar-center">
+    <img src="images/logo.webp" class="app-topbar-logo logo-day" alt="Deentag">
+    <img src="images/logo-night.webp" class="app-topbar-logo logo-night" alt="Deentag">
+  </div>
+  <div class="app-topbar-right">
+    <button class="theme-knob-btn" onclick="toggleTheme()" id="theme-circle-btn" aria-label="Th&#232;me">
+      <div class="theme-knob-btn-inner">
+        <svg class="tt-sun" width="18" height="18" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="6" fill="#c8922a"/><g stroke="#c8922a" stroke-width="2.2" stroke-linecap="round"><line x1="16" y1="3" x2="16" y2="7"/><line x1="16" y1="25" x2="16" y2="29"/><line x1="3" y1="16" x2="7" y2="16"/><line x1="25" y1="16" x2="29" y2="16"/><line x1="6.9" y1="6.9" x2="9.8" y2="9.8"/><line x1="22.2" y1="22.2" x2="25.1" y2="25.1"/><line x1="25.1" y1="6.9" x2="22.2" y2="9.8"/><line x1="9.8" y1="22.2" x2="6.9" y2="25.1"/></g></svg>
+        <svg class="tt-moon" width="15" height="15" viewBox="0 0 28 28" fill="none"><path d="M22 17.5A10 10 0 0 1 10.5 6a10 10 0 1 0 11.5 11.5z" fill="#7abf95"/></svg>
+      </div>
+    </button>
+  </div>
+</div>
+
+<!-- GALERIE CARROUSEL -->
+<div class="sh-gallery">
+  <div class="sh-carousel" id="shCarousel">
+    <div class="sh-carousel-item active"><img src="images/shop-lifestyle.jpg" alt="Deentag lifestyle">
+      <div class="sh-hero-overlay">
+        <div class="sh-hero-tagline"><span class="lang-block" data-lang-block="fr">Le rappel spirituel connect&#233; pour toute la famille</span><span class="lang-block" data-lang-block="en">The connected spiritual reminder for the whole family</span><span class="lang-block" data-lang-block="es">El recordatorio espiritual conectado para toda la familia</span><span class="lang-block" data-lang-block="de">Die vernetzte spirituelle Erinnerung f&#252;r die ganze Familie</span><span class="lang-block" data-lang-block="it">Il promemoria spirituale connesso per tutta la famiglia</span><span class="lang-block" data-lang-block="nl">De verbonden spirituele herinnering voor het hele gezin</span><span class="lang-block" data-lang-block="pt">O lembrete espiritual conectado para toda a fam&#237;lia</span><span class="lang-block" data-lang-block="tr">T&#252;m aile i&#231;in ba&#287;lant&#305;l&#305; manevi hat&#305;rlat&#305;c&#305;</span></div>
+        <div class="sh-hero-scan">&#128241; <span class="lang-block" data-lang-block="fr">Scannez avec votre t&#233;l&#233;phone</span><span class="lang-block" data-lang-block="en">Scan with your phone</span><span class="lang-block" data-lang-block="es">Escanea con tu tel&#233;fono</span><span class="lang-block" data-lang-block="de">Mit dem Handy scannen</span><span class="lang-block" data-lang-block="it">Scansiona con il telefono</span><span class="lang-block" data-lang-block="nl">Scan met je telefoon</span><span class="lang-block" data-lang-block="pt">Digitaliza com o teu telem&#243;vel</span><span class="lang-block" data-lang-block="tr">Telefonunuzla tarat&#305;n</span></div>
+      </div>
+    </div>
+    <div class="sh-carousel-item"><img src="images/shop-coloris.jpg" alt="Deentag coloris"></div>
+    <div class="sh-carousel-item"><img src="images/shop-details.jpg" alt="Deentag détails"></div>
+    <div class="sh-carousel-item"><img src="images/shop-trois.jpg" alt="Deentag trio"></div>
+    <div class="sh-carousel-item"><img src="images/shop-presentation.jpg" alt="Deentag présentation"></div>
+  </div>
+  <div class="sh-carousel-dots" id="shDots">
+    <div class="sh-dot active" onclick="scrollToSlide(0)"></div>
+    <div class="sh-dot" onclick="scrollToSlide(1)"></div>
+    <div class="sh-dot" onclick="scrollToSlide(2)"></div>
+    <div class="sh-dot" onclick="scrollToSlide(3)"></div>
+    <div class="sh-dot" onclick="scrollToSlide(4)"></div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<div class="sh-header">
+  <div class="sh-title">DEENTAG &#8212; OBJET NFC D&#201;CORATIF</div>
+  <div class="sh-subtitle">
+    <span class="lang-block" data-lang-block="fr">Impression 3D haute qualit&#233; &#8212; Puce NFC int&#233;gr&#233;e &#8212; App gratuite &#224; vie</span>
+    <span class="lang-block" data-lang-block="en">High quality 3D print &#8212; Built-in NFC chip &#8212; Free app for life</span>
+    <span class="lang-block" data-lang-block="es">Impresi&#243;n 3D de alta calidad &#8212; Chip NFC integrado &#8212; App gratuita de por vida</span>
+    <span class="lang-block" data-lang-block="de">Hochwertiger 3D-Druck &#8212; NFC-Chip integriert &#8212; App lebenslang kostenlos</span>
+    <span class="lang-block" data-lang-block="it">Stampa 3D alta qualit&#224; &#8212; Chip NFC integrato &#8212; App gratuita a vita</span>
+    <span class="lang-block" data-lang-block="nl">3D-print hoge kwaliteit &#8212; NFC-chip ingebouwd &#8212; App levenslang gratis</span>
+    <span class="lang-block" data-lang-block="pt">Impress&#227;o 3D alta qualidade &#8212; Chip NFC integrado &#8212; App gratuita para sempre</span>
+    <span class="lang-block" data-lang-block="tr">Y&#252;ksek kaliteli 3D bask&#305; &#8212; NFC &#231;ipi dahili &#8212; &#214;m&#252;r boyu &#252;cretsiz uygulama</span>
+  </div>
+  <div class="sh-badges">
+    <span class="sh-badge gold">NFC Int&#233;gr&#233;</span>
+    <span class="sh-badge gold">App gratuite &amp; illimit&#233;e</span>
+    <span class="sh-badge gold">8 langues</span>
+    <span class="sh-badge">Sans batterie</span>
+    <span class="sh-badge">20 &#215; 13 cm</span>
+    <span class="sh-badge">Id&#233;al cadeau</span>
+  </div>
+</div>
+
+<!-- OFFRE -->
+<div class="sh-sep">
+  <div class="sh-sep-line"></div>
+  <div class="sh-sep-label"><span class="lang-block" data-lang-block="fr">Choisissez votre offre</span><span class="lang-block" data-lang-block="en">Choose your offer</span><span class="lang-block" data-lang-block="es">Elige tu oferta</span><span class="lang-block" data-lang-block="de">W&#228;hle dein Angebot</span><span class="lang-block" data-lang-block="it">Scegli la tua offerta</span><span class="lang-block" data-lang-block="nl">Kies je aanbieding</span><span class="lang-block" data-lang-block="pt">Escolha a sua oferta</span><span class="lang-block" data-lang-block="tr">Teklifinizi se&#231;in</span></div>
+  <div class="sh-sep-line"></div>
+</div>
+
+<div class="sh-offers">
+  <div class="sh-offer-card selected" id="offerUnit" onclick="selectOffer('unit')">
+    <div class="sh-offer-top">
+      <div class="sh-offer-radio"><div class="sh-offer-radio-dot"></div></div>
+      <div class="sh-offer-name"><span class="lang-block" data-lang-block="fr">1 objet &#8212; coloris au choix</span><span class="lang-block" data-lang-block="en">1 object &#8212; colour of your choice</span><span class="lang-block" data-lang-block="es">1 objeto &#8212; color a elegir</span><span class="lang-block" data-lang-block="de">1 Objekt &#8212; Farbe nach Wahl</span><span class="lang-block" data-lang-block="it">1 oggetto &#8212; colore a scelta</span><span class="lang-block" data-lang-block="nl">1 object &#8212; kleur naar keuze</span><span class="lang-block" data-lang-block="pt">1 objeto &#8212; cor &#224; escolha</span><span class="lang-block" data-lang-block="tr">1 nesne &#8212; renk se&#231;imi</span></div>
+      <div class="sh-offer-price">14,99&nbsp;&#8364;</div>
+    </div>
+    <div class="sh-offer-desc"><span class="lang-block" data-lang-block="fr">Bois naturel, Vert profond ou Blanc &amp; dor&#233;</span><span class="lang-block" data-lang-block="en">Natural wood, Deep green or White &amp; gold</span><span class="lang-block" data-lang-block="es">Madera natural, Verde profundo o Blanco y dorado</span><span class="lang-block" data-lang-block="de">Naturholz, Tiefgr&#252;n oder Wei&#223; &amp; Gold</span><span class="lang-block" data-lang-block="it">Legno naturale, Verde scuro o Bianco e oro</span><span class="lang-block" data-lang-block="nl">Natuurlijk hout, Donkergroen of Wit en goud</span><span class="lang-block" data-lang-block="pt">Madeira natural, Verde profundo ou Branco e dourado</span><span class="lang-block" data-lang-block="tr">Do&#287;al ah&#351;ap, Koyu ye&#351;il veya Beyaz &amp; alt&#305;n</span></div>
+  </div>
+  <div class="sh-offer-card" id="offerBundle" onclick="selectOffer('bundle')">
+    <div class="sh-offer-badge"><span class="lang-block" data-lang-block="fr">&#201;conomisez 6&#8364;</span><span class="lang-block" data-lang-block="en">Save 6&#8364;</span><span class="lang-block" data-lang-block="es">Ahorra 6&#8364;</span><span class="lang-block" data-lang-block="de">Spare 6&#8364;</span><span class="lang-block" data-lang-block="it">Risparmia 6&#8364;</span><span class="lang-block" data-lang-block="nl">Bespaar 6&#8364;</span><span class="lang-block" data-lang-block="pt">Poupe 6&#8364;</span><span class="lang-block" data-lang-block="tr">6&#8364; Tasarruf</span></div>
+    <div class="sh-offer-top">
+      <div class="sh-offer-radio"><div class="sh-offer-radio-dot"></div></div>
+      <div class="sh-offer-name"><span class="lang-block" data-lang-block="fr">Pack &#8212; les 3 coloris</span><span class="lang-block" data-lang-block="en">Bundle &#8212; all 3 colours</span><span class="lang-block" data-lang-block="es">Pack &#8212; los 3 colores</span><span class="lang-block" data-lang-block="de">Set &#8212; alle 3 Farben</span><span class="lang-block" data-lang-block="it">Pack &#8212; tutti e 3 i colori</span><span class="lang-block" data-lang-block="nl">Pack &#8212; alle 3 kleuren</span><span class="lang-block" data-lang-block="pt">Pack &#8212; as 3 cores</span><span class="lang-block" data-lang-block="tr">Paket &#8212; 3 rengin tamam&#305;</span></div>
+      <div class="sh-offer-price">38,99&nbsp;&#8364;</div>
+    </div>
+    <div class="sh-offer-desc"><span class="lang-block" data-lang-block="fr">Bois naturel + Vert profond + Blanc &amp; dor&#233; &#8212; au lieu de 44,97 &#8364;</span><span class="lang-block" data-lang-block="en">Natural wood + Deep green + White &amp; gold &#8212; instead of 44.97 &#8364;</span><span class="lang-block" data-lang-block="es">Madera + Verde + Blanco &#8212; en vez de 44,97 &#8364;</span><span class="lang-block" data-lang-block="de">Naturholz + Tiefgr&#252;n + Wei&#223; &#8212; statt 44,97 &#8364;</span><span class="lang-block" data-lang-block="it">Legno + Verde + Bianco &#8212; invece di 44,97 &#8364;</span><span class="lang-block" data-lang-block="nl">Hout + Donkergroen + Wit &#8212; i.p.v. 44,97 &#8364;</span><span class="lang-block" data-lang-block="pt">Madeira + Verde + Branco &#8212; em vez de 44,97 &#8364;</span><span class="lang-block" data-lang-block="tr">Ah&#351;ap + Ye&#351;il + Beyaz &#8212; 44,97 &#8364; yerine</span></div>
+  </div>
+</div>
+
+<!-- COLORIS -->
+<div class="sh-coloris-wrap" id="colorisWrap">
+  <div class="sh-coloris-label"><span class="lang-block" data-lang-block="fr">Coloris</span><span class="lang-block" data-lang-block="en">Colour</span><span class="lang-block" data-lang-block="es">Color</span><span class="lang-block" data-lang-block="de">Farbe</span><span class="lang-block" data-lang-block="it">Colore</span><span class="lang-block" data-lang-block="nl">Kleur</span><span class="lang-block" data-lang-block="pt">Cor</span><span class="lang-block" data-lang-block="tr">Renk</span></div>
+  <div class="sh-coloris-btns">
+    <button class="sh-coloris-btn active" onclick="selectColoris('bois',this)">
+      <div class="sh-coloris-swatch" style="background:linear-gradient(135deg,#D4B896,#E8D5B0)"></div>
+      <div class="sh-coloris-name"><span class="lang-block" data-lang-block="fr">Bois</span><span class="lang-block" data-lang-block="en">Wood</span><span class="lang-block" data-lang-block="es">Madera</span><span class="lang-block" data-lang-block="de">Holz</span><span class="lang-block" data-lang-block="it">Legno</span><span class="lang-block" data-lang-block="nl">Hout</span><span class="lang-block" data-lang-block="pt">Madeira</span><span class="lang-block" data-lang-block="tr">Ah&#351;ap</span></div>
+    </button>
+    <button class="sh-coloris-btn" onclick="selectColoris('vert',this)">
+      <div class="sh-coloris-swatch" style="background:linear-gradient(135deg,#1E4D2B,#2D6B3F)"></div>
+      <div class="sh-coloris-name"><span class="lang-block" data-lang-block="fr">Vert</span><span class="lang-block" data-lang-block="en">Green</span><span class="lang-block" data-lang-block="es">Verde</span><span class="lang-block" data-lang-block="de">Gr&#252;n</span><span class="lang-block" data-lang-block="it">Verde</span><span class="lang-block" data-lang-block="nl">Groen</span><span class="lang-block" data-lang-block="pt">Verde</span><span class="lang-block" data-lang-block="tr">Ye&#351;il</span></div>
+    </button>
+    <button class="sh-coloris-btn" onclick="selectColoris('blanc',this)">
+      <div class="sh-coloris-swatch" style="background:linear-gradient(135deg,#F0EDE8,#FFF);border:1px solid rgba(201,168,76,0.3)"></div>
+      <div class="sh-coloris-name"><span class="lang-block" data-lang-block="fr">Blanc</span><span class="lang-block" data-lang-block="en">White</span><span class="lang-block" data-lang-block="es">Blanco</span><span class="lang-block" data-lang-block="de">Wei&#223;</span><span class="lang-block" data-lang-block="it">Bianco</span><span class="lang-block" data-lang-block="nl">Wit</span><span class="lang-block" data-lang-block="pt">Branco</span><span class="lang-block" data-lang-block="tr">Beyaz</span></div>
+    </button>
+  </div>
+</div>
+
+<!-- COMMENT CA MARCHE -->
+<div class="sh-sep" style="margin-top:6px">
+  <div class="sh-sep-line"></div>
+  <div class="sh-sep-label"><span class="lang-block" data-lang-block="fr">Comment &#231;a marche</span><span class="lang-block" data-lang-block="en">How it works</span><span class="lang-block" data-lang-block="es">C&#243;mo funciona</span><span class="lang-block" data-lang-block="de">Wie es funktioniert</span><span class="lang-block" data-lang-block="it">Come funziona</span><span class="lang-block" data-lang-block="nl">Hoe het werkt</span><span class="lang-block" data-lang-block="pt">Como funciona</span><span class="lang-block" data-lang-block="tr">Nas&#305;l &#231;al&#305;&#351;&#305;r</span></div>
+  <div class="sh-sep-line"></div>
+</div>
+<div class="sh-steps">
+  <div class="sh-step">
+    <div class="sh-step-num">1</div>
+    <div class="sh-step-body">
+      <div class="sh-step-title"><span class="lang-block" data-lang-block="fr">Placez votre Deentag</span><span class="lang-block" data-lang-block="en">Place your Deentag</span><span class="lang-block" data-lang-block="es">Coloca tu Deentag</span><span class="lang-block" data-lang-block="de">Platziere dein Deentag</span><span class="lang-block" data-lang-block="it">Posiziona il tuo Deentag</span><span class="lang-block" data-lang-block="nl">Plaats je Deentag</span><span class="lang-block" data-lang-block="pt">Coloca o teu Deentag</span><span class="lang-block" data-lang-block="tr">Deentag'&#305;n&#305;z&#305; yerle&#351;tirin</span></div>
+      <div class="sh-step-desc"><span class="lang-block" data-lang-block="fr">Salon, chambre ou bureau — un rappel quotidien de votre connexion avec Allah.</span><span class="lang-block" data-lang-block="en">Living room, bedroom or office &#8212; a daily reminder of your connection with Allah.</span><span class="lang-block" data-lang-block="es">Sal&#243;n, habitaci&#243;n u oficina &#8212; un recordatorio diario de tu conexi&#243;n con Allah.</span><span class="lang-block" data-lang-block="de">Wohnzimmer, Schlafzimmer oder B&#252;ro &#8212; eine t&#228;gliche Erinnerung an deine Verbindung mit Allah.</span><span class="lang-block" data-lang-block="it">Soggiorno, camera o ufficio &#8212; un promemoria quotidiano del tuo legame con Allah.</span><span class="lang-block" data-lang-block="nl">Woonkamer, slaapkamer of kantoor &#8212; een dagelijkse herinnering aan je verbinding met Allah.</span><span class="lang-block" data-lang-block="pt">Sala, quarto ou escrit&#243;rio &#8212; um lembrete di&#225;rio da tua liga&#231;&#227;o com Allah.</span><span class="lang-block" data-lang-block="tr">Oturma odas&#305;, yatak odas&#305; veya ofis &#8212; Allah ile ba&#287;lant&#305;n&#305;z&#305;n g&#252;nl&#252;k hat&#305;rlat&#305;c&#305;s&#305;.</span></div>
+    </div>
+  </div>
+  <div class="sh-step">
+    <div class="sh-step-num">2</div>
+    <div class="sh-step-body">
+      <div class="sh-step-title"><span class="lang-block" data-lang-block="fr">Scannez avec votre t&#233;l&#233;phone</span><span class="lang-block" data-lang-block="en">Scan with your phone</span><span class="lang-block" data-lang-block="es">Escanea con tu tel&#233;fono</span><span class="lang-block" data-lang-block="de">Mit dem Handy scannen</span><span class="lang-block" data-lang-block="it">Scansiona con il tuo telefono</span><span class="lang-block" data-lang-block="nl">Scan met je telefoon</span><span class="lang-block" data-lang-block="pt">Digitalize com o teu telemovel</span><span class="lang-block" data-lang-block="tr">Telefonunuzla tray&#305;n</span></div>
+      <div class="sh-step-desc"><span class="lang-block" data-lang-block="fr">Approchez votre smartphone. Acc&#232;s imm&#233;diat gr&#226;ce au NFC &#8212; sans app, sans configuration.</span><span class="lang-block" data-lang-block="en">Bring your smartphone close. Instant access thanks to NFC &#8212; no app, no setup.</span><span class="lang-block" data-lang-block="es">Acerca tu smartphone. Acceso inmediato gracias al NFC &#8212; sin app, sin configuraci&#243;n.</span><span class="lang-block" data-lang-block="de">Halte dein Smartphone daran. Sofortiger Zugang dank NFC &#8212; keine App, keine Konfiguration.</span><span class="lang-block" data-lang-block="it">Avvicina il tuo smartphone. Accesso immediato grazie all'NFC &#8212; senza app, senza configurazione.</span><span class="lang-block" data-lang-block="nl">Houd je smartphone erbij. Directe toegang dankzij NFC &#8212; geen app, geen configuratie.</span><span class="lang-block" data-lang-block="pt">Aproxima o teu smartphone. Acesso imediato gra&#231;as ao NFC &#8212; sem app, sem configura&#231;&#227;o.</span><span class="lang-block" data-lang-block="tr">Ak&#305;ll&#305; telefonunuzu yakla&#351;t&#305;r&#305;n. NFC sayesinde anl&#305;k eri&#351;im &#8212; uygulama veya kurulum yok.</span></div>
+    </div>
+  </div>
+  <div class="sh-step">
+    <div class="sh-step-num">3</div>
+    <div class="sh-step-body">
+      <div class="sh-step-title"><span class="lang-block" data-lang-block="fr">Progressez dans votre foi</span><span class="lang-block" data-lang-block="en">Grow in your faith</span><span class="lang-block" data-lang-block="es">Progresa en tu fe</span><span class="lang-block" data-lang-block="de">Wachse in deinem Glauben</span><span class="lang-block" data-lang-block="it">Cresci nella tua fede</span><span class="lang-block" data-lang-block="nl">Groei in je geloof</span><span class="lang-block" data-lang-block="pt">Cresce na tua f&#233;</span><span class="lang-block" data-lang-block="tr">&#304;man&#305;n&#305;zda ilerleyin</span></div>
+      <div class="sh-step-desc"><span class="lang-block" data-lang-block="fr">Invocations, Coran complet, mode enfants &#8212; gratuit et illimit&#233; pour toute la famille.</span><span class="lang-block" data-lang-block="en">Supplications, full Quran, kids mode &#8212; free and unlimited for the whole family.</span><span class="lang-block" data-lang-block="es">Invocaciones, Cor&#225;n completo, modo infantil &#8212; gratis e ilimitado para toda la familia.</span><span class="lang-block" data-lang-block="de">Bittgebete, vollst&#228;ndiger Koran, Kindermodus &#8212; kostenlos und unbegrenzt f&#252;r die ganze Familie.</span><span class="lang-block" data-lang-block="it">Invocazioni, Corano completo, modalit&#224; bambini &#8212; gratuito e illimitato per tutta la famiglia.</span><span class="lang-block" data-lang-block="nl">Smeekbeden, volledige Koran, kindermodus &#8212; gratis en onbeperkt voor het hele gezin.</span><span class="lang-block" data-lang-block="pt">Invoca&#231;&#245;es, Cor&#227;o completo, modo crian&#231;as &#8212; gratuito e ilimitado para toda a fam&#237;lia.</span><span class="lang-block" data-lang-block="tr">Dualar, tam Kuran, &#231;ocuk modu &#8212; t&#252;m aile i&#231;in &#252;cretsiz ve s&#305;n&#305;rs&#305;z.</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- VITRINE APP -->
+<div class="sh-sep">
+  <div class="sh-sep-line"></div>
+  <div class="sh-sep-label"><span class="lang-block" data-lang-block="fr">L'application</span><span class="lang-block" data-lang-block="en">The app</span><span class="lang-block" data-lang-block="es">La aplicaci&#243;n</span><span class="lang-block" data-lang-block="de">Die App</span><span class="lang-block" data-lang-block="it">L'applicazione</span><span class="lang-block" data-lang-block="nl">De app</span><span class="lang-block" data-lang-block="pt">A aplica&#231;&#227;o</span><span class="lang-block" data-lang-block="tr">Uygulama</span></div>
+  <div class="sh-sep-line"></div>
+</div>
+<div class="sh-mockup-wrap">
+  <div class="sh-mockup">
+    <div class="sh-mockup-frame">
+      <img src="images/app-kids.png" alt="Kids Mode">
+    </div>
+    <div class="sh-mockup-caption"><span class="lang-block" data-lang-block="fr">Mode Enfants</span><span class="lang-block" data-lang-block="en">Kids Mode</span><span class="lang-block" data-lang-block="es">Ni&#241;os</span><span class="lang-block" data-lang-block="de">Kinder</span><span class="lang-block" data-lang-block="it">Bambini</span><span class="lang-block" data-lang-block="nl">Kinderen</span><span class="lang-block" data-lang-block="pt">Crian&#231;as</span><span class="lang-block" data-lang-block="tr">&#199;ocuk</span></div>
+  </div>
+  <div class="sh-mockup main-mock">
+    <div class="sh-mockup-frame">
+      <img src="images/app-jour.png" alt="Deentag App">
+    </div>
+    <div class="sh-mockup-caption"><span class="lang-block" data-lang-block="fr">Mode Adulte</span><span class="lang-block" data-lang-block="en">Adult Mode</span><span class="lang-block" data-lang-block="es">Adulto</span><span class="lang-block" data-lang-block="de">Erwachsene</span><span class="lang-block" data-lang-block="it">Adulti</span><span class="lang-block" data-lang-block="nl">Volwassenen</span><span class="lang-block" data-lang-block="pt">Adulto</span><span class="lang-block" data-lang-block="tr">Yeti&#351;kin</span></div>
+  </div>
+  <div class="sh-mockup">
+    <div class="sh-mockup-frame">
+      <img src="images/app-nuit.png" alt="Night Mode">
+    </div>
+    <div class="sh-mockup-caption"><span class="lang-block" data-lang-block="fr">Mode Nuit</span><span class="lang-block" data-lang-block="en">Night Mode</span><span class="lang-block" data-lang-block="es">Noche</span><span class="lang-block" data-lang-block="de">Nacht</span><span class="lang-block" data-lang-block="it">Notte</span><span class="lang-block" data-lang-block="nl">Nacht</span><span class="lang-block" data-lang-block="pt">Noite</span><span class="lang-block" data-lang-block="tr">Gece</span></div>
+  </div>
+</div>
+
+<!-- CHECKLIST -->
+<div class="sh-checklist">
+  <div class="sh-check-item"><span class="sh-check-icon">&#10022;</span><span class="sh-check-text"><span class="lang-block" data-lang-block="fr"><strong>App gratuite &amp; illimit&#233;e &#224; vie</strong> &#8212; aucun abonnement, aucun achat in-app</span><span class="lang-block" data-lang-block="en"><strong>Free &amp; unlimited app for life</strong> &#8212; no subscription, no in-app purchase</span><span class="lang-block" data-lang-block="es"><strong>App gratuita e ilimitada de por vida</strong> &#8212; sin suscripci&#243;n</span><span class="lang-block" data-lang-block="de"><strong>Kostenlose &amp; unbegrenzte App f&#252;r immer</strong> &#8212; kein Abonnement</span><span class="lang-block" data-lang-block="it"><strong>App gratuita e illimitata per sempre</strong> &#8212; nessun abbonamento</span><span class="lang-block" data-lang-block="nl"><strong>Gratis &amp; onbeperkte app voor altijd</strong> &#8212; geen abonnement</span><span class="lang-block" data-lang-block="pt"><strong>App gratuita &amp; ilimitada para sempre</strong> &#8212; sem subscri&#231;&#227;o</span><span class="lang-block" data-lang-block="tr"><strong>&#214;m&#252;r boyu &#252;cretsiz &amp; s&#305;n&#305;rs&#305;z uygulama</strong> &#8212; abonelik yok</span></span></div>
+  <div class="sh-check-item"><span class="sh-check-icon">&#10022;</span><span class="sh-check-text"><span class="lang-block" data-lang-block="fr"><strong>8 langues disponibles</strong> &#8212; fran&#231;ais, anglais, espagnol, allemand, italien, n&#233;erlandais, portugais, turc</span><span class="lang-block" data-lang-block="en"><strong>8 languages available</strong> &#8212; French, English, Spanish, German, Italian, Dutch, Portuguese, Turkish</span><span class="lang-block" data-lang-block="es"><strong>8 idiomas disponibles</strong> &#8212; franc&#233;s, ingl&#233;s, espa&#241;ol, alem&#225;n, italiano, neerland&#233;s, portugu&#233;s, turco</span><span class="lang-block" data-lang-block="de"><strong>8 Sprachen verf&#252;gbar</strong> &#8212; Franz&#246;sisch, Englisch, Spanisch, Deutsch, Italienisch, Niederl&#228;ndisch, Portugiesisch, T&#252;rkisch</span><span class="lang-block" data-lang-block="it"><strong>8 lingue disponibili</strong> &#8212; francese, inglese, spagnolo, tedesco, italiano, olandese, portoghese, turco</span><span class="lang-block" data-lang-block="nl"><strong>8 talen beschikbaar</strong> &#8212; Frans, Engels, Spaans, Duits, Italiaans, Nederlands, Portugees, Turks</span><span class="lang-block" data-lang-block="pt"><strong>8 l&#237;nguas dispon&#237;veis</strong> &#8212; franc&#234;s, ingl&#234;s, espanhol, alem&#227;o, italiano, neerland&#234;s, portugu&#234;s, turco</span><span class="lang-block" data-lang-block="tr"><strong>8 dil mevcut</strong> &#8212; Frans&#305;zca, &#304;ngilizce, &#304;spanyolca, Almanca, &#304;talyanca, Felemenkce, Portekizce, T&#252;rk&#231;e</span></span></div>
+  <div class="sh-check-item"><span class="sh-check-icon">&#10022;</span><span class="sh-check-text"><span class="lang-block" data-lang-block="fr"><strong>Mode Enfants gamifi&#233;</strong> &#8212; badges, collection, apprentissage ludique</span><span class="lang-block" data-lang-block="en"><strong>Gamified Kids Mode</strong> &#8212; badges, collection, playful learning</span><span class="lang-block" data-lang-block="es"><strong>Modo Ni&#241;os gamificado</strong> &#8212; insignias, colecci&#243;n, aprendizaje l&#250;dico</span><span class="lang-block" data-lang-block="de"><strong>Gamifizierter Kindermodus</strong> &#8212; Abzeichen, Sammlung, spielerisches Lernen</span><span class="lang-block" data-lang-block="it"><strong>Modalit&#224; Bambini gamificata</strong> &#8212; badge, collezione, apprendimento ludico</span><span class="lang-block" data-lang-block="nl"><strong>Gamified Kindermodus</strong> &#8212; badges, collectie, speels leren</span><span class="lang-block" data-lang-block="pt"><strong>Modo Crian&#231;as gamificado</strong> &#8212; crachás, cole&#231;&#227;o, aprendizagem l&#250;dica</span><span class="lang-block" data-lang-block="tr"><strong>Oyunla&#351;t&#305;r&#305;lm&#305;&#351; &#199;ocuk Modu</strong> &#8212; rozetler, koleksiyon, e&#287;lenceli &#246;&#287;renme</span></span></div>
+  <div class="sh-check-item"><span class="sh-check-icon">&#10022;</span><span class="sh-check-text"><span class="lang-block" data-lang-block="fr"><strong>Coran complet</strong> &#8212; 30 Jouz, 114 Sourates, r&#233;citations audio de lecteurs renomm&#233;s</span><span class="lang-block" data-lang-block="en"><strong>Full Quran</strong> &#8212; 30 Juz, 114 Surahs, audio recitations by renowned reciters</span><span class="lang-block" data-lang-block="es"><strong>Cor&#225;n completo</strong> &#8212; 30 Yuz, 114 Suras, recitaciones de audio</span><span class="lang-block" data-lang-block="de"><strong>Vollst&#228;ndiger Koran</strong> &#8212; 30 Juz, 114 Suren, Audiorezitationen</span><span class="lang-block" data-lang-block="it"><strong>Corano completo</strong> &#8212; 30 Juz, 114 Sure, recitazioni audio</span><span class="lang-block" data-lang-block="nl"><strong>Volledige Koran</strong> &#8212; 30 Juz, 114 Soera's, audiorecitaties</span><span class="lang-block" data-lang-block="pt"><strong>Cor&#227;o completo</strong> &#8212; 30 Juz, 114 Suras, recita&#231;&#245;es &#225;udio</span><span class="lang-block" data-lang-block="tr"><strong>Tam Kuran</strong> &#8212; 30 C&#252;z, 114 Sure, sesli okumalar</span></span></div>
+</div>
+
+<!-- ACCORDEONS -->
+<div class="sh-sep">
+  <div class="sh-sep-line"></div>
+  <div class="sh-sep-label"><span class="lang-block" data-lang-block="fr">En savoir plus</span><span class="lang-block" data-lang-block="en">Learn more</span><span class="lang-block" data-lang-block="es">Saber m&#225;s</span><span class="lang-block" data-lang-block="de">Mehr erfahren</span><span class="lang-block" data-lang-block="it">Scopri di pi&#249;</span><span class="lang-block" data-lang-block="nl">Meer weten</span><span class="lang-block" data-lang-block="pt">Saber mais</span><span class="lang-block" data-lang-block="tr">Daha fazla</span></div>
+  <div class="sh-sep-line"></div>
+</div>
+<div class="sh-accordions">
+  <div class="sh-accord" id="acc1">
+    <div class="sh-accord-header" onclick="toggleAccord('acc1')">
+      <div class="sh-accord-title">
+        <div><span class="lang-block" data-lang-block="fr">&#128225; Rappel NFC instantan&#233;</span><span class="lang-block" data-lang-block="en">&#128225; Instant NFC reminder</span><span class="lang-block" data-lang-block="es">&#128225; Recordatorio NFC instant&#225;neo</span><span class="lang-block" data-lang-block="de">&#128225; Sofortige NFC-Erinnerung</span><span class="lang-block" data-lang-block="it">&#128225; Promemoria NFC istantaneo</span><span class="lang-block" data-lang-block="nl">&#128225; Instant NFC-herinnering</span><span class="lang-block" data-lang-block="pt">&#128225; Lembrete NFC instant&#226;neo</span><span class="lang-block" data-lang-block="tr">&#128225; Anl&#305;k NFC hat&#305;rlat&#305;c&#305;</span></div>
+        <div class="sh-accord-hint"><span class="lang-block" data-lang-block="fr">Sans app &#8226; Sans batterie &#8226; Acc&#232;s en 1 seconde</span><span class="lang-block" data-lang-block="en">No app &#8226; No battery &#8226; 1-second access</span><span class="lang-block" data-lang-block="es">Sin app &#8226; Sin bater&#237;a &#8226; Acceso en 1 segundo</span><span class="lang-block" data-lang-block="de">Keine App &#8226; Kein Akku &#8226; Zugang in 1 Sekunde</span><span class="lang-block" data-lang-block="it">Nessuna app &#8226; Nessuna batteria &#8226; Accesso in 1 secondo</span><span class="lang-block" data-lang-block="nl">Geen app &#8226; Geen batterij &#8226; Toegang in 1 seconde</span><span class="lang-block" data-lang-block="pt">Sem app &#8226; Sem bateria &#8226; Acesso em 1 segundo</span><span class="lang-block" data-lang-block="tr">Uygulama yok &#8226; Pil yok &#8226; 1 saniyede eri&#351;im</span></div>
+      </div>
+      <div class="sh-accord-icon">&#9662;</div>
+    </div>
+    <div class="sh-accord-body"><div class="sh-accord-content"><span class="lang-block" data-lang-block="fr">Deentag n'est pas qu'un bel objet d&#233;coratif. C'est un rappel visuel quotidien qui vous aide &#224; maintenir vos invocations aux moments cl&#233;s de la journ&#233;e. D'un simple geste, acc&#233;dez instantan&#233;ment &#224; vos duas sans recherche ni distraction. Chaque passage devant votre Deentag devient une opportunit&#233; de vous souvenir d'Allah.</span><span class="lang-block" data-lang-block="en">Deentag is more than a beautiful decorative object. It's a daily visual reminder helping you maintain your supplications at key moments of the day. With a simple gesture, access your duas instantly without searching or distraction.</span><span class="lang-block" data-lang-block="es">Deentag es m&#225;s que un bello objeto decorativo. Es un recordatorio visual diario que te ayuda a mantener tus invocaciones en los momentos clave del d&#237;a.</span><span class="lang-block" data-lang-block="de">Deentag ist mehr als ein sch&#246;nes Deko-Objekt. Es ist eine t&#228;gliche visuelle Erinnerung, die dir hilft, deine Bittgebete zu den wichtigen Momenten des Tages aufrechtzuerhalten.</span><span class="lang-block" data-lang-block="it">Deentag non &#232; solo un bello oggetto decorativo. &#200; un promemoria visivo quotidiano che ti aiuta a mantenere le tue invocazioni nei momenti chiave della giornata.</span><span class="lang-block" data-lang-block="nl">Deentag is meer dan een mooi decoratief object. Het is een dagelijkse visuele herinnering die je helpt je smeekbeden te onderhouden op de sleutelmomenten van de dag.</span><span class="lang-block" data-lang-block="pt">O Deentag &#233; mais do que um belo objeto decorativo. &#201; um lembrete visual di&#225;rio que te ajuda a manter as tuas invoca&#231;&#245;es nos momentos-chave do dia.</span><span class="lang-block" data-lang-block="tr">Deentag sadece g&#252;zel bir dekoratif nesne de&#287;il. G&#252;n&#252;n &#246;nemli anlar&#305;nda dualar&#305;n&#305;z&#305; s&#252;rd&#252;rmenize yard&#305;mc&#305; olan g&#252;nl&#252;k g&#246;rsel bir hat&#305;rlat&#305;c&#305;d&#305;r.</span></div></div>
+  </div>
+  <div class="sh-accord" id="acc2">
+    <div class="sh-accord-header" onclick="toggleAccord('acc2')">
+      <div class="sh-accord-title">
+        <div><span class="lang-block" data-lang-block="fr">&#128214; Coran interactif complet</span><span class="lang-block" data-lang-block="en">&#128214; Full interactive Quran</span><span class="lang-block" data-lang-block="es">&#128214; Cor&#225;n interactivo completo</span><span class="lang-block" data-lang-block="de">&#128214; Vollst&#228;ndiger interaktiver Koran</span><span class="lang-block" data-lang-block="it">&#128214; Corano interattivo completo</span><span class="lang-block" data-lang-block="nl">&#128214; Volledige interactieve Koran</span><span class="lang-block" data-lang-block="pt">&#128214; Cor&#227;o interativo completo</span><span class="lang-block" data-lang-block="tr">&#128214; Tam interaktif Kuran</span></div>
+        <div class="sh-accord-hint">30 Jouz &bull; 114 Sourates &bull; Audio</div>
+      </div>
+      <div class="sh-accord-icon">&#9662;</div>
+    </div>
+    <div class="sh-accord-body"><div class="sh-accord-content"><span class="lang-block" data-lang-block="fr">D&#233;couvrez le Saint Coran d'une mani&#232;re moderne et accessible. Profitez des traductions, phon&#233;tiques et r&#233;citations audio de lecteurs renomm&#233;s pour am&#233;liorer votre compr&#233;hension et votre m&#233;morisation.</span><span class="lang-block" data-lang-block="en">Discover the Holy Quran in a modern and accessible way. Enjoy translations, phonetics and audio recitations by renowned reciters to improve your understanding and memorisation.</span><span class="lang-block" data-lang-block="es">Descubre el Santo Cor&#225;n de manera moderna y accesible. Traducciones, fon&#233;tica y recitaciones de audio de lectores reconocidos.</span><span class="lang-block" data-lang-block="de">Entdecke den Heiligen Koran auf moderne Weise. &#220;bersetzungen, Phonetik und Audiorezitationen bekannter Rezitatoren.</span><span class="lang-block" data-lang-block="it">Scopri il Santo Corano in modo moderno. Traduzioni, fonetica e recitazioni audio di lettori rinomati.</span><span class="lang-block" data-lang-block="nl">Ontdek de Heilige Koran op een moderne manier. Vertalingen, fonetiek en audiorecitaties van bekende recitators.</span><span class="lang-block" data-lang-block="pt">Descobre o Santo Cor&#227;o de forma moderna. Tradu&#231;&#245;es, fon&#233;tica e recita&#231;&#245;es &#225;udio de recitadores renomados.</span><span class="lang-block" data-lang-block="tr">Kutsal Kuran'&#305; modern bir &#351;ekilde ke&#351;fedin. Tan&#305;nm&#305;&#351; haf&#305;zlar&#305;n &#231;evirileri ve sesli okumalar&#305;.</span><div class="sh-accord-stat"><div class="sh-accord-stat-item">30 JOUZ</div><div class="sh-accord-stat-item">114 SOURATES</div><div class="sh-accord-stat-item">6236 VERSETS</div><div class="sh-accord-stat-item">&#127911; AUDIO</div></div></div></div>
+  </div>
+  <div class="sh-accord" id="acc3">
+    <div class="sh-accord-header" onclick="toggleAccord('acc3')">
+      <div class="sh-accord-title">
+        <div><span class="lang-block" data-lang-block="fr">&#128106; Compagnon pour toute la famille</span><span class="lang-block" data-lang-block="en">&#128106; Companion for the whole family</span><span class="lang-block" data-lang-block="es">&#128106; Para toda la familia</span><span class="lang-block" data-lang-block="de">&#128106; F&#252;r die ganze Familie</span><span class="lang-block" data-lang-block="it">&#128106; Per tutta la famiglia</span><span class="lang-block" data-lang-block="nl">&#128106; Voor het hele gezin</span><span class="lang-block" data-lang-block="pt">&#128106; Para toda a fam&#237;lia</span><span class="lang-block" data-lang-block="tr">&#128106; T&#252;m aile i&#231;in</span></div>
+        <div class="sh-accord-hint"><span class="lang-block" data-lang-block="fr">Adultes &bull; Enfants &bull; 8 langues</span><span class="lang-block" data-lang-block="en">Adults &bull; Kids &bull; 8 languages</span><span class="lang-block" data-lang-block="es">Adultos &bull; Ni&#241;os &bull; 8 idiomas</span><span class="lang-block" data-lang-block="de">Erwachsene &bull; Kinder &bull; 8 Sprachen</span><span class="lang-block" data-lang-block="it">Adulti &bull; Bambini &bull; 8 lingue</span><span class="lang-block" data-lang-block="nl">Volwassenen &bull; Kinderen &bull; 8 talen</span><span class="lang-block" data-lang-block="pt">Adultos &bull; Crian&#231;as &bull; 8 l&#237;nguas</span><span class="lang-block" data-lang-block="tr">Yeti&#351;kin &bull; &#199;ocuk &bull; 8 dil</span></div>
+      </div>
+      <div class="sh-accord-icon">&#9662;</div>
+    </div>
+    <div class="sh-accord-body"><div class="sh-accord-content"><span class="lang-block" data-lang-block="fr">Que vous souhaitiez renforcer votre pratique, apprendre de nouvelles invocations ou transmettre les valeurs de l'islam &#224; vos enfants, Deentag vous accompagne &#224; chaque &#233;tape. Le mode enfants gamifi&#233; avec syst&#232;me de badges rend l'apprentissage amusant et motivant.</span><span class="lang-block" data-lang-block="en">Whether you want to strengthen your practice or pass on Islamic values to your children, Deentag accompanies you every step of the way. The gamified children's mode with a badge system makes learning fun and motivating.</span><span class="lang-block" data-lang-block="es">Ya sea que quieras fortalecer tu pr&#225;ctica o transmitir los valores del islam a tus hijos, Deentag te acompa&#241;a en cada paso.</span><span class="lang-block" data-lang-block="de">Ob du deine Praxis st&#228;rken oder islamische Werte an deine Kinder weitergeben m&#246;chtest &#8212; Deentag begleitet dich auf jedem Schritt.</span><span class="lang-block" data-lang-block="it">Che tu voglia rafforzare la tua pratica o trasmettere i valori dell'islam ai tuoi figli, Deentag ti accompagna in ogni fase.</span><span class="lang-block" data-lang-block="nl">Of je nu je praktijk wilt versterken of islamitische waarden wilt doorgeven aan je kinderen, Deentag begeleidt je elke stap.</span><span class="lang-block" data-lang-block="pt">Quer queiras fortalecer a tua pr&#225;tica ou transmitir os valores do isl&#227;o aos teus filhos, o Deentag acompanha-te.</span><span class="lang-block" data-lang-block="tr">Pratiginizi g&#252;&#231;lendirmek veya &#231;ocuklar&#305;n&#305;za &#304;slam de&#287;erlerini aktarmak istiyorsan&#305;z, Deentag her ad&#305;mda yan&#305;n&#305;zda.</span></div></div>
+  </div>
+  <div class="sh-accord" id="acc4">
+    <div class="sh-accord-header" onclick="toggleAccord('acc4')">
+      <div class="sh-accord-title">
+        <div><span class="lang-block" data-lang-block="fr">&#10022; Pourquoi choisir Deentag ?</span><span class="lang-block" data-lang-block="en">&#10022; Why choose Deentag?</span><span class="lang-block" data-lang-block="es">&#10022; &#191;Por qu&#233; elegir Deentag?</span><span class="lang-block" data-lang-block="de">&#10022; Warum Deentag w&#228;hlen?</span><span class="lang-block" data-lang-block="it">&#10022; Perch&#233; scegliere Deentag?</span><span class="lang-block" data-lang-block="nl">&#10022; Waarom Deentag kiezen?</span><span class="lang-block" data-lang-block="pt">&#10022; Porqu&#234; escolher o Deentag?</span><span class="lang-block" data-lang-block="tr">&#10022; Neden Deentag?</span></div>
+        <div class="sh-accord-hint"><span class="lang-block" data-lang-block="fr">NFC &bull; Gratuit &bull; Sans batterie &bull; Design</span><span class="lang-block" data-lang-block="en">NFC &bull; Free &bull; No battery &bull; Design</span><span class="lang-block" data-lang-block="es">NFC &bull; Gratis &bull; Sin bater&#237;a &bull; Dise&#241;o</span><span class="lang-block" data-lang-block="de">NFC &bull; Kostenlos &bull; Kein Akku &bull; Design</span><span class="lang-block" data-lang-block="it">NFC &bull; Gratuito &bull; Senza batteria &bull; Design</span><span class="lang-block" data-lang-block="nl">NFC &bull; Gratis &bull; Geen batterij &bull; Design</span><span class="lang-block" data-lang-block="pt">NFC &bull; Gratuito &bull; Sem bateria &bull; Design</span><span class="lang-block" data-lang-block="tr">NFC &bull; &#220;cretsiz &bull; Pil yok &bull; Tasar&#305;m</span></div>
+      </div>
+      <div class="sh-accord-icon">&#9662;</div>
+    </div>
+    <div class="sh-accord-body"><div class="sh-accord-content"><ul>
+      <li><span class="lang-block" data-lang-block="fr">Acc&#232;s instantan&#233; gr&#226;ce au NFC &#8212; aucune installation</span><span class="lang-block" data-lang-block="en">Instant access via NFC &#8212; no installation</span><span class="lang-block" data-lang-block="es">Acceso instant&#225;neo gracias al NFC &#8212; sin instalaci&#243;n</span><span class="lang-block" data-lang-block="de">Sofortzugang dank NFC &#8212; keine Installation</span><span class="lang-block" data-lang-block="it">Accesso istantaneo grazie all'NFC &#8212; nessuna installazione</span><span class="lang-block" data-lang-block="nl">Directe toegang via NFC &#8212; geen installatie</span><span class="lang-block" data-lang-block="pt">Acesso instant&#226;neo gra&#231;as ao NFC &#8212; sem instala&#231;&#227;o</span><span class="lang-block" data-lang-block="tr">NFC sayesinde aninda eri&#351;im &#8212; kurulum yok</span></li>
+      <li><span class="lang-block" data-lang-block="fr">Application 100% gratuite et illimit&#233;e &#8212; pour toujours</span><span class="lang-block" data-lang-block="en">100% free and unlimited app &#8212; forever</span><span class="lang-block" data-lang-block="es">Aplicaci&#243;n 100% gratuita e ilimitada &#8212; para siempre</span><span class="lang-block" data-lang-block="de">100% kostenlose und unbegrenzte App &#8212; f&#252;r immer</span><span class="lang-block" data-lang-block="it">App 100% gratuita e illimitata &#8212; per sempre</span><span class="lang-block" data-lang-block="nl">100% gratis en onbeperkte app &#8212; voor altijd</span><span class="lang-block" data-lang-block="pt">App 100% gratuita e ilimitada &#8212; para sempre</span><span class="lang-block" data-lang-block="tr">Sonsuza kadar %100 &#252;cretsiz ve s&#305;n&#305;rs&#305;z uygulama</span></li>
+      <li><span class="lang-block" data-lang-block="fr">Sans batterie, sans c&#226;ble, sans entretien</span><span class="lang-block" data-lang-block="en">No battery, no cable, no maintenance</span><span class="lang-block" data-lang-block="es">Sin bater&#237;a, sin cable, sin mantenimiento</span><span class="lang-block" data-lang-block="de">Ohne Batterie, ohne Kabel, ohne Wartung</span><span class="lang-block" data-lang-block="it">Senza batteria, senza cavi, senza manutenzione</span><span class="lang-block" data-lang-block="nl">Geen batterij, geen kabel, geen onderhoud</span><span class="lang-block" data-lang-block="pt">Sem bateria, sem cabo, sem manuten&#231;&#227;o</span><span class="lang-block" data-lang-block="tr">Pil, kablo ve bak&#305;m gerektirmez</span></li>
+      <li><span class="lang-block" data-lang-block="fr">Disponible en 8 langues &#8212; pour toute la communaut&#233;</span><span class="lang-block" data-lang-block="en">Available in 8 languages &#8212; for the whole community</span><span class="lang-block" data-lang-block="es">Disponible en 8 idiomas &#8212; para toda la comunidad</span><span class="lang-block" data-lang-block="de">In 8 Sprachen verf&#252;gbar &#8212; f&#252;r die ganze Gemeinschaft</span><span class="lang-block" data-lang-block="it">Disponibile in 8 lingue &#8212; per tutta la comunit&#224;</span><span class="lang-block" data-lang-block="nl">Beschikbaar in 8 talen &#8212; voor de hele gemeenschap</span><span class="lang-block" data-lang-block="pt">Dispon&#237;vel em 8 l&#237;nguas &#8212; para toda a comunidade</span><span class="lang-block" data-lang-block="tr">8 dilde mevcut &#8212; t&#252;m topluluk i&#231;in</span></li>
+      <li><span class="lang-block" data-lang-block="fr">Design islamique &#233;l&#233;gant &#8212; s'int&#232;gre dans tous les int&#233;rieurs</span><span class="lang-block" data-lang-block="en">Elegant Islamic design &#8212; fits any interior</span><span class="lang-block" data-lang-block="es">Dise&#241;o isl&#225;mico elegante &#8212; se integra en cualquier interior</span><span class="lang-block" data-lang-block="de">Elegantes islamisches Design &#8212; passt in jedes Interieur</span><span class="lang-block" data-lang-block="it">Design islamico elegante &#8212; si adatta a qualsiasi interno</span><span class="lang-block" data-lang-block="nl">Elegant islamitisch ontwerp &#8212; past in elk interieur</span><span class="lang-block" data-lang-block="pt">Design isl&#226;mico elegante &#8212; integra-se em qualquer interior</span><span class="lang-block" data-lang-block="tr">Zarif &#304;slami tasar&#305;m &#8212; her i&#231; mekana uyum sa&#287;lar</span></li>
+    </ul></div></div>
+  </div>
+</div>
+
+<!-- DIMENSIONS -->
+<div class="sh-sep">
+  <div class="sh-sep-line"></div>
+  <div class="sh-sep-label">Dimensions</div>
+  <div class="sh-sep-line"></div>
+</div>
+<div class="sh-dims">
+  <div class="sh-dim-item"><div class="sh-dim-icon">&#128207;</div><div class="sh-dim-val">20</div><div class="sh-dim-unit">cm &#8212; <span class="lang-block" data-lang-block="fr">hauteur</span><span class="lang-block" data-lang-block="en">height</span><span class="lang-block" data-lang-block="es">altura</span><span class="lang-block" data-lang-block="de">H&#246;he</span><span class="lang-block" data-lang-block="it">altezza</span><span class="lang-block" data-lang-block="nl">hoogte</span><span class="lang-block" data-lang-block="pt">altura</span><span class="lang-block" data-lang-block="tr">y&#252;kseklik</span></div></div>
+  <div class="sh-dim-item"><div class="sh-dim-icon">&#128208;</div><div class="sh-dim-val">13</div><div class="sh-dim-unit">cm &#8212; <span class="lang-block" data-lang-block="fr">largeur</span><span class="lang-block" data-lang-block="en">width</span><span class="lang-block" data-lang-block="es">anchura</span><span class="lang-block" data-lang-block="de">Breite</span><span class="lang-block" data-lang-block="it">larghezza</span><span class="lang-block" data-lang-block="nl">breedte</span><span class="lang-block" data-lang-block="pt">largura</span><span class="lang-block" data-lang-block="tr">geni&#351;lik</span></div></div>
+  <div class="sh-dim-item"><div class="sh-dim-icon">&#128438;</div><div class="sh-dim-val">3D</div><div class="sh-dim-unit"><span class="lang-block" data-lang-block="fr">impression</span><span class="lang-block" data-lang-block="en">printed</span><span class="lang-block" data-lang-block="es">impresi&#243;n</span><span class="lang-block" data-lang-block="de">Druck</span><span class="lang-block" data-lang-block="it">stampa</span><span class="lang-block" data-lang-block="nl">druk</span><span class="lang-block" data-lang-block="pt">impress&#227;o</span><span class="lang-block" data-lang-block="tr">bask&#305;</span></div></div>
+</div>
+
+<!-- SECTION CONFIANCE -->
+<div class="sh-trust">
+  <div class="sh-trust-quote"><span class="lang-block" data-lang-block="fr">Une nouvelle mani&#232;re de vivre votre foi, chaque jour.</span><span class="lang-block" data-lang-block="en">A new way to live your faith, every day.</span><span class="lang-block" data-lang-block="es">Una nueva forma de vivir tu fe, cada d&#237;a.</span><span class="lang-block" data-lang-block="de">Eine neue Art, deinen Glauben jeden Tag zu leben.</span><span class="lang-block" data-lang-block="it">Un nuovo modo di vivere la tua fede, ogni giorno.</span><span class="lang-block" data-lang-block="nl">Een nieuwe manier om je geloof elke dag te beleven.</span><span class="lang-block" data-lang-block="pt">Uma nova forma de viver a tua f&#233;, todos os dias.</span><span class="lang-block" data-lang-block="tr">&#304;man&#305;n&#305;z&#305; her g&#252;n ya&#351;aman&#305;n yeni bir yolu.</span></div>
+  <div class="sh-trust-items">
+    <div class="sh-trust-item">&#128230;<br><span class="lang-block" data-lang-block="fr">Livraison rapide</span><span class="lang-block" data-lang-block="en">Fast delivery</span><span class="lang-block" data-lang-block="es">Env&#237;o r&#225;pido</span><span class="lang-block" data-lang-block="de">Schnelle Lieferung</span><span class="lang-block" data-lang-block="it">Consegna rapida</span><span class="lang-block" data-lang-block="nl">Snelle levering</span><span class="lang-block" data-lang-block="pt">Entrega r&#225;pida</span><span class="lang-block" data-lang-block="tr">H&#305;zl&#305; teslimat</span></div>
+    <div class="sh-trust-item">&#128274;<br><span class="lang-block" data-lang-block="fr">Paiement s&#233;curis&#233;</span><span class="lang-block" data-lang-block="en">Secure payment</span><span class="lang-block" data-lang-block="es">Pago seguro</span><span class="lang-block" data-lang-block="de">Sicheres Bezahlen</span><span class="lang-block" data-lang-block="it">Pagamento sicuro</span><span class="lang-block" data-lang-block="nl">Veilige betaling</span><span class="lang-block" data-lang-block="pt">Pagamento seguro</span><span class="lang-block" data-lang-block="tr">G&#252;venli &#246;deme</span></div>
+    <div class="sh-trust-item">&#127482;<br><span class="lang-block" data-lang-block="fr">Support en fran&#231;ais</span><span class="lang-block" data-lang-block="en">French support</span><span class="lang-block" data-lang-block="es">Soporte en franc&#233;s</span><span class="lang-block" data-lang-block="de">Support auf Franz&#246;sisch</span><span class="lang-block" data-lang-block="it">Supporto in francese</span><span class="lang-block" data-lang-block="nl">Support in het Frans</span><span class="lang-block" data-lang-block="pt">Suporte em franc&#234;s</span><span class="lang-block" data-lang-block="tr">Frans&#305;zca destek</span></div>
+    <div class="sh-trust-item">&#9854;<br><span class="lang-block" data-lang-block="fr">App gratuite &#224; vie</span><span class="lang-block" data-lang-block="en">Free app for life</span><span class="lang-block" data-lang-block="es">App gratuita</span><span class="lang-block" data-lang-block="de">Lebenslang kostenlos</span><span class="lang-block" data-lang-block="it">App gratuita</span><span class="lang-block" data-lang-block="nl">Gratis app</span><span class="lang-block" data-lang-block="pt">App gratuita</span><span class="lang-block" data-lang-block="tr">&#220;cretsiz uygulama</span></div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="sh-sep">
+  <div class="sh-sep-line"></div>
+  <div class="sh-sep-label">FAQ</div>
+  <div class="sh-sep-line"></div>
+</div>
+<div class="sh-accordions">
+  <div class="sh-accord" id="faq1">
+    <div class="sh-accord-header" onclick="toggleAccord('faq1')">
+      <div class="sh-accord-title"><div><span class="lang-block" data-lang-block="fr">Compatible iPhone et Android ?</span><span class="lang-block" data-lang-block="en">Compatible with iPhone and Android?</span><span class="lang-block" data-lang-block="es">&#191;Compatible con iPhone y Android?</span><span class="lang-block" data-lang-block="de">Kompatibel mit iPhone und Android?</span><span class="lang-block" data-lang-block="it">Compatibile con iPhone e Android?</span><span class="lang-block" data-lang-block="nl">Compatibel met iPhone en Android?</span><span class="lang-block" data-lang-block="pt">Compat&#237;vel com iPhone e Android?</span><span class="lang-block" data-lang-block="tr">iPhone ve Android ile uyumlu mu?</span></div></div>
+      <div class="sh-accord-icon">&#9662;</div>
+    </div>
+    <div class="sh-accord-body"><div class="sh-accord-content"><span class="lang-block" data-lang-block="fr">Oui, Deentag fonctionne avec tous les iPhones depuis l'iPhone 7 et tous les smartphones Android disposant du NFC. Aucune app &#224; t&#233;l&#233;charger.</span><span class="lang-block" data-lang-block="en">Yes, Deentag works with all iPhones from the iPhone 7 and all Android smartphones with NFC. No app to download.</span><span class="lang-block" data-lang-block="es">S&#237;, Deentag funciona con todos los iPhones desde el iPhone 7 y todos los smartphones Android con NFC. Sin app que descargar.</span><span class="lang-block" data-lang-block="de">Ja, Deentag funktioniert mit allen iPhones ab iPhone 7 und allen Android-Smartphones mit NFC. Keine App zum Herunterladen.</span><span class="lang-block" data-lang-block="it">S&#236;, Deentag funziona con tutti gli iPhone dall'iPhone 7 e tutti gli smartphone Android con NFC. Nessuna app da scaricare.</span><span class="lang-block" data-lang-block="nl">Ja, Deentag werkt met alle iPhones vanaf de iPhone 7 en alle Android-smartphones met NFC. Geen app te downloaden.</span><span class="lang-block" data-lang-block="pt">Sim, o Deentag funciona com todos os iPhones desde o iPhone 7 e todos os smartphones Android com NFC. Sem app para descarregar.</span><span class="lang-block" data-lang-block="tr">Evet, Deentag iPhone 7'den itibaren t&#252;m iPhone'larla ve NFC'li t&#252;m Android ak&#305;ll&#305; telefonlarla &#231;al&#305;&#351;&#305;r. &#304;ndirilecek uygulama yok.</span></div></div>
+  </div>
+  <div class="sh-accord" id="faq2">
+    <div class="sh-accord-header" onclick="toggleAccord('faq2')">
+      <div class="sh-accord-title"><div><span class="lang-block" data-lang-block="fr">Faut-il une connexion internet ?</span><span class="lang-block" data-lang-block="en">Do I need an internet connection?</span><span class="lang-block" data-lang-block="es">&#191;Se necesita conexi&#243;n a internet?</span><span class="lang-block" data-lang-block="de">Brauche ich eine Internetverbindung?</span><span class="lang-block" data-lang-block="it">&#200; necessaria una connessione internet?</span><span class="lang-block" data-lang-block="nl">Heb ik een internetverbinding nodig?</span><span class="lang-block" data-lang-block="pt">&#201; necess&#225;ria liga&#231;&#227;o &#224; internet?</span><span class="lang-block" data-lang-block="tr">&#304;nternet ba&#287;lant&#305;s&#305; gerekli mi?</span></div></div>
+      <div class="sh-accord-icon">&#9662;</div>
+    </div>
+    <div class="sh-accord-body"><div class="sh-accord-content"><span class="lang-block" data-lang-block="fr">Uniquement pour le premier chargement. Ensuite, les invocations et le Coran sont disponibles hors ligne.</span><span class="lang-block" data-lang-block="en">Only for the first load. After that, supplications and the Quran are available offline.</span><span class="lang-block" data-lang-block="es">Solo para la primera carga. Despu&#233;s, las invocaciones y el Cor&#225;n est&#225;n disponibles sin conexi&#243;n.</span><span class="lang-block" data-lang-block="de">Nur beim ersten Laden. Danach sind Bittgebete und der Koran offline verf&#252;gbar.</span><span class="lang-block" data-lang-block="it">Solo per il primo caricamento. Poi, le invocazioni e il Corano sono disponibili offline.</span><span class="lang-block" data-lang-block="nl">Alleen voor de eerste keer laden. Daarna zijn smeekbeden en de Koran offline beschikbaar.</span><span class="lang-block" data-lang-block="pt">Apenas para o primeiro carregamento. Depois, as invoca&#231;&#245;es e o Cor&#227;o est&#227;o dispon&#237;veis offline.</span><span class="lang-block" data-lang-block="tr">Sadece ilk y&#252;kleme i&#231;in. Daha sonra dualar ve Kuran &#231;evrimd&#305;&#351;&#305; kullan&#305;labilir.</span></div></div>
+  </div>
+  <div class="sh-accord" id="faq3">
+    <div class="sh-accord-header" onclick="toggleAccord('faq3')">
+      <div class="sh-accord-title"><div><span class="lang-block" data-lang-block="fr">Puis-je l'offrir comme cadeau ?</span><span class="lang-block" data-lang-block="en">Can I give it as a gift?</span><span class="lang-block" data-lang-block="es">&#191;Puedo regalarlo?</span><span class="lang-block" data-lang-block="de">Kann ich es als Geschenk geben?</span><span class="lang-block" data-lang-block="it">Posso regalarlo?</span><span class="lang-block" data-lang-block="nl">Kan ik het als cadeau geven?</span><span class="lang-block" data-lang-block="pt">Posso oferecer como presente?</span><span class="lang-block" data-lang-block="tr">Hediye olarak verebilir miyim?</span></div></div>
+      <div class="sh-accord-icon">&#9662;</div>
+    </div>
+    <div class="sh-accord-body"><div class="sh-accord-content"><span class="lang-block" data-lang-block="fr">Absolument. Deentag est l'un des cadeaux les plus originaux et spirituels &#224; offrir &#224; un proche. Il est livr&#233; dans un emballage soign&#233;, pr&#234;t &#224; offrir.</span><span class="lang-block" data-lang-block="en">Absolutely. Deentag is one of the most original and spiritual gifts to give a loved one. It comes in careful packaging, ready to give.</span><span class="lang-block" data-lang-block="es">Absolutamente. Deentag es uno de los regalos m&#225;s originales y espirituales para un ser querido.</span><span class="lang-block" data-lang-block="de">Absolut. Deentag ist eines der originellsten und spirituellsten Geschenke f&#252;r einen geliebten Menschen.</span><span class="lang-block" data-lang-block="it">Assolutamente. Deentag &#232; uno dei regali pi&#249; originali e spirituali da fare a una persona cara.</span><span class="lang-block" data-lang-block="nl">Absoluut. Deentag is een van de meest originele en spirituele cadeaus voor een dierbare.</span><span class="lang-block" data-lang-block="pt">Absolutamente. O Deentag &#233; um dos presentes mais originais e espirituais para oferecer a um ente querido.</span><span class="lang-block" data-lang-block="tr">Kesinlikle. Deentag, sevdiklerinize verebilece&#287;iniz en orijinal ve manevi hediyelerden biridir.</span></div></div>
+  </div>
+  <div class="sh-accord" id="faq4">
+    <div class="sh-accord-header" onclick="toggleAccord('faq4')">
+      <div class="sh-accord-title"><div><span class="lang-block" data-lang-block="fr">Comment coller ou poser le Deentag ?</span><span class="lang-block" data-lang-block="en">How do I place or hang the Deentag?</span><span class="lang-block" data-lang-block="es">&#191;C&#243;mo colocar el Deentag?</span><span class="lang-block" data-lang-block="de">Wie befestige ich den Deentag?</span><span class="lang-block" data-lang-block="it">Come posiziono il Deentag?</span><span class="lang-block" data-lang-block="nl">Hoe plaats ik de Deentag?</span><span class="lang-block" data-lang-block="pt">Como coloco o Deentag?</span><span class="lang-block" data-lang-block="tr">Deentag'&#305; nas&#305;l yerle&#351;tirebilirim?</span></div></div>
+      <div class="sh-accord-icon">&#9662;</div>
+    </div>
+    <div class="sh-accord-body"><div class="sh-accord-content"><span class="lang-block" data-lang-block="fr">Le Deentag peut &#234;tre pos&#233; sur un meuble, une &#233;tag&#232;re ou un bureau. Il peut &#233;galement &#234;tre accroch&#233; au mur gr&#226;ce &#224; un crochet ou une tige. Une notice est incluse dans le colis.</span><span class="lang-block" data-lang-block="en">The Deentag can be placed on a piece of furniture, a shelf or a desk. It can also be hung on a wall using a hook or rod. Instructions are included in the package.</span><span class="lang-block" data-lang-block="es">El Deentag se puede colocar en un mueble, estante o escritorio. Tambi&#233;n se puede colgar en la pared. Las instrucciones se incluyen en el paquete.</span><span class="lang-block" data-lang-block="de">Der Deentag kann auf einem M&#246;belst&#252;ck, einem Regal oder einem Schreibtisch platziert werden. Er kann auch an einer Wand aufgeh&#228;ngt werden.</span><span class="lang-block" data-lang-block="it">Il Deentag pu&#242; essere posizionato su un mobile, una mensola o una scrivania. Pu&#242; anche essere appeso a una parete.</span><span class="lang-block" data-lang-block="nl">De Deentag kan op een meubel, plank of bureau worden geplaatst. Hij kan ook aan een muur worden gehangen.</span><span class="lang-block" data-lang-block="pt">O Deentag pode ser colocado num m&#243;vel, numa prateleira ou numa secretaria. Tamb&#233;m pode ser pendurado numa parede.</span><span class="lang-block" data-lang-block="tr">Deentag bir mobilyaya, rafa veya masaya yerle&#351;tirilebilir. Ayr&#305;ca duvara as&#305;labilir.</span></div></div>
+  </div>
+  <div class="sh-accord" id="faq5">
+    <div class="sh-accord-header" onclick="toggleAccord('faq5')">
+      <div class="sh-accord-title"><div><span class="lang-block" data-lang-block="fr">Quels sont les délais de livraison et puis-je être remboursé ?</span><span class="lang-block" data-lang-block="en">What are the delivery times and can I get a refund?</span><span class="lang-block" data-lang-block="es">¿Cuáles son los plazos de envío y puedo recibir un reembolso?</span><span class="lang-block" data-lang-block="de">Wie lange dauert der Versand und kann ich eine Rückerstattung erhalten?</span><span class="lang-block" data-lang-block="it">Quali sono i tempi di consegna e posso ottenere un rimborso?</span><span class="lang-block" data-lang-block="nl">Wat zijn de levertijden en kan ik geld terugkrijgen?</span><span class="lang-block" data-lang-block="pt">Quais são os prazos de entrega e posso ser reembolsado?</span><span class="lang-block" data-lang-block="tr">Teslimat süreleri nedir ve iade alabilir miyim?</span></div></div>
+      <div class="sh-accord-icon">&#9662;</div>
+    </div>
+    <div class="sh-accord-body"><div class="sh-accord-content"><span class="lang-block" data-lang-block="fr">[À COMPLÉTER : indique ici ton délai de livraison réel, ex. "Expédié sous 24-48h, livré en X-X jours"] et [À COMPLÉTER : ta politique de retour réelle, ex. "satisfait ou remboursé sous 14 jours"].</span><span class="lang-block" data-lang-block="en">[TO FILL IN: your actual delivery time] and [TO FILL IN: your actual return policy].</span><span class="lang-block" data-lang-block="es">[COMPLETAR: tu plazo de envío real] y [COMPLETAR: tu política de devolución real].</span><span class="lang-block" data-lang-block="de">[AUSFÜLLEN: deine echte Lieferzeit] und [AUSFÜLLEN: deine echte Rückgaberichtlinie].</span><span class="lang-block" data-lang-block="it">[DA COMPLETARE: i tuoi tempi di consegna reali] e [DA COMPLETARE: la tua politica di rimborso reale].</span><span class="lang-block" data-lang-block="nl">[AAN TE VULLEN: je echte levertijd] en [AAN TE VULLEN: je echte retourbeleid].</span><span class="lang-block" data-lang-block="pt">[A PREENCHER: o teu prazo de entrega real] e [A PREENCHER: a tua política de devolução real].</span><span class="lang-block" data-lang-block="tr">[DOLDURUN: gerçek teslimat süreniz] ve [DOLDURUN: gerçek iade politikanız].</span></div></div>
+  </div>
+</div>
+  <div class="sh-dim-item"><div class="sh-dim-val">3D</div><div class="sh-dim-unit"><span class="lang-block" data-lang-block="fr">impression</span><span class="lang-block" data-lang-block="en">printed</span><span class="lang-block" data-lang-block="es">impresi&#243;n</span><span class="lang-block" data-lang-block="de">Druck</span><span class="lang-block" data-lang-block="it">stampa</span><span class="lang-block" data-lang-block="nl">druk</span><span class="lang-block" data-lang-block="pt">impress&#227;o</span><span class="lang-block" data-lang-block="tr">bask&#305;</span></div></div>
+</div>
+
+<!-- FOOTER -->
+<div class="shop-footer">
+  <div class="shop-footer-ornament">
+    <div class="shop-footer-line"></div>
+    <div class="ornament-center"><div class="ornament-diamond"></div><span class="ornament-star">&#10022;</span><div class="ornament-diamond"></div></div>
+    <div class="shop-footer-line"></div>
+  </div>
+  <div class="shop-footer-text">
+    <span class="lang-block" data-lang-block="fr">Chaque instant a son invocation.<br>Deentag vous accompagne &#224; chaque pas.</span>
+    <span class="lang-block" data-lang-block="en">Every moment has its supplication.<br>Deentag accompanies you at every step.</span>
+    <span class="lang-block" data-lang-block="es">Cada momento tiene su invocaci&#243;n.<br>Deentag te acompa&#241;a en cada paso.</span>
+    <span class="lang-block" data-lang-block="de">Jeder Moment hat sein Bittgebet.<br>Deentag begleitet dich auf jedem Schritt.</span>
+    <span class="lang-block" data-lang-block="it">Ogni momento ha la sua invocazione.<br>Deentag ti accompagna in ogni passo.</span>
+    <span class="lang-block" data-lang-block="nl">Elk moment heeft zijn smeekbede.<br>Deentag vergezelt je bij elke stap.</span>
+    <span class="lang-block" data-lang-block="pt">Cada momento tem a sua invoca&#231;&#227;o.<br>Deentag acompanha-o em cada passo.</span>
+    <span class="lang-block" data-lang-block="tr">Her an&#305;n bir duas&#305; vard&#305;r.<br>Deentag her ad&#305;m&#305;n&#305;zda yan&#305;n&#305;zda.</span>
+  </div>
+  <a href="index.html" class="back-pill">
+    <div class="back-pill-arrow">&#8592;</div>
+    <span class="back-pill-txt"><span class="lang-block" data-lang-block="fr">Retour &#224; l'app</span><span class="lang-block" data-lang-block="en">Back to app</span><span class="lang-block" data-lang-block="es">Volver a la app</span><span class="lang-block" data-lang-block="de">Zur&#252;ck zur App</span><span class="lang-block" data-lang-block="it">Torna all'app</span><span class="lang-block" data-lang-block="nl">Terug naar de app</span><span class="lang-block" data-lang-block="pt">Voltar &#224; app</span><span class="lang-block" data-lang-block="tr">Uygulamaya d&#246;n</span></span>
+  </a>
+</div>
+
+<div class="sh-scroll-pad"></div>
+
+<!-- STICKY CTA -->
+<div class="sh-sticky">
+  <div class="sh-sticky-inner">
+    <div class="sh-sticky-info">
+      <div class="sh-sticky-price" id="stickyPrice">14,99 &#8364;</div>
+      <div class="sh-sticky-label"><span class="lang-block" data-lang-block="fr">1 objet &#8212; coloris au choix</span><span class="lang-block" data-lang-block="en">1 object &#8212; colour of choice</span><span class="lang-block" data-lang-block="es">1 objeto &#8212; color a elegir</span><span class="lang-block" data-lang-block="de">1 Objekt &#8212; Farbe nach Wahl</span><span class="lang-block" data-lang-block="it">1 oggetto &#8212; colore a scelta</span><span class="lang-block" data-lang-block="nl">1 object &#8212; kleur naar keuze</span><span class="lang-block" data-lang-block="pt">1 objeto &#8212; cor &#224; escolha</span><span class="lang-block" data-lang-block="tr">1 nesne &#8212; renk se&#231;imi</span></div>
+    </div>
+    <button class="sh-sticky-btn" onclick="handleBuy()"><span class="lang-block" data-lang-block="fr">Commander</span><span class="lang-block" data-lang-block="en">Order now</span><span class="lang-block" data-lang-block="es">Pedir</span><span class="lang-block" data-lang-block="de">Bestellen</span><span class="lang-block" data-lang-block="it">Ordina</span><span class="lang-block" data-lang-block="nl">Bestellen</span><span class="lang-block" data-lang-block="pt">Encomendar</span><span class="lang-block" data-lang-block="tr">Sipari&#351; ver</span></button>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="soon-overlay" id="soon-overlay" onclick="hideSoon(event)">
+  <div class="soon-modal">
+    <span class="soon-icon">&#128332;</span>
+    <div class="soon-title"><span class="lang-block" data-lang-block="fr">Bient&#244;t disponible</span><span class="lang-block" data-lang-block="en">Coming soon</span><span class="lang-block" data-lang-block="es">Pr&#243;ximamente</span><span class="lang-block" data-lang-block="de">Demn&#228;chst verf&#252;gbar</span><span class="lang-block" data-lang-block="it">Prossimamente</span><span class="lang-block" data-lang-block="nl">Binnenkort beschikbaar</span><span class="lang-block" data-lang-block="pt">Brevemente</span><span class="lang-block" data-lang-block="tr">Yak&#305;nda</span></div>
+    <div class="soon-text"><span class="lang-block" data-lang-block="fr">La boutique Deentag ouvrira tr&#232;s prochainement.<br>Revenez nous voir bient&#244;t&nbsp;!</span><span class="lang-block" data-lang-block="en">The Deentag shop will open very soon.<br>Come back soon!</span><span class="lang-block" data-lang-block="es">La tienda Deentag abrir&#225; muy pronto.<br>&#161;Vuelve pronto!</span><span class="lang-block" data-lang-block="de">Der Deentag-Shop wird in K&#252;rze er&#246;ffnet.<br>Besuchen Sie uns bald wieder!</span><span class="lang-block" data-lang-block="it">Il negozio Deentag aprir&#224; molto presto.<br>Torna a trovarci presto!</span><span class="lang-block" data-lang-block="nl">De Deentag-winkel gaat zeer binnenkort open.<br>Kom snel nog eens kijken!</span><span class="lang-block" data-lang-block="pt">A loja Deentag abrir&#225; muito brevemente.<br>Volte a visitar-nos em breve!</span><span class="lang-block" data-lang-block="tr">Deentag ma&#287;azas&#305; yak&#305;nda a&#231;&#305;lacak.<br>L&#252;tfen yak&#305;nda tekrar ziyaret edin!</span></div>
+    <button class="soon-close" onclick="hideSoon()"><span class="lang-block" data-lang-block="fr">Compris</span><span class="lang-block" data-lang-block="en">Got it</span><span class="lang-block" data-lang-block="es">Entendido</span><span class="lang-block" data-lang-block="de">Verstanden</span><span class="lang-block" data-lang-block="it">Ho capito</span><span class="lang-block" data-lang-block="nl">Begrepen</span><span class="lang-block" data-lang-block="pt">Entendido</span><span class="lang-block" data-lang-block="tr">Anla&#351;&#305;ld&#305;</span></button>
+  </div>
+</div>
+
+<script src="js/duas.js"></script>
+<script src="js/app.js"></script>
+<script src="js/nav.js"></script>
+<script>
+/* CARROUSEL */
+(function(){
+  var carousel=document.getElementById('shCarousel');
+  var dots=document.querySelectorAll('.sh-dot');
+  var items=document.querySelectorAll('.sh-carousel-item');
+  if(!carousel) return;
+  function updateDots(){
+    var idx=Math.round(carousel.scrollLeft/(carousel.scrollWidth/items.length));
+    dots.forEach(function(d,i){d.classList.toggle('active',i===idx);});
+    items.forEach(function(it,i){it.classList.toggle('active',i===idx);});
+  }
+  carousel.addEventListener('scroll',updateDots,{passive:true});
+})();
+window.scrollToSlide=function(i){
+  var carousel=document.getElementById('shCarousel');
+  var items=carousel.querySelectorAll('.sh-carousel-item');
+  if(items[i]) items[i].scrollIntoView({behavior:'smooth',block:'nearest',inline:'start'});
+};
+var currentOffer='unit';
+function selectOffer(offer){currentOffer=offer;document.getElementById('offerUnit').classList.toggle('selected',offer==='unit');document.getElementById('offerBundle').classList.toggle('selected',offer==='bundle');var cw=document.getElementById('colorisWrap');var sp=document.getElementById('stickyPrice');if(offer==='unit'){cw.style.display='';sp.textContent='14,99 \u20ac';}else{cw.style.display='none';sp.textContent='38,99 \u20ac';}}
+function selectColoris(c,btn){document.querySelectorAll('.sh-coloris-btn').forEach(function(b){b.classList.remove('active');});btn.classList.add('active');}
+function toggleAccord(id){document.getElementById(id).classList.toggle('open');}
+function handleBuy(){showSoon();}
+function showSoon(){document.getElementById('soon-overlay').classList.add('open');}
+function hideSoon(e){if(!e||e.target===document.getElementById('soon-overlay')||e.target.classList.contains('soon-close')){document.getElementById('soon-overlay').classList.remove('open');}}
+</script>
+</body>
+</html>
