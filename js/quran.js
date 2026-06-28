@@ -980,7 +980,14 @@ window.addEventListener('DOMContentLoaded', () => {
   sheet.addEventListener('touchstart', e => {
     if (sheetTransitioning) return;
     startY = e.touches[0].clientY; swipeDY = 0;
-    swipeActive = true; swipeBlocked = false;
+    swipeActive = true;
+
+    // Bloquer immédiatement si le conteneur scrollable n'est pas en haut
+    const scrollEl = currentSurahId
+      ? document.getElementById('surahScroll')
+      : (document.getElementById('navList') || document.getElementById('surahList'));
+    swipeBlocked = !!(scrollEl && scrollEl.scrollTop > 5);
+
     sheet.style.transition = 'none';
   }, { passive: true });
 
@@ -990,11 +997,10 @@ window.addEventListener('DOMContentLoaded', () => {
     if (Math.abs(dy) < 10) return;
     if (dy < 0) { swipeBlocked = true; return; }
 
-    // Bloquer le swipe si le conteneur n'est pas encore remonté en haut
     const scrollEl = currentSurahId
       ? document.getElementById('surahScroll')
       : (document.getElementById('navList') || document.getElementById('surahList'));
-    if (scrollEl && scrollEl.scrollTop > 0) { swipeBlocked = true; return; }
+    if (scrollEl && scrollEl.scrollTop > 5) { swipeBlocked = true; return; }
 
     swipeDY = dy;
     const drag = dy > 100 ? 100 + (dy - 100) * 0.3 : dy;
