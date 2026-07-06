@@ -167,7 +167,7 @@
     window._kidsSelColor = PASTEL_COLORS[cidx];
 
     var dots = PASTEL_COLORS.map(function(c, i) {
-      return '<div data-kci="' + i + '" data-color="' + c + '" onclick="kidsPickColor(this,' + i + ')" style="width:26px;height:26px;border-radius:50%;background:' + c + ';cursor:pointer;border:2.5px solid ' + (i === cidx ? '#333' : 'transparent') + ';transition:border 0.2s;"></div>';
+      return '<div data-kci="' + i + '" data-color="' + c + '" onclick="kidsPickColor(\'' + c + '\',' + i + ')" style="width:26px;height:26px;border-radius:50%;background:' + c + ';cursor:pointer;border:2.5px solid ' + (i === cidx ? '#333' : 'transparent') + ';transition:border 0.2s;"></div>';
     }).join('');
 
     box.innerHTML =
@@ -373,7 +373,7 @@
     window._kidsSelColor = p.color;
 
     var dots = PASTEL_COLORS.map(function(c, i) {
-      return '<div data-kci="' + i + '" data-color="' + c + '" onclick="kidsPickColor(this,' + i + ')" style="width:26px;height:26px;border-radius:50%;background:' + c + ';cursor:pointer;border:2.5px solid ' + (i === cidx ? '#333' : 'transparent') + ';transition:border 0.2s;"></div>';
+      return '<div data-kci="' + i + '" data-color="' + c + '" onclick="kidsPickColor(\'' + c + '\',' + i + ')" style="width:26px;height:26px;border-radius:50%;background:' + c + ';cursor:pointer;border:2.5px solid ' + (i === cidx ? '#333' : 'transparent') + ';transition:border 0.2s;"></div>';
     }).join('');
 
     box.innerHTML =
@@ -444,6 +444,80 @@
     if (oldModal) oldModal.remove();
     openKidsProfileModal();
     window.dispatchEvent(new CustomEvent('deentag:profileChanged', { detail:{ id: getActiveId() } }));
+  }
+
+  /* ── Toast de bienvenue de secours ──
+     Sur certaines pages (ex: quran-kids.html), kids.js n'est pas chargé,
+     donc showWelcomeToast() n'existe pas. On la fournit ici si besoin,
+     avec sa propre mini-animation de confettis. */
+  function fallbackLaunchConfetti() {
+    var container = document.getElementById('confettiContainer');
+    if (!container) return;
+    container.innerHTML = '';
+    var colors = ['#FF6B6B','#6C63FF','#00B4D8','#52B788','#F4A261','#FFD166','#06D6A0'];
+    for (var i = 0; i < 60; i++) {
+      var piece = document.createElement('div');
+      piece.className = 'confetti-piece';
+      piece.style.left = Math.random() * 100 + 'vw';
+      piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+      piece.style.animationDelay = Math.random() * 1.5 + 's';
+      piece.style.animationDuration = (2 + Math.random()) + 's';
+      piece.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+      piece.style.width = (8 + Math.random() * 8) + 'px';
+      piece.style.height = (8 + Math.random() * 8) + 'px';
+      container.appendChild(piece);
+    }
+    setTimeout(function(){ container.innerHTML = ''; }, 4000);
+  }
+
+  if (typeof window.showWelcomeToast !== 'function') {
+    window.showWelcomeToast = function(name) {
+      var existing = document.getElementById('kidsWelcomeToast');
+      if (existing) existing.remove();
+
+      var toast = document.createElement('div');
+      toast.id = 'kidsWelcomeToast';
+      toast.style.cssText = [
+        'position:fixed','top:50%','left:50%',
+        'transform:translate(-50%,-50%) scale(0.7)',
+        'z-index:9999',
+        'background:linear-gradient(135deg,#fff 0%,#f0fff4 100%)',
+        'border-radius:28px',
+        'padding:32px 28px 24px',
+        'text-align:center',
+        'box-shadow:0 20px 60px rgba(0,0,0,0.18)',
+        'width:80vw','max-width:300px',
+        'opacity:0',
+        'transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1)',
+        'border:3px solid #C9A84C'
+      ].join(';');
+
+      toast.innerHTML =
+        '<div style="font-size:48px;margin-bottom:8px;">🌟</div>' +
+        '<div style="font-family:Baloo 2,cursive;font-size:20px;font-weight:800;color:#2C4A3E;margin-bottom:6px;">Bienvenue ' + name + ' !</div>' +
+        '<div style="font-family:Baloo 2,cursive;font-size:14px;color:#5a7a6a;line-height:1.5;margin-bottom:20px;">Bismillah ! Ton aventure commence maintenant ! 🚀</div>' +
+        '<button onclick="document.getElementById(\'kidsWelcomeToast\').remove();" style="background:linear-gradient(135deg,#C9A84C,#e8c96d);border:none;border-radius:50px;padding:10px 28px;font-family:Baloo 2,cursive;font-weight:800;font-size:14px;color:#fff;cursor:pointer;">C\'est parti ! ✨</button>';
+
+      document.body.appendChild(toast);
+      fallbackLaunchConfetti();
+
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          toast.style.opacity = '1';
+          toast.style.transform = 'translate(-50%,-50%) scale(1)';
+        });
+      });
+
+      setTimeout(function() {
+        if (document.getElementById('kidsWelcomeToast')) {
+          toast.style.opacity = '0';
+          toast.style.transform = 'translate(-50%,-50%) scale(0.7)';
+          setTimeout(function() {
+            if (toast.parentNode) toast.remove();
+          }, 400);
+        }
+      }, 5000);
+    };
   }
 
   window.openKidsProfileModal  = openKidsProfileModal;
