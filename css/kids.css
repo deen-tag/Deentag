@@ -811,7 +811,14 @@ body.page-kids::after, body.page-quran-kids::after{
   font-family: 'Baloo 2', cursive; font-weight: 800; font-size: 14px;
   color: var(--ink);
 }
-.settings-panel-close{ cursor: pointer; font-size: 16px; color: var(--ink-60); }
+.settings-panel-close{
+  position: absolute; top: 10px; right: 10px;
+  width: 26px; height: 26px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 13px; font-weight: 700;
+  color: var(--ink-60); background: var(--paper-warm);
+  border: 1.5px solid var(--line);
+}
 .size-row{ margin-bottom: 2px; }
 .size-row-label, .toggle-label{
   font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 12.5px;
@@ -825,6 +832,10 @@ body.page-kids::after, body.page-quran-kids::after{
   color: var(--ink-60); cursor: pointer;
 }
 .size-pill.active{ background: var(--gold); border-color: var(--gold); color: #fff; }
+.size-pill-a{ font-family: 'Baloo 2', cursive; font-weight: 800; line-height: 1; }
+.size-pill-a.sp-sm{ font-size: 11px; }
+.size-pill-a.sp-md{ font-size: 15px; }
+.size-pill-a.sp-lg{ font-size: 19px; }
 .toggle-row{ display: flex; align-items: center; justify-content: space-between; }
 .toggle-switch{
   width: 40px; height: 23px; border-radius: 50px;
@@ -841,6 +852,22 @@ body.page-kids::after, body.page-quran-kids::after{
 }
 .toggle-switch.on{ background: var(--gold); border-color: var(--gold); }
 .toggle-switch.on::after{ transform: translateX(16px); }
+
+/* ── Groupes de réglages (Coran enfants) : label + interrupteur + tailles réunis ── */
+.settings-group{ padding-bottom: 12px; }
+.settings-group + .settings-group{
+  border-top: 1px solid rgba(232,184,75,.18);
+  padding-top: 12px;
+}
+.settings-group-head{
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.settings-group-label{
+  font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 13px;
+  color: var(--ink);
+}
+.size-pills.disabled{ opacity: .4; pointer-events: none; }
 
 /* ============================================================
    RESPONSIVE
