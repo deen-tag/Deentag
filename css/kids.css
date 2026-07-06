@@ -908,6 +908,15 @@ body.has-tabbar { padding-bottom: calc(80px + env(safe-area-inset-bottom, 0px));
   border-top: 1.5px solid rgba(232,184,75,0.35);
   box-shadow: 0 -6px 24px rgba(184,133,46,0.15);
   transition: transform 0.3s cubic-bezier(0.32,0.72,0,1);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  /* Reste invisible tant que le viewport n'est pas stabilisé (évite le saut
+     dû à la barre d'adresse du navigateur qui se rétracte au chargement) */
+  opacity: 0;
+}
+.app-tabbar.tabbar-ready {
+  opacity: 1;
+  transition: transform 0.3s cubic-bezier(0.32,0.72,0,1), opacity 0.25s ease;
 }
 .app-tabbar.tabbar-hidden { transform: translateY(100%); }
 
