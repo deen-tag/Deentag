@@ -102,37 +102,40 @@
 <div class="settings-panel" id="surahSettingsPanel">
   <button class="settings-panel-close" onclick="kidsCloseSettings()">✕</button>
   <div class="settings-panel-title">⚙️ Réglages</div>
-  <div class="size-row">
-    <span class="size-row-label">Arabe</span>
+
+  <div class="settings-group">
+    <div class="settings-group-head">
+      <span class="settings-group-label">🔤 Arabe</span>
+    </div>
     <div class="size-pills">
-      <button class="size-pill" data-type="ar" data-val="small"  onclick="event.stopPropagation();kidsApplySizeLevel('ar','small')">P</button>
-      <button class="size-pill active" data-type="ar" data-val="medium" onclick="event.stopPropagation();kidsApplySizeLevel('ar','medium')">M</button>
-      <button class="size-pill" data-type="ar" data-val="large"  onclick="event.stopPropagation();kidsApplySizeLevel('ar','large')">G</button>
+      <button class="size-pill" data-type="ar" data-val="small"  onclick="event.stopPropagation();kidsApplySizeLevel('ar','small')" title="Petit"><span class="size-pill-a sp-sm">A</span></button>
+      <button class="size-pill active" data-type="ar" data-val="medium" onclick="event.stopPropagation();kidsApplySizeLevel('ar','medium')" title="Moyen"><span class="size-pill-a sp-md">A</span></button>
+      <button class="size-pill" data-type="ar" data-val="large"  onclick="event.stopPropagation();kidsApplySizeLevel('ar','large')" title="Grand"><span class="size-pill-a sp-lg">A</span></button>
     </div>
   </div>
-  <div class="size-row">
-    <span class="size-row-label">Phonétique</span>
-    <div class="size-pills">
-      <button class="size-pill" data-type="ph" data-val="small"  onclick="event.stopPropagation();kidsApplySizeLevel('ph','small')">P</button>
-      <button class="size-pill active" data-type="ph" data-val="medium" onclick="event.stopPropagation();kidsApplySizeLevel('ph','medium')">M</button>
-      <button class="size-pill" data-type="ph" data-val="large"  onclick="event.stopPropagation();kidsApplySizeLevel('ph','large')">G</button>
+
+  <div class="settings-group">
+    <div class="settings-group-head">
+      <span class="settings-group-label">🗣️ Phonétique</span>
+      <div class="toggle-switch on" id="togglePhonetic" onclick="kidsTogglePhonetic(this)"></div>
+    </div>
+    <div class="size-pills" id="phSizePills">
+      <button class="size-pill" data-type="ph" data-val="small"  onclick="event.stopPropagation();kidsApplySizeLevel('ph','small')" title="Petit"><span class="size-pill-a sp-sm">A</span></button>
+      <button class="size-pill active" data-type="ph" data-val="medium" onclick="event.stopPropagation();kidsApplySizeLevel('ph','medium')" title="Moyen"><span class="size-pill-a sp-md">A</span></button>
+      <button class="size-pill" data-type="ph" data-val="large"  onclick="event.stopPropagation();kidsApplySizeLevel('ph','large')" title="Grand"><span class="size-pill-a sp-lg">A</span></button>
     </div>
   </div>
-  <div class="size-row">
-    <span class="size-row-label">Traduction</span>
-    <div class="size-pills">
-      <button class="size-pill" data-type="tr" data-val="small"  onclick="event.stopPropagation();kidsApplySizeLevel('tr','small')">P</button>
-      <button class="size-pill active" data-type="tr" data-val="medium" onclick="event.stopPropagation();kidsApplySizeLevel('tr','medium')">M</button>
-      <button class="size-pill" data-type="tr" data-val="large"  onclick="event.stopPropagation();kidsApplySizeLevel('tr','large')">G</button>
+
+  <div class="settings-group">
+    <div class="settings-group-head">
+      <span class="settings-group-label">🌍 Traduction</span>
+      <div class="toggle-switch on" id="toggleTranslation" onclick="kidsToggleTranslation(this)"></div>
     </div>
-  </div>
-  <div class="toggle-row">
-    <span class="toggle-label">Phonétique</span>
-    <div class="toggle-switch on" id="togglePhonetic" onclick="kidsTogglePhonetic(this)"></div>
-  </div>
-  <div class="toggle-row">
-    <span class="toggle-label">Traduction</span>
-    <div class="toggle-switch on" id="toggleTranslation" onclick="kidsToggleTranslation(this)"></div>
+    <div class="size-pills" id="trSizePills">
+      <button class="size-pill" data-type="tr" data-val="small"  onclick="event.stopPropagation();kidsApplySizeLevel('tr','small')" title="Petit"><span class="size-pill-a sp-sm">A</span></button>
+      <button class="size-pill active" data-type="tr" data-val="medium" onclick="event.stopPropagation();kidsApplySizeLevel('tr','medium')" title="Moyen"><span class="size-pill-a sp-md">A</span></button>
+      <button class="size-pill" data-type="tr" data-val="large"  onclick="event.stopPropagation();kidsApplySizeLevel('tr','large')" title="Grand"><span class="size-pill-a sp-lg">A</span></button>
+    </div>
   </div>
 </div>
 
