@@ -671,16 +671,11 @@ function kidsToggleTranslation(el) {
   if (kidsCurrentVerse) kidsShowVerse(kidsCurrentVerse);
 }
 
-let kidsSettingsTimer = null;
 function kidsOpenSettings() {
   const panel = document.getElementById('surahSettingsPanel');
   if (!panel) return;
   const isOpen = panel.classList.contains('open');
   panel.classList.toggle('open', !isOpen);
-  if (!isOpen) {
-    clearTimeout(kidsSettingsTimer);
-    kidsSettingsTimer = setTimeout(() => panel.classList.remove('open'), 5000);
-  }
 }
 function kidsCloseSettings() {
   const p = document.getElementById('surahSettingsPanel');

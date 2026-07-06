@@ -321,7 +321,7 @@
   function kidsPickColor(color, idx) {
     window._kidsSelColor = color;
     document.querySelectorAll('[data-kci]').forEach(function(el){
-      el.style.border = '2.5px solid ' + (parseInt(el.dataset.kci) === idx ? '#fff' : 'transparent');
+      el.style.border = '2.5px solid ' + (parseInt(el.dataset.kci) === idx ? '#333' : 'transparent');
     });
     var inp = document.getElementById('kp-name');
     var preview = document.getElementById('kp-dome-preview');
