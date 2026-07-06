@@ -1,5 +1,29 @@
 (function () {
 
+  // Fix Safari (surtout navigation privée) qui calcule mal 100dvh
+  // à cause de sa barre d'outils qui ne se rétracte pas pareil.
+  function setAppVH() {
+    var h = (window.visualViewport && window.visualViewport.height) || window.innerHeight;
+    document.documentElement.style.setProperty('--app-vh', h + 'px');
+  }
+  setAppVH();
+  // Exposée pour que d'autres scripts (ex: ouverture du lecteur de sourate)
+  // puissent forcer ce recalcul au bon moment, sans dépendre d'un scroll
+  // ou d'un resize qui ne se déclenche pas toujours spontanément.
+  window.DT_setAppVH = setAppVH;
+  window.addEventListener('resize', setAppVH);
+  window.addEventListener('orientationchange', setAppVH);
+  if (window.visualViewport) {
+    window.visualViewport.addEventListener('resize', setAppVH);
+    window.visualViewport.addEventListener('scroll', setAppVH);
+  }
+  // Certains navigateurs (Chrome Android) rétractent leur barre d'adresse
+  // juste après le premier rendu, sans déclencher resize tout de suite :
+  // on re-mesure à quelques reprises pour rattraper ce changement tardif.
+  [50, 150, 300, 600, 1000].forEach(function (delay) {
+    setTimeout(setAppVH, delay);
+  });
+
   var IMGS = {
     duas:     'images/nav-invocations.webp',
     coran:    'images/nav-coran.webp',
@@ -85,6 +109,45 @@
     }, { passive: true });
   }
 
+  // Révèle la tabbar seulement quand le viewport a fini de bouger
+  // (la barre d'adresse du navigateur se rétracte après le chargement,
+  // ce qui déplace un élément position:fixed;bottom:0 — on attend que
+  // ça se stabilise pour éviter le saut visible).
+  function revealWhenStable(tabbar) {
+    var revealed = false;
+    var debounceTimer = null;
+    var maxWaitTimer = null;
+
+    function reveal() {
+      if (revealed) return;
+      revealed = true;
+      clearTimeout(debounceTimer);
+      clearTimeout(maxWaitTimer);
+      window.removeEventListener('resize', onResize);
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', onResize);
+      }
+      requestAnimationFrame(function () {
+        tabbar.classList.add('tabbar-ready');
+      });
+    }
+
+    function onResize() {
+      // Chaque resize repousse la révélation de 150ms : on ne montre la
+      // tabbar qu'une fois que le viewport ne bouge plus.
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(reveal, 150);
+    }
+
+    window.addEventListener('resize', onResize);
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', onResize);
+    }
+    // Filet de sécurité : si aucun resize ne se déclenche (desktop, PWA
+    // déjà stable...), on révèle quand même après un court délai.
+    maxWaitTimer = setTimeout(reveal, 400);
+  }
+
   function init() {
     var page = document.body.getAttribute('data-page');
     var cfg = page && PAGES[page];
@@ -93,6 +156,17 @@
     document.body.appendChild(tabbar);
     document.body.classList.add('has-tabbar');
     initSmartTabbar(tabbar);
+
+    // Certains navigateurs ne repositionnent des éléments position:fixed
+    // qu'au premier scroll — sans ça, aucun resize ne se déclenche et notre
+    // logique d'attente ne sert à rien. On force ce recalcul immédiatement,
+    // pendant que la tabbar est encore invisible.
+    requestAnimationFrame(function () {
+      var y = window.scrollY || window.pageYOffset || 0;
+      window.scrollTo(0, y + 1);
+      window.scrollTo(0, y);
+      revealWhenStable(tabbar);
+    });
 
   }
 

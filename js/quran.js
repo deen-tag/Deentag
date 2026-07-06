@@ -211,6 +211,7 @@ function applyLangBlocks(lang) {
 function applyLang(lang) {
   currentLang = lang;
   localStorage.setItem('deentag_lang', lang);
+  document.documentElement.setAttribute('lang', lang);
   const btn = document.getElementById('lang-btn');
   if (btn) btn.textContent = lang.toUpperCase() + ' ▾';
   document.querySelectorAll('.lang-option').forEach(o => {
@@ -531,6 +532,21 @@ function openSurah(surahId, startVerse) {
       sheet.style.transform  = 'translateY(0)';
     });
 
+    // Signal fiable de fin d'animation du panneau (au lieu d'un délai devine),
+    // utilisé pour ne scroller vers le verset qu'une fois le panneau réellement stabilisé.
+    window.sheetSlideDonePromise = new Promise((resolve) => {
+      let done = false;
+      const finish = () => { if (!done) { done = true; resolve(); } };
+      sheet.addEventListener('transitionend', function handler(e) {
+        if (e.propertyName === 'transform') {
+          sheet.removeEventListener('transitionend', handler);
+          finish();
+        }
+      });
+      // Filet de sécurité si transitionend ne se déclenche pas (ex: onglet en arrière-plan)
+      setTimeout(finish, 700);
+    });
+
     // Charger les versets
     loadSurah(surahId, startVerse || 1);
 
@@ -647,9 +663,11 @@ function renderSurahContent(surah, data, lang, startVerse) {
         <div class="verse-arabic">${ayah.text}</div>
         <span class="verse-phonetic${phonHidden}" id="ph-${surah.id}-${vNum}">${phoneticText}</span>
         <span class="verse-translation${trHidden}" id="tr-${surah.id}-${vNum}">${translText}</span>
-        <button class="verse-memorize-btn" id="mem-${surah.id}-${vNum}" onclick="event.stopPropagation();toggleVerseMemorized(${surah.id},${vNum})" title="Mémorisé">
-          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
-          <span class="verse-mem-label"></span>
+        <button class="verse-memorize-btn" id="mem-${surah.id}-${vNum}" onclick="event.stopPropagation();toggleVerseMemorized(${surah.id},${vNum})" title="Mémoriser ce verset">
+          <span class="verse-mem-ring">
+            <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/></svg>
+          </span>
+          <span class="verse-mem-label">Mémoriser</span>
         </button>
       </div>
     `;
@@ -660,8 +678,10 @@ function renderSurahContent(surah, data, lang, startVerse) {
   html += `
     <div class="surah-memorize-block">
       <button class="surah-memorize-btn${isMemSurah ? ' memorized' : ''}" id="surah-mem-btn" onclick="toggleSurahMemorized(${surah.id})">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
-        <span id="surah-mem-label">${isMemSurah ? (window.DT ? window.DT.t('memorized') : 'Mémorisé') : (window.DT ? window.DT.t('memorized') : 'Mémorisé')}</span>
+        <span class="surah-mem-ring">
+          <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/></svg>
+        </span>
+        <span id="surah-mem-label">${isMemSurah ? (window.DT ? window.DT.t('memorized') : 'Mémorisé') : 'Mémoriser la sourate'}</span>
       </button>
     </div>
   `;
@@ -672,19 +692,57 @@ function renderSurahContent(surah, data, lang, startVerse) {
   // Mettre à jour les boutons verset après injection
   setTimeout(() => updateAllVerseMemBtns(surah.id), 50);
 
-  // Scroll au verset de départ si différent du premier
-  if (startVerse && startVerse > 1) {
-    setTimeout(() => {
-      const el = document.getElementById('verse-' + startVerse);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
+  // Le bouton play (barre audio du bas) doit reprendre au verset de départ,
+  // pas revenir au verset 1 par défaut.
+  audioCurrentVerse = startVerse || 1;
+
+  // Recalcule la vraie hauteur d'écran (barre d'adresse mobile qui se
+  // rétracte) à chaque ouverture de sourate — avant, ce recalcul ne se
+  // déclenchait que par accident via le scroll vers un verset précis,
+  // laissant la barre audio mal positionnée quand on ouvrait au verset 1.
+  const doAppVHFix = () => { if (window.DT_setAppVH) window.DT_setAppVH(); };
+
+  // Scroll animé vers le verset de départ, TOUJOURS déclenché — même pour
+  // le verset 1 (déjà en haut, donc quasi aucun déplacement visuel).
+  // C'est l'animation de défilement elle-même (plusieurs frames), et non
+  // un simple ajustement instantané de scrollTop, qui force le navigateur
+  // à finaliser la vraie hauteur du panneau. Sans cet appel, le verset 1
+  // ne déclenchait jamais cette finalisation → barre audio coupée.
+  const doScroll = () => {
+    const el = document.getElementById('verse-' + (startVerse || 1));
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  // Le vrai coupable trouvé grâce au diagnostic : la transition CSS de hauteur
+  // du panneau reste bloquée à mi-chemin tant que rien ne force le navigateur
+  // à confirmer sa taille finale. Avant, seul le scrollIntoView (verset > 1)
+  // déclenchait cette confirmation par effet de bord. On force maintenant ce
+  // même "coup de pouce" à chaque ouverture, verset 1 ou pas — même astuce
+  // déjà utilisée dans nav.js pour la tab bar (micro scroll aller-retour).
+  const forceLayoutSettle = () => {
+    if (scroll) {
+      const y = scroll.scrollTop;
+      scroll.scrollTop = y + 1;
+      scroll.scrollTop = y;
+    }
+  };
+
+  if (window.sheetSlideDonePromise) {
+    window.sheetSlideDonePromise.then(() => {
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        doAppVHFix(); doScroll(); forceLayoutSettle();
+        setTimeout(() => { forceLayoutSettle(); }, 400);
+      }));
+    });
+  } else {
+    setTimeout(() => { doAppVHFix(); doScroll(); forceLayoutSettle(); }, 550);
   }
 
   // Restaurer les tailles de texte sauvegardées
   applyAllSizes();
 
   // Mettre à jour l'info audio
-  updateAudioBar(0);
+  updateAudioBar((startVerse || 1) - 1);
 }
 
 // ============================================================
@@ -1614,6 +1672,29 @@ function closeNavAndOpenJuz(juzNum) {
 // MÉMORISATION
 // ============================================================
 
+// Petit éclat de poussière dorée autour d'un bouton, au moment où
+// on marque un verset/une sourate comme mémorisé (jamais au décochage).
+// Volontairement discret : peu de particules, courte distance, pour
+// rester élégant même répété plusieurs fois d'affilée.
+function sparkleBurst(btn, count) {
+  if (!btn) return;
+  const rect = btn.getBoundingClientRect();
+  const n = count || 4;
+  for (let i = 0; i < n; i++) {
+    const s = document.createElement('span');
+    s.className = 'dt-mem-spark';
+    const angle = (Math.PI * 2 * i) / n + Math.random() * 0.4;
+    const dist  = 10 + Math.random() * 8;
+    s.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+    s.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+    s.style.left = (rect.width / 2) + 'px';
+    s.style.top  = (rect.height / 2) + 'px';
+    btn.appendChild(s);
+    requestAnimationFrame(() => s.classList.add('go'));
+    setTimeout(() => s.remove(), 600);
+  }
+}
+
 function toggleVerseMemorized(surahId, verseNum) {
   if (!window.DT) return;
   const isNow = window.DT.toggleMemorized('verse', surahId + '_' + verseNum);
@@ -1621,7 +1702,8 @@ function toggleVerseMemorized(surahId, verseNum) {
   if (btn) {
     btn.classList.toggle('memorized', isNow);
     const label = btn.querySelector('.verse-mem-label');
-    if (label) label.textContent = isNow ? window.DT.t('memorized') : '';
+    if (label) label.textContent = isNow ? (window.DT.t('memorized')) : 'Mémoriser';
+    if (isNow) sparkleBurst(btn, 4);
   }
 }
 
@@ -1631,7 +1713,8 @@ function toggleSurahMemorized(surahId) {
   const btn   = document.getElementById('surah-mem-btn');
   const label = document.getElementById('surah-mem-label');
   if (btn)   btn.classList.toggle('memorized', isNow);
-  if (label) label.textContent = window.DT.t('memorized');
+  if (label) label.textContent = isNow ? window.DT.t('memorized') : 'Mémoriser la sourate';
+  if (isNow) sparkleBurst(btn, 6);
 
   // Cocher/décocher tous les versets de la sourate
   const surah = typeof SURAHS !== 'undefined' ? SURAHS.find(s => s.id === surahId) : null;
@@ -1657,7 +1740,7 @@ function updateAllVerseMemBtns(surahId) {
     const isM   = window.DT.isMemorized('verse', surahId + '_' + vNum);
     btn.classList.toggle('memorized', isM);
     const label = btn.querySelector('.verse-mem-label');
-    if (label) label.textContent = isM ? window.DT.t('memorized') : '';
+    if (label) label.textContent = isM ? window.DT.t('memorized') : 'Mémoriser';
   });
   // Sourate
   const surahBtn = document.getElementById('surah-mem-btn');

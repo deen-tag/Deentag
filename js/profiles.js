@@ -195,16 +195,6 @@
     }
     return { done: done, partial: partial, totals: juzTotals, mem: juzMem };
   }
-  /* ── Compatibilité : si on a mémorisé une sourate entière, on compte tous ses versets ── */
-  function calcJuzFromSurahs(memorizedSurahIds) {
-    var prog = {};
-    memorizedSurahIds.forEach(function(sid) {
-      for (var v = 1; v <= (SURAH_VERSES[sid] || 0); v++) {
-        prog['verse_' + sid + '_' + v] = { date: new Date().toISOString() };
-      }
-    });
-    return calcJuzProgress(prog);
-  }
 
   var PROFILE_COLORS = ['#C9A84C','#2C4A3E','#4A3728','#3A3060','#5C3A4A'];
 
@@ -238,6 +228,32 @@
   function progressKey(id) { return 'deentag_progress_' + id; }
   function loadProgress(id) { try { return JSON.parse(localStorage.getItem(progressKey(id))) || {}; } catch(e) { return {}; } }
   function saveProgress(id, data) { localStorage.setItem(progressKey(id), JSON.stringify(data)); }
+
+  /* ── Paliers de progression (25/50/100%) ── */
+  var MILESTONES = [25, 50, 100];
+  function milestoneKey(profileId) { return 'deentag_milestones_' + profileId; }
+  function loadMilestoneState(profileId) {
+    try { return JSON.parse(localStorage.getItem(milestoneKey(profileId))) || {}; } catch(e) { return {}; }
+  }
+  function saveMilestoneState(profileId, data) {
+    localStorage.setItem(milestoneKey(profileId), JSON.stringify(data));
+  }
+  // Retourne le palier fraîchement franchi (25/50/100) pour ce type de statistique,
+  // ou null si aucun nouveau palier n'a été atteint depuis la dernière visite.
+  function checkNewMilestone(type, pct) {
+    var p = getActiveProfile(); if (!p) return null;
+    var state = loadMilestoneState(p.id);
+    var lastReached = state[type] || 0;
+    var newlyReached = null;
+    MILESTONES.forEach(function(m) {
+      if (pct >= m && lastReached < m) newlyReached = m;
+    });
+    if (newlyReached) {
+      state[type] = newlyReached;
+      saveMilestoneState(p.id, state);
+    }
+    return newlyReached;
+  }
 
   /* ── API publique ── */
   window.DT = window.DT || {};
@@ -315,6 +331,22 @@
       .dt-stat-counter { flex:1;display:flex;flex-direction:column;align-items:center;gap:10px; }
       .dt-ring-wrap { position:relative;width:68px;height:68px;display:flex;align-items:center;justify-content:center; }
       .dt-ring-wrap svg { position:absolute;top:0;left:0;transform:rotate(-90deg); }
+
+      /* Éclat doré — réservé aux paliers 25/50/100%, discret */
+      .dt-milestone-spark {
+        position:absolute; width:3px; height:3px;
+        background:var(--gold-light,#E8C97A); border-radius:50%;
+        pointer-events:none; opacity:0;
+        box-shadow:0 0 3px rgba(232,201,122,0.8);
+      }
+      .dt-milestone-spark.go { animation: dtMilestoneSparkFly 0.65s ease-out forwards; }
+      @keyframes dtMilestoneSparkFly {
+        0%   { opacity:0.85; transform:translate(-50%,-50%) scale(1); }
+        100% { opacity:0; transform:translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.3); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .dt-milestone-spark { display:none; }
+      }
       .dt-ring-track { fill:none;stroke:rgba(201,168,76,0.08);stroke-width:5; }
       .dt-ring-prog  { fill:none;stroke-width:5;stroke-linecap:round;stroke-dasharray:220;stroke-dashoffset:220;transition:stroke-dashoffset 1.6s cubic-bezier(0.4,0,0.2,1); }
       .dt-ring-s { stroke:var(--gold); }
@@ -433,8 +465,33 @@
     return overlay;
   }
 
+  /* ── Éclat de célébration (paliers 25/50/100%) ──
+     Volontairement discret, réservé aux étapes qui comptent —
+     jamais déclenché à chaque petite variation du pourcentage. */
+  function ringSparkleBurst(ringId) {
+    var ring = document.getElementById(ringId);
+    var wrap = ring ? ring.closest('.dt-ring-wrap') : null;
+    if (!wrap) return;
+    var n = 6;
+    for (var i = 0; i < n; i++) {
+      (function(i){
+        var s = document.createElement('span');
+        s.className = 'dt-milestone-spark';
+        var angle = (Math.PI * 2 * i) / n + Math.random() * 0.3;
+        var dist  = 26 + Math.random() * 14;
+        s.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+        s.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+        s.style.left = '50%';
+        s.style.top  = '50%';
+        wrap.appendChild(s);
+        requestAnimationFrame(function(){ s.classList.add('go'); });
+        setTimeout(function(){ s.remove(); }, 750);
+      })(i);
+    }
+  }
+
   /* ── Anneau animé ── */
-  function animateRing(ringId, pctId, detId, value, total) {
+  function animateRing(ringId, pctId, detId, value, total, milestoneType) {
     var ring  = document.getElementById(ringId);
     var pctEl = document.getElementById(pctId);
     var detEl = document.getElementById(detId);
@@ -451,6 +508,11 @@
       if (cur >= pct) { clearInterval(iv); pctEl.innerHTML = pct + '<span style="font-size:10px;">%</span>'; }
     }, 25);
     if (detEl) detEl.textContent = value + ' / ' + total;
+
+    if (milestoneType) {
+      var reached = checkNewMilestone(milestoneType, pct);
+      if (reached) setTimeout(function(){ ringSparkleBurst(ringId); }, 900);
+    }
   }
 
   /* ── Toggle section ── */
@@ -693,9 +755,9 @@
     var activeP  = getActiveProfile();
     var prog2    = activeP ? loadProgress(activeP.id) : {};
     var juzDoneCount = calcJuzProgress(prog2).done.length;
-    setTimeout(function(){ animateRing('dt-ring-s','dt-pct-s','dt-det-s', stats.surahs, 114); }, 200);
-    setTimeout(function(){ animateRing('dt-ring-v','dt-pct-v','dt-det-v', stats.verses, 6236); }, 400);
-    setTimeout(function(){ animateRing('dt-ring-j','dt-pct-j','dt-det-j', juzDoneCount, 30); }, 600);
+    setTimeout(function(){ animateRing('dt-ring-s','dt-pct-s','dt-det-s', stats.surahs, 114, 'surahs'); }, 200);
+    setTimeout(function(){ animateRing('dt-ring-v','dt-pct-v','dt-det-v', stats.verses, 6236, 'verses'); }, 400);
+    setTimeout(function(){ animateRing('dt-ring-j','dt-pct-j','dt-det-j', juzDoneCount, 30, 'juz'); }, 600);
   }
 
   function closeProfileModal() {

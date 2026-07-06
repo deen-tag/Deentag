@@ -101,6 +101,7 @@ function applyLangBlocks(lang) {
 function applyLang(lang) {
   currentLang = lang;
   localStorage.setItem('deentag_lang', lang);
+  document.documentElement.setAttribute('lang', lang);
   const btn = document.getElementById('lang-btn');
   if (btn) btn.textContent = lang.toUpperCase() + ' ▾';
   document.querySelectorAll('.lang-option').forEach(o => {
@@ -169,17 +170,6 @@ function toggleTheme() {
 
 
 // ============================================================
-// MODE ENFANTS
-// ============================================================
-
-function toggleKidsMode() {
-  const isKids = document.body.classList.contains('kids');
-  document.body.classList.toggle('kids', !isKids);
-  localStorage.setItem('deentag_kids', isKids ? 'off' : 'on');
-}
-
-
-// ============================================================
 // AUDIO
 // ============================================================
 
@@ -195,7 +185,6 @@ function stopAudio() {
   }
   if (audioState.btn) {
     audioState.btn.classList.remove('playing');
-    stopCardEffect(audioState.btn);
     const wrap = audioState.btn.closest('.audio-solo-wrap');
     const ring = wrap ? wrap.querySelector('.audio-solo-ring-prog') : null;
     if (ring) ring.style.strokeDashoffset = SOLO_RING_CIRC;
@@ -208,26 +197,7 @@ function stopAudio() {
 
 function clearAllHighlights() {
   document.querySelectorAll('[data-tts-reading]').forEach(el => el.removeAttribute('data-tts-reading'));
-}
-
-
-function getCardBody(btn) {
-  return btn.closest('.accordion-body');
-}
-function startCardEffect(btn) {
-  const body = getCardBody(btn);
-  if (!body) return;
-  body.classList.remove('playing', 'ending');
-  void body.offsetWidth;
-  body.classList.add('playing');
-}
-function stopCardEffect(btn) {
-  if (!btn) return;
-  const body = getCardBody(btn);
-  if (!body) return;
-  body.classList.remove('playing');
-  body.classList.add('ending');
-  setTimeout(() => body.classList.remove('ending'), 500);
+  document.querySelectorAll('.audio-shimmer').forEach(el => el.classList.remove('audio-shimmer'));
 }
 
 function playAudio(accId, type, btn, audioFile) {
@@ -243,7 +213,6 @@ function playAudio(accId, type, btn, audioFile) {
   audioState.type   = type;
   audioState.accId  = accId;
   btn.classList.add('playing');
-  startCardEffect(btn);
 
   const wrap = btn.closest('.audio-solo-wrap');
   const ring = wrap ? wrap.querySelector('.audio-solo-ring-prog') : null;
@@ -255,6 +224,11 @@ function playAudio(accId, type, btn, audioFile) {
     }
   };
 
+  const arEl = document.getElementById(accId + '-ar');
+  const phEl = document.getElementById(accId + '-ph');
+  if (arEl) arEl.setAttribute('data-tts-reading', '1');
+  if (phEl) phEl.setAttribute('data-tts-reading', '1');
+  applyGlobalDim(accId, [arEl, phEl]);
 
   const svgMuted = '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>';
 
@@ -743,8 +717,10 @@ function openSheet(cat) {
   const meta    = DUAS[cat].meta;
   const bsIcon  = document.getElementById('bsIcon');
   const bsTitle = document.getElementById('bsTitle');
+  const bsCatSub = document.getElementById('bsCatSub');
   if (bsIcon)  bsIcon.src       = meta.icon || '';
   if (bsTitle) bsTitle.textContent = meta.titre[lang] || meta.titre[LANGS[0]];
+  if (bsCatSub) bsCatSub.textContent = (meta.sousTitre && (meta.sousTitre[lang] || meta.sousTitre[LANGS[0]])) || '';
 
   renderSheetItems(cat);
   if (typeof applyLangBlocks === 'function') applyLangBlocks(lang);
@@ -839,8 +815,8 @@ function openDua(cat, accId) {
     if (sheet) {
       sheet.style.transition    = 'none';
       sheet.style.transform     = 'translateY(100%)';
-      sheet.style.height        = 'calc(100dvh - 16px)';
-      sheet.style.maxHeight     = 'calc(100dvh - 16px)';
+      sheet.style.height        = 'calc(var(--app-vh, 100dvh) - 16px)';
+      sheet.style.maxHeight     = 'calc(var(--app-vh, 100dvh) - 16px)';
       sheet.style.borderRadius  = '20px 20px 0 0';
       sheet.style.overflowY     = 'hidden';
       sheet.style.top           = '16px';
@@ -953,11 +929,6 @@ function backToList(fromSwipe) {
       }, 200);
     }, 200);
   }, 150);
-}
-
-function toggleDuaMenu() {
-  if (!currentAccId) return;
-  if (typeof toggleAccSettings === 'function') toggleAccSettings(currentAccId);
 }
 
 
@@ -1199,3 +1170,37 @@ function generateStars() {
 
 /* Désactiver clic droit */
 document.addEventListener('contextmenu', e => { e.preventDefault(); return false; });
+
+/* ===== CHIPS DE NAVIGATION RAPIDE (index) ===== */
+function jumpToSection(name) {
+  const target = document.querySelector('.cat-section[data-section="' + name + '"]');
+  const navBar = document.getElementById('sectionNav');
+  if (!target) return;
+  const offset = (navBar ? navBar.offsetHeight : 0) + 4;
+  const top = target.getBoundingClientRect().top + window.scrollY - offset;
+  window.scrollTo({ top, behavior: 'smooth' });
+}
+
+(function initSectionNavSpy() {
+  const navBar = document.getElementById('sectionNav');
+  if (!navBar) return;
+  const chips = Array.from(navBar.querySelectorAll('.section-chip'));
+  const sections = Array.from(document.querySelectorAll('.cat-section[data-section]'));
+  if (!chips.length || !sections.length) return;
+
+  function setActive(name) {
+    chips.forEach(c => c.classList.toggle('active', c.getAttribute('data-jump') === name));
+    const activeChip = chips.find(c => c.getAttribute('data-jump') === name);
+    if (activeChip) {
+      activeChip.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    }
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) setActive(entry.target.getAttribute('data-section'));
+    });
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+  sections.forEach(s => io.observe(s));
+})();
