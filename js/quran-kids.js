@@ -661,6 +661,8 @@ function kidsTogglePhonetic(el) {
   kidsShowPhonetic = !kidsShowPhonetic;
   el.classList.toggle('on', kidsShowPhonetic);
   localStorage.setItem('quran_kids_phonetic', kidsShowPhonetic ? '1' : '0');
+  const pills = document.getElementById('phSizePills');
+  if (pills) pills.classList.toggle('disabled', !kidsShowPhonetic);
   if (kidsCurrentVerse) kidsShowVerse(kidsCurrentVerse);
 }
 
@@ -668,6 +670,8 @@ function kidsToggleTranslation(el) {
   kidsShowTransl = !kidsShowTransl;
   el.classList.toggle('on', kidsShowTransl);
   localStorage.setItem('quran_kids_translation', kidsShowTransl ? '1' : '0');
+  const pills = document.getElementById('trSizePills');
+  if (pills) pills.classList.toggle('disabled', !kidsShowTransl);
   if (kidsCurrentVerse) kidsShowVerse(kidsCurrentVerse);
 }
 
@@ -697,6 +701,10 @@ window.addEventListener('DOMContentLoaded', () => {
   const trToggle = document.getElementById('toggleTranslation');
   if (phToggle) phToggle.classList.toggle('on', kidsShowPhonetic);
   if (trToggle) trToggle.classList.toggle('on', kidsShowTransl);
+  const phPills = document.getElementById('phSizePills');
+  const trPills = document.getElementById('trSizePills');
+  if (phPills) phPills.classList.toggle('disabled', !kidsShowPhonetic);
+  if (trPills) trPills.classList.toggle('disabled', !kidsShowTransl);
 
   ['ar','ph','tr'].forEach(t => {
     const level = localStorage.getItem('quran_kids_size_' + t) || 'medium';

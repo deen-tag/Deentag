@@ -167,22 +167,19 @@
     window._kidsSelColor = PASTEL_COLORS[cidx];
 
     var dots = PASTEL_COLORS.map(function(c, i) {
-      return '<div data-kci="' + i + '" data-color="' + c + '" onclick="kidsPickColor(\'' + c + '\',' + i + ')" style="width:26px;height:26px;border-radius:50%;background:' + c + ';cursor:pointer;border:2.5px solid ' + (i === cidx ? '#333' : 'transparent') + ';transition:border 0.2s;"></div>';
+      return '<div class="kids-profile-color-dot' + (i === cidx ? ' selected' : '') + '" data-kci="' + i + '" data-color="' + c + '" onclick="kidsPickColor(\'' + c + '\',' + i + ')" style="background:' + c + ';"></div>';
     }).join('');
 
     box.innerHTML =
       '<div class="kids-profile-title">✨ Nouveau profil</div>' +
-      '<div id="kp-dome-preview" style="display:flex;justify-content:center;margin-bottom:14px;">' +
+      '<div id="kp-dome-preview" class="kids-profile-form-preview">' +
         kidsDome({ id:'preview', name:'?', color: window._kidsSelColor, photo: null }, 52) +
       '</div>' +
-      '<div style="display:flex;gap:8px;justify-content:center;margin-bottom:14px;">' + dots + '</div>' +
-      '<input id="kp-name" type="text" placeholder="Prénom" maxlength="12" ' +
-        'style="width:100%;padding:12px 14px;border-radius:50px;border:2px solid rgba(108,99,255,0.2);' +
-        'background:#FFFBF5;font-family:Baloo 2,cursive;font-size:15px;font-weight:700;color:#262B45;' +
-        'box-sizing:border-box;margin-bottom:14px;outline:none;text-align:center;">' +
-      '<div style="display:flex;gap:10px;">' +
-        '<button onclick="closeKidsProfileModal()" style="flex:1;padding:13px;border-radius:50px;border:2px solid rgba(108,99,255,0.2);background:transparent;font-family:Baloo 2,cursive;font-weight:700;font-size:14px;color:#262B45;cursor:pointer;">Annuler</button>' +
-        '<button onclick="kidsSaveProfile()" style="flex:2;padding:13px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--gold),var(--violet));color:white;font-family:Baloo 2,cursive;font-weight:800;font-size:14px;cursor:pointer;">Créer ✓</button>' +
+      '<div class="kids-profile-colors">' + dots + '</div>' +
+      '<input id="kp-name" class="kids-profile-input" type="text" placeholder="Prénom" maxlength="12">' +
+      '<div class="kids-profile-actions">' +
+        '<button class="kids-profile-btn" onclick="closeKidsProfileModal()">Annuler</button>' +
+        '<button class="kids-profile-btn kids-profile-btn-primary" onclick="kidsSaveProfile()">Créer ✓</button>' +
       '</div>';
 
     setTimeout(function() {
@@ -190,6 +187,7 @@
       if (inp) {
         inp.focus();
         inp.oninput = function() {
+          inp.classList.remove('error');
           var preview = document.getElementById('kp-dome-preview');
           if (preview) preview.innerHTML = kidsDome({ id:'preview', name: inp.value || '?', color: window._kidsSelColor, photo: null }, 52);
         };
@@ -312,6 +310,51 @@
         transition: transform 0.15s;
       }
       .kids-profile-add-btn:active { transform: scale(0.97); }
+
+      /* ── Formulaire ajout / modification ── */
+      .kids-profile-form-preview {
+        display: flex; justify-content: center; margin-bottom: 18px;
+      }
+      .kids-profile-colors {
+        display: flex; gap: 12px; justify-content: center;
+        margin-bottom: 20px; flex-wrap: wrap;
+      }
+      .kids-profile-color-dot {
+        width: 30px; height: 30px; border-radius: 50%;
+        cursor: pointer; border: 3px solid transparent;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+        transition: transform 0.15s ease, border-color 0.15s ease;
+      }
+      .kids-profile-color-dot:active { transform: scale(0.9); }
+      .kids-profile-color-dot.selected {
+        border-color: var(--ink);
+        transform: scale(1.15);
+        box-shadow: 0 3px 10px rgba(0,0,0,0.22);
+      }
+      .kids-profile-input {
+        width: 100%; padding: 13px 16px; border-radius: 50px;
+        border: 2px solid var(--line);
+        background: var(--paper-warm);
+        font-family: 'Baloo 2', cursive; font-size: 15px; font-weight: 700;
+        color: var(--ink); box-sizing: border-box; margin-bottom: 18px;
+        outline: none; text-align: center;
+        transition: border-color 0.15s ease;
+      }
+      .kids-profile-input:focus { border-color: var(--gold); }
+      .kids-profile-input.error { border-color: #FF6B6B; }
+      .kids-profile-actions { display: flex; gap: 10px; }
+      .kids-profile-btn {
+        flex: 1; padding: 13px; border-radius: 50px;
+        border: 2px solid var(--line); background: transparent;
+        font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 14px;
+        color: var(--ink); cursor: pointer; transition: transform 0.15s ease;
+      }
+      .kids-profile-btn:active { transform: scale(0.97); }
+      .kids-profile-btn-primary {
+        flex: 2; border: none; color: white; font-weight: 800;
+        background: linear-gradient(135deg, var(--gold), var(--violet));
+        box-shadow: 0 6px 16px rgba(108,99,255,0.28);
+      }
     `;
     document.head.appendChild(style);
   }
@@ -321,7 +364,7 @@
   function kidsPickColor(color, idx) {
     window._kidsSelColor = color;
     document.querySelectorAll('[data-kci]').forEach(function(el){
-      el.style.border = '2.5px solid ' + (parseInt(el.dataset.kci) === idx ? '#333' : 'transparent');
+      el.classList.toggle('selected', parseInt(el.dataset.kci) === idx);
     });
     var inp = document.getElementById('kp-name');
     var preview = document.getElementById('kp-dome-preview');
@@ -331,13 +374,13 @@
   function kidsSaveProfile() {
     var inp = document.getElementById('kp-name');
     var name = inp ? inp.value.trim() : '';
-    if (!name) { if (inp) inp.style.border = '2px solid #FF6B6B'; return; }
+    if (!name) { if (inp) inp.classList.add('error'); return; }
     var profiles = loadProfiles();
     if (profiles.length >= 10) return;
     // Vérification doublon de nom (insensible à la casse)
     var nameLower = name.toLowerCase();
     if (profiles.some(function(p){ return p.name.toLowerCase() === nameLower; })) {
-      if (inp) { inp.style.border = '2px solid #FF6B6B'; inp.placeholder = 'Ce prénom existe déjà'; }
+      if (inp) { inp.classList.add('error'); inp.placeholder = 'Ce prénom existe déjà'; }
       return;
     }
     var newP = {
@@ -373,22 +416,19 @@
     window._kidsSelColor = p.color;
 
     var dots = PASTEL_COLORS.map(function(c, i) {
-      return '<div data-kci="' + i + '" data-color="' + c + '" onclick="kidsPickColor(\'' + c + '\',' + i + ')" style="width:26px;height:26px;border-radius:50%;background:' + c + ';cursor:pointer;border:2.5px solid ' + (i === cidx ? '#333' : 'transparent') + ';transition:border 0.2s;"></div>';
+      return '<div class="kids-profile-color-dot' + (i === cidx ? ' selected' : '') + '" data-kci="' + i + '" data-color="' + c + '" onclick="kidsPickColor(\'' + c + '\',' + i + ')" style="background:' + c + ';"></div>';
     }).join('');
 
     box.innerHTML =
       '<div class="kids-profile-title">\u270F\uFE0F Modifier le profil</div>' +
-      '<div id="kp-dome-preview" style="display:flex;justify-content:center;margin-bottom:14px;">' +
+      '<div id="kp-dome-preview" class="kids-profile-form-preview">' +
         kidsDome(p, 52) +
       '</div>' +
-      '<div style="display:flex;gap:8px;justify-content:center;margin-bottom:14px;">' + dots + '</div>' +
-      '<input id="kp-name" type="text" value="' + p.name + '" maxlength="12" ' +
-        'style="width:100%;padding:12px 14px;border-radius:50px;border:2px solid rgba(108,99,255,0.2);' +
-        'background:#FFFBF5;font-family:Baloo 2,cursive;font-size:15px;font-weight:700;color:#262B45;' +
-        'box-sizing:border-box;margin-bottom:14px;outline:none;text-align:center;">' +
-      '<div style="display:flex;gap:10px;">' +
-        '<button onclick="closeKidsProfileModal();openKidsProfileModal();" style="flex:1;padding:13px;border-radius:50px;border:2px solid rgba(108,99,255,0.2);background:transparent;font-family:Baloo 2,cursive;font-weight:700;font-size:14px;color:#262B45;cursor:pointer;">Annuler</button>' +
-        '<button onclick="kidsSaveEdit(\'' + id + '\')" style="flex:2;padding:13px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--gold),#6C63FF);color:white;font-family:Baloo 2,cursive;font-weight:800;font-size:14px;cursor:pointer;">Sauvegarder \u2713</button>' +
+      '<div class="kids-profile-colors">' + dots + '</div>' +
+      '<input id="kp-name" class="kids-profile-input" type="text" value="' + p.name + '" maxlength="12">' +
+      '<div class="kids-profile-actions">' +
+        '<button class="kids-profile-btn" onclick="closeKidsProfileModal();openKidsProfileModal();">Annuler</button>' +
+        '<button class="kids-profile-btn kids-profile-btn-primary" onclick="kidsSaveEdit(\'' + id + '\')">Sauvegarder \u2713</button>' +
       '</div>';
 
     setTimeout(function() {
@@ -396,6 +436,7 @@
       if (inp) {
         inp.focus();
         inp.oninput = function() {
+          inp.classList.remove('error');
           var preview = document.getElementById('kp-dome-preview');
           if (preview) preview.innerHTML = kidsDome({ id:'preview', name: inp.value || '?', color: window._kidsSelColor, photo: null }, 52);
         };
@@ -407,11 +448,11 @@
   function kidsSaveEdit(id) {
     var inp = document.getElementById('kp-name');
     var name = inp ? inp.value.trim() : '';
-    if (!name) { if (inp) inp.style.border = '2px solid #FF6B6B'; return; }
+    if (!name) { if (inp) inp.classList.add('error'); return; }
     var profiles = loadProfiles();
     var nameLower = name.toLowerCase();
     if (profiles.some(function(p){ return p.name.toLowerCase() === nameLower && p.id !== id; })) {
-      if (inp) { inp.style.border = '2px solid #FF6B6B'; inp.placeholder = 'Ce prénom existe déjà'; }
+      if (inp) { inp.classList.add('error'); inp.placeholder = 'Ce prénom existe déjà'; }
       return;
     }
     profiles = profiles.map(function(p) {
