@@ -5,6 +5,19 @@
 
   var PASTEL_COLORS = ['#FFB3BA','#FFDFBA','#FFFFBA','#BAFFC9','#BAE1FF','#D4BAFF'];
 
+  var KP_I18N = {
+    fr:{ who:'👤 C\'est qui ?', addBtn:'＋ Nouveau profil', newTitle:'✨ Nouveau profil', editTitle:'✏️ Modifier le profil', namePh:'Prénom', cancel:'Annuler', create:'Créer ✓', save:'Sauvegarder ✓', dupName:'Ce prénom existe déjà', onlyOne:'Tu ne peux pas supprimer le seul profil !', confirmDel:function(n){ return 'Supprimer le profil de ' + n + ' ? 😢'; } },
+    en:{ who:'👤 Who is it?', addBtn:'＋ New profile', newTitle:'✨ New profile', editTitle:'✏️ Edit profile', namePh:'First name', cancel:'Cancel', create:'Create ✓', save:'Save ✓', dupName:'This name already exists', onlyOne:'You can\'t delete the only profile!', confirmDel:function(n){ return 'Delete ' + n + '\'s profile? 😢'; } },
+    es:{ who:'👤 ¿Quién es?', addBtn:'＋ Nuevo perfil', newTitle:'✨ Nuevo perfil', editTitle:'✏️ Editar perfil', namePh:'Nombre', cancel:'Cancelar', create:'Crear ✓', save:'Guardar ✓', dupName:'Este nombre ya existe', onlyOne:'¡No puedes eliminar el único perfil!', confirmDel:function(n){ return '¿Eliminar el perfil de ' + n + '? 😢'; } },
+    de:{ who:'👤 Wer ist das?', addBtn:'＋ Neues Profil', newTitle:'✨ Neues Profil', editTitle:'✏️ Profil bearbeiten', namePh:'Vorname', cancel:'Abbrechen', create:'Erstellen ✓', save:'Speichern ✓', dupName:'Dieser Name existiert bereits', onlyOne:'Du kannst das einzige Profil nicht löschen!', confirmDel:function(n){ return 'Profil von ' + n + ' löschen? 😢'; } },
+    it:{ who:'👤 Chi è?', addBtn:'＋ Nuovo profilo', newTitle:'✨ Nuovo profilo', editTitle:'✏️ Modifica profilo', namePh:'Nome', cancel:'Annulla', create:'Crea ✓', save:'Salva ✓', dupName:'Questo nome esiste già', onlyOne:'Non puoi eliminare l\'unico profilo!', confirmDel:function(n){ return 'Eliminare il profilo di ' + n + '? 😢'; } },
+    nl:{ who:'👤 Wie is het?', addBtn:'＋ Nieuw profiel', newTitle:'✨ Nieuw profiel', editTitle:'✏️ Profiel bewerken', namePh:'Voornaam', cancel:'Annuleren', create:'Aanmaken ✓', save:'Opslaan ✓', dupName:'Deze naam bestaat al', onlyOne:'Je kan het enige profiel niet verwijderen!', confirmDel:function(n){ return 'Profiel van ' + n + ' verwijderen? 😢'; } },
+    pt:{ who:'👤 Quem é?', addBtn:'＋ Novo perfil', newTitle:'✨ Novo perfil', editTitle:'✏️ Editar perfil', namePh:'Nome', cancel:'Cancelar', create:'Criar ✓', save:'Guardar ✓', dupName:'Este nome já existe', onlyOne:'Não podes eliminar o único perfil!', confirmDel:function(n){ return 'Eliminar o perfil de ' + n + '? 😢'; } },
+    tr:{ who:'👤 Bu kim?', addBtn:'＋ Yeni profil', newTitle:'✨ Yeni profil', editTitle:'✏️ Profili düzenle', namePh:'İsim', cancel:'İptal', create:'Oluştur ✓', save:'Kaydet ✓', dupName:'Bu isim zaten var', onlyOne:'Tek profili silemezsin!', confirmDel:function(n){ return n + ' profili silinsin mi? 😢'; } }
+  };
+  function kpLang() { return localStorage.getItem('deentag_lang') || 'fr'; }
+  function kpT() { return KP_I18N[kpLang()] || KP_I18N.fr; }
+
   /* ── Délégation à window.DT (profiles.js) pour tout le stockage ── */
   function loadProfiles() {
     if (window.DT && window.DT._loadProfiles) return window.DT._loadProfiles();
@@ -57,9 +70,9 @@
     modal.onclick = function () { closeKidsProfileModal(); };
     modal.innerHTML =
       '<div class="kids-profile-box" onclick="event.stopPropagation()">' +
-        '<div class="kids-profile-title">👤 C\'est qui ?</div>' +
+        '<div class="kids-profile-title">' + kpT().who + '</div>' +
         '<div class="kids-profile-grid" id="kidsProfileGrid"></div>' +
-        '<button class="kids-profile-add-btn" onclick="kidsAddProfile()">＋ Nouveau profil</button>' +
+        '<button class="kids-profile-add-btn" onclick="kidsAddProfile()">' + kpT().addBtn + '</button>' +
       '</div>';
     document.body.appendChild(modal);
     return modal;
@@ -70,6 +83,11 @@
     var modal = ensureKidsModalDOM();
     var grid  = document.getElementById('kidsProfileGrid');
     if (!modal || !grid) return;
+
+    var titleEl = modal.querySelector('.kids-profile-title');
+    var addBtnEl = modal.querySelector('.kids-profile-add-btn');
+    if (titleEl) titleEl.textContent = kpT().who;
+    if (addBtnEl) addBtnEl.textContent = kpT().addBtn;
 
     var profiles = loadProfiles();
     var activeId = getActiveId();
@@ -171,15 +189,15 @@
     }).join('');
 
     box.innerHTML =
-      '<div class="kids-profile-title">✨ Nouveau profil</div>' +
+      '<div class="kids-profile-title">' + kpT().newTitle + '</div>' +
       '<div id="kp-dome-preview" class="kids-profile-form-preview">' +
         kidsDome({ id:'preview', name:'?', color: window._kidsSelColor, photo: null }, 52) +
       '</div>' +
       '<div class="kids-profile-colors">' + dots + '</div>' +
-      '<input id="kp-name" class="kids-profile-input" type="text" placeholder="Prénom" maxlength="12">' +
+      '<input id="kp-name" class="kids-profile-input" type="text" placeholder="' + kpT().namePh + '" maxlength="12">' +
       '<div class="kids-profile-actions">' +
-        '<button class="kids-profile-btn" onclick="closeKidsProfileModal()">Annuler</button>' +
-        '<button class="kids-profile-btn kids-profile-btn-primary" onclick="kidsSaveProfile()">Créer ✓</button>' +
+        '<button class="kids-profile-btn" onclick="closeKidsProfileModal()">' + kpT().cancel + '</button>' +
+        '<button class="kids-profile-btn kids-profile-btn-primary" onclick="kidsSaveProfile()">' + kpT().create + '</button>' +
       '</div>';
 
     setTimeout(function() {
@@ -380,7 +398,7 @@
     // Vérification doublon de nom (insensible à la casse)
     var nameLower = name.toLowerCase();
     if (profiles.some(function(p){ return p.name.toLowerCase() === nameLower; })) {
-      if (inp) { inp.classList.add('error'); inp.placeholder = 'Ce prénom existe déjà'; }
+      if (inp) { inp.classList.add('error'); inp.placeholder = kpT().dupName; }
       return;
     }
     var newP = {
@@ -420,15 +438,15 @@
     }).join('');
 
     box.innerHTML =
-      '<div class="kids-profile-title">\u270F\uFE0F Modifier le profil</div>' +
+      '<div class="kids-profile-title">' + kpT().editTitle + '</div>' +
       '<div id="kp-dome-preview" class="kids-profile-form-preview">' +
         kidsDome(p, 52) +
       '</div>' +
       '<div class="kids-profile-colors">' + dots + '</div>' +
       '<input id="kp-name" class="kids-profile-input" type="text" value="' + p.name + '" maxlength="12">' +
       '<div class="kids-profile-actions">' +
-        '<button class="kids-profile-btn" onclick="closeKidsProfileModal();openKidsProfileModal();">Annuler</button>' +
-        '<button class="kids-profile-btn kids-profile-btn-primary" onclick="kidsSaveEdit(\'' + id + '\')">Sauvegarder \u2713</button>' +
+        '<button class="kids-profile-btn" onclick="closeKidsProfileModal();openKidsProfileModal();">' + kpT().cancel + '</button>' +
+        '<button class="kids-profile-btn kids-profile-btn-primary" onclick="kidsSaveEdit(\'' + id + '\')">' + kpT().save + '</button>' +
       '</div>';
 
     setTimeout(function() {
@@ -452,7 +470,7 @@
     var profiles = loadProfiles();
     var nameLower = name.toLowerCase();
     if (profiles.some(function(p){ return p.name.toLowerCase() === nameLower && p.id !== id; })) {
-      if (inp) { inp.classList.add('error'); inp.placeholder = 'Ce prénom existe déjà'; }
+      if (inp) { inp.classList.add('error'); inp.placeholder = kpT().dupName; }
       return;
     }
     profiles = profiles.map(function(p) {
@@ -470,12 +488,12 @@
   function kidsDeleteProfile(id) {
     var profiles = loadProfiles();
     if (profiles.length <= 1) {
-      alert('Tu ne peux pas supprimer le seul profil !');
+      alert(kpT().onlyOne);
       return;
     }
     var p = profiles.find(function(x){ return x.id === id; });
     if (!p) return;
-    if (!confirm('Supprimer le profil de ' + p.name + ' ? 😢')) return;
+    if (!confirm(kpT().confirmDel(p.name))) return;
     profiles = profiles.filter(function(x){ return x.id !== id; });
     localStorage.setItem('deentag_profiles', JSON.stringify(profiles));
     // Si c'était le profil actif, basculer sur le premier

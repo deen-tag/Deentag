@@ -47,6 +47,16 @@ const KIDS_VERSET_WORD = {
   fr:'Verset', en:'Verse', es:'Verso', de:'Vers',
   it:'Versetto', nl:'Vers', pt:'Verso', tr:'Ayet'
 };
+const KIDS_SETTINGS_I18N = {
+  fr:{ title:'⚙️ Réglages', arabic:'🔤 Arabe', phonetic:'🗣️ Phonétique', translation:'🌍 Traduction', sizeCaption:'Taille du texte', small:'Petit', medium:'Moyen', large:'Grand' },
+  en:{ title:'⚙️ Settings', arabic:'🔤 Arabic', phonetic:'🗣️ Phonetic', translation:'🌍 Translation', sizeCaption:'Text size', small:'Small', medium:'Medium', large:'Large' },
+  es:{ title:'⚙️ Ajustes', arabic:'🔤 Árabe', phonetic:'🗣️ Fonética', translation:'🌍 Traducción', sizeCaption:'Tamaño del texto', small:'Pequeño', medium:'Mediano', large:'Grande' },
+  de:{ title:'⚙️ Einstellungen', arabic:'🔤 Arabisch', phonetic:'🗣️ Phonetik', translation:'🌍 Übersetzung', sizeCaption:'Textgröße', small:'Klein', medium:'Mittel', large:'Groß' },
+  it:{ title:'⚙️ Impostazioni', arabic:'🔤 Arabo', phonetic:'🗣️ Fonetica', translation:'🌍 Traduzione', sizeCaption:'Dimensione testo', small:'Piccolo', medium:'Medio', large:'Grande' },
+  nl:{ title:'⚙️ Instellingen', arabic:'🔤 Arabisch', phonetic:'🗣️ Fonetiek', translation:'🌍 Vertaling', sizeCaption:'Tekstgrootte', small:'Klein', medium:'Middel', large:'Groot' },
+  pt:{ title:'⚙️ Configurações', arabic:'🔤 Árabe', phonetic:'🗣️ Fonética', translation:'🌍 Tradução', sizeCaption:'Tamanho do texto', small:'Pequeno', medium:'Médio', large:'Grande' },
+  tr:{ title:'⚙️ Ayarlar', arabic:'🔤 Arapça', phonetic:'🗣️ Fonetik', translation:'🌍 Çeviri', sizeCaption:'Metin boyutu', small:'Küçük', medium:'Orta', large:'Büyük' }
+};
 
 const KIDS_COLORS_LIST = ['#FF6B6B','#6C63FF','#00B4D8','#52B788','#F4A261','#E76F51','#E85D9A','#8E44AD'];
 
@@ -136,6 +146,19 @@ function kidsApplyLang(lang) {
   if (sub) sub.textContent = KIDS_SELECT_SUBTITLE[lang] || 'Choisis une sourate !';
   const allTitle = document.getElementById('allPageTitle');
   if (allTitle) allTitle.textContent = KIDS_ALL_QURAN[lang] || '📚 Tout le Coran';
+
+  const si = KIDS_SETTINGS_I18N[lang] || KIDS_SETTINGS_I18N.fr;
+  const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+  setTxt('settingsTitle', si.title);
+  setTxt('settingsLabelArabic', si.arabic);
+  setTxt('settingsLabelPhonetic', si.phonetic);
+  setTxt('settingsLabelTranslation', si.translation);
+  setTxt('settingsCaptionAr', si.sizeCaption);
+  setTxt('settingsCaptionPh', si.sizeCaption);
+  setTxt('settingsCaptionTr', si.sizeCaption);
+  document.querySelectorAll('.size-pill[data-val="small"]').forEach(el => el.title = si.small);
+  document.querySelectorAll('.size-pill[data-val="medium"]').forEach(el => el.title = si.medium);
+  document.querySelectorAll('.size-pill[data-val="large"]').forEach(el => el.title = si.large);
 }
 
 function kidsSetLang(lang) {
