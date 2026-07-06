@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="description" content="Deentag — Coran complet en arabe, phonétique et traduction. 8 langues.">
+<meta property="og:url" content="https://deentag.vercel.app/quran.html">
+<meta property="og:image" content="https://deentag.vercel.app/images/logo.webp">
 <meta name="theme-color" content="#E9E6D3">
 <title>Deentag — Coran</title>
 <link rel="stylesheet" href="css/adult.css">
@@ -89,7 +91,6 @@
 
   <!-- Coran complet -->
   <div class="qnav-card" onclick="openNavSheet('full')">
-    <div class="qnav-card-corner"></div>
     <div class="qnav-watermark">القرآن</div>
     <div class="qnav-icon">
       <img src="images/quran-full.webp" alt="Coran Complet" class="qnav-img">
@@ -118,7 +119,6 @@
 
   <!-- Par Jouz -->
   <div class="qnav-card" onclick="openNavSheet('juz')">
-    <div class="qnav-card-corner"></div>
     <div class="qnav-watermark">جزء</div>
     <div class="qnav-icon">
       <img src="images/quran-juz.webp" alt="Par Jouz" class="qnav-img">
@@ -147,7 +147,6 @@
 
   <!-- Sourates célèbres -->
   <div class="qnav-card" onclick="openNavSheet('famous')">
-    <div class="qnav-card-corner"></div>
     <div class="qnav-watermark">سور</div>
     <div class="qnav-icon">
       <img src="images/quran-famous.webp" alt="Sourates Célèbres" class="qnav-img">
@@ -176,7 +175,6 @@
 
   <!-- Par Prophète -->
   <div class="qnav-card" onclick="openNavSheet('prophet')">
-    <div class="qnav-card-corner"></div>
     <div class="qnav-watermark">أنبياء</div>
     <div class="qnav-icon">
       <img src="images/quran-prophet.webp" alt="Par Prophète" class="qnav-img">
@@ -204,8 +202,7 @@
   </div>
 
   <!-- Par Thème -->
-  <div class="qnav-card qnav-card-full" onclick="openNavSheet('theme')">
-    <div class="qnav-card-corner"></div>
+  <div class="qnav-card" onclick="openNavSheet('theme')">
     <div class="qnav-watermark">مواضيع</div>
     <div class="qnav-icon">
       <img src="images/quran-theme.webp" alt="Par Thème" class="qnav-img">

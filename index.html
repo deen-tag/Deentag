@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="description" content="Deentag — Lisez et apprenez les invocations islamiques (duas) en arabe, phonétique et traduction. Application gratuite et illimitée.">
 <meta property="og:title" content="Deentag — Invocations islamiques">
 <meta property="og:description" content="Lisez et apprenez les duas en arabe, phonétique et traduction. Application gratuite, sans abonnement.">
@@ -92,73 +92,244 @@
   </div>
 </div>
 
+<!-- CHIPS DE NAVIGATION RAPIDE -->
+<div class="section-nav" id="sectionNav">
+  <button class="section-chip" data-jump="Quotidien" onclick="jumpToSection('Quotidien')">
+    <span class="lang-block" data-lang-block="fr">Quotidien</span>
+    <span class="lang-block" data-lang-block="en">Daily</span>
+    <span class="lang-block" data-lang-block="es">Cotidiano</span>
+    <span class="lang-block" data-lang-block="de">Alltag</span>
+    <span class="lang-block" data-lang-block="it">Quotidiano</span>
+    <span class="lang-block" data-lang-block="nl">Dagelijks</span>
+    <span class="lang-block" data-lang-block="pt">Quotidiano</span>
+    <span class="lang-block" data-lang-block="tr">Günlük</span>
+  </button>
+  <button class="section-chip" data-jump="Adorations" onclick="jumpToSection('Adorations')">
+    <span class="lang-block" data-lang-block="fr">Adorations</span>
+    <span class="lang-block" data-lang-block="en">Worship</span>
+    <span class="lang-block" data-lang-block="es">Adoración</span>
+    <span class="lang-block" data-lang-block="de">Andacht</span>
+    <span class="lang-block" data-lang-block="it">Adorazione</span>
+    <span class="lang-block" data-lang-block="nl">Aanbidding</span>
+    <span class="lang-block" data-lang-block="pt">Adoração</span>
+    <span class="lang-block" data-lang-block="tr">İbadet</span>
+  </button>
+  <button class="section-chip" data-jump="Épreuves & Émotions" onclick="jumpToSection('Épreuves &amp; Émotions')">
+    <span class="lang-block" data-lang-block="fr">Épreuves</span>
+    <span class="lang-block" data-lang-block="en">Trials</span>
+    <span class="lang-block" data-lang-block="es">Pruebas</span>
+    <span class="lang-block" data-lang-block="de">Prüfungen</span>
+    <span class="lang-block" data-lang-block="it">Prove</span>
+    <span class="lang-block" data-lang-block="nl">Beproevingen</span>
+    <span class="lang-block" data-lang-block="pt">Provações</span>
+    <span class="lang-block" data-lang-block="tr">Sınavlar</span>
+  </button>
+  <button class="section-chip" data-jump="Vie personnelle" onclick="jumpToSection('Vie personnelle')">
+    <span class="lang-block" data-lang-block="fr">Vie perso</span>
+    <span class="lang-block" data-lang-block="en">Personal</span>
+    <span class="lang-block" data-lang-block="es">Vida personal</span>
+    <span class="lang-block" data-lang-block="de">Privatleben</span>
+    <span class="lang-block" data-lang-block="it">Vita personale</span>
+    <span class="lang-block" data-lang-block="nl">Persoonlijk</span>
+    <span class="lang-block" data-lang-block="pt">Vida pessoal</span>
+    <span class="lang-block" data-lang-block="tr">Özel hayat</span>
+  </button>
+  <button class="section-chip" data-jump="Circonstances" onclick="jumpToSection('Circonstances')">
+    <span class="lang-block" data-lang-block="fr">Circonstances</span>
+    <span class="lang-block" data-lang-block="en">Circumstances</span>
+    <span class="lang-block" data-lang-block="es">Circunstancias</span>
+    <span class="lang-block" data-lang-block="de">Umstände</span>
+    <span class="lang-block" data-lang-block="it">Circostanze</span>
+    <span class="lang-block" data-lang-block="nl">Omstandigheden</span>
+    <span class="lang-block" data-lang-block="pt">Circunstâncias</span>
+    <span class="lang-block" data-lang-block="tr">Durumlar</span>
+  </button>
+</div>
+
 <!-- GRILLE -->
-<div class="cat-grid">
+<div class="cat-section" data-section="Quotidien">
+  <div class="cat-section-header">
+    <span class="cat-section-line"></span>
+    <span class="cat-section-title">Quotidien</span>
+    <span class="cat-section-line"></span>
+  </div>
+  <div class="cat-grid">
   <div class="cat-card" onclick="openSheet('repas')">
     <div class="cat-icon-circle"><img src="images/repas.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
-      <span class="lang-block" data-lang-block="fr">Repas</span>
-      <span class="lang-block" data-lang-block="en">Meals</span>
-      <span class="lang-block" data-lang-block="es">Comidas</span>
-      <span class="lang-block" data-lang-block="de">Mahlzeiten</span>
-      <span class="lang-block" data-lang-block="it">Pasti</span>
-      <span class="lang-block" data-lang-block="nl">Maaltijden</span>
-      <span class="lang-block" data-lang-block="pt">Refeições</span>
-      <span class="lang-block" data-lang-block="tr">Yemekler</span>
-    </div>
+        <span class="lang-block" data-lang-block="fr">Repas</span>
+        <span class="lang-block" data-lang-block="en">Meals</span>
+        <span class="lang-block" data-lang-block="es">Comidas</span>
+        <span class="lang-block" data-lang-block="de">Mahlzeiten</span>
+        <span class="lang-block" data-lang-block="it">Pasti</span>
+        <span class="lang-block" data-lang-block="nl">Maaltijden</span>
+        <span class="lang-block" data-lang-block="pt">Refeições</span>
+        <span class="lang-block" data-lang-block="tr">Yemekler</span>
+      </div>
   </div>
   <div class="cat-card" onclick="openSheet('reveil')">
     <div class="cat-icon-circle"><img src="images/lit.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
-      <span class="lang-block" data-lang-block="fr">Réveil &amp; Couché</span>
-      <span class="lang-block" data-lang-block="en">Wake &amp; Sleep</span>
-      <span class="lang-block" data-lang-block="es">Despertar &amp; Dormir</span>
-      <span class="lang-block" data-lang-block="de">Aufwachen &amp; Schlafen</span>
-      <span class="lang-block" data-lang-block="it">Sveglio &amp; Sonno</span>
-      <span class="lang-block" data-lang-block="nl">Wakker &amp; Slapen</span>
-      <span class="lang-block" data-lang-block="pt">Acordar &amp; Dormir</span>
-      <span class="lang-block" data-lang-block="tr">Uyanış &amp; Uyku</span>
-    </div>
+        <span class="lang-block" data-lang-block="fr">Réveil &amp; Couché</span>
+        <span class="lang-block" data-lang-block="en">Wake &amp; Sleep</span>
+        <span class="lang-block" data-lang-block="es">Despertar &amp; Dormir</span>
+        <span class="lang-block" data-lang-block="de">Aufwachen &amp; Schlafen</span>
+        <span class="lang-block" data-lang-block="it">Sveglio &amp; Sonno</span>
+        <span class="lang-block" data-lang-block="nl">Wakker &amp; Slapen</span>
+        <span class="lang-block" data-lang-block="pt">Acordar &amp; Dormir</span>
+        <span class="lang-block" data-lang-block="tr">Uyanış &amp; Uyku</span>
+      </div>
   </div>
   <div class="cat-card" onclick="openSheet('ablution')">
     <div class="cat-icon-circle"><img src="images/ablution.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
-      <span class="lang-block" data-lang-block="fr">Ablution</span>
-      <span class="lang-block" data-lang-block="en">Ablution</span>
-      <span class="lang-block" data-lang-block="es">Ablución</span>
-      <span class="lang-block" data-lang-block="de">Ablution</span>
-      <span class="lang-block" data-lang-block="it">Abluzione</span>
-      <span class="lang-block" data-lang-block="nl">Reiniging</span>
-      <span class="lang-block" data-lang-block="pt">Ablução</span>
-      <span class="lang-block" data-lang-block="tr">Abdest</span>
-    </div>
+        <span class="lang-block" data-lang-block="fr">Ablution</span>
+        <span class="lang-block" data-lang-block="en">Ablution</span>
+        <span class="lang-block" data-lang-block="es">Ablución</span>
+        <span class="lang-block" data-lang-block="de">Ablution</span>
+        <span class="lang-block" data-lang-block="it">Abluzione</span>
+        <span class="lang-block" data-lang-block="nl">Reiniging</span>
+        <span class="lang-block" data-lang-block="pt">Ablução</span>
+        <span class="lang-block" data-lang-block="tr">Abdest</span>
+      </div>
   </div>
   <div class="cat-card" onclick="openSheet('toilettes')">
     <div class="cat-icon-circle"><img src="images/wc.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
-      <span class="lang-block" data-lang-block="fr">Toilettes</span>
-      <span class="lang-block" data-lang-block="en">Restroom</span>
-      <span class="lang-block" data-lang-block="es">Baño</span>
-      <span class="lang-block" data-lang-block="de">Toilette</span>
-      <span class="lang-block" data-lang-block="it">Bagno</span>
-      <span class="lang-block" data-lang-block="nl">Toilet</span>
-      <span class="lang-block" data-lang-block="pt">Casa de Banho</span>
-      <span class="lang-block" data-lang-block="tr">Tuvalet</span>
-    </div>
+        <span class="lang-block" data-lang-block="fr">Toilettes</span>
+        <span class="lang-block" data-lang-block="en">Restroom</span>
+        <span class="lang-block" data-lang-block="es">Baño</span>
+        <span class="lang-block" data-lang-block="de">Toilette</span>
+        <span class="lang-block" data-lang-block="it">Bagno</span>
+        <span class="lang-block" data-lang-block="nl">Toilet</span>
+        <span class="lang-block" data-lang-block="pt">Casa de Banho</span>
+        <span class="lang-block" data-lang-block="tr">Tuvalet</span>
+      </div>
   </div>
   <div class="cat-card" onclick="openSheet('maison')">
     <div class="cat-icon-circle"><img src="images/maison.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
-      <span class="lang-block" data-lang-block="fr">Maison</span>
-      <span class="lang-block" data-lang-block="en">Home</span>
-      <span class="lang-block" data-lang-block="es">Casa</span>
-      <span class="lang-block" data-lang-block="de">Zuhause</span>
-      <span class="lang-block" data-lang-block="it">Casa</span>
-      <span class="lang-block" data-lang-block="nl">Thuis</span>
-      <span class="lang-block" data-lang-block="pt">Casa</span>
-      <span class="lang-block" data-lang-block="tr">Ev</span>
+        <span class="lang-block" data-lang-block="fr">Maison</span>
+        <span class="lang-block" data-lang-block="en">Home</span>
+        <span class="lang-block" data-lang-block="es">Casa</span>
+        <span class="lang-block" data-lang-block="de">Zuhause</span>
+        <span class="lang-block" data-lang-block="it">Casa</span>
+        <span class="lang-block" data-lang-block="nl">Thuis</span>
+        <span class="lang-block" data-lang-block="pt">Casa</span>
+        <span class="lang-block" data-lang-block="tr">Ev</span>
+      </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('transport')">
+    <div class="cat-icon-circle"><img src="images/voiture.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+        <span class="lang-block" data-lang-block="fr">Transport &amp; Voyage</span>
+        <span class="lang-block" data-lang-block="en">Transport &amp; Travel</span>
+        <span class="lang-block" data-lang-block="es">Transporte y Viaje</span>
+        <span class="lang-block" data-lang-block="de">Transport &amp; Reise</span>
+        <span class="lang-block" data-lang-block="it">Trasporto e Viaggio</span>
+        <span class="lang-block" data-lang-block="nl">Transport &amp; Reizen</span>
+        <span class="lang-block" data-lang-block="pt">Transporte e Viagem</span>
+        <span class="lang-block" data-lang-block="tr">Ulaşım &amp; Seyahat</span>
+      </div>
+  </div>
+  </div>
+</div>
+
+<div class="cat-section" data-section="Adorations">
+  <div class="cat-section-header">
+    <span class="cat-section-line"></span>
+    <span class="cat-section-title">Adorations</span>
+    <span class="cat-section-line"></span>
+  </div>
+  <div class="cat-grid">
+  <div class="cat-card" onclick="openSheet('mosquee')">
+    <div class="cat-icon-circle"><img src="images/mosquee.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Mosquée</span>
+      <span class="lang-block" data-lang-block="en">Mosque</span>
+      <span class="lang-block" data-lang-block="es">Mezquita</span>
+      <span class="lang-block" data-lang-block="de">Moschee</span>
+      <span class="lang-block" data-lang-block="it">Moschea</span>
+      <span class="lang-block" data-lang-block="nl">Moskee</span>
+      <span class="lang-block" data-lang-block="pt">Mesquita</span>
+      <span class="lang-block" data-lang-block="tr">Cami</span>
     </div>
   </div>
+  <div class="cat-card" onclick="openSheet('azan')">
+    <div class="cat-icon-circle"><img src="images/azan.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Azan</span>
+      <span class="lang-block" data-lang-block="en">Azan</span>
+      <span class="lang-block" data-lang-block="es">Azan</span>
+      <span class="lang-block" data-lang-block="de">Azan</span>
+      <span class="lang-block" data-lang-block="it">Azan</span>
+      <span class="lang-block" data-lang-block="nl">Azan</span>
+      <span class="lang-block" data-lang-block="pt">Azan</span>
+      <span class="lang-block" data-lang-block="tr">Ezan</span>
+    </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('salah')">
+    <div class="cat-icon-circle"><img src="images/salah.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Salah</span>
+      <span class="lang-block" data-lang-block="en">Prayer</span>
+      <span class="lang-block" data-lang-block="es">Oración</span>
+      <span class="lang-block" data-lang-block="de">Gebet</span>
+      <span class="lang-block" data-lang-block="it">Preghiera</span>
+      <span class="lang-block" data-lang-block="nl">Gebed</span>
+      <span class="lang-block" data-lang-block="pt">Oração</span>
+      <span class="lang-block" data-lang-block="tr">Namaz</span>
+    </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('istikhara')">
+    <div class="cat-icon-circle"><img src="images/istikhara.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Istikhara</span>
+      <span class="lang-block" data-lang-block="en">Istikhara</span>
+      <span class="lang-block" data-lang-block="es">Istikhara</span>
+      <span class="lang-block" data-lang-block="de">Istikhara</span>
+      <span class="lang-block" data-lang-block="it">Istikhara</span>
+      <span class="lang-block" data-lang-block="nl">Istikhara</span>
+      <span class="lang-block" data-lang-block="pt">Istikhara</span>
+      <span class="lang-block" data-lang-block="tr">İstihare</span>
+    </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('ramadan')">
+    <div class="cat-icon-circle"><img src="images/ramadan.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Ramadan</span>
+      <span class="lang-block" data-lang-block="en">Ramadan</span>
+      <span class="lang-block" data-lang-block="es">Ramadán</span>
+      <span class="lang-block" data-lang-block="de">Ramadan</span>
+      <span class="lang-block" data-lang-block="it">Ramadan</span>
+      <span class="lang-block" data-lang-block="nl">Ramadan</span>
+      <span class="lang-block" data-lang-block="pt">Ramadão</span>
+      <span class="lang-block" data-lang-block="tr">Ramazan</span>
+    </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('hajjumra')">
+    <div class="cat-icon-circle"><img src="images/hajjumra.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Hajj &amp; Umra</span>
+      <span class="lang-block" data-lang-block="en">Hajj &amp; Umrah</span>
+      <span class="lang-block" data-lang-block="es">Hajj &amp; Umrah</span>
+      <span class="lang-block" data-lang-block="de">Hadsch &amp; Umrah</span>
+      <span class="lang-block" data-lang-block="it">Hajj &amp; Umrah</span>
+      <span class="lang-block" data-lang-block="nl">Hajj &amp; Umrah</span>
+      <span class="lang-block" data-lang-block="pt">Hajj &amp; Umrah</span>
+      <span class="lang-block" data-lang-block="tr">Hac &amp; Umre</span>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="cat-section" data-section="Épreuves & Émotions">
+  <div class="cat-section-header">
+    <span class="cat-section-line"></span>
+    <span class="cat-section-title">Épreuves & Émotions</span>
+    <span class="cat-section-line"></span>
+  </div>
+  <div class="cat-grid">
   <div class="cat-card" onclick="openSheet('tristesse')">
     <div class="cat-icon-circle"><img src="images/tristesse.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
@@ -170,6 +341,68 @@
       <span class="lang-block" data-lang-block="nl">Verdriet</span>
       <span class="lang-block" data-lang-block="pt">Tristeza</span>
       <span class="lang-block" data-lang-block="tr">Üzüntü</span>
+    </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('maladie')">
+    <div class="cat-icon-circle"><img src="images/maladie.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Maladie</span>
+      <span class="lang-block" data-lang-block="en">Illness</span>
+      <span class="lang-block" data-lang-block="es">Enfermedad</span>
+      <span class="lang-block" data-lang-block="de">Krankheit</span>
+      <span class="lang-block" data-lang-block="it">Malattia</span>
+      <span class="lang-block" data-lang-block="nl">Ziekte</span>
+      <span class="lang-block" data-lang-block="pt">Doença</span>
+      <span class="lang-block" data-lang-block="tr">Hastalık</span>
+    </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('colere')">
+    <div class="cat-icon-circle"><img src="images/colere.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Colère</span>
+      <span class="lang-block" data-lang-block="en">Anger</span>
+      <span class="lang-block" data-lang-block="es">Ira</span>
+      <span class="lang-block" data-lang-block="de">Zorn</span>
+      <span class="lang-block" data-lang-block="it">Rabbia</span>
+      <span class="lang-block" data-lang-block="nl">Woede</span>
+      <span class="lang-block" data-lang-block="pt">Raiva</span>
+      <span class="lang-block" data-lang-block="tr">Öfke</span>
+    </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('ruqya')">
+    <div class="cat-icon-circle"><img src="images/ruqya.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Ruqya</span>
+      <span class="lang-block" data-lang-block="en">Ruqya</span>
+      <span class="lang-block" data-lang-block="es">Ruqya</span>
+      <span class="lang-block" data-lang-block="de">Ruqya</span>
+      <span class="lang-block" data-lang-block="it">Ruqya</span>
+      <span class="lang-block" data-lang-block="nl">Ruqya</span>
+      <span class="lang-block" data-lang-block="pt">Ruqya</span>
+      <span class="lang-block" data-lang-block="tr">Rukye</span>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="cat-section" data-section="Vie personnelle">
+  <div class="cat-section-header">
+    <span class="cat-section-line"></span>
+    <span class="cat-section-title">Vie personnelle</span>
+    <span class="cat-section-line"></span>
+  </div>
+  <div class="cat-grid">
+  <div class="cat-card" onclick="openSheet('mariage')">
+    <div class="cat-icon-circle"><img src="images/mariage.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Mariage</span>
+      <span class="lang-block" data-lang-block="en">Marriage</span>
+      <span class="lang-block" data-lang-block="es">Matrimonio</span>
+      <span class="lang-block" data-lang-block="de">Heirat</span>
+      <span class="lang-block" data-lang-block="it">Matrimonio</span>
+      <span class="lang-block" data-lang-block="nl">Huwelijk</span>
+      <span class="lang-block" data-lang-block="pt">Casamento</span>
+      <span class="lang-block" data-lang-block="tr">Evlilik</span>
     </div>
   </div>
   <div class="cat-card" onclick="openSheet('enfants')">
@@ -185,20 +418,71 @@
       <span class="lang-block" data-lang-block="tr">Çocuklar</span>
     </div>
   </div>
-  <div class="cat-card" onclick="openSheet('transport')">
-    <div class="cat-icon-circle"><img src="images/voiture.webp" class="cat-icon" alt=""></div>
+  <div class="cat-card" onclick="openSheet('nouveaune')">
+    <div class="cat-icon-circle"><img src="images/nouveaune.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
-      <span class="lang-block" data-lang-block="fr">Transport</span>
-      <span class="lang-block" data-lang-block="en">Transport</span>
-      <span class="lang-block" data-lang-block="es">Transporte</span>
-      <span class="lang-block" data-lang-block="de">Transport</span>
-      <span class="lang-block" data-lang-block="it">Trasporto</span>
-      <span class="lang-block" data-lang-block="nl">Transport</span>
-      <span class="lang-block" data-lang-block="pt">Transporte</span>
-      <span class="lang-block" data-lang-block="tr">Ulaşım</span>
+      <span class="lang-block" data-lang-block="fr">Nouveau-né</span>
+      <span class="lang-block" data-lang-block="en">Newborn</span>
+      <span class="lang-block" data-lang-block="es">Recién nacido</span>
+      <span class="lang-block" data-lang-block="de">Neugeborenes</span>
+      <span class="lang-block" data-lang-block="it">Neonato</span>
+      <span class="lang-block" data-lang-block="nl">Baby</span>
+      <span class="lang-block" data-lang-block="pt">Recém-nascido</span>
+      <span class="lang-block" data-lang-block="tr">Yenidoğan</span>
     </div>
   </div>
+  <div class="cat-card" onclick="openSheet('mort')">
+    <div class="cat-icon-circle"><img src="images/mort.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Mort &amp; Funérailles</span>
+      <span class="lang-block" data-lang-block="en">Death &amp; Funeral</span>
+      <span class="lang-block" data-lang-block="es">Muerte &amp; Funeral</span>
+      <span class="lang-block" data-lang-block="de">Tod &amp; Beerdigung</span>
+      <span class="lang-block" data-lang-block="it">Morte &amp; Funerale</span>
+      <span class="lang-block" data-lang-block="nl">Dood &amp; Begrafenis</span>
+      <span class="lang-block" data-lang-block="pt">Morte &amp; Funeral</span>
+      <span class="lang-block" data-lang-block="tr">Ölüm &amp; Cenaze</span>
+    </div>
+  </div>
+  </div>
 </div>
+
+<div class="cat-section" data-section="Circonstances">
+  <div class="cat-section-header">
+    <span class="cat-section-line"></span>
+    <span class="cat-section-title">Circonstances</span>
+    <span class="cat-section-line"></span>
+  </div>
+  <div class="cat-grid">
+  <div class="cat-card" onclick="openSheet('pluie')">
+    <div class="cat-icon-circle"><img src="images/pluie.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Pluie</span>
+      <span class="lang-block" data-lang-block="en">Rain</span>
+      <span class="lang-block" data-lang-block="es">Lluvia</span>
+      <span class="lang-block" data-lang-block="de">Regen</span>
+      <span class="lang-block" data-lang-block="it">Pioggia</span>
+      <span class="lang-block" data-lang-block="nl">Regen</span>
+      <span class="lang-block" data-lang-block="pt">Chuva</span>
+      <span class="lang-block" data-lang-block="tr">Yağmur</span>
+    </div>
+  </div>
+  <div class="cat-card" onclick="openSheet('rizq')">
+    <div class="cat-icon-circle"><img src="images/rizq.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">
+      <span class="lang-block" data-lang-block="fr">Rizq</span>
+      <span class="lang-block" data-lang-block="en">Rizq</span>
+      <span class="lang-block" data-lang-block="es">Rizq</span>
+      <span class="lang-block" data-lang-block="de">Rizq</span>
+      <span class="lang-block" data-lang-block="it">Rizq</span>
+      <span class="lang-block" data-lang-block="nl">Rizq</span>
+      <span class="lang-block" data-lang-block="pt">Rizq</span>
+      <span class="lang-block" data-lang-block="tr">Rızık</span>
+    </div>
+  </div>
+  </div>
+</div>
+
 
 <!-- SEPARATEUR -->
 <div class="ornament-row">
@@ -236,6 +520,7 @@
     <div class="bs-header">
       <div class="bs-header-icon"><img id="bsIcon" src="" alt=""></div>
       <div class="bs-header-title" id="bsTitle"></div>
+      <div class="bs-header-cat-sub" id="bsCatSub"></div>
     </div>
     <div class="bs-ornament">
       <div class="bs-ornament-line"></div>
