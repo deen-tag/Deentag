@@ -8,6 +8,73 @@ var listenedDuas = {};
 const KIDS_BADGES_KEY  = 'deentag_kids_badges';
 const KIDS_STARS_KEY   = 'deentag_kids_stars';
 
+// ============================================================
+// LANGUE — même clé de stockage que le reste de l'application
+// ============================================================
+
+const KIDS_HOME_LANGS = ['fr', 'en', 'es', 'de', 'it', 'nl', 'pt', 'tr'];
+
+const KIDS_HOME_I18N = {
+  fr:{ subtitle:'Choisis une catégorie !', collection:'✨ Ta collection', invocation:'invocation', invocations:'invocations',
+       bravoTitle:'Bravo !', bravoSub:'Tu as écouté toutes les invocations !', bravoBtn:'Continuer 🎉',
+       who:'👤 C\'est qui ?', addBtn:'＋ Nouveau profil', back:'Retour',
+       welcomeTitle:function(n){ return 'Bienvenue ' + n + ' !'; }, welcomeSub:'Bismillah ! Ton aventure commence maintenant ! 🚀', welcomeBtn:'C\'est parti ! ✨' },
+  en:{ subtitle:'Choose a category!', collection:'✨ Your collection', invocation:'prayer', invocations:'prayers',
+       bravoTitle:'Well done!', bravoSub:'You listened to all the prayers!', bravoBtn:'Continue 🎉',
+       who:'👤 Who is it?', addBtn:'＋ New profile', back:'Back',
+       welcomeTitle:function(n){ return 'Welcome ' + n + '!'; }, welcomeSub:'Bismillah! Your adventure starts now! 🚀', welcomeBtn:'Let\'s go! ✨' },
+  es:{ subtitle:'¡Elige una categoría!', collection:'✨ Tu colección', invocation:'súplica', invocations:'súplicas',
+       bravoTitle:'¡Bravo!', bravoSub:'¡Has escuchado todas las súplicas!', bravoBtn:'Continuar 🎉',
+       who:'👤 ¿Quién es?', addBtn:'＋ Nuevo perfil', back:'Volver',
+       welcomeTitle:function(n){ return '¡Bienvenido ' + n + '!'; }, welcomeSub:'¡Bismillah! ¡Tu aventura empieza ahora! 🚀', welcomeBtn:'¡Vamos! ✨' },
+  de:{ subtitle:'Wähle eine Kategorie!', collection:'✨ Deine Sammlung', invocation:'Bittgebet', invocations:'Bittgebete',
+       bravoTitle:'Bravo!', bravoSub:'Du hast alle Bittgebete gehört!', bravoBtn:'Weiter 🎉',
+       who:'👤 Wer ist das?', addBtn:'＋ Neues Profil', back:'Zurück',
+       welcomeTitle:function(n){ return 'Willkommen ' + n + '!'; }, welcomeSub:'Bismillah! Dein Abenteuer beginnt jetzt! 🚀', welcomeBtn:'Los geht\'s! ✨' },
+  it:{ subtitle:'Scegli una categoria!', collection:'✨ La tua collezione', invocation:'invocazione', invocations:'invocazioni',
+       bravoTitle:'Bravo!', bravoSub:'Hai ascoltato tutte le invocazioni!', bravoBtn:'Continua 🎉',
+       who:'👤 Chi è?', addBtn:'＋ Nuovo profilo', back:'Indietro',
+       welcomeTitle:function(n){ return 'Benvenuto ' + n + '!'; }, welcomeSub:'Bismillah! La tua avventura inizia ora! 🚀', welcomeBtn:'Si parte! ✨' },
+  nl:{ subtitle:'Kies een categorie!', collection:'✨ Jouw verzameling', invocation:'smeekbede', invocations:'smeekbeden',
+       bravoTitle:'Bravo!', bravoSub:'Je hebt alle smeekbeden beluisterd!', bravoBtn:'Verdergaan 🎉',
+       who:'👤 Wie is het?', addBtn:'＋ Nieuw profiel', back:'Terug',
+       welcomeTitle:function(n){ return 'Welkom ' + n + '!'; }, welcomeSub:'Bismillah! Jouw avontuur begint nu! 🚀', welcomeBtn:'Daar gaan we! ✨' },
+  pt:{ subtitle:'Escolhe uma categoria!', collection:'✨ A tua coleção', invocation:'súplica', invocations:'súplicas',
+       bravoTitle:'Muito bem!', bravoSub:'Ouviste todas as súplicas!', bravoBtn:'Continuar 🎉',
+       who:'👤 Quem é?', addBtn:'＋ Novo perfil', back:'Voltar',
+       welcomeTitle:function(n){ return 'Bem-vindo ' + n + '!'; }, welcomeSub:'Bismillah! A tua aventura começa agora! 🚀', welcomeBtn:'Vamos lá! ✨' },
+  tr:{ subtitle:'Bir kategori seç!', collection:'✨ Koleksiyonun', invocation:'dua', invocations:'dua',
+       bravoTitle:'Aferin!', bravoSub:'Tüm duaları dinledin!', bravoBtn:'Devam 🎉',
+       who:'👤 Bu kim?', addBtn:'＋ Yeni profil', back:'Geri',
+       welcomeTitle:function(n){ return 'Hoş geldin ' + n + '!'; }, welcomeSub:'Bismillah! Maceran şimdi başlıyor! 🚀', welcomeBtn:'Haydi başlayalım! ✨' }
+};
+
+function kidsHomeGetLang() { return localStorage.getItem('deentag_lang') || KIDS_HOME_LANGS[0]; }
+function kidsHomeT() { return KIDS_HOME_I18N[kidsHomeGetLang()] || KIDS_HOME_I18N.fr; }
+
+function kidsHomeApplyLang(lang) {
+  localStorage.setItem('deentag_lang', lang);
+
+  const t = kidsHomeT();
+  const sub = document.getElementById('kidsHomeSubtitle');
+  if (sub) sub.textContent = t.subtitle;
+
+  // Re-rendre la vue active dans la nouvelle langue
+  renderHome();
+  if (currentCat) {
+    renderDuas(currentCat);
+    const cat = KIDS_DUAS[currentCat];
+    if (cat) {
+      const titre = cat.meta.titre[lang] || cat.meta.titre[KIDS_HOME_LANGS[0]];
+      const catHeaderTitle = document.getElementById('catHeaderTitle');
+      const catPageTitle   = document.getElementById('catPageTitle');
+      if (catHeaderTitle) catHeaderTitle.textContent = titre;
+      if (catPageTitle)   catPageTitle.textContent   = titre;
+    }
+  }
+}
+
+
 function getActiveKidsProfileId() {
   return localStorage.getItem('deentag_active_profile') || 'default';
 }
@@ -52,7 +119,7 @@ function saveBadge(catKey) {
 // ============================================================
 
 window.addEventListener('DOMContentLoaded', () => {
-  renderHome();
+  kidsHomeApplyLang(kidsHomeGetLang());
   checkUrlParams();
 });
 
@@ -78,10 +145,13 @@ function renderHome() {
   if (!grid) return;
   grid.innerHTML = '';
   const badges = getBadges();
+  const lang   = kidsHomeGetLang();
+  const t      = kidsHomeT();
 
   Object.keys(KIDS_DUAS).forEach(catKey => {
     const cat   = KIDS_DUAS[catKey];
     const count = Object.keys(cat).filter(k => k !== 'meta').length;
+    const titre = cat.meta.titre[lang] || cat.meta.titre[KIDS_HOME_LANGS[0]];
 
     const card = document.createElement('div');
     card.className  = 'kids-cat-card' + (badges.indexOf(catKey) !== -1 ? ' done' : '');
@@ -92,13 +162,15 @@ function renderHome() {
 
     // Image illustrée si disponible, sinon fallback emoji — posée sur un médaillon
     const mediaHtml = cat.meta.image
-      ? '<div class="kids-cat-icon-wrap"><img class="kids-cat-img" src="' + cat.meta.image + '" alt="' + cat.meta.titre + '"></div>'
+      ? '<div class="kids-cat-icon-wrap"><img class="kids-cat-img" src="' + cat.meta.image + '" alt="' + titre + '"></div>'
       : '<div class="kids-cat-icon-wrap"><span class="kids-cat-emoji">' + cat.meta.emoji + '</span></div>';
+
+    const countLabel = count > 1 ? t.invocations : t.invocation;
 
     card.innerHTML =
       mediaHtml +
-      '<div class="kids-cat-label">'  + cat.meta.titre + '</div>' +
-      '<div class="kids-cat-count">'  + count + ' invocation' + (count > 1 ? 's' : '') + '</div>';
+      '<div class="kids-cat-label">'  + titre + '</div>' +
+      '<div class="kids-cat-count">'  + count + ' ' + countLabel + '</div>';
     card.addEventListener('click', () => showCat(catKey));
     grid.appendChild(card);
   });
@@ -111,15 +183,18 @@ function renderCollection() {
   if (!wrap) return;
   const badges   = getBadges();
   const catKeys  = Object.keys(KIDS_DUAS);
+  const lang     = kidsHomeGetLang();
+  const t        = kidsHomeT();
 
   wrap.innerHTML =
     '<div class="kids-collection-head">' +
-      '<span class="kids-collection-title">✨ Ta collection</span>' +
+      '<span class="kids-collection-title">' + t.collection + '</span>' +
       '<span class="kids-collection-count">' + badges.length + ' / ' + catKeys.length + '</span>' +
     '</div>' +
     '<div class="kids-collection-row">' +
       catKeys.map(catKey => {
         const cat      = KIDS_DUAS[catKey];
+        const titre    = cat.meta.titre[lang] || cat.meta.titre[KIDS_HOME_LANGS[0]];
         const unlocked = badges.indexOf(catKey) !== -1;
         const iconHtml = cat.meta.image
           ? '<img class="kids-coin-icon" src="' + cat.meta.image + '" alt="">'
@@ -130,7 +205,7 @@ function renderCollection() {
               iconHtml +
               (unlocked ? '' : '<span class="kids-coin-lock">🔒</span>') +
             '</div>' +
-            '<span class="kids-collection-label">' + cat.meta.titre + '</span>' +
+            '<span class="kids-collection-label">' + titre + '</span>' +
           '</div>'
         );
       }).join('') +
@@ -150,9 +225,12 @@ function showCat(catKey) {
   saved.forEach(function(dk) { listenedDuas[dk] = true; });
   stopAudio();
 
-  const cat = KIDS_DUAS[catKey];
+  const cat  = KIDS_DUAS[catKey];
+  const lang = kidsHomeGetLang();
   document.getElementById('page-home').style.display = 'none';
   document.getElementById('page-cat').style.display  = 'block';
+
+  const titre = cat.meta.titre[lang] || cat.meta.titre[KIDS_HOME_LANGS[0]];
 
   // Header couleur (variable CSS -> permet le dégradé doux défini en CSS)
   const header = document.getElementById('catHeader');
@@ -160,7 +238,7 @@ function showCat(catKey) {
 
   const emojiEl = document.getElementById('catHeaderEmoji');
   if (cat.meta.image) {
-    emojiEl.innerHTML = '<img src="' + cat.meta.image + '" alt="' + cat.meta.titre + '" style="width:46px;height:46px;object-fit:contain;">';
+    emojiEl.innerHTML = '<img src="' + cat.meta.image + '" alt="' + titre + '" style="width:46px;height:46px;object-fit:contain;">';
   } else {
     emojiEl.textContent = cat.meta.emoji;
   }
@@ -175,8 +253,8 @@ function showCat(catKey) {
     }, { once: true });
   };
 
-  document.getElementById('catHeaderTitle').textContent = cat.meta.titre;
-  document.getElementById('catPageTitle').textContent   = cat.meta.titre;
+  document.getElementById('catHeaderTitle').textContent = titre;
+  document.getElementById('catPageTitle').textContent   = titre;
 
   renderDuas(catKey);
   renderProgress(catKey);
@@ -195,6 +273,7 @@ function showHome() {
 
 function renderDuas(catKey) {
   const cat  = KIDS_DUAS[catKey];
+  const lang = kidsHomeGetLang();
   const list = document.getElementById('kidsDuaList');
   if (!list) return;
   list.innerHTML = '';
@@ -208,6 +287,10 @@ function renderDuas(catKey) {
     card.id        = 'dua-card-' + duaKey;
     card.style.borderColor = cat.meta.couleur + '44';
 
+    const moment     = dua.moment[lang]     || dua.moment[KIDS_HOME_LANGS[0]];
+    const traduction = dua.traduction[lang] || dua.traduction[KIDS_HOME_LANGS[0]];
+    const conseil    = dua.conseil ? (dua.conseil[lang] || dua.conseil[KIDS_HOME_LANGS[0]]) : '';
+
     const audioBar = dua.audio
       ? '<div class="kids-audio-bar">' +
           '<button class="kids-audio-btn" id="audio-btn-' + duaKey + '" ' +
@@ -219,20 +302,20 @@ function renderDuas(catKey) {
       : '';
 
     // Bloc conseil islamique
-    const conseilHtml = dua.conseil
+    const conseilHtml = conseil
       ? '<div class="kids-dua-conseil" style="color:' + cat.meta.couleur + '; border-left-color:' + cat.meta.couleur + '">' +
           '<span class="kids-dua-conseil-icon">💡</span>' +
-          '<span class="kids-dua-conseil-text">' + dua.conseil + '</span>' +
+          '<span class="kids-dua-conseil-text">' + conseil + '</span>' +
         '</div>'
       : '';
 
     card.innerHTML =
       '<div class="kids-dua-moment">' +
         '<span class="kids-dua-moment-emoji">' + dua.emoji + '</span>' +
-        '<span class="kids-dua-moment-text">'  + dua.moment + '</span>' +
+        '<span class="kids-dua-moment-text">'  + moment + '</span>' +
       '</div>' +
       '<div class="kids-dua-body">' +
-        '<div class="kids-dua-traduction" style="color:' + cat.meta.couleur + '">' + dua.traduction + '</div>' +
+        '<div class="kids-dua-traduction" style="color:' + cat.meta.couleur + '">' + traduction + '</div>' +
         '<div class="kids-dua-phonetique">' + dua.phonetique  + '</div>' +
         '<div class="kids-dua-arabe">'      + dua.arabe       + '</div>' +
         conseilHtml +
@@ -354,12 +437,20 @@ function markListened(duaKey) {
 
 function showBravo() {
   const cat     = KIDS_DUAS[currentCat];
+  const t       = kidsHomeT();
   const badgeEl = document.getElementById('bravoBadge');
   if (badgeEl) {
     badgeEl.innerHTML = cat && cat.meta.image
       ? '<div class="kids-coin kids-coin-earned" style="--coin-c:' + cat.meta.couleur + '"><img class="kids-coin-icon" src="' + cat.meta.image + '" alt=""></div>'
       : '🌟';
   }
+  const titleEl = document.querySelector('#bravoModal .kids-bravo-title');
+  const subEl   = document.querySelector('#bravoModal .kids-bravo-sub');
+  const btnEl   = document.querySelector('#bravoModal .kids-bravo-btn');
+  if (titleEl) titleEl.textContent = t.bravoTitle;
+  if (subEl)   subEl.textContent   = t.bravoSub;
+  if (btnEl)   btnEl.textContent   = t.bravoBtn;
+
   launchConfetti();
   document.getElementById('bravoModal').style.display = 'flex';
 }
@@ -400,6 +491,8 @@ function showWelcomeToast(name) {
   var existing = document.getElementById('kidsWelcomeToast');
   if (existing) existing.remove();
 
+  var t = kidsHomeT();
+
   var toast = document.createElement('div');
   toast.id = 'kidsWelcomeToast';
   toast.style.cssText = [
@@ -419,9 +512,9 @@ function showWelcomeToast(name) {
 
   toast.innerHTML =
     '<div style="font-size:48px;margin-bottom:8px;">🌟</div>' +
-    '<div style="font-family:Baloo 2,cursive;font-size:20px;font-weight:800;color:#2C4A3E;margin-bottom:6px;">Bienvenue ' + name + ' !</div>' +
-    '<div style="font-family:Baloo 2,cursive;font-size:14px;color:#5a7a6a;line-height:1.5;margin-bottom:20px;">Bismillah ! Ton aventure commence maintenant ! 🚀</div>' +
-    '<button onclick="document.getElementById(\'kidsWelcomeToast\').remove();if(typeof renderHome===\'function\')renderHome();" style="background:linear-gradient(135deg,#C9A84C,#e8c96d);border:none;border-radius:50px;padding:10px 28px;font-family:Baloo 2,cursive;font-weight:800;font-size:14px;color:#fff;cursor:pointer;">C\'est parti ! ✨</button>';
+    '<div style="font-family:Baloo 2,cursive;font-size:20px;font-weight:800;color:#2C4A3E;margin-bottom:6px;">' + t.welcomeTitle(name) + '</div>' +
+    '<div style="font-family:Baloo 2,cursive;font-size:14px;color:#5a7a6a;line-height:1.5;margin-bottom:20px;">' + t.welcomeSub + '</div>' +
+    '<button onclick="document.getElementById(\'kidsWelcomeToast\').remove();if(typeof renderHome===\'function\')renderHome();" style="background:linear-gradient(135deg,#C9A84C,#e8c96d);border:none;border-radius:50px;padding:10px 28px;font-family:Baloo 2,cursive;font-weight:800;font-size:14px;color:#fff;cursor:pointer;">' + t.welcomeBtn + '</button>';
 
   document.body.appendChild(toast);
   launchConfetti();
