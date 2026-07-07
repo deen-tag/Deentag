@@ -199,14 +199,14 @@
   var PROFILE_COLORS = ['#C9A84C','#2C4A3E','#4A3728','#3A3060','#5C3A4A'];
 
   var TRANSLATIONS = {
-    fr: { memorized:'Mémorisé',      profiles:'Profils',    addProfile:'Ajouter un profil', editProfile:'Modifier', deleteProfile:'Supprimer', chooseProfile:'Qui êtes-vous ?', name:'Prénom', save:'Enregistrer', cancel:'Annuler', progress:'Progression', surasMemorized:'Sourates mémorisées', confirmDelete:'Supprimer ce profil ?', detail:'Détail', close:'Fermer', activeSince:'Membre depuis', activeProfile:'Profil actif', juzCompleted:'Juz complétés', duasMemorized:'Invocations mémorisées', noDuaMemorized:'Aucune invocation mémorisée' },
-    en: { memorized:'Memorized',     profiles:'Profiles',   addProfile:'Add profile',        editProfile:'Edit',     deleteProfile:'Delete',    chooseProfile:'Who are you?',     name:'Name',   save:'Save',        cancel:'Cancel',  progress:'Progress',     surasMemorized:'Memorized surahs',    confirmDelete:'Delete this profile?',  detail:'Detail', close:'Close', activeSince:'Member since', activeProfile:'Active profile', juzCompleted:'Completed Juz', duasMemorized:'Memorized supplications', noDuaMemorized:'No supplication memorized yet' },
-    es: { memorized:'Memorizado',    profiles:'Perfiles',   addProfile:'Añadir perfil',      editProfile:'Editar',   deleteProfile:'Eliminar',  chooseProfile:'¿Quién eres?',     name:'Nombre', save:'Guardar',     cancel:'Cancelar',progress:'Progreso',     surasMemorized:'Suras memorizadas',   confirmDelete:'¿Eliminar este perfil?',detail:'Detalle',close:'Cerrar',activeSince:'Miembro desde',activeProfile:'Perfil activo',juzCompleted:'Juz completados', duasMemorized:'Invocaciones memorizadas', noDuaMemorized:'Ninguna invocación memorizada' },
-    de: { memorized:'Auswendig',     profiles:'Profile',    addProfile:'Profil hinzufügen',  editProfile:'Bearbeiten',deleteProfile:'Löschen',  chooseProfile:'Wer bist du?',      name:'Name',   save:'Speichern',   cancel:'Abbrechen',progress:'Fortschritt',  surasMemorized:'Gelernte Suren',      confirmDelete:'Profil löschen?',       detail:'Detail', close:'Schließen',activeSince:'Mitglied seit',activeProfile:'Aktives Profil',juzCompleted:'Abgeschlossene Juz', duasMemorized:'Gelernte Bittgebete', noDuaMemorized:'Noch kein Bittgebet gelernt' },
-    it: { memorized:'Memorizzato',   profiles:'Profili',    addProfile:'Aggiungi profilo',   editProfile:'Modifica', deleteProfile:'Elimina',   chooseProfile:'Chi sei?',         name:'Nome',   save:'Salva',       cancel:'Annulla', progress:'Progressi',    surasMemorized:'Sure memorizzate',    confirmDelete:'Eliminare questo profilo?',detail:'Dettaglio',close:'Chiudi',activeSince:'Membro da',activeProfile:'Profilo attivo',juzCompleted:'Juz completati', duasMemorized:'Invocazioni memorizzate', noDuaMemorized:'Nessuna invocazione memorizzata' },
-    nl: { memorized:'Gememoriseerd', profiles:'Profielen',  addProfile:'Profiel toevoegen',  editProfile:'Bewerken', deleteProfile:'Verwijderen',chooseProfile:'Wie ben jij?',    name:'Naam',   save:'Opslaan',     cancel:'Annuleren',progress:'Voortgang',    surasMemorized:"Gememoriseerde soera's",confirmDelete:'Dit profiel verwijderen?',detail:'Detail',close:'Sluiten',activeSince:'Lid sinds',activeProfile:'Actief profiel',juzCompleted:'Voltooide Juz', duasMemorized:'Gememoriseerde smeekgebeden', noDuaMemorized:'Nog geen smeekgebed gememoriseerd' },
-    pt: { memorized:'Memorizado',    profiles:'Perfis',     addProfile:'Adicionar perfil',   editProfile:'Editar',   deleteProfile:'Eliminar',  chooseProfile:'Quem és tu?',      name:'Nome',   save:'Guardar',     cancel:'Cancelar', progress:'Progresso',   surasMemorized:'Suras memorizadas',   confirmDelete:'Eliminar este perfil?', detail:'Detalhe',close:'Fechar',activeSince:'Membro desde',activeProfile:'Perfil ativo',juzCompleted:'Juz concluídos', duasMemorized:'Invocações memorizadas', noDuaMemorized:'Nenhuma invocação memorizada' },
-    tr: { memorized:'Ezberlenmiş',   profiles:'Profiller',  addProfile:'Profil ekle',        editProfile:'Düzenle',  deleteProfile:'Sil',       chooseProfile:'Sen kimsin?',      name:'İsim',   save:'Kaydet',      cancel:'İptal',    progress:'İlerleme',    surasMemorized:'Ezberlenmiş sureler', confirmDelete:'Bu profili sil?',       detail:'Detay',  close:'Kapat',  activeSince:'Üye tarihi',  activeProfile:'Aktif profil',  juzCompleted:'Tamamlanan Cüzler', duasMemorized:'Ezberlenmiş dualar', noDuaMemorized:'Henüz ezberlenmiş dua yok' }
+    fr: { memorized:'Mémorisé',      profiles:'Profils',    addProfile:'Ajouter un profil', editProfile:'Modifier', deleteProfile:'Supprimer', chooseProfile:'Qui êtes-vous ?', name:'Prénom', save:'Enregistrer', cancel:'Annuler', progress:'Progression', surasMemorized:'Sourates mémorisées', confirmDelete:'Supprimer ce profil ?', detail:'Détail', close:'Fermer', activeSince:'Membre depuis', activeProfile:'Profil actif', juzCompleted:'Juz complétés', duasMemorized:'Invocations mémorisées', noDuaMemorized:'Aucune invocation mémorisée', me:'Moi', onboardTitle:'Bienvenue sur Deentag !', onboardText:'C\'est ton espace pour suivre ce que tu apprends : sourates, invocations, progression... Comment veux-tu qu\'on t\'appelle ?', onboardCta:'Commencer ✓' },
+    en: { memorized:'Memorized',     profiles:'Profiles',   addProfile:'Add profile',        editProfile:'Edit',     deleteProfile:'Delete',    chooseProfile:'Who are you?',     name:'Name',   save:'Save',        cancel:'Cancel',  progress:'Progress',     surasMemorized:'Memorized surahs',    confirmDelete:'Delete this profile?',  detail:'Detail', close:'Close', activeSince:'Member since', activeProfile:'Active profile', juzCompleted:'Completed Juz', duasMemorized:'Memorized supplications', noDuaMemorized:'No supplication memorized yet', me:'Me', onboardTitle:'Welcome to Deentag!', onboardText:'This is your space to track what you learn: surahs, supplications, progress... What would you like to be called?', onboardCta:'Get started ✓' },
+    es: { memorized:'Memorizado',    profiles:'Perfiles',   addProfile:'Añadir perfil',      editProfile:'Editar',   deleteProfile:'Eliminar',  chooseProfile:'¿Quién eres?',     name:'Nombre', save:'Guardar',     cancel:'Cancelar',progress:'Progreso',     surasMemorized:'Suras memorizadas',   confirmDelete:'¿Eliminar este perfil?',detail:'Detalle',close:'Cerrar',activeSince:'Miembro desde',activeProfile:'Perfil activo',juzCompleted:'Juz completados', duasMemorized:'Invocaciones memorizadas', noDuaMemorized:'Ninguna invocación memorizada', me:'Yo', onboardTitle:'¡Bienvenido a Deentag!', onboardText:'Este es tu espacio para seguir lo que aprendes: suras, súplicas, progreso... ¿Cómo quieres que te llamemos?', onboardCta:'Empezar ✓' },
+    de: { memorized:'Auswendig',     profiles:'Profile',    addProfile:'Profil hinzufügen',  editProfile:'Bearbeiten',deleteProfile:'Löschen',  chooseProfile:'Wer bist du?',      name:'Name',   save:'Speichern',   cancel:'Abbrechen',progress:'Fortschritt',  surasMemorized:'Gelernte Suren',      confirmDelete:'Profil löschen?',       detail:'Detail', close:'Schließen',activeSince:'Mitglied seit',activeProfile:'Aktives Profil',juzCompleted:'Abgeschlossene Juz', duasMemorized:'Gelernte Bittgebete', noDuaMemorized:'Noch kein Bittgebet gelernt', me:'Ich', onboardTitle:'Willkommen bei Deentag!', onboardText:'Das ist dein Bereich, um deinen Lernfortschritt zu verfolgen: Suren, Bittgebete, Fortschritt... Wie möchtest du genannt werden?', onboardCta:'Loslegen ✓' },
+    it: { memorized:'Memorizzato',   profiles:'Profili',    addProfile:'Aggiungi profilo',   editProfile:'Modifica', deleteProfile:'Elimina',   chooseProfile:'Chi sei?',         name:'Nome',   save:'Salva',       cancel:'Annulla', progress:'Progressi',    surasMemorized:'Sure memorizzate',    confirmDelete:'Eliminare questo profilo?',detail:'Dettaglio',close:'Chiudi',activeSince:'Membro da',activeProfile:'Profilo attivo',juzCompleted:'Juz completati', duasMemorized:'Invocazioni memorizzate', noDuaMemorized:'Nessuna invocazione memorizzata', me:'Io', onboardTitle:'Benvenuto su Deentag!', onboardText:'Questo è il tuo spazio per seguire ciò che impari: sure, invocazioni, progressi... Come vuoi essere chiamato?', onboardCta:'Inizia ✓' },
+    nl: { memorized:'Gememoriseerd', profiles:'Profielen',  addProfile:'Profiel toevoegen',  editProfile:'Bewerken', deleteProfile:'Verwijderen',chooseProfile:'Wie ben jij?',    name:'Naam',   save:'Opslaan',     cancel:'Annuleren',progress:'Voortgang',    surasMemorized:"Gememoriseerde soera's",confirmDelete:'Dit profiel verwijderen?',detail:'Detail',close:'Sluiten',activeSince:'Lid sinds',activeProfile:'Actief profiel',juzCompleted:'Voltooide Juz', duasMemorized:'Gememoriseerde smeekgebeden', noDuaMemorized:'Nog geen smeekgebed gememoriseerd', me:'Ik', onboardTitle:'Welkom bij Deentag!', onboardText:'Dit is jouw plek om te volgen wat je leert: soera\'s, smeekbeden, voortgang... Hoe wil je genoemd worden?', onboardCta:'Beginnen ✓' },
+    pt: { memorized:'Memorizado',    profiles:'Perfis',     addProfile:'Adicionar perfil',   editProfile:'Editar',   deleteProfile:'Eliminar',  chooseProfile:'Quem és tu?',      name:'Nome',   save:'Guardar',     cancel:'Cancelar', progress:'Progresso',   surasMemorized:'Suras memorizadas',   confirmDelete:'Eliminar este perfil?', detail:'Detalhe',close:'Fechar',activeSince:'Membro desde',activeProfile:'Perfil ativo',juzCompleted:'Juz concluídos', duasMemorized:'Invocações memorizadas', noDuaMemorized:'Nenhuma invocação memorizada', me:'Eu', onboardTitle:'Bem-vindo ao Deentag!', onboardText:'Este é o teu espaço para acompanhar o que aprendes: suras, súplicas, progresso... Como queres ser chamado?', onboardCta:'Começar ✓' },
+    tr: { memorized:'Ezberlenmiş',   profiles:'Profiller',  addProfile:'Profil ekle',        editProfile:'Düzenle',  deleteProfile:'Sil',       chooseProfile:'Sen kimsin?',      name:'İsim',   save:'Kaydet',      cancel:'İptal',    progress:'İlerleme',    surasMemorized:'Ezberlenmiş sureler', confirmDelete:'Bu profili sil?',       detail:'Detay',  close:'Kapat',  activeSince:'Üye tarihi',  activeProfile:'Aktif profil',  juzCompleted:'Tamamlanan Cüzler', duasMemorized:'Ezberlenmiş dualar', noDuaMemorized:'Henüz ezberlenmiş dua yok', me:'Ben', onboardTitle:'Deentag\'a hoş geldin!', onboardText:'Burası öğrendiklerini takip ettiğin alanın: sureler, dualar, ilerleme... Sana nasıl seslenelim?', onboardCta:'Başla ✓' }
   };
 
   /* ── Helpers ── */
@@ -761,6 +761,10 @@
   }
 
   function closeProfileModal() {
+    if (!loadProfiles().length) {
+      var def = {id:uid(),name:t('me'),color:PROFILE_COLORS[0],photo:null,created:new Date().toISOString()};
+      saveProfiles([def]); setActiveId(def.id); updateTabbarAvatar();
+    }
     var overlay = document.getElementById('dtStandaloneOverlay');
     if (overlay) overlay.classList.remove('open');
     document.body.style.overflow = '';
@@ -790,7 +794,7 @@
     window.dispatchEvent(new CustomEvent('deentag:profileChanged', { detail:{ id:id } }));
   };
 
-  function openProfileForm(profile) {
+  function openProfileForm(profile, isFirstRun) {
     var overlay = ensureModalDOM();
     var modal   = document.getElementById('dtStandaloneContent');
     var titleEl = document.getElementById('dtStandaloneTitle');
@@ -798,13 +802,17 @@
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
     var isEdit   = !!profile;
-    if (titleEl) titleEl.textContent = isEdit ? t('editProfile') : t('addProfile');
+    if (titleEl) titleEl.textContent = isFirstRun ? t('onboardTitle') : (isEdit ? t('editProfile') : t('addProfile'));
     var profiles = loadProfiles();
     var colorIdx = isEdit ? PROFILE_COLORS.indexOf(profile.color) : profiles.length % PROFILE_COLORS.length;
     if (colorIdx < 0) colorIdx = 0;
 
     var html = '';
     html += '<div style="padding:20px 24px 0;">';
+
+    if (isFirstRun) {
+      html += '<div style="text-align:center;font-size:14px;line-height:1.5;color:var(--gold,#C9A84C);margin-bottom:18px;">' + t('onboardText') + '</div>';
+    }
 
     // Avatar
     html += '<div style="text-align:center;margin-bottom:20px;">';
@@ -826,8 +834,8 @@
 
     html += '<div style="display:flex;gap:10px;">';
     if (isEdit) html += '<button class="dt-delete-btn" onclick="window.DT.deleteProfile(\''+profile.id+'\')">🗑</button>';
-    html += '<button class="dt-cancel-btn" onclick="window.DT._cancelForm()">'+t('cancel')+'</button>';
-    html += '<button class="dt-save-btn" onclick="window.DT._saveForm(\'' + (isEdit && profile ? profile.id : '') + '\')">' + t('save') + '</button>';
+    if (!isFirstRun) html += '<button class="dt-cancel-btn" onclick="window.DT._cancelForm()">'+t('cancel')+'</button>';
+    html += '<button class="dt-save-btn" onclick="window.DT._saveForm(\'' + (isEdit && profile ? profile.id : '') + '\')">' + (isFirstRun ? t('onboardCta') : t('save')) + '</button>';
     html += '</div></div><div style="height:40px;"></div>';
 
     modal.innerHTML = html;
@@ -894,6 +902,7 @@
       return;
     }
     var colorSel = _color || PROFILE_COLORS[profiles.length % PROFILE_COLORS.length];
+    var wasFirstRun = !editId && profiles.length === 0;
     if (editId) {
       profiles = profiles.map(function(p){
         return p.id !== editId ? p : Object.assign({},p,{name:name,color:colorSel,photo:_photo!==null?_photo:p.photo});
@@ -905,7 +914,9 @@
     }
     saveProfiles(profiles);
     _color=null; _photo=null;
-    updateTabbarAvatar(); openProfileModal();
+    updateTabbarAvatar();
+    if (wasFirstRun) { closeProfileModal(); window.dispatchEvent(new CustomEvent('deentag:profileChanged', { detail:{ id: profiles[profiles.length-1].id } })); }
+    else { openProfileModal(); }
   };
 
   /* ── Tabbar avatar ── */
@@ -957,9 +968,9 @@
   /* ── Init ── */
   function init() {
     var profiles = loadProfiles();
+    var needsOnboarding = !profiles.length;
     if (!profiles.length) {
-      var def = {id:uid(),name:'Moi',color:PROFILE_COLORS[0],photo:null,created:new Date().toISOString()};
-      saveProfiles([def]); setActiveId(def.id);
+      // Pas de création silencieuse : on demande le prénom via le formulaire d'accueil
     } else if (!getActiveId()) { setActiveId(profiles[0].id); }
     injectCSS();
     var n = 0;
@@ -968,6 +979,9 @@
       if (document.querySelector('.app-tabbar')) { clearInterval(iv); injectProfileTab(); }
       else if (n > 30) clearInterval(iv);
     }, 100);
+    if (needsOnboarding) {
+      setTimeout(function(){ _color=null; _photo=null; openProfileForm(null, true); }, 400);
+    }
   }
 
   if (document.readyState==='loading') { document.addEventListener('DOMContentLoaded',init); }
