@@ -732,6 +732,13 @@
 
   /* ── Open/Close profile : modal autonome, fonctionne sur toute page ── */
   function openProfileModal() {
+    if (!localStorage.getItem('deentag_onboarding_done')) {
+      localStorage.setItem('deentag_onboarding_done', '1');
+      var profiles0 = loadProfiles();
+      _color = null; _photo = null;
+      openProfileForm(profiles0[0] || null, true);
+      return;
+    }
     var overlay = ensureModalDOM();
     var titleEl = document.getElementById('dtStandaloneTitle');
     var content = document.getElementById('dtStandaloneContent');
@@ -833,7 +840,7 @@
     html += '<input id="dt-name" class="dt-form-input" type="text" placeholder="'+t('name')+'" maxlength="20" value="'+(isEdit?profile.name:'')+'">';
 
     html += '<div style="display:flex;gap:10px;">';
-    if (isEdit) html += '<button class="dt-delete-btn" onclick="window.DT.deleteProfile(\''+profile.id+'\')">🗑</button>';
+    if (isEdit && !isFirstRun) html += '<button class="dt-delete-btn" onclick="window.DT.deleteProfile(\''+profile.id+'\')">🗑</button>';
     if (!isFirstRun) html += '<button class="dt-cancel-btn" onclick="window.DT._cancelForm()">'+t('cancel')+'</button>';
     html += '<button class="dt-save-btn" onclick="window.DT._saveForm(\'' + (isEdit && profile ? profile.id : '') + '\')">' + (isFirstRun ? t('onboardCta') : t('save')) + '</button>';
     html += '</div></div><div style="height:40px;"></div>';
@@ -968,9 +975,9 @@
   /* ── Init ── */
   function init() {
     var profiles = loadProfiles();
-    var needsOnboarding = !profiles.length;
     if (!profiles.length) {
-      // Pas de création silencieuse : on demande le prénom via le formulaire d'accueil
+      var def = {id:uid(),name:t('me'),color:PROFILE_COLORS[0],photo:null,created:new Date().toISOString()};
+      saveProfiles([def]); setActiveId(def.id);
     } else if (!getActiveId()) { setActiveId(profiles[0].id); }
     injectCSS();
     var n = 0;
@@ -979,9 +986,6 @@
       if (document.querySelector('.app-tabbar')) { clearInterval(iv); injectProfileTab(); }
       else if (n > 30) clearInterval(iv);
     }, 100);
-    if (needsOnboarding) {
-      setTimeout(function(){ _color=null; _photo=null; openProfileForm(null, true); }, 400);
-    }
   }
 
   if (document.readyState==='loading') { document.addEventListener('DOMContentLoaded',init); }
