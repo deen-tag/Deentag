@@ -33,18 +33,77 @@
   };
 
   var NAV_I18N = {
-    fr:{ duas:'Invocations', coran:'Coran', enfants:'Enfants', boutique:'Boutique', adulte:'Adulte' },
-    en:{ duas:'Prayers',     coran:'Quran', enfants:'Kids',    boutique:'Shop',     adulte:'Adult'  },
-    es:{ duas:'Súplicas',    coran:'Corán', enfants:'Niños',   boutique:'Tienda',   adulte:'Adulto' },
-    de:{ duas:'Bittgebete',  coran:'Koran', enfants:'Kinder',  boutique:'Shop',     adulte:'Erwachsene' },
-    it:{ duas:'Invocazioni', coran:'Corano', enfants:'Bambini', boutique:'Negozio', adulte:'Adulto' },
-    nl:{ duas:'Smeekbeden',  coran:'Koran', enfants:'Kinderen', boutique:'Winkel',  adulte:'Volwassene' },
-    pt:{ duas:'Súplicas',    coran:'Alcorão', enfants:'Crianças', boutique:'Loja',  adulte:'Adulto' },
-    tr:{ duas:'Dualar',      coran:'Kur\'an', enfants:'Çocuklar', boutique:'Mağaza', adulte:'Yetişkin' }
+    fr:{ duas:'Invocations', coran:'Coran', enfants:'Enfants', boutique:'Boutique', adulte:'Adulte',
+         exitTitle:'Aller vers l\'espace Adulte ?', exitSub:'À bientôt sur Deentag Kids ! 👋', exitCancel:'Annuler', exitContinue:'Continuer' },
+    en:{ duas:'Prayers',     coran:'Quran', enfants:'Kids',    boutique:'Shop',     adulte:'Adult',
+         exitTitle:'Go to the Adult space?', exitSub:'See you soon on Deentag Kids! 👋', exitCancel:'Cancel', exitContinue:'Continue' },
+    es:{ duas:'Súplicas',    coran:'Corán', enfants:'Niños',   boutique:'Tienda',   adulte:'Adulto',
+         exitTitle:'¿Ir al espacio Adulto?', exitSub:'¡Hasta pronto en Deentag Kids! 👋', exitCancel:'Cancelar', exitContinue:'Continuar' },
+    de:{ duas:'Bittgebete',  coran:'Koran', enfants:'Kinder',  boutique:'Shop',     adulte:'Erwachsene',
+         exitTitle:'Zum Erwachsenenbereich wechseln?', exitSub:'Bis bald bei Deentag Kids! 👋', exitCancel:'Abbrechen', exitContinue:'Weiter' },
+    it:{ duas:'Invocazioni', coran:'Corano', enfants:'Bambini', boutique:'Negozio', adulte:'Adulto',
+         exitTitle:'Andare nello spazio Adulti?', exitSub:'A presto su Deentag Kids! 👋', exitCancel:'Annulla', exitContinue:'Continua' },
+    nl:{ duas:'Smeekbeden',  coran:'Koran', enfants:'Kinderen', boutique:'Winkel',  adulte:'Volwassene',
+         exitTitle:'Naar de Volwassenenruimte?', exitSub:'Tot snel bij Deentag Kids! 👋', exitCancel:'Annuleren', exitContinue:'Doorgaan' },
+    pt:{ duas:'Súplicas',    coran:'Alcorão', enfants:'Crianças', boutique:'Loja',  adulte:'Adulto',
+         exitTitle:'Ir para o espaço Adulto?', exitSub:'Até já no Deentag Kids! 👋', exitCancel:'Cancelar', exitContinue:'Continuar' },
+    tr:{ duas:'Dualar',      coran:'Kur\'an', enfants:'Çocuklar', boutique:'Mağaza', adulte:'Yetişkin',
+         exitTitle:'Yetişkin alanına geçilsin mi?', exitSub:'Deentag Kids\'te yakında görüşürüz! 👋', exitCancel:'İptal', exitContinue:'Devam et' }
   };
   function navGetLang() { return localStorage.getItem('deentag_lang') || 'fr'; }
   function navLabels()  { return NAV_I18N[navGetLang()] || NAV_I18N.fr; }
   var LABELS = navLabels();
+
+  /* ── Confirmation légère avant de quitter le mode enfant ──
+     Pas un vrai verrou parental : juste assez de friction pour éviter
+     qu'un enfant bascule par erreur vers l'espace Adulte en un tap. */
+  function injectExitModalCSS() {
+    if (document.getElementById('kids-exit-css')) return;
+    var style = document.createElement('style');
+    style.id  = 'kids-exit-css';
+    style.textContent =
+      '.kids-exit-modal{position:fixed;inset:0;z-index:300;background:rgba(17,22,58,.75);' +
+      'backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:24px;}' +
+      '.kids-exit-modal.open{display:flex;}' +
+      '.kids-exit-box{width:100%;max-width:320px;background:var(--paper,#fffaf0);border-radius:28px;' +
+      'box-shadow:0 20px 60px rgba(0,0,0,.25);padding:26px 22px 22px;text-align:center;position:relative;}' +
+      '.kids-exit-logo{position:absolute;top:14px;right:16px;width:34px;height:34px;object-fit:contain;}' +
+      '.kids-exit-emoji{font-size:40px;margin-bottom:10px;}' +
+      '.kids-exit-title{font-family:"Baloo 2",cursive;font-weight:800;font-size:18px;color:var(--ink,#2C4A3E);margin-bottom:8px;}' +
+      '.kids-exit-sub{font-family:"Baloo 2",cursive;font-size:13px;color:#5a7a6a;line-height:1.5;margin-bottom:20px;}' +
+      '.kids-exit-actions{display:flex;gap:10px;}' +
+      '.kids-exit-cancel,.kids-exit-continue{flex:1;padding:12px;border-radius:50px;border:none;' +
+      'font-family:"Baloo 2",cursive;font-weight:800;font-size:14px;cursor:pointer;}' +
+      '.kids-exit-cancel{background:#eee;color:#555;}' +
+      '.kids-exit-continue{background:linear-gradient(135deg,#C9A84C,#e8c96d);color:#fff;}';
+    document.head.appendChild(style);
+  }
+
+  function navConfirmExitKids(href) {
+    injectExitModalCSS();
+    var t = navLabels();
+    var modal = document.getElementById('kids-exit-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'kids-exit-modal';
+      modal.className = 'kids-exit-modal';
+      modal.onclick = function (e) { if (e.target === modal) modal.classList.remove('open'); };
+      document.body.appendChild(modal);
+    }
+    modal.innerHTML =
+      '<div class="kids-exit-box" onclick="event.stopPropagation()">' +
+        '<img src="images/kids_logo.webp" alt="Deentag Kids" class="kids-exit-logo">' +
+        '<div class="kids-exit-emoji">👋</div>' +
+        '<div class="kids-exit-title">' + t.exitTitle + '</div>' +
+        '<div class="kids-exit-sub">' + t.exitSub + '</div>' +
+        '<div class="kids-exit-actions">' +
+          '<button class="kids-exit-cancel" onclick="document.getElementById(\'kids-exit-modal\').classList.remove(\'open\')">' + t.exitCancel + '</button>' +
+          '<button class="kids-exit-continue" onclick="window.location.href=\'' + href + '\'">' + t.exitContinue + '</button>' +
+        '</div>' +
+      '</div>';
+    modal.classList.add('open');
+  }
+  window.navConfirmExitKids = navConfirmExitKids;
 
   var ADULT_TABS = [
     { id: 'duas',     href: 'index.html' },
@@ -83,9 +142,11 @@
     var html = '';
     cfg.tabs.forEach(function (tab) {
       var isActive = tab.id === cfg.active;
+      var isKidsExitTab = cfg.mode === 'kids' && tab.id === 'adulte';
       html +=
-        '<a href="' + tab.href + '" class="tab' + (isActive ? ' active' : '') + '"' +
+        '<a href="' + (isKidsExitTab ? '#' : tab.href) + '" class="tab' + (isActive ? ' active' : '') + '"' +
         (isActive ? ' aria-current="page"' : '') +
+        (isKidsExitTab ? ' onclick="event.preventDefault();navConfirmExitKids(\'' + tab.href + '\')"' : '') +
         ' aria-label="' + LABELS[tab.id] + '">' +
         '<div class="tab-icon">' +
         '<img src="' + (cfg.mode === 'kids' && KIDS_IMGS[tab.id] ? KIDS_IMGS[tab.id] : IMGS[tab.id]) + '" alt="' + LABELS[tab.id] + '" draggable="false"/>' +
