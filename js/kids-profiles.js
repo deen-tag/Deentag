@@ -6,14 +6,14 @@
   var PASTEL_COLORS = ['#FFB3BA','#FFDFBA','#FFFFBA','#BAFFC9','#BAE1FF','#D4BAFF'];
 
   var KP_I18N = {
-    fr:{ who:'👤 C\'est qui ?', addBtn:'＋ Nouveau profil', newTitle:'✨ Nouveau profil', editTitle:'✏️ Modifier le profil', namePh:'Prénom', cancel:'Annuler', create:'Créer ✓', save:'Sauvegarder ✓', dupName:'Ce prénom existe déjà', onlyOne:'Tu ne peux pas supprimer le seul profil !', confirmDel:function(n){ return 'Supprimer le profil de ' + n + ' ? 😢'; } },
-    en:{ who:'👤 Who is it?', addBtn:'＋ New profile', newTitle:'✨ New profile', editTitle:'✏️ Edit profile', namePh:'First name', cancel:'Cancel', create:'Create ✓', save:'Save ✓', dupName:'This name already exists', onlyOne:'You can\'t delete the only profile!', confirmDel:function(n){ return 'Delete ' + n + '\'s profile? 😢'; } },
-    es:{ who:'👤 ¿Quién es?', addBtn:'＋ Nuevo perfil', newTitle:'✨ Nuevo perfil', editTitle:'✏️ Editar perfil', namePh:'Nombre', cancel:'Cancelar', create:'Crear ✓', save:'Guardar ✓', dupName:'Este nombre ya existe', onlyOne:'¡No puedes eliminar el único perfil!', confirmDel:function(n){ return '¿Eliminar el perfil de ' + n + '? 😢'; } },
-    de:{ who:'👤 Wer ist das?', addBtn:'＋ Neues Profil', newTitle:'✨ Neues Profil', editTitle:'✏️ Profil bearbeiten', namePh:'Vorname', cancel:'Abbrechen', create:'Erstellen ✓', save:'Speichern ✓', dupName:'Dieser Name existiert bereits', onlyOne:'Du kannst das einzige Profil nicht löschen!', confirmDel:function(n){ return 'Profil von ' + n + ' löschen? 😢'; } },
-    it:{ who:'👤 Chi è?', addBtn:'＋ Nuovo profilo', newTitle:'✨ Nuovo profilo', editTitle:'✏️ Modifica profilo', namePh:'Nome', cancel:'Annulla', create:'Crea ✓', save:'Salva ✓', dupName:'Questo nome esiste già', onlyOne:'Non puoi eliminare l\'unico profilo!', confirmDel:function(n){ return 'Eliminare il profilo di ' + n + '? 😢'; } },
-    nl:{ who:'👤 Wie is het?', addBtn:'＋ Nieuw profiel', newTitle:'✨ Nieuw profiel', editTitle:'✏️ Profiel bewerken', namePh:'Voornaam', cancel:'Annuleren', create:'Aanmaken ✓', save:'Opslaan ✓', dupName:'Deze naam bestaat al', onlyOne:'Je kan het enige profiel niet verwijderen!', confirmDel:function(n){ return 'Profiel van ' + n + ' verwijderen? 😢'; } },
-    pt:{ who:'👤 Quem é?', addBtn:'＋ Novo perfil', newTitle:'✨ Novo perfil', editTitle:'✏️ Editar perfil', namePh:'Nome', cancel:'Cancelar', create:'Criar ✓', save:'Guardar ✓', dupName:'Este nome já existe', onlyOne:'Não podes eliminar o único perfil!', confirmDel:function(n){ return 'Eliminar o perfil de ' + n + '? 😢'; } },
-    tr:{ who:'👤 Bu kim?', addBtn:'＋ Yeni profil', newTitle:'✨ Yeni profil', editTitle:'✏️ Profili düzenle', namePh:'İsim', cancel:'İptal', create:'Oluştur ✓', save:'Kaydet ✓', dupName:'Bu isim zaten var', onlyOne:'Tek profili silemezsin!', confirmDel:function(n){ return n + ' profili silinsin mi? 😢'; } }
+    fr:{ who:'👤 C\'est qui ?', addBtn:'＋ Nouveau profil', newTitle:'✨ Nouveau profil', editTitle:'✏️ Modifier le profil', namePh:'Prénom', cancel:'Annuler', create:'Créer ✓', save:'Sauvegarder ✓', dupName:'Ce prénom existe déjà', onlyOne:'Tu ne peux pas supprimer le seul profil !', confirmDel:function(n){ return 'Supprimer le profil de ' + n + ' ? 😢'; }, tabLabel:'Profil' },
+    en:{ who:'👤 Who is it?', addBtn:'＋ New profile', newTitle:'✨ New profile', editTitle:'✏️ Edit profile', namePh:'First name', cancel:'Cancel', create:'Create ✓', save:'Save ✓', dupName:'This name already exists', onlyOne:'You can\'t delete the only profile!', confirmDel:function(n){ return 'Delete ' + n + '\'s profile? 😢'; }, tabLabel:'Profile' },
+    es:{ who:'👤 ¿Quién es?', addBtn:'＋ Nuevo perfil', newTitle:'✨ Nuevo perfil', editTitle:'✏️ Editar perfil', namePh:'Nombre', cancel:'Cancelar', create:'Crear ✓', save:'Guardar ✓', dupName:'Este nombre ya existe', onlyOne:'¡No puedes eliminar el único perfil!', confirmDel:function(n){ return '¿Eliminar el perfil de ' + n + '? 😢'; }, tabLabel:'Perfil' },
+    de:{ who:'👤 Wer ist das?', addBtn:'＋ Neues Profil', newTitle:'✨ Neues Profil', editTitle:'✏️ Profil bearbeiten', namePh:'Vorname', cancel:'Abbrechen', create:'Erstellen ✓', save:'Speichern ✓', dupName:'Dieser Name existiert bereits', onlyOne:'Du kannst das einzige Profil nicht löschen!', confirmDel:function(n){ return 'Profil von ' + n + ' löschen? 😢'; }, tabLabel:'Profil' },
+    it:{ who:'👤 Chi è?', addBtn:'＋ Nuovo profilo', newTitle:'✨ Nuovo profilo', editTitle:'✏️ Modifica profilo', namePh:'Nome', cancel:'Annulla', create:'Crea ✓', save:'Salva ✓', dupName:'Questo nome esiste già', onlyOne:'Non puoi eliminare l\'unico profilo!', confirmDel:function(n){ return 'Eliminare il profilo di ' + n + '? 😢'; }, tabLabel:'Profilo' },
+    nl:{ who:'👤 Wie is het?', addBtn:'＋ Nieuw profiel', newTitle:'✨ Nieuw profiel', editTitle:'✏️ Profiel bewerken', namePh:'Voornaam', cancel:'Annuleren', create:'Aanmaken ✓', save:'Opslaan ✓', dupName:'Deze naam bestaat al', onlyOne:'Je kan het enige profiel niet verwijderen!', confirmDel:function(n){ return 'Profiel van ' + n + ' verwijderen? 😢'; }, tabLabel:'Profiel' },
+    pt:{ who:'👤 Quem é?', addBtn:'＋ Novo perfil', newTitle:'✨ Novo perfil', editTitle:'✏️ Editar perfil', namePh:'Nome', cancel:'Cancelar', create:'Criar ✓', save:'Guardar ✓', dupName:'Este nome já existe', onlyOne:'Não podes eliminar o único perfil!', confirmDel:function(n){ return 'Eliminar o perfil de ' + n + '? 😢'; }, tabLabel:'Perfil' },
+    tr:{ who:'👤 Bu kim?', addBtn:'＋ Yeni profil', newTitle:'✨ Yeni profil', editTitle:'✏️ Profili düzenle', namePh:'İsim', cancel:'İptal', create:'Oluştur ✓', save:'Kaydet ✓', dupName:'Bu isim zaten var', onlyOne:'Tek profili silemezsin!', confirmDel:function(n){ return n + ' profili silinsin mi? 😢'; }, tabLabel:'Profil' }
   };
   function kpLang() { return localStorage.getItem('deentag_lang') || 'fr'; }
   function kpT() { return KP_I18N[kpLang()] || KP_I18N.fr; }
@@ -246,7 +246,7 @@
     icon.style.cssText = 'background:transparent;overflow:visible;border-radius:0;';
 
     var lbl = document.createElement('span');
-    lbl.textContent = 'Profil';
+    lbl.textContent = kpT().tabLabel;
 
     btn.appendChild(icon);
     btn.appendChild(lbl);
