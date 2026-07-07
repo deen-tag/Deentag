@@ -15,35 +15,35 @@ const KIDS_STARS_KEY   = 'deentag_kids_stars';
 const KIDS_HOME_LANGS = ['fr', 'en', 'es', 'de', 'it', 'nl', 'pt', 'tr'];
 
 const KIDS_HOME_I18N = {
-  fr:{ subtitle:'Choisis une catégorie !', collection:'✨ Ta collection', invocation:'invocation', invocations:'invocations',
+  fr:{ subtitle:'Choisis une catégorie !', collection:'✨ Ta collection', collectionEmpty:'Ta collection t\'attend ✨', invocation:'invocation', invocations:'invocations',
        bravoTitle:'Bravo !', bravoSub:'Tu as écouté toutes les invocations !', bravoBtn:'Continuer 🎉',
        who:'👤 C\'est qui ?', addBtn:'＋ Nouveau profil', back:'Retour',
        welcomeTitle:function(n){ return 'Bienvenue ' + n + ' !'; }, welcomeSub:'Bismillah ! Ton aventure commence maintenant ! 🚀', welcomeBtn:'C\'est parti ! ✨' },
-  en:{ subtitle:'Choose a category!', collection:'✨ Your collection', invocation:'prayer', invocations:'prayers',
+  en:{ subtitle:'Choose a category!', collection:'✨ Your collection', collectionEmpty:'Your collection awaits ✨', invocation:'prayer', invocations:'prayers',
        bravoTitle:'Well done!', bravoSub:'You listened to all the prayers!', bravoBtn:'Continue 🎉',
        who:'👤 Who is it?', addBtn:'＋ New profile', back:'Back',
        welcomeTitle:function(n){ return 'Welcome ' + n + '!'; }, welcomeSub:'Bismillah! Your adventure starts now! 🚀', welcomeBtn:'Let\'s go! ✨' },
-  es:{ subtitle:'¡Elige una categoría!', collection:'✨ Tu colección', invocation:'súplica', invocations:'súplicas',
+  es:{ subtitle:'¡Elige una categoría!', collection:'✨ Tu colección', collectionEmpty:'Tu colección te espera ✨', invocation:'súplica', invocations:'súplicas',
        bravoTitle:'¡Bravo!', bravoSub:'¡Has escuchado todas las súplicas!', bravoBtn:'Continuar 🎉',
        who:'👤 ¿Quién es?', addBtn:'＋ Nuevo perfil', back:'Volver',
        welcomeTitle:function(n){ return '¡Bienvenido ' + n + '!'; }, welcomeSub:'¡Bismillah! ¡Tu aventura empieza ahora! 🚀', welcomeBtn:'¡Vamos! ✨' },
-  de:{ subtitle:'Wähle eine Kategorie!', collection:'✨ Deine Sammlung', invocation:'Bittgebet', invocations:'Bittgebete',
+  de:{ subtitle:'Wähle eine Kategorie!', collection:'✨ Deine Sammlung', collectionEmpty:'Deine Sammlung wartet ✨', invocation:'Bittgebet', invocations:'Bittgebete',
        bravoTitle:'Bravo!', bravoSub:'Du hast alle Bittgebete gehört!', bravoBtn:'Weiter 🎉',
        who:'👤 Wer ist das?', addBtn:'＋ Neues Profil', back:'Zurück',
        welcomeTitle:function(n){ return 'Willkommen ' + n + '!'; }, welcomeSub:'Bismillah! Dein Abenteuer beginnt jetzt! 🚀', welcomeBtn:'Los geht\'s! ✨' },
-  it:{ subtitle:'Scegli una categoria!', collection:'✨ La tua collezione', invocation:'invocazione', invocations:'invocazioni',
+  it:{ subtitle:'Scegli una categoria!', collection:'✨ La tua collezione', collectionEmpty:'La tua collezione ti aspetta ✨', invocation:'invocazione', invocations:'invocazioni',
        bravoTitle:'Bravo!', bravoSub:'Hai ascoltato tutte le invocazioni!', bravoBtn:'Continua 🎉',
        who:'👤 Chi è?', addBtn:'＋ Nuovo profilo', back:'Indietro',
        welcomeTitle:function(n){ return 'Benvenuto ' + n + '!'; }, welcomeSub:'Bismillah! La tua avventura inizia ora! 🚀', welcomeBtn:'Si parte! ✨' },
-  nl:{ subtitle:'Kies een categorie!', collection:'✨ Jouw verzameling', invocation:'smeekbede', invocations:'smeekbeden',
+  nl:{ subtitle:'Kies een categorie!', collection:'✨ Jouw verzameling', collectionEmpty:'Jouw verzameling wacht ✨', invocation:'smeekbede', invocations:'smeekbeden',
        bravoTitle:'Bravo!', bravoSub:'Je hebt alle smeekbeden beluisterd!', bravoBtn:'Verdergaan 🎉',
        who:'👤 Wie is het?', addBtn:'＋ Nieuw profiel', back:'Terug',
        welcomeTitle:function(n){ return 'Welkom ' + n + '!'; }, welcomeSub:'Bismillah! Jouw avontuur begint nu! 🚀', welcomeBtn:'Daar gaan we! ✨' },
-  pt:{ subtitle:'Escolhe uma categoria!', collection:'✨ A tua coleção', invocation:'súplica', invocations:'súplicas',
+  pt:{ subtitle:'Escolhe uma categoria!', collection:'✨ A tua coleção', collectionEmpty:'A tua coleção espera-te ✨', invocation:'súplica', invocations:'súplicas',
        bravoTitle:'Muito bem!', bravoSub:'Ouviste todas as súplicas!', bravoBtn:'Continuar 🎉',
        who:'👤 Quem é?', addBtn:'＋ Novo perfil', back:'Voltar',
        welcomeTitle:function(n){ return 'Bem-vindo ' + n + '!'; }, welcomeSub:'Bismillah! A tua aventura começa agora! 🚀', welcomeBtn:'Vamos lá! ✨' },
-  tr:{ subtitle:'Bir kategori seç!', collection:'✨ Koleksiyonun', invocation:'dua', invocations:'dua',
+  tr:{ subtitle:'Bir kategori seç!', collection:'✨ Koleksiyonun', collectionEmpty:'Koleksiyonun seni bekliyor ✨', invocation:'dua', invocations:'dua',
        bravoTitle:'Aferin!', bravoSub:'Tüm duaları dinledin!', bravoBtn:'Devam 🎉',
        who:'👤 Bu kim?', addBtn:'＋ Yeni profil', back:'Geri',
        welcomeTitle:function(n){ return 'Hoş geldin ' + n + '!'; }, welcomeSub:'Bismillah! Maceran şimdi başlıyor! 🚀', welcomeBtn:'Haydi başlayalım! ✨' }
@@ -188,7 +188,7 @@ function renderCollection() {
 
   wrap.innerHTML =
     '<div class="kids-collection-head">' +
-      '<span class="kids-collection-title">' + t.collection + '</span>' +
+      '<span class="kids-collection-title">' + (badges.length === 0 ? t.collectionEmpty : t.collection) + '</span>' +
       '<span class="kids-collection-count">' + badges.length + ' / ' + catKeys.length + '</span>' +
     '</div>' +
     '<div class="kids-collection-row">' +

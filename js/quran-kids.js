@@ -14,6 +14,21 @@ const KIDS_LOADING = {
   fr:'Chargement...', en:'Loading...', es:'Cargando...', de:'Laden...',
   it:'Caricamento...', nl:'Laden...', pt:'Carregando...', tr:'Yükleniyor...'
 };
+const KIDS_MAIN_TITLE = {
+  fr:'Le Saint Coran 🌟', en:'The Holy Quran 🌟', es:'El Sagrado Corán 🌟',
+  de:'Der Heilige Koran 🌟', it:'Il Sacro Corano 🌟', nl:'De Heilige Koran 🌟',
+  pt:'O Alcorão Sagrado 🌟', tr:'Kutsal Kuran 🌟'
+};
+const KIDS_COLLECTION_TITLE = {
+  fr:'✨ Ta collection', en:'✨ Your collection', es:'✨ Tu colección',
+  de:'✨ Deine Sammlung', it:'✨ La tua collezione', nl:'✨ Jouw verzameling',
+  pt:'✨ A tua coleção', tr:'✨ Koleksiyonun'
+};
+const KIDS_COLLECTION_EMPTY = {
+  fr:'Ta collection t\'attend ✨', en:'Your collection awaits ✨', es:'Tu colección te espera ✨',
+  de:'Deine Sammlung wartet ✨', it:'La tua collezione ti aspetta ✨', nl:'Jouw verzameling wacht ✨',
+  pt:'A tua coleção espera-te ✨', tr:'Koleksiyonun seni bekliyor ✨'
+};
 const KIDS_VERSE_LABEL = {
   fr:'versets', en:'verses', es:'versos', de:'Verse',
   it:'versetti', nl:'verzen', pt:'versos', tr:'ayet'
@@ -91,10 +106,14 @@ function kidsRenderCollection() {
   if (!wrap || typeof SURAHS === 'undefined') return;
   const badges = kidsGetQuranBadges();
   const ids    = KIDS_CARD_IDS.filter(id => id !== 'all');
+  const lang   = kidsGetLang();
+  const titleTxt = badges.length === 0
+    ? (KIDS_COLLECTION_EMPTY[lang] || KIDS_COLLECTION_EMPTY.fr)
+    : (KIDS_COLLECTION_TITLE[lang] || KIDS_COLLECTION_TITLE.fr);
 
   wrap.innerHTML = `
     <div class="kids-collection-head">
-      <span class="kids-collection-title">✨ Ta collection</span>
+      <span class="kids-collection-title">${titleTxt}</span>
       <span class="kids-collection-count">${badges.length} / ${ids.length}</span>
     </div>
     <div class="kids-collection-row">
@@ -144,8 +163,11 @@ function kidsApplyLang(lang) {
   document.querySelectorAll('.lang-option').forEach(o => o.classList.toggle('active', o.dataset.lang === lang));
   const sub = document.getElementById('homeSubtitle');
   if (sub) sub.textContent = KIDS_SELECT_SUBTITLE[lang] || 'Choisis une sourate !';
+  const mainTitle = document.getElementById('kidsMainTitle');
+  if (mainTitle) mainTitle.textContent = KIDS_MAIN_TITLE[lang] || KIDS_MAIN_TITLE.fr;
   const allTitle = document.getElementById('allPageTitle');
   if (allTitle) allTitle.textContent = KIDS_ALL_QURAN[lang] || '📚 Tout le Coran';
+  kidsRenderCollection();
 
   const si = KIDS_SETTINGS_I18N[lang] || KIDS_SETTINGS_I18N.fr;
   const setTxt = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
