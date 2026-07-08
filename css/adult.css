@@ -1040,7 +1040,7 @@ body.night .accordion.open .accordion-header {
   background: linear-gradient(135deg, rgba(201,168,76,0.14), rgba(201,168,76,0.05));
 }
 .accordion-title {
-  font-family: 'Cinzel', serif; font-size: 12px; letter-spacing: 0.03em;
+  font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 0.03em;
   color: #8B6914; font-weight: 600; text-transform: uppercase; flex: 1; line-height: 1.6;
 }
 body.night .accordion-title {
@@ -2030,7 +2030,7 @@ body.night .dua-close-btn:active {
 .section-chip {
   flex-shrink: 0;
   font-family: 'Cinzel', serif;
-  font-size: 11.5px;
+  font-size: 12.5px;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -2777,14 +2777,15 @@ body.night .surah-name-fr { color:var(--gold-shine); }
 
 .surah-meta {
   font-family:'Cormorant Garamond', serif; font-style:italic;
-  font-size:11px; color:var(--text3); margin-top:1px;
+  font-size:12px; color:var(--text3); margin-top:1px;
 }
 
 .surah-versets {
-  font-family:'Cinzel', serif; font-size:9px; color:var(--gold-dark);
+  font-family:'Cinzel', serif; font-size:10px; color:var(--gold-dark);
   letter-spacing:0.1em; flex-shrink:0;
 }
 
+body.day .surah-versets { color:#7A5E00; }
 body.night .surah-versets { color:var(--gold-light); }
 
 .surah-separator {
@@ -3180,7 +3181,7 @@ body.has-tabbar {
 /* Label */
 .app-tabbar .tab span {
   font-family: 'Cinzel', serif;
-  font-size: 8.5px; font-weight: 600;
+  font-size: 9.5px; font-weight: 600;
   letter-spacing: 0.05em; text-transform: uppercase;
   color: var(--text3);
   opacity: 0.85;
