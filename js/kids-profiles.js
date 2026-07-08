@@ -6,14 +6,14 @@
   var PASTEL_COLORS = ['#FFB3BA','#FFDFBA','#FFFFBA','#BAFFC9','#BAE1FF','#D4BAFF'];
 
   var KP_I18N = {
-    fr:{ who:'👤 C\'est qui ?', addBtn:'＋ Nouveau profil', newTitle:'✨ Nouveau profil', editTitle:'✏️ Modifier le profil', namePh:'Prénom', cancel:'Annuler', create:'Créer ✓', save:'Sauvegarder ✓', dupName:'Ce prénom existe déjà', onlyOne:'Tu ne peux pas supprimer le seul profil !', confirmDel:function(n){ return 'Supprimer le profil de ' + n + ' ? 😢'; }, tabLabel:'Profil' },
-    en:{ who:'👤 Who is it?', addBtn:'＋ New profile', newTitle:'✨ New profile', editTitle:'✏️ Edit profile', namePh:'First name', cancel:'Cancel', create:'Create ✓', save:'Save ✓', dupName:'This name already exists', onlyOne:'You can\'t delete the only profile!', confirmDel:function(n){ return 'Delete ' + n + '\'s profile? 😢'; }, tabLabel:'Profile' },
-    es:{ who:'👤 ¿Quién es?', addBtn:'＋ Nuevo perfil', newTitle:'✨ Nuevo perfil', editTitle:'✏️ Editar perfil', namePh:'Nombre', cancel:'Cancelar', create:'Crear ✓', save:'Guardar ✓', dupName:'Este nombre ya existe', onlyOne:'¡No puedes eliminar el único perfil!', confirmDel:function(n){ return '¿Eliminar el perfil de ' + n + '? 😢'; }, tabLabel:'Perfil' },
-    de:{ who:'👤 Wer ist das?', addBtn:'＋ Neues Profil', newTitle:'✨ Neues Profil', editTitle:'✏️ Profil bearbeiten', namePh:'Vorname', cancel:'Abbrechen', create:'Erstellen ✓', save:'Speichern ✓', dupName:'Dieser Name existiert bereits', onlyOne:'Du kannst das einzige Profil nicht löschen!', confirmDel:function(n){ return 'Profil von ' + n + ' löschen? 😢'; }, tabLabel:'Profil' },
-    it:{ who:'👤 Chi è?', addBtn:'＋ Nuovo profilo', newTitle:'✨ Nuovo profilo', editTitle:'✏️ Modifica profilo', namePh:'Nome', cancel:'Annulla', create:'Crea ✓', save:'Salva ✓', dupName:'Questo nome esiste già', onlyOne:'Non puoi eliminare l\'unico profilo!', confirmDel:function(n){ return 'Eliminare il profilo di ' + n + '? 😢'; }, tabLabel:'Profilo' },
-    nl:{ who:'👤 Wie is het?', addBtn:'＋ Nieuw profiel', newTitle:'✨ Nieuw profiel', editTitle:'✏️ Profiel bewerken', namePh:'Voornaam', cancel:'Annuleren', create:'Aanmaken ✓', save:'Opslaan ✓', dupName:'Deze naam bestaat al', onlyOne:'Je kan het enige profiel niet verwijderen!', confirmDel:function(n){ return 'Profiel van ' + n + ' verwijderen? 😢'; }, tabLabel:'Profiel' },
-    pt:{ who:'👤 Quem é?', addBtn:'＋ Novo perfil', newTitle:'✨ Novo perfil', editTitle:'✏️ Editar perfil', namePh:'Nome', cancel:'Cancelar', create:'Criar ✓', save:'Guardar ✓', dupName:'Este nome já existe', onlyOne:'Não podes eliminar o único perfil!', confirmDel:function(n){ return 'Eliminar o perfil de ' + n + '? 😢'; }, tabLabel:'Perfil' },
-    tr:{ who:'👤 Bu kim?', addBtn:'＋ Yeni profil', newTitle:'✨ Yeni profil', editTitle:'✏️ Profili düzenle', namePh:'İsim', cancel:'İptal', create:'Oluştur ✓', save:'Kaydet ✓', dupName:'Bu isim zaten var', onlyOne:'Tek profili silemezsin!', confirmDel:function(n){ return n + ' profili silinsin mi? 😢'; }, tabLabel:'Profil' }
+    fr:{ who:'👤 C\'est qui ?', addBtn:'＋ Nouveau profil', newTitle:'✨ Nouveau profil', editTitle:'✏️ Modifier le profil', namePh:'Prénom', cancel:'Annuler', create:'Créer ✓', save:'Sauvegarder ✓', dupName:'Ce prénom existe déjà', onlyOne:'Tu ne peux pas supprimer le seul profil !', confirmDel:function(n){ return 'Supprimer le profil de ' + n + ' ? 😢'; }, deleteBtn:'Supprimer', ok:'Compris', tabLabel:'Profil' },
+    en:{ who:'👤 Who is it?', addBtn:'＋ New profile', newTitle:'✨ New profile', editTitle:'✏️ Edit profile', namePh:'First name', cancel:'Cancel', create:'Create ✓', save:'Save ✓', dupName:'This name already exists', onlyOne:'You can\'t delete the only profile!', confirmDel:function(n){ return 'Delete ' + n + '\'s profile? 😢'; }, deleteBtn:'Delete', ok:'Got it', tabLabel:'Profile' },
+    es:{ who:'👤 ¿Quién es?', addBtn:'＋ Nuevo perfil', newTitle:'✨ Nuevo perfil', editTitle:'✏️ Editar perfil', namePh:'Nombre', cancel:'Cancelar', create:'Crear ✓', save:'Guardar ✓', dupName:'Este nombre ya existe', onlyOne:'¡No puedes eliminar el único perfil!', confirmDel:function(n){ return '¿Eliminar el perfil de ' + n + '? 😢'; }, deleteBtn:'Eliminar', ok:'Entendido', tabLabel:'Perfil' },
+    de:{ who:'👤 Wer ist das?', addBtn:'＋ Neues Profil', newTitle:'✨ Neues Profil', editTitle:'✏️ Profil bearbeiten', namePh:'Vorname', cancel:'Abbrechen', create:'Erstellen ✓', save:'Speichern ✓', dupName:'Dieser Name existiert bereits', onlyOne:'Du kannst das einzige Profil nicht löschen!', confirmDel:function(n){ return 'Profil von ' + n + ' löschen? 😢'; }, deleteBtn:'Löschen', ok:'Verstanden', tabLabel:'Profil' },
+    it:{ who:'👤 Chi è?', addBtn:'＋ Nuovo profilo', newTitle:'✨ Nuovo profilo', editTitle:'✏️ Modifica profilo', namePh:'Nome', cancel:'Annulla', create:'Crea ✓', save:'Salva ✓', dupName:'Questo nome esiste già', onlyOne:'Non puoi eliminare l\'unico profilo!', confirmDel:function(n){ return 'Eliminare il profilo di ' + n + '? 😢'; }, deleteBtn:'Elimina', ok:'Ho capito', tabLabel:'Profilo' },
+    nl:{ who:'👤 Wie is het?', addBtn:'＋ Nieuw profiel', newTitle:'✨ Nieuw profiel', editTitle:'✏️ Profiel bewerken', namePh:'Voornaam', cancel:'Annuleren', create:'Aanmaken ✓', save:'Opslaan ✓', dupName:'Deze naam bestaat al', onlyOne:'Je kan het enige profiel niet verwijderen!', confirmDel:function(n){ return 'Profiel van ' + n + ' verwijderen? 😢'; }, deleteBtn:'Verwijderen', ok:'Begrepen', tabLabel:'Profiel' },
+    pt:{ who:'👤 Quem é?', addBtn:'＋ Novo perfil', newTitle:'✨ Novo perfil', editTitle:'✏️ Editar perfil', namePh:'Nome', cancel:'Cancelar', create:'Criar ✓', save:'Guardar ✓', dupName:'Este nome já existe', onlyOne:'Não podes eliminar o único perfil!', confirmDel:function(n){ return 'Eliminar o perfil de ' + n + '? 😢'; }, deleteBtn:'Eliminar', ok:'Entendido', tabLabel:'Perfil' },
+    tr:{ who:'👤 Bu kim?', addBtn:'＋ Yeni profil', newTitle:'✨ Yeni profil', editTitle:'✏️ Profili düzenle', namePh:'İsim', cancel:'İptal', create:'Oluştur ✓', save:'Kaydet ✓', dupName:'Bu isim zaten var', onlyOne:'Tek profili silemezsin!', confirmDel:function(n){ return n + ' profili silinsin mi? 😢'; }, deleteBtn:'Sil', ok:'Anladım', tabLabel:'Profil' }
   };
   function kpLang() { return localStorage.getItem('deentag_lang') || 'fr'; }
   function kpT() { return KP_I18N[kpLang()] || KP_I18N.fr; }
@@ -373,8 +373,93 @@
         background: linear-gradient(135deg, var(--gold), var(--violet));
         box-shadow: 0 6px 16px rgba(108,99,255,0.28);
       }
+
+      /* ── Popup alert/confirm custom (remplace alert()/confirm()) ── */
+      .kp-confirm-overlay {
+        position: fixed; inset: 0; z-index: 250;
+        background: rgba(17,22,58,.75);
+        backdrop-filter: blur(4px);
+        display: none;
+        align-items: center; justify-content: center;
+        padding: 24px;
+      }
+      .kp-confirm-overlay.open { display: flex; }
+      .kp-confirm-box {
+        width: 100%; max-width: 320px;
+        background: var(--paper);
+        border-radius: 28px;
+        box-shadow: var(--kids-shadow);
+        padding: 28px 22px 22px;
+        text-align: center;
+        transform: scale(0.85) translateY(10px);
+        opacity: 0;
+        transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease;
+      }
+      .kp-confirm-overlay.open .kp-confirm-box { transform: scale(1) translateY(0); opacity: 1; }
+      .kp-confirm-emoji { font-size: 44px; margin-bottom: 8px; line-height: 1; }
+      .kp-confirm-text {
+        font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 16px;
+        color: var(--ink); line-height: 1.4; margin-bottom: 22px;
+      }
+      .kp-confirm-actions { display: flex; gap: 10px; }
+      .kids-profile-btn-danger {
+        flex: 2; border: none; color: white; font-weight: 800;
+        background: linear-gradient(135deg, #FF6B6B, #FF8A65);
+        box-shadow: 0 6px 16px rgba(255,107,107,0.3);
+      }
     `;
     document.head.appendChild(style);
+  }
+
+  /* ── Popup alert custom : un seul bouton ── */
+  function kpAlert(message) {
+    injectKidsCSS();
+    var overlay = document.getElementById('kpConfirmOverlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'kpConfirmOverlay';
+      overlay.className = 'kp-confirm-overlay';
+      document.body.appendChild(overlay);
+    }
+    overlay.innerHTML =
+      '<div class="kp-confirm-box" onclick="event.stopPropagation()">' +
+        '<div class="kp-confirm-emoji">🙈</div>' +
+        '<div class="kp-confirm-text">' + message + '</div>' +
+        '<div class="kp-confirm-actions">' +
+          '<button class="kids-profile-btn kids-profile-btn-primary" id="kpAlertOk">' + kpT().ok + '</button>' +
+        '</div>' +
+      '</div>';
+    overlay.onclick = function () { overlay.classList.remove('open'); };
+    document.getElementById('kpAlertOk').onclick = function () { overlay.classList.remove('open'); };
+    requestAnimationFrame(function(){ overlay.classList.add('open'); });
+  }
+
+  /* ── Popup confirm custom : Annuler / Supprimer ── */
+  function kpConfirm(message, onConfirm) {
+    injectKidsCSS();
+    var overlay = document.getElementById('kpConfirmOverlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'kpConfirmOverlay';
+      overlay.className = 'kp-confirm-overlay';
+      document.body.appendChild(overlay);
+    }
+    overlay.innerHTML =
+      '<div class="kp-confirm-box" onclick="event.stopPropagation()">' +
+        '<div class="kp-confirm-emoji">😢</div>' +
+        '<div class="kp-confirm-text">' + message + '</div>' +
+        '<div class="kp-confirm-actions">' +
+          '<button class="kids-profile-btn" id="kpConfirmCancel">' + kpT().cancel + '</button>' +
+          '<button class="kids-profile-btn kids-profile-btn-danger" id="kpConfirmOk">' + kpT().deleteBtn + '</button>' +
+        '</div>' +
+      '</div>';
+    overlay.onclick = function () { overlay.classList.remove('open'); };
+    document.getElementById('kpConfirmCancel').onclick = function () { overlay.classList.remove('open'); };
+    document.getElementById('kpConfirmOk').onclick = function () {
+      overlay.classList.remove('open');
+      onConfirm();
+    };
+    requestAnimationFrame(function(){ overlay.classList.add('open'); });
   }
 
   /* ── Init ── */
@@ -488,21 +573,22 @@
   function kidsDeleteProfile(id) {
     var profiles = loadProfiles();
     if (profiles.length <= 1) {
-      alert(kpT().onlyOne);
+      kpAlert(kpT().onlyOne);
       return;
     }
     var p = profiles.find(function(x){ return x.id === id; });
     if (!p) return;
-    if (!confirm(kpT().confirmDel(p.name))) return;
-    profiles = profiles.filter(function(x){ return x.id !== id; });
-    localStorage.setItem('deentag_profiles', JSON.stringify(profiles));
-    // Si c'était le profil actif, basculer sur le premier
-    if (getActiveId() === id) setActiveId(profiles[0].id);
-    updateKidsTabAvatar();
-    var oldModal = document.getElementById('kidsProfileModal');
-    if (oldModal) oldModal.remove();
-    openKidsProfileModal();
-    window.dispatchEvent(new CustomEvent('deentag:profileChanged', { detail:{ id: getActiveId() } }));
+    kpConfirm(kpT().confirmDel(p.name), function() {
+      var remaining = loadProfiles().filter(function(x){ return x.id !== id; });
+      localStorage.setItem('deentag_profiles', JSON.stringify(remaining));
+      // Si c'était le profil actif, basculer sur le premier
+      if (getActiveId() === id) setActiveId(remaining[0].id);
+      updateKidsTabAvatar();
+      var oldModal = document.getElementById('kidsProfileModal');
+      if (oldModal) oldModal.remove();
+      openKidsProfileModal();
+      window.dispatchEvent(new CustomEvent('deentag:profileChanged', { detail:{ id: getActiveId() } }));
+    });
   }
 
   /* ── Toast de bienvenue de secours ──
