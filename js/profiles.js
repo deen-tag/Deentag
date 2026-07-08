@@ -888,11 +888,9 @@
 
   /* ── Open/Close profile : modal autonome, fonctionne sur toute page ── */
   function openProfileModal() {
-    if (!localStorage.getItem('deentag_onboarding_done')) {
-      localStorage.setItem('deentag_onboarding_done', '1');
-      var profiles0 = loadProfiles();
+    if (!loadProfiles().length) {
       _color = null; _photo = null;
-      openProfileForm(profiles0[0] || null, true);
+      openProfileForm(null, true);
       return;
     }
     var overlay = ensureModalDOM();
@@ -947,8 +945,7 @@
     if (getActiveId() === id) setActiveId(profiles.length ? profiles[0].id : null);
     localStorage.removeItem(progressKey(id));
     updateTabbarAvatar();
-    if (!profiles.length) { _color = null; _photo = null; openProfileForm(null, true); }
-    else { openProfileModal(); }
+    openProfileModal();
   };
   window.DT.selectProfile = function(id) {
     setActiveId(id); updateTabbarAvatar(); closeProfileModal();
