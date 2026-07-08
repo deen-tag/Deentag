@@ -199,14 +199,14 @@
   var PROFILE_COLORS = ['#C9A84C','#2C4A3E','#4A3728','#3A3060','#5C3A4A'];
 
   var TRANSLATIONS = {
-    fr: { memorized:'Mémorisé',      profiles:'Profils',    addProfile:'Ajouter un profil', editProfile:'Modifier', deleteProfile:'Supprimer', chooseProfile:'Qui êtes-vous ?', name:'Prénom', save:'Enregistrer', cancel:'Annuler', progress:'Progression', surasMemorized:'Sourates mémorisées', confirmDelete:'Supprimer ce profil ?', detail:'Détail', close:'Fermer', activeSince:'Membre depuis', activeProfile:'Profil actif', juzCompleted:'Juz complétés', duasMemorized:'Invocations mémorisées', noDuaMemorized:'Aucune invocation mémorisée', me:'Moi', onboardTitle:'Créez votre profil', onboardText:'Démarrez votre progression personnelle : sourates, invocations, tout ce que vous apprenez sera suivi ici. Comment souhaitez-vous être appelé ?', onboardCta:'Commencer ✓' , thisWeek:'Cette semaine', activeDaysLabel:'jours actifs', itemsLearned:'appris', currentFocus:'En cours', continueLabel:'Continuer', recentActivity:'Activité récente', noRecentActivity:'Aucune activité récente', today:"Aujourd'hui", yesterday:'Hier', surahMemorizedEvent:'Sourate mémorisée', duaMemorizedEvent:'Invocation apprise' },
-    en: { memorized:'Memorized',     profiles:'Profiles',   addProfile:'Add profile',        editProfile:'Edit',     deleteProfile:'Delete',    chooseProfile:'Who are you?',     name:'Name',   save:'Save',        cancel:'Cancel',  progress:'Progress',     surasMemorized:'Memorized surahs',    confirmDelete:'Delete this profile?',  detail:'Detail', close:'Close', activeSince:'Member since', activeProfile:'Active profile', juzCompleted:'Completed Juz', duasMemorized:'Memorized supplications', noDuaMemorized:'No supplication memorized yet', me:'Me', onboardTitle:'Create your profile', onboardText:'Start tracking your personal progress: surahs, supplications, and more. What would you like to be called?', onboardCta:'Get started ✓' , thisWeek:'This week', activeDaysLabel:'active days', itemsLearned:'learned', currentFocus:'In progress', continueLabel:'Continue', recentActivity:'Recent activity', noRecentActivity:'No recent activity', today:'Today', yesterday:'Yesterday', surahMemorizedEvent:'Surah memorized', duaMemorizedEvent:'Supplication learned' },
-    es: { memorized:'Memorizado',    profiles:'Perfiles',   addProfile:'Añadir perfil',      editProfile:'Editar',   deleteProfile:'Eliminar',  chooseProfile:'¿Quién eres?',     name:'Nombre', save:'Guardar',     cancel:'Cancelar',progress:'Progreso',     surasMemorized:'Suras memorizadas',   confirmDelete:'¿Eliminar este perfil?',detail:'Detalle',close:'Cerrar',activeSince:'Miembro desde',activeProfile:'Perfil activo',juzCompleted:'Juz completados', duasMemorized:'Invocaciones memorizadas', noDuaMemorized:'Ninguna invocación memorizada', me:'Yo', onboardTitle:'Cree su perfil', onboardText:'Este es su espacio para seguir su progreso personal: suras, súplicas, progreso... ¿Cómo desea que le llamemos?', onboardCta:'Empezar ✓' , thisWeek:'Esta semana', activeDaysLabel:'días activos', itemsLearned:'aprendido', currentFocus:'En curso', continueLabel:'Continuar', recentActivity:'Actividad reciente', noRecentActivity:'Sin actividad reciente', today:'Hoy', yesterday:'Ayer', surahMemorizedEvent:'Sura memorizada', duaMemorizedEvent:'Súplica aprendida' },
-    de: { memorized:'Auswendig',     profiles:'Profile',    addProfile:'Profil hinzufügen',  editProfile:'Bearbeiten',deleteProfile:'Löschen',  chooseProfile:'Wer bist du?',      name:'Name',   save:'Speichern',   cancel:'Abbrechen',progress:'Fortschritt',  surasMemorized:'Gelernte Suren',      confirmDelete:'Profil löschen?',       detail:'Detail', close:'Schließen',activeSince:'Mitglied seit',activeProfile:'Aktives Profil',juzCompleted:'Abgeschlossene Juz', duasMemorized:'Gelernte Bittgebete', noDuaMemorized:'Noch kein Bittgebet gelernt', me:'Ich', onboardTitle:'Erstellen Sie Ihr Profil', onboardText:'Dies ist Ihr Bereich, um Ihren persönlichen Fortschritt zu verfolgen: Suren, Bittgebete, Fortschritt... Wie möchten Sie genannt werden?', onboardCta:'Loslegen ✓' , thisWeek:'Diese Woche', activeDaysLabel:'aktive Tage', itemsLearned:'gelernt', currentFocus:'In Arbeit', continueLabel:'Weiter', recentActivity:'Letzte Aktivität', noRecentActivity:'Keine aktuelle Aktivität', today:'Heute', yesterday:'Gestern', surahMemorizedEvent:'Sure gelernt', duaMemorizedEvent:'Bittgebet gelernt' },
-    it: { memorized:'Memorizzato',   profiles:'Profili',    addProfile:'Aggiungi profilo',   editProfile:'Modifica', deleteProfile:'Elimina',   chooseProfile:'Chi sei?',         name:'Nome',   save:'Salva',       cancel:'Annulla', progress:'Progressi',    surasMemorized:'Sure memorizzate',    confirmDelete:'Eliminare questo profilo?',detail:'Dettaglio',close:'Chiudi',activeSince:'Membro da',activeProfile:'Profilo attivo',juzCompleted:'Juz completati', duasMemorized:'Invocazioni memorizzate', noDuaMemorized:'Nessuna invocazione memorizzata', me:'Io', onboardTitle:'Crei il suo profilo', onboardText:'Questo è il suo spazio per seguire i suoi progressi personali: sure, invocazioni, progressi... Come desidera essere chiamato?', onboardCta:'Inizia ✓' , thisWeek:'Questa settimana', activeDaysLabel:'giorni attivi', itemsLearned:'imparato', currentFocus:'In corso', continueLabel:'Continua', recentActivity:'Attività recente', noRecentActivity:'Nessuna attività recente', today:'Oggi', yesterday:'Ieri', surahMemorizedEvent:'Sura memorizzata', duaMemorizedEvent:'Invocazione imparata' },
-    nl: { memorized:'Gememoriseerd', profiles:'Profielen',  addProfile:'Profiel toevoegen',  editProfile:'Bewerken', deleteProfile:'Verwijderen',chooseProfile:'Wie ben jij?',    name:'Naam',   save:'Opslaan',     cancel:'Annuleren',progress:'Voortgang',    surasMemorized:"Gememoriseerde soera's",confirmDelete:'Dit profiel verwijderen?',detail:'Detail',close:'Sluiten',activeSince:'Lid sinds',activeProfile:'Actief profiel',juzCompleted:'Voltooide Juz', duasMemorized:'Gememoriseerde smeekgebeden', noDuaMemorized:'Nog geen smeekgebed gememoriseerd', me:'Ik', onboardTitle:'Maak uw profiel aan', onboardText:'Dit is uw plek om uw persoonlijke voortgang te volgen: soera\'s, smeekbeden, voortgang... Hoe wilt u genoemd worden?', onboardCta:'Beginnen ✓' , thisWeek:'Deze week', activeDaysLabel:'actieve dagen', itemsLearned:'geleerd', currentFocus:'Bezig', continueLabel:'Doorgaan', recentActivity:'Recente activiteit', noRecentActivity:'Geen recente activiteit', today:'Vandaag', yesterday:'Gisteren', surahMemorizedEvent:'Soera gememoriseerd', duaMemorizedEvent:'Smeekgebed geleerd' },
-    pt: { memorized:'Memorizado',    profiles:'Perfis',     addProfile:'Adicionar perfil',   editProfile:'Editar',   deleteProfile:'Eliminar',  chooseProfile:'Quem és tu?',      name:'Nome',   save:'Guardar',     cancel:'Cancelar', progress:'Progresso',   surasMemorized:'Suras memorizadas',   confirmDelete:'Eliminar este perfil?', detail:'Detalhe',close:'Fechar',activeSince:'Membro desde',activeProfile:'Perfil ativo',juzCompleted:'Juz concluídos', duasMemorized:'Invocações memorizadas', noDuaMemorized:'Nenhuma invocação memorizada', me:'Eu', onboardTitle:'Crie o seu perfil', onboardText:'Este é o seu espaço para acompanhar o seu progresso pessoal: suras, súplicas, progresso... Como deseja ser chamado?', onboardCta:'Começar ✓' , thisWeek:'Esta semana', activeDaysLabel:'dias ativos', itemsLearned:'aprendido', currentFocus:'Em curso', continueLabel:'Continuar', recentActivity:'Atividade recente', noRecentActivity:'Sem atividade recente', today:'Hoje', yesterday:'Ontem', surahMemorizedEvent:'Sura memorizada', duaMemorizedEvent:'Invocação aprendida' },
-    tr: { memorized:'Ezberlenmiş',   profiles:'Profiller',  addProfile:'Profil ekle',        editProfile:'Düzenle',  deleteProfile:'Sil',       chooseProfile:'Sen kimsin?',      name:'İsim',   save:'Kaydet',      cancel:'İptal',    progress:'İlerleme',    surasMemorized:'Ezberlenmiş sureler', confirmDelete:'Bu profili sil?',       detail:'Detay',  close:'Kapat',  activeSince:'Üye tarihi',  activeProfile:'Aktif profil',  juzCompleted:'Tamamlanan Cüzler', duasMemorized:'Ezberlenmiş dualar', noDuaMemorized:'Henüz ezberlenmiş dua yok', me:'Ben', onboardTitle:'Profilinizi oluşturun', onboardText:'Burası kişisel ilerlemenizi takip ettiğiniz alandır: sureler, dualar, ilerleme... Size nasıl hitap edelim?', onboardCta:'Başla ✓', thisWeek:'Bu hafta', activeDaysLabel:'aktif gün', itemsLearned:'öğrenildi', currentFocus:'Devam ediyor', continueLabel:'Devam et', recentActivity:'Son etkinlik', noRecentActivity:'Yakın zamanda etkinlik yok', today:'Bugün', yesterday:'Dün', surahMemorizedEvent:'Sure ezberlendi', duaMemorizedEvent:'Dua ezberlendi' }
+    fr: { memorized:'Mémorisé',      profiles:'Profils',    addProfile:'Ajouter un profil', editProfile:'Modifier', deleteProfile:'Supprimer', chooseProfile:'Qui êtes-vous ?', name:'Prénom', save:'Enregistrer', cancel:'Annuler', progress:'Progression', surasMemorized:'Sourates mémorisées', confirmDelete:'Supprimer ce profil ?', confirmDeleteText:'Toute la progression de {name} — sourates, versets, invocations — sera définitivement perdue.', detail:'Détail', close:'Fermer', activeSince:'Membre depuis', activeProfile:'Profil actif', juzCompleted:'Juz complétés', duasMemorized:'Invocations mémorisées', noDuaMemorized:'Aucune invocation mémorisée', me:'Moi', onboardTitle:'Créez votre profil', onboardText:'Démarrez votre progression personnelle : sourates, invocations, tout ce que vous apprenez sera suivi ici. Comment souhaitez-vous être appelé ?', onboardCta:'Commencer ✓' , thisWeek:'Cette semaine', activeDaysLabel:'jours actifs', itemsLearned:'appris', currentFocus:'En cours', continueLabel:'Continuer', recentActivity:'Activité récente', noRecentActivity:'Aucune activité récente', today:"Aujourd'hui", yesterday:'Hier', surahMemorizedEvent:'Sourate mémorisée', duaMemorizedEvent:'Invocation apprise' },
+    en: { memorized:'Memorized',     profiles:'Profiles',   addProfile:'Add profile',        editProfile:'Edit',     deleteProfile:'Delete',    chooseProfile:'Who are you?',     name:'Name',   save:'Save',        cancel:'Cancel',  progress:'Progress',     surasMemorized:'Memorized surahs',    confirmDelete:'Delete this profile?', confirmDeleteText:'All progress for {name} — surahs, verses, supplications — will be permanently lost.', detail:'Detail', close:'Close', activeSince:'Member since', activeProfile:'Active profile', juzCompleted:'Completed Juz', duasMemorized:'Memorized supplications', noDuaMemorized:'No supplication memorized yet', me:'Me', onboardTitle:'Create your profile', onboardText:'Start tracking your personal progress: surahs, supplications, and more. What would you like to be called?', onboardCta:'Get started ✓' , thisWeek:'This week', activeDaysLabel:'active days', itemsLearned:'learned', currentFocus:'In progress', continueLabel:'Continue', recentActivity:'Recent activity', noRecentActivity:'No recent activity', today:'Today', yesterday:'Yesterday', surahMemorizedEvent:'Surah memorized', duaMemorizedEvent:'Supplication learned' },
+    es: { memorized:'Memorizado',    profiles:'Perfiles',   addProfile:'Añadir perfil',      editProfile:'Editar',   deleteProfile:'Eliminar',  chooseProfile:'¿Quién eres?',     name:'Nombre', save:'Guardar',     cancel:'Cancelar',progress:'Progreso',     surasMemorized:'Suras memorizadas',   confirmDelete:'¿Eliminar este perfil?', confirmDeleteText:'Todo el progreso de {name} — suras, versículos, súplicas — se perderá permanentemente.',detail:'Detalle',close:'Cerrar',activeSince:'Miembro desde',activeProfile:'Perfil activo',juzCompleted:'Juz completados', duasMemorized:'Invocaciones memorizadas', noDuaMemorized:'Ninguna invocación memorizada', me:'Yo', onboardTitle:'Cree su perfil', onboardText:'Este es su espacio para seguir su progreso personal: suras, súplicas, progreso... ¿Cómo desea que le llamemos?', onboardCta:'Empezar ✓' , thisWeek:'Esta semana', activeDaysLabel:'días activos', itemsLearned:'aprendido', currentFocus:'En curso', continueLabel:'Continuar', recentActivity:'Actividad reciente', noRecentActivity:'Sin actividad reciente', today:'Hoy', yesterday:'Ayer', surahMemorizedEvent:'Sura memorizada', duaMemorizedEvent:'Súplica aprendida' },
+    de: { memorized:'Auswendig',     profiles:'Profile',    addProfile:'Profil hinzufügen',  editProfile:'Bearbeiten',deleteProfile:'Löschen',  chooseProfile:'Wer bist du?',      name:'Name',   save:'Speichern',   cancel:'Abbrechen',progress:'Fortschritt',  surasMemorized:'Gelernte Suren',      confirmDelete:'Profil löschen?', confirmDeleteText:'Der gesamte Fortschritt von {name} — Suren, Verse, Bittgebete — geht endgültig verloren.',       detail:'Detail', close:'Schließen',activeSince:'Mitglied seit',activeProfile:'Aktives Profil',juzCompleted:'Abgeschlossene Juz', duasMemorized:'Gelernte Bittgebete', noDuaMemorized:'Noch kein Bittgebet gelernt', me:'Ich', onboardTitle:'Erstellen Sie Ihr Profil', onboardText:'Dies ist Ihr Bereich, um Ihren persönlichen Fortschritt zu verfolgen: Suren, Bittgebete, Fortschritt... Wie möchten Sie genannt werden?', onboardCta:'Loslegen ✓' , thisWeek:'Diese Woche', activeDaysLabel:'aktive Tage', itemsLearned:'gelernt', currentFocus:'In Arbeit', continueLabel:'Weiter', recentActivity:'Letzte Aktivität', noRecentActivity:'Keine aktuelle Aktivität', today:'Heute', yesterday:'Gestern', surahMemorizedEvent:'Sure gelernt', duaMemorizedEvent:'Bittgebet gelernt' },
+    it: { memorized:'Memorizzato',   profiles:'Profili',    addProfile:'Aggiungi profilo',   editProfile:'Modifica', deleteProfile:'Elimina',   chooseProfile:'Chi sei?',         name:'Nome',   save:'Salva',       cancel:'Annulla', progress:'Progressi',    surasMemorized:'Sure memorizzate',    confirmDelete:'Eliminare questo profilo?', confirmDeleteText:'Tutti i progressi di {name} — sure, versetti, invocazioni — andranno persi definitivamente.',detail:'Dettaglio',close:'Chiudi',activeSince:'Membro da',activeProfile:'Profilo attivo',juzCompleted:'Juz completati', duasMemorized:'Invocazioni memorizzate', noDuaMemorized:'Nessuna invocazione memorizzata', me:'Io', onboardTitle:'Crei il suo profilo', onboardText:'Questo è il suo spazio per seguire i suoi progressi personali: sure, invocazioni, progressi... Come desidera essere chiamato?', onboardCta:'Inizia ✓' , thisWeek:'Questa settimana', activeDaysLabel:'giorni attivi', itemsLearned:'imparato', currentFocus:'In corso', continueLabel:'Continua', recentActivity:'Attività recente', noRecentActivity:'Nessuna attività recente', today:'Oggi', yesterday:'Ieri', surahMemorizedEvent:'Sura memorizzata', duaMemorizedEvent:'Invocazione imparata' },
+    nl: { memorized:'Gememoriseerd', profiles:'Profielen',  addProfile:'Profiel toevoegen',  editProfile:'Bewerken', deleteProfile:'Verwijderen',chooseProfile:'Wie ben jij?',    name:'Naam',   save:'Opslaan',     cancel:'Annuleren',progress:'Voortgang',    surasMemorized:"Gememoriseerde soera's",confirmDelete:'Dit profiel verwijderen?', confirmDeleteText:'Alle voortgang van {name} — soera\'s, verzen, smeekbeden — gaat definitief verloren.',detail:'Detail',close:'Sluiten',activeSince:'Lid sinds',activeProfile:'Actief profiel',juzCompleted:'Voltooide Juz', duasMemorized:'Gememoriseerde smeekgebeden', noDuaMemorized:'Nog geen smeekgebed gememoriseerd', me:'Ik', onboardTitle:'Maak uw profiel aan', onboardText:'Dit is uw plek om uw persoonlijke voortgang te volgen: soera\'s, smeekbeden, voortgang... Hoe wilt u genoemd worden?', onboardCta:'Beginnen ✓' , thisWeek:'Deze week', activeDaysLabel:'actieve dagen', itemsLearned:'geleerd', currentFocus:'Bezig', continueLabel:'Doorgaan', recentActivity:'Recente activiteit', noRecentActivity:'Geen recente activiteit', today:'Vandaag', yesterday:'Gisteren', surahMemorizedEvent:'Soera gememoriseerd', duaMemorizedEvent:'Smeekgebed geleerd' },
+    pt: { memorized:'Memorizado',    profiles:'Perfis',     addProfile:'Adicionar perfil',   editProfile:'Editar',   deleteProfile:'Eliminar',  chooseProfile:'Quem és tu?',      name:'Nome',   save:'Guardar',     cancel:'Cancelar', progress:'Progresso',   surasMemorized:'Suras memorizadas',   confirmDelete:'Eliminar este perfil?', confirmDeleteText:'Todo o progresso de {name} — suras, versículos, súplicas — será perdido definitivamente.', detail:'Detalhe',close:'Fechar',activeSince:'Membro desde',activeProfile:'Perfil ativo',juzCompleted:'Juz concluídos', duasMemorized:'Invocações memorizadas', noDuaMemorized:'Nenhuma invocação memorizada', me:'Eu', onboardTitle:'Crie o seu perfil', onboardText:'Este é o seu espaço para acompanhar o seu progresso pessoal: suras, súplicas, progresso... Como deseja ser chamado?', onboardCta:'Começar ✓' , thisWeek:'Esta semana', activeDaysLabel:'dias ativos', itemsLearned:'aprendido', currentFocus:'Em curso', continueLabel:'Continuar', recentActivity:'Atividade recente', noRecentActivity:'Sem atividade recente', today:'Hoje', yesterday:'Ontem', surahMemorizedEvent:'Sura memorizada', duaMemorizedEvent:'Invocação aprendida' },
+    tr: { memorized:'Ezberlenmiş',   profiles:'Profiller',  addProfile:'Profil ekle',        editProfile:'Düzenle',  deleteProfile:'Sil',       chooseProfile:'Sen kimsin?',      name:'İsim',   save:'Kaydet',      cancel:'İptal',    progress:'İlerleme',    surasMemorized:'Ezberlenmiş sureler', confirmDelete:'Bu profili sil?', confirmDeleteText:'{name} adlı profilin tüm ilerlemesi — sureler, ayetler, dualar — kalıcı olarak silinecek.',       detail:'Detay',  close:'Kapat',  activeSince:'Üye tarihi',  activeProfile:'Aktif profil',  juzCompleted:'Tamamlanan Cüzler', duasMemorized:'Ezberlenmiş dualar', noDuaMemorized:'Henüz ezberlenmiş dua yok', me:'Ben', onboardTitle:'Profilinizi oluşturun', onboardText:'Burası kişisel ilerlemenizi takip ettiğiniz alandır: sureler, dualar, ilerleme... Size nasıl hitap edelim?', onboardCta:'Başla ✓', thisWeek:'Bu hafta', activeDaysLabel:'aktif gün', itemsLearned:'öğrenildi', currentFocus:'Devam ediyor', continueLabel:'Devam et', recentActivity:'Son etkinlik', noRecentActivity:'Yakın zamanda etkinlik yok', today:'Bugün', yesterday:'Dün', surahMemorizedEvent:'Sure ezberlendi', duaMemorizedEvent:'Dua ezberlendi' }
   };
 
   /* ── Helpers ── */
@@ -553,8 +553,71 @@
         font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--gold);
         letter-spacing:0.1em;text-transform:uppercase;
       }
+
+      /* ── Popup de confirmation custom (remplace confirm()) ── */
+      .dt-confirm-overlay {
+        position:fixed;inset:0;z-index:600;background:rgba(0,0,0,0.6);
+        display:none;align-items:center;justify-content:center;padding:24px;
+      }
+      .dt-confirm-overlay.open { display:flex; }
+      .dt-confirm-box {
+        width:100%;max-width:320px;border-radius:20px;
+        background:var(--bg2,#F5F0E3);
+        border:1.5px solid rgba(201,168,76,0.4);
+        box-shadow:0 10px 40px rgba(0,0,0,0.4);
+        padding:24px 22px 20px;text-align:center;
+        transform:scale(0.92);opacity:0;transition:transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94),opacity 0.2s ease;
+      }
+      .dt-confirm-overlay.open .dt-confirm-box { transform:scale(1);opacity:1; }
+      .dt-confirm-title {
+        font-family:'Cinzel',serif;font-size:15px;font-weight:600;color:var(--gold);
+        letter-spacing:0.03em;margin-bottom:12px;
+      }
+      .dt-confirm-text {
+        font-family:'Cormorant Garamond',serif;font-size:15px;line-height:1.5;color:var(--text);
+        margin-bottom:22px;
+      }
+      .dt-confirm-actions { display:flex;gap:10px; }
+      .dt-confirm-cancel {
+        flex:1;padding:12px;border-radius:12px;border:1.5px solid rgba(201,168,76,0.3);
+        background:transparent;color:var(--text2);font-family:'Cinzel',serif;font-size:12px;
+        letter-spacing:0.05em;cursor:pointer;
+      }
+      .dt-confirm-delete {
+        flex:1;padding:12px;border-radius:12px;border:1.5px solid #E05555;
+        background:rgba(224,85,85,0.12);color:#E05555;font-family:'Cinzel',serif;font-size:12px;
+        letter-spacing:0.05em;cursor:pointer;font-weight:600;
+      }
     `;
     document.head.appendChild(style);
+  }
+
+  /* ── Popup de confirmation custom, remplace window.confirm() ── */
+  function showConfirmDialog(title, text, onConfirm) {
+    injectCSS();
+    var overlay = document.getElementById('dtConfirmOverlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'dtConfirmOverlay';
+      overlay.className = 'dt-confirm-overlay';
+      document.body.appendChild(overlay);
+    }
+    overlay.innerHTML =
+      '<div class="dt-confirm-box" onclick="event.stopPropagation()">' +
+        '<div class="dt-confirm-title">' + title + '</div>' +
+        '<div class="dt-confirm-text">' + text + '</div>' +
+        '<div class="dt-confirm-actions">' +
+          '<button class="dt-confirm-cancel" id="dtConfirmCancel">' + t('cancel') + '</button>' +
+          '<button class="dt-confirm-delete" id="dtConfirmOk">' + t('deleteProfile') + '</button>' +
+        '</div>' +
+      '</div>';
+    overlay.classList.add('open');
+    overlay.onclick = function () { overlay.classList.remove('open'); };
+    document.getElementById('dtConfirmCancel').onclick = function () { overlay.classList.remove('open'); };
+    document.getElementById('dtConfirmOk').onclick = function () {
+      overlay.classList.remove('open');
+      onConfirm();
+    };
   }
 
   /* ── Modal autonome : créé en JS, donc indépendant du HTML de la page ── */
@@ -946,13 +1009,17 @@
     if (p) openProfileForm(p);
   };
   window.DT.deleteProfile = function(id) {
-    if (!confirm(t('confirmDelete'))) return;
-    var profiles = loadProfiles().filter(function(p){ return p.id !== id; });
-    saveProfiles(profiles);
-    if (getActiveId() === id) setActiveId(profiles.length ? profiles[0].id : null);
-    localStorage.removeItem(progressKey(id));
-    updateTabbarAvatar();
-    openProfileModal();
+    var target = loadProfiles().find(function(p){ return p.id === id; });
+    var name   = target ? target.name : '';
+    var msg    = t('confirmDeleteText').replace('{name}', '<strong>'+name+'</strong>');
+    showConfirmDialog(t('confirmDelete'), msg, function() {
+      var profiles = loadProfiles().filter(function(p){ return p.id !== id; });
+      saveProfiles(profiles);
+      if (getActiveId() === id) setActiveId(profiles.length ? profiles[0].id : null);
+      localStorage.removeItem(progressKey(id));
+      updateTabbarAvatar();
+      openProfileModal();
+    });
   };
   window.DT.selectProfile = function(id) {
     setActiveId(id); updateTabbarAvatar(); closeProfileModal();
