@@ -117,15 +117,15 @@
       nameEl.textContent = p.name;
 
       var actionsEl = document.createElement('div');
-      actionsEl.style.cssText = 'display:flex;gap:4px;margin-top:2px;';
+      actionsEl.style.cssText = 'display:flex;gap:10px;margin-top:6px;';
 
       var editBtn = document.createElement('button');
       editBtn.textContent = '✏️';
-      editBtn.style.cssText = 'background:#BAE1FF;border:none;border-radius:20px;padding:3px 8px;font-size:11px;font-family:Baloo 2,cursive;font-weight:700;color:#1a4a6e;cursor:pointer;';
+      editBtn.style.cssText = 'background:#BAE1FF;border:none;border-radius:20px;padding:6px 12px;font-size:14px;font-family:Baloo 2,cursive;font-weight:700;color:#1a4a6e;cursor:pointer;';
 
       var delBtn = document.createElement('button');
       delBtn.textContent = '🗑️';
-      delBtn.style.cssText = 'background:#FFB3BA;border:none;border-radius:20px;padding:3px 8px;font-size:11px;font-family:Baloo 2,cursive;font-weight:700;color:#8B1a1a;cursor:pointer;';
+      delBtn.style.cssText = 'background:#FFB3BA;border:none;border-radius:20px;padding:6px 12px;font-size:14px;font-family:Baloo 2,cursive;font-weight:700;color:#8B1a1a;cursor:pointer;';
 
       if (isActive) {
         var checkEl = document.createElement('div');
@@ -283,6 +283,7 @@
       }
       .kids-profile-box {
         width: 100%; max-width: 340px;
+        max-height: 85vh; overflow-y: auto;
         background: var(--paper);
         border-radius: 28px;
         box-shadow: var(--kids-shadow);
