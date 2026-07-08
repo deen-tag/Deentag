@@ -32,14 +32,22 @@
     localStorage.setItem('deentag_active_profile', id);
   }
 
-  /* ── Dôme kids coloré ── */
+  /* ── Dôme kids : réutilise la même arche que le mode adulte (cohérence visuelle) ── */
   function kidsDome(profile, size) {
     size = size || 52;
-    var h       = Math.round(size * 1.15);
-    var cx      = size / 2;
     var color   = profile.color || '#C9A84C';
     var initial = (profile.name || '?').charAt(0).toUpperCase();
 
+    if (profile.photo && window.DT && window.DT._domePhotoHTML) {
+      return window.DT._domePhotoHTML(profile.photo, size, profile.id || 'preview');
+    }
+    if (window.DT && window.DT._domeHTML) {
+      return window.DT._domeHTML(initial, color, size);
+    }
+
+    /* Repli si profiles.js n'est pas encore chargé */
+    var h = Math.round(size * 1.15);
+    var cx = size / 2;
     if (profile.photo) {
       return '<svg width="'+size+'" height="'+h+'" viewBox="0 0 '+size+' '+h+'" fill="none">' +
         '<defs><clipPath id="clip-'+profile.id+'"><path d="M'+cx+' 1 C'+cx+' 1 2 '+(h*0.25)+' 2 '+(h*0.45)+' L2 '+(h-4)+' C2 '+(h-1.5)+' 3.5 '+h+' 5 '+h+' L'+(size-5)+' '+h+' C'+(size-3.5)+' '+h+' '+(size-2)+' '+(h-1.5)+' '+(size-2)+' '+(h-4)+' L'+(size-2)+' '+(h*0.45)+' C'+(size-2)+' '+(h*0.25)+' '+cx+' 1 '+cx+' 1Z"/></clipPath></defs>' +
@@ -47,7 +55,6 @@
         '<path d="M'+cx+' 1 C'+cx+' 1 2 '+(h*0.25)+' 2 '+(h*0.45)+' L2 '+(h-4)+' C2 '+(h-1.5)+' 3.5 '+h+' 5 '+h+' L'+(size-5)+' '+h+' C'+(size-3.5)+' '+h+' '+(size-2)+' '+(h-1.5)+' '+(size-2)+' '+(h-4)+' L'+(size-2)+' '+(h*0.45)+' C'+(size-2)+' '+(h*0.25)+' '+cx+' 1 '+cx+' 1Z" fill="none" stroke="white" stroke-width="2"/>' +
         '</svg>';
     }
-
     return '<svg width="'+size+'" height="'+h+'" viewBox="0 0 '+size+' '+h+'" fill="none">' +
       '<path d="M'+cx+' 1 C'+cx+' 1 2 '+(h*0.25)+' 2 '+(h*0.45)+' L2 '+(h-4)+' C2 '+(h-1.5)+' 3.5 '+h+' 5 '+h+' L'+(size-5)+' '+h+' C'+(size-3.5)+' '+h+' '+(size-2)+' '+(h-1.5)+' '+(size-2)+' '+(h-4)+' L'+(size-2)+' '+(h*0.45)+' C'+(size-2)+' '+(h*0.25)+' '+cx+' 1 '+cx+' 1Z" fill="'+color+'" stroke="white" stroke-width="2"/>' +
       '<circle cx="'+cx+'" cy="2" r="2" fill="white" opacity="0.8"/>' +
@@ -213,6 +220,10 @@
   }
 
   /* ── Avatar dans la tabbar kids ── */
+  function kidsDefaultIcon() {
+    return '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--gold,#C9A84C)" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>';
+  }
+
   function updateKidsTabAvatar() {
     var btn = document.getElementById('kids-profile-tab');
     if (!btn) return;
@@ -221,11 +232,13 @@
     var p = profiles.find(function(x){ return x.id === activeId; }) || profiles[0];
     var icon = btn.querySelector('.tab-icon');
     var lbl  = btn.querySelector('span');
-    if (icon && p) {
-      icon.innerHTML = '<div style="width:44px;height:50px;display:flex;align-items:center;justify-content:center;">'+kidsDome(p, 38)+'</div>';
+    if (icon) {
+      icon.innerHTML = p
+        ? '<div style="width:44px;height:50px;display:flex;align-items:center;justify-content:center;">'+kidsDome(p, 38)+'</div>'
+        : kidsDefaultIcon();
       icon.style.background = 'transparent';
     }
-    if (lbl && p) lbl.textContent = p.name.split(' ')[0];
+    if (lbl) lbl.textContent = p ? p.name.split(' ')[0] : kpT().tabLabel;
   }
 
   /* ── Injecter dans la tabbar kids ── */

@@ -373,7 +373,8 @@
   window.DT._loadProfiles = loadProfiles;
   window.DT._getActiveId  = getActiveId;
   window.DT._setActiveId  = setActiveId;
-
+  window.DT._domeHTML      = domeHTML;
+  window.DT._domePhotoHTML = domePhotoHTML;
   /* ── Dôme / arche (contour mesuré sur les illustrations de catégories) ── */
   function domeHTML(initial, color, size) {
     size = size || 40;
@@ -400,6 +401,22 @@
       '<path d="'+archClipPath(w,h)+'" stroke="var(--gold,#C9A84C)" stroke-width="2"/>' +
       '</svg>';
   }
+
+  /* ── Version "toutes tailles" de l'arche pour une photo, via viewBox (utilisée par le mode enfant
+       qui a besoin de tailles arbitraires, contrairement à archClipPath qui n'a que 2 tailles figées) ── */
+  function domePhotoHTML(photoUrl, size, uid) {
+    size = size || 40;
+    var h = Math.round(size * 86/70);
+    var clipId = 'dome-clip-' + uid;
+    var outerPath = 'M35.00,0.00 L35.68,0.61 L36.13,1.22 L36.44,1.84 L36.89,2.45 L37.34,3.06 L37.80,3.67 L38.25,4.28 L38.86,4.90 L39.46,5.51 L40.06,6.12 L40.82,6.73 L41.58,7.35 L42.33,7.96 L43.24,8.57 L44.00,9.18 L44.90,9.79 L45.81,10.41 L46.57,11.02 L47.47,11.63 L48.38,12.24 L49.14,12.85 L50.04,13.47 L50.80,14.08 L51.56,14.69 L52.16,15.30 L52.92,15.91 L53.37,16.53 L53.97,17.14 L54.43,17.75 L54.88,18.36 L55.33,18.98 L55.64,19.59 L56.09,20.20 L56.39,20.81 L56.70,21.42 L56.85,22.04 L57.15,22.65 L57.30,23.26 L57.45,23.87 L57.60,24.48 L57.75,25.10 L57.90,25.71 L57.90,26.32 L58.81,26.93 L60.02,27.54 L61.08,28.16 L61.99,28.77 L62.74,29.38 L63.50,29.99 L64.10,30.60 L64.71,31.22 L65.31,31.83 L65.77,32.44 L66.22,33.05 L66.67,33.67 L67.13,34.28 L67.43,34.89 L67.73,35.50 L68.03,36.11 L68.34,36.73 L68.64,37.34 L68.79,37.95 L69.09,38.56 L69.24,39.17 L69.40,39.79 L69.55,40.40 L69.70,41.01 L69.70,41.62 L69.85,42.23 L69.85,42.85 L70.00,43.46 L70.00,44.07 L70.00,44.68 L70.00,45.30 L70.00,81.70 Q70.00,86.00 65.70,86.00 L4.30,86.00 Q0.00,86.00 0.00,81.70 L0.00,45.30 L0.00,44.68 L0.00,44.07 L0.00,43.46 L0.15,42.85 L0.15,42.23 L0.30,41.62 L0.30,41.01 L0.45,40.40 L0.60,39.79 L0.76,39.17 L0.91,38.56 L1.21,37.95 L1.36,37.34 L1.66,36.73 L1.97,36.11 L2.27,35.50 L2.57,34.89 L2.87,34.28 L3.33,33.67 L3.78,33.05 L4.23,32.44 L4.69,31.83 L5.29,31.22 L5.90,30.60 L6.50,29.99 L7.26,29.38 L8.01,28.77 L8.92,28.16 L9.98,27.54 L11.19,26.93 L12.10,26.32 L12.10,25.71 L12.25,25.10 L12.40,24.48 L12.55,23.87 L12.70,23.26 L12.85,22.65 L13.15,22.04 L13.30,21.42 L13.61,20.81 L13.91,20.20 L14.36,19.59 L14.67,18.98 L15.12,18.36 L15.57,17.75 L16.03,17.14 L16.63,16.53 L17.08,15.91 L17.84,15.30 L18.44,14.69 L19.20,14.08 L19.96,13.47 L20.86,12.85 L21.62,12.24 L22.53,11.63 L23.43,11.02 L24.19,10.41 L25.10,9.79 L26.00,9.18 L26.76,8.57 L27.67,7.96 L28.42,7.35 L29.18,6.73 L29.94,6.12 L30.54,5.51 L31.14,4.90 L31.75,4.28 L32.20,3.67 L32.66,3.06 L33.11,2.45 L33.56,1.84 L33.87,1.22 L34.32,0.61 Z';
+    return '<svg width="'+size+'" height="'+h+'" viewBox="0 0 70 86" fill="none">' +
+      '<defs><clipPath id="'+clipId+'"><path d="'+outerPath+'"/></clipPath></defs>' +
+      '<image href="'+photoUrl+'" x="0" y="0" width="70" height="86" clip-path="url(#'+clipId+')" preserveAspectRatio="xMidYMid slice"/>' +
+      '<path d="'+outerPath+'" fill="none" stroke="white" stroke-width="1.5"/>' +
+      '</svg>';
+  }
+
+
 
   /* ── CSS injection ── */
   function injectCSS() {
