@@ -119,6 +119,7 @@ function applyLang(lang) {
     const key = el.getAttribute('data-i18n-pill');
     if (i18n[lang][key]) el.textContent = i18n[lang][key];
   });
+  if (window.DT_refreshNavLang) window.DT_refreshNavLang();
 }
 
 function setLang(lang) {

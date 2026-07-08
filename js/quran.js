@@ -218,6 +218,7 @@ function applyLang(lang) {
     o.classList.toggle('active', o.dataset.lang === lang);
   });
   applyLangBlocks(lang);
+  if (window.DT_refreshNavLang) window.DT_refreshNavLang();
 }
 function setLang(lang) {
   stopAudio();

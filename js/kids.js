@@ -72,6 +72,7 @@ function kidsHomeApplyLang(lang) {
       if (catPageTitle)   catPageTitle.textContent   = titre;
     }
   }
+  if (window.DT_refreshNavLang) window.DT_refreshNavLang();
 }
 
 

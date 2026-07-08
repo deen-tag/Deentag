@@ -181,6 +181,7 @@ function kidsApplyLang(lang) {
   document.querySelectorAll('.size-pill[data-val="small"]').forEach(el => el.title = si.small);
   document.querySelectorAll('.size-pill[data-val="medium"]').forEach(el => el.title = si.medium);
   document.querySelectorAll('.size-pill[data-val="large"]').forEach(el => el.title = si.large);
+  if (window.DT_refreshNavLang) window.DT_refreshNavLang();
 }
 
 function kidsSetLang(lang) {
