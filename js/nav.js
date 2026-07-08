@@ -121,8 +121,8 @@
   function kidsTabs(adulteHref) {
     return [
       { id: 'duas',   href: 'kids.html'       },
-      { id: 'adulte', href: adulteHref         },
-      { id: 'coran',  href: 'quran-kids.html' }
+      { id: 'coran',  href: 'quran-kids.html' },
+      { id: 'adulte', href: adulteHref         }
     ];
   }
 
@@ -133,6 +133,8 @@
     'kids':       { mode: 'kids',  active: 'duas',     tabs: kidsTabs('index.html') },
     'quran-kids': { mode: 'kids',  active: 'coran',    tabs: kidsTabs('quran.html') }
   };
+
+  var _builtCfg = null, _builtTabbar = null;
 
   function buildNav(cfg) {
     LABELS = navLabels();
@@ -155,8 +157,31 @@
         '</a>';
     });
     nav.innerHTML = html;
+    _builtCfg = cfg;
+    _builtTabbar = nav;
     return nav;
   }
+
+  /* ── Remet à jour les libellés de la tabbar sans la reconstruire ──
+     Appelée par chaque fonction applyLang/setLang des différentes pages,
+     pour que le changement de langue soit immédiat, sans rafraîchir. */
+  function refreshNavLang() {
+    if (!_builtCfg || !_builtTabbar) return;
+    LABELS = navLabels();
+    var links = _builtTabbar.querySelectorAll('a.tab');
+    _builtCfg.tabs.forEach(function (tab, i) {
+      var a = links[i];
+      if (!a) return;
+      var label = LABELS[tab.id];
+      a.setAttribute('aria-label', label);
+      var span = a.querySelector('span');
+      if (span) span.textContent = label;
+      var img = a.querySelector('img');
+      if (img) img.alt = label;
+    });
+  }
+  window.DT_refreshNavLang = refreshNavLang;
+
 
 
 
