@@ -1073,7 +1073,7 @@
     modal.innerHTML = html;
     setTimeout(function(){
       var inp = document.getElementById('dt-name');
-      if (inp) { inp.focus(); inp.oninput = window.DT._updateInit; }
+      if (inp) { inp.oninput = window.DT._updateInit; }
     }, 100);
   }
 

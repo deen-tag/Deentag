@@ -203,7 +203,6 @@
     setTimeout(function() {
       var inp = document.getElementById('kp-name');
       if (inp) {
-        inp.focus();
         inp.oninput = function() {
           inp.classList.remove('error');
           var preview = document.getElementById('kp-dome-preview');
@@ -537,7 +536,6 @@
     setTimeout(function() {
       var inp = document.getElementById('kp-name');
       if (inp) {
-        inp.focus();
         inp.oninput = function() {
           inp.classList.remove('error');
           var preview = document.getElementById('kp-dome-preview');
