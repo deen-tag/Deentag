@@ -394,6 +394,13 @@
     return paths[w+'x'+h] || paths['56x68'];
   }
 
+  /* ── Contour doré de l'arche, à superposer sur une photo découpée en clip-path ── */
+  function archBorderSVG(w, h) {
+    return '<svg width="'+w+'" height="'+h+'" viewBox="0 0 '+w+' '+h+'" style="position:absolute;top:0;left:0;pointer-events:none;" fill="none">' +
+      '<path d="'+archClipPath(w,h)+'" stroke="var(--gold,#C9A84C)" stroke-width="2"/>' +
+      '</svg>';
+  }
+
   /* ── CSS injection ── */
   function injectCSS() {
     if (document.getElementById('dt-profile-css')) return;
@@ -693,7 +700,7 @@
       var color   = profile.color || PROFILE_COLORS[0];
       var initial = (profile.name || '?').charAt(0).toUpperCase();
       html += profile.photo
-        ? '<div style="width:56px;height:68px;flex-shrink:0;overflow:hidden;clip-path:path(\''+archClipPath(56,68)+'\');border:none;"><img src="'+profile.photo+'" style="width:56px;height:68px;object-fit:cover;"></div>'
+        ? '<div style="position:relative;width:56px;height:68px;flex-shrink:0;"><div style="width:56px;height:68px;overflow:hidden;clip-path:path(\''+archClipPath(56,68)+'\');"><img src="'+profile.photo+'" style="width:56px;height:68px;object-fit:cover;"></div>'+archBorderSVG(56,68)+'</div>'
         : '<div style="flex-shrink:0;">'+domeHTML(initial, color, 56)+'</div>';
       html += '<div style="flex:1;">';
       html += '<div class="dt-active-name">'+profile.name+'</div>';
@@ -1038,7 +1045,7 @@
         canvas.getContext('2d').drawImage(img, 0, 0, w, h);
         _photo = canvas.toDataURL('image/jpeg', 0.82);
         var av = document.getElementById('dt-av-preview');
-        if (av) av.innerHTML = '<img src="'+_photo+'" style="width:64px;height:73px;object-fit:cover;border-radius:4px;">';
+        if (av) av.innerHTML = '<div style="position:relative;width:56px;height:68px;"><div style="width:56px;height:68px;overflow:hidden;clip-path:path(\''+archClipPath(56,68)+'\');"><img src="'+_photo+'" style="width:56px;height:68px;object-fit:cover;"></div>'+archBorderSVG(56,68)+'</div>';
       };
       img.src = e.target.result;
     };
@@ -1093,7 +1100,7 @@
       var color   = p.color || PROFILE_COLORS[0];
       var initial = (p.name||'?').charAt(0).toUpperCase();
       icon.innerHTML = p.photo
-        ? '<div style="width:44px;height:53px;overflow:hidden;clip-path:path(\''+archClipPath(44,53)+'\');"><img src="'+p.photo+'" style="width:44px;height:53px;object-fit:cover;"></div>'
+        ? '<div style="position:relative;width:44px;height:53px;"><div style="width:44px;height:53px;overflow:hidden;clip-path:path(\''+archClipPath(44,53)+'\');"><img src="'+p.photo+'" style="width:44px;height:53px;object-fit:cover;"></div>'+archBorderSVG(44,53)+'</div>'
         : domeHTML(initial, color, 40);
     } else {
       icon.innerHTML = defaultIcon();
