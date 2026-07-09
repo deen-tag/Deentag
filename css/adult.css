@@ -14,6 +14,7 @@
   --gold-light: #E8C97A;
   --gold-dark: #8B6914;
   --gold-shine: #F5E4A0;
+  --ivory: #FFF8E7;
   --radius-lg: 20px;
   --radius-md: 14px;
   --radius-sm: 12px;
@@ -279,6 +280,7 @@ body.night .cat-card:active {
 .cat-label {
   font-family:'Cinzel',serif; font-size:9px; font-weight:600;
   letter-spacing:0.10em; color:var(--gold-dark); text-align:center;
+  text-transform:uppercase;
   flex-shrink:0;
   background: rgba(255,255,255,0.92);
   border: 1px solid rgba(201,168,76,0.45);
@@ -293,7 +295,7 @@ body.night .cat-card {
   box-shadow: none;
 }
 body.night .cat-label {
-  color: var(--gold);
+  color: var(--ivory);
   background: rgba(30,32,22,0.85);
   border-color: rgba(240,192,64,0.30);
 }
@@ -3292,7 +3294,7 @@ body.night .qnav-icon { color: var(--gold); }
 }
 
 body.night .qnav-label {
-  color: var(--gold-light);
+  color: var(--ivory);
   background: rgba(30,32,22,0.85);
   border-color: rgba(240,192,64,0.30);
 }
