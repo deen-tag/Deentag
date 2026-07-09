@@ -1010,7 +1010,7 @@ function toggleColorPicker(type) {
 }
 
 function selectColor(type, hex) {
-  document.documentElement.style.setProperty(COLOR_VAR_MAP[type], hex);
+  document.body.style.setProperty(COLOR_VAR_MAP[type], hex);
   localStorage.setItem('quran_color_' + type, hex);
   const dot = document.getElementById('colorDot-' + type);
   if (dot) dot.style.setProperty('--dot-color', hex);
@@ -1019,7 +1019,7 @@ function selectColor(type, hex) {
 }
 
 function resetColor(type) {
-  document.documentElement.style.removeProperty(COLOR_VAR_MAP[type]);
+  document.body.style.removeProperty(COLOR_VAR_MAP[type]);
   localStorage.removeItem('quran_color_' + type);
   const dot = document.getElementById('colorDot-' + type);
   if (dot) dot.style.removeProperty('--dot-color');
@@ -1031,7 +1031,7 @@ function applyAllColors() {
   ['ar', 'ph', 'tr'].forEach(type => {
     const saved = localStorage.getItem('quran_color_' + type);
     if (saved) {
-      document.documentElement.style.setProperty(COLOR_VAR_MAP[type], saved);
+      document.body.style.setProperty(COLOR_VAR_MAP[type], saved);
       const dot = document.getElementById('colorDot-' + type);
       if (dot) dot.style.setProperty('--dot-color', saved);
     }
