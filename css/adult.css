@@ -1042,10 +1042,7 @@ body.night .accordion.open .accordion-header {
 }
 .accordion-title {
   font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 0.03em;
-  color: #8B6914; font-weight: 600; text-transform: uppercase; flex: 1; line-height: 1.6;
-}
-body.night .accordion-title {
-  color: #F0D070;
+  color: var(--gold-shine); font-weight: 600; text-transform: uppercase; flex: 1; line-height: 1.6;
 }
 .accordion-arrow {
   width: 32px; height: 32px; border-radius: 50%;
