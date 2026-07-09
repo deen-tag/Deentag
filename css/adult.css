@@ -511,12 +511,6 @@ body.night .theme-knob-btn-inner svg { color: #8B6914; }
 .theme-knob-btn-inner .tt-moon path { fill: #F0C040; }
 .theme-knob-btn-inner .tt-moon circle { fill: #F0C040; }
 
-/* ===== SETTINGS-PANEL-CLOSE — repositionnement ===== */
-.theme-knob-btn.settings-panel-close {
-  position: absolute; top: 8px; right: 10px;
-}
-
-
 /* capsule mode enfant */
 .kids-entry {
   display: flex;
@@ -1410,6 +1404,21 @@ body.kids .acc-settings-btn.active svg { stroke: #fff; fill: #fff; }
   box-shadow: 0 0 10px rgba(201,168,76,0.32);
 }
 
+/* ===== BACKDROP LÉGER DERRIÈRE LE PANEL ===== */
+.settings-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 590;
+  background: rgba(0,0,0,0.18);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+.settings-backdrop.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
 /* ===== PANEL RÉGLAGES COMPACT ===== */
 .settings-panel {
   position: fixed;
@@ -1422,12 +1431,33 @@ body.kids .acc-settings-btn.active svg { stroke: #fff; fill: #fff; }
   background: var(--bg2);
   border: 1px solid var(--gold);
   border-radius: 14px;
-  padding: 14px 16px 16px;
+  padding: 16px 18px 18px;
   box-shadow: 0 4px 24px var(--shadow);
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.22s ease, transform 0.22s ease;
   overflow: hidden;
+}
+
+/* ===== BOUTON FERMER — discret et bien cadré ===== */
+.settings-close-btn {
+  position: absolute;
+  top: 10px; right: 12px;
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(201,168,76,0.35);
+  background: transparent;
+  color: var(--text3);
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.settings-close-btn:hover,
+.settings-close-btn:active {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: rgba(201,168,76,0.08);
 }
 .settings-panel::after {
   content: ''; position: absolute; top: 0; right: 0;
@@ -1453,9 +1483,9 @@ body.night .settings-panel {
 
 .settings-panel-title {
   font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.35em;
-  color: var(--gold); text-transform: uppercase; text-align: center;
-  margin-bottom: 12px; padding-bottom: 8px;
-  border-bottom: 1px solid var(--card-border);
+  color: var(--gold-light); text-transform: uppercase; text-align: center;
+  margin-bottom: 14px; padding-bottom: 9px;
+  border-bottom: 1px solid rgba(201,168,76,0.28);
 }
 
 /* ===== BOUTONS TAILLE : Petit / Moyen / Grand ===== */
@@ -1471,11 +1501,11 @@ body.night .settings-panel {
 /* Layout compact horizontal */
 .size-row {
   display: flex; align-items: center; justify-content: space-between;
-  gap: 10px; margin: 6px 0;
+  gap: 10px; margin: 12px 0;
 }
 .size-row-label {
   font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.12em;
-  color: var(--gold); text-transform: uppercase; white-space: nowrap;
+  color: var(--gold-light); text-transform: uppercase; white-space: nowrap;
   flex-shrink: 0; width: 90px;
 }
 .size-pills {
@@ -1485,8 +1515,8 @@ body.night .settings-panel {
   flex: 1; padding: 5px 4px; border-radius: var(--radius-lg);
   border: 1px solid var(--card-border);
   background: transparent; cursor: pointer;
-  font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.08em;
-  color: var(--text3); text-transform: uppercase; text-align: center;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text3); text-align: center;
   transition: all 0.2s; white-space: nowrap;
 }
 .size-pill:hover { border-color: var(--gold); color: var(--gold); }
@@ -1495,6 +1525,11 @@ body.night .settings-panel {
   background: var(--gold); border-color: var(--gold);
   color: var(--bg); font-weight: 600;
 }
+/* Icônes A A A de tailles croissantes pour Petit/Moyen/Grand */
+.pill-a { font-family: 'Cinzel', serif; line-height: 1; color: inherit; }
+.pill-a-sm { font-size: 9px; }
+.pill-a-md { font-size: 12px; }
+.pill-a-lg { font-size: 15px; }
 
 /* ===== OVERLAY pour fermeture panel ===== */
 .settings-overlay { display: none; }
@@ -2414,10 +2449,13 @@ body.night .juz-range { color:var(--gold-shine); opacity:0.7; }
 
 .reciter-select {
   background:transparent; border:1px solid rgba(201,168,76,0.4);
-  border-radius:8px; color:var(--gold); padding:6px 10px;
+  border-radius:8px; color:var(--gold-light); padding:6px 24px 6px 10px;
   font-family:'Cinzel', serif; font-size:10px; letter-spacing:0.08em;
   cursor:pointer; width:100%; outline:none;
   -webkit-appearance:none; appearance:none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%23C9A84C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat:no-repeat;
+  background-position:right 8px center;
 }
 
 body.night .reciter-select { background:rgba(240,192,64,0.05); }
@@ -2841,13 +2879,13 @@ body.night .audio-play-btn svg { stroke: var(--gold); }
 
 .toggle-row {
   display:flex; align-items:center; justify-content:space-between;
-  gap:10px; margin:8px 0 4px; padding-top:8px;
-  border-top:1px solid rgba(201,168,76,0.10);
+  gap:10px; margin:12px 0 6px; padding-top:12px;
+  border-top:1px solid rgba(201,168,76,0.20);
 }
 
 .toggle-label {
   font-family:'Cinzel', serif; font-size:8px; letter-spacing:0.12em;
-  color:var(--gold); text-transform:uppercase;
+  color:var(--gold-light); text-transform:uppercase;
 }
 
 .toggle-switch {
