@@ -390,6 +390,7 @@
   <!-- Taille arabe -->
   <div class="size-row">
     <span class="size-row-label">Arabe</span>
+    <span class="row-toggle-spacer"></span>
     <button class="color-dot-btn" id="colorDot-ar" style="--dot-color:var(--arabic-color)" onclick="event.stopPropagation();toggleColorPicker('ar')" aria-label="Couleur Arabe"></button>
     <div class="size-pills">
       <button class="size-pill" data-type="ar" data-val="small"  onclick="event.stopPropagation();applySizeLevel('ar','small')" aria-label="Petit"><span class="pill-a pill-a-sm">A</span></button>
@@ -407,9 +408,10 @@
     <button class="color-swatch reset-swatch" onclick="event.stopPropagation();resetColor('ar')" aria-label="Réinitialiser">✕</button>
   </div>
 
-  <!-- Taille phonétique -->
+  <!-- Taille + affichage phonétique -->
   <div class="size-row">
     <span class="size-row-label">Phonétique</span>
+    <div class="row-toggle on" id="togglePhonetic" onclick="event.stopPropagation();togglePhonetic(this)" aria-label="Afficher/masquer la phonétique"></div>
     <button class="color-dot-btn" id="colorDot-ph" style="--dot-color:var(--phonetic-color)" onclick="event.stopPropagation();toggleColorPicker('ph')" aria-label="Couleur Phonétique"></button>
     <div class="size-pills">
       <button class="size-pill" data-type="ph" data-val="small"  onclick="event.stopPropagation();applySizeLevel('ph','small')" aria-label="Petit"><span class="pill-a pill-a-sm">A</span></button>
@@ -427,9 +429,10 @@
     <button class="color-swatch reset-swatch" onclick="event.stopPropagation();resetColor('ph')" aria-label="Réinitialiser">✕</button>
   </div>
 
-  <!-- Taille traduction -->
+  <!-- Taille + affichage traduction -->
   <div class="size-row">
     <span class="size-row-label">Traduction</span>
+    <div class="row-toggle on" id="toggleTranslation" onclick="event.stopPropagation();toggleTranslation(this)" aria-label="Afficher/masquer la traduction"></div>
     <button class="color-dot-btn" id="colorDot-tr" style="--dot-color:var(--translation-color)" onclick="event.stopPropagation();toggleColorPicker('tr')" aria-label="Couleur Traduction"></button>
     <div class="size-pills">
       <button class="size-pill" data-type="tr" data-val="small"  onclick="event.stopPropagation();applySizeLevel('tr','small')" aria-label="Petit"><span class="pill-a pill-a-sm">A</span></button>
@@ -447,17 +450,7 @@
     <button class="color-swatch reset-swatch" onclick="event.stopPropagation();resetColor('tr')" aria-label="Réinitialiser">✕</button>
   </div>
 
-  <!-- Toggle phonétique -->
-  <div class="toggle-row">
-    <span class="toggle-label">Phonétique</span>
-    <div class="toggle-switch on" id="togglePhonetic" onclick="togglePhonetic(this)"></div>
-  </div>
-
-  <!-- Toggle traduction -->
-  <div class="toggle-row">
-    <span class="toggle-label">Traduction</span>
-    <div class="toggle-switch on" id="toggleTranslation" onclick="toggleTranslation(this)"></div>
-  </div>
+  <div class="settings-divider"></div>
 
   <!-- Récitateur -->
   <div class="size-row">
