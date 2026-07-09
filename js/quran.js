@@ -995,6 +995,49 @@ function applyAllSizes() {
   ['ar', 'ph', 'tr'].forEach(t => applySizeLevel(t, getSizeLevel(t)));
 }
 
+// ============================================================
+// PALETTE DE COULEURS (Arabe / Phonétique / Traduction)
+// ============================================================
+const COLOR_VAR_MAP = { ar: '--arabic-color', ph: '--phonetic-color', tr: '--translation-color' };
+
+function toggleColorPicker(type) {
+  const popover = document.getElementById('colorPopover-' + type);
+  if (!popover) return;
+  const willOpen = !popover.classList.contains('open');
+  // Ferme les autres palettes ouvertes
+  document.querySelectorAll('.color-popover.open').forEach(p => p.classList.remove('open'));
+  if (willOpen) popover.classList.add('open');
+}
+
+function selectColor(type, hex) {
+  document.documentElement.style.setProperty(COLOR_VAR_MAP[type], hex);
+  localStorage.setItem('quran_color_' + type, hex);
+  const dot = document.getElementById('colorDot-' + type);
+  if (dot) dot.style.setProperty('--dot-color', hex);
+  const popover = document.getElementById('colorPopover-' + type);
+  if (popover) popover.classList.remove('open');
+}
+
+function resetColor(type) {
+  document.documentElement.style.removeProperty(COLOR_VAR_MAP[type]);
+  localStorage.removeItem('quran_color_' + type);
+  const dot = document.getElementById('colorDot-' + type);
+  if (dot) dot.style.removeProperty('--dot-color');
+  const popover = document.getElementById('colorPopover-' + type);
+  if (popover) popover.classList.remove('open');
+}
+
+function applyAllColors() {
+  ['ar', 'ph', 'tr'].forEach(type => {
+    const saved = localStorage.getItem('quran_color_' + type);
+    if (saved) {
+      document.documentElement.style.setProperty(COLOR_VAR_MAP[type], saved);
+      const dot = document.getElementById('colorDot-' + type);
+      if (dot) dot.style.setProperty('--dot-color', saved);
+    }
+  });
+}
+
 function togglePhonetic(el) {
   showPhonetic = !showPhonetic;
   el.classList.toggle('on', showPhonetic);
@@ -1028,6 +1071,7 @@ function closeSettings() {
   const backdrop = document.getElementById('settingsBackdrop');
   if (panel) panel.classList.remove('open');
   if (backdrop) backdrop.classList.remove('open');
+  document.querySelectorAll('.color-popover.open').forEach(p => p.classList.remove('open'));
 }
 
 // ============================================================
@@ -1159,6 +1203,9 @@ window.addEventListener('DOMContentLoaded', () => {
   const trToggle = document.getElementById('toggleTranslation');
   if (phToggle) phToggle.classList.toggle('on', showPhonetic);
   if (trToggle) trToggle.classList.toggle('on', showTranslation);
+
+  // Restaurer les couleurs personnalisées sauvegardées
+  applyAllColors();
 
   renderJuzCards();
   handleNfcParams();
