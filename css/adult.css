@@ -11,9 +11,9 @@
 /* ===== VARIABLES ===== */
 :root {
   --gold: #C9A84C;
-  --gold-light: #E8C97A;
+  --gold-light: #9A7730;
   --gold-dark: #8B6914;
-  --gold-shine: #9A7730;
+  --hadith-color: #6B5E48;
   --translation-color: var(--text2);
   --radius-lg: 20px;
   --radius-md: 14px;
@@ -54,7 +54,6 @@ body.night {
   --gold: #F0C040;
   --gold-light: #FFE070;
   --gold-dark: #C9A84C;
-  --gold-shine: #FFF0A0;
   --text: #FFF8E7;
   --text2: #ECD080;
   --text3: #C4A055;
@@ -295,7 +294,7 @@ body.night .cat-card {
   box-shadow: none;
 }
 body.night .cat-label {
-  color: var(--gold-shine);
+  color: var(--gold-light);
   background: rgba(30,32,22,0.85);
   border-color: rgba(240,192,64,0.30);
 }
@@ -606,7 +605,7 @@ body.night .deen-card::after { opacity: 1; }
 body.night .theme-toggle { background:#2C2208; }
 .theme-toggle .knob {
   width:18px; height:18px; border-radius:50%;
-  background:var(--gold-shine); position:absolute; left:2px;
+  background:var(--gold-light); position:absolute; left:2px;
   transition:transform 0.3s; display:flex; align-items:center; justify-content:center;
   font-size:10px;
 }
@@ -1037,7 +1036,7 @@ body.night .accordion.open .accordion-header {
 }
 .accordion-title {
   font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 0.03em;
-  color: var(--gold-shine); font-weight: 600; text-transform: uppercase; flex: 1; line-height: 1.6;
+  color: var(--gold-light); font-weight: 600; text-transform: uppercase; flex: 1; line-height: 1.6;
 }
 .accordion-arrow {
   width: 32px; height: 32px; border-radius: 50%;
@@ -1484,7 +1483,7 @@ body.night .settings-panel {
 
 .settings-panel-title {
   font-family: 'Cinzel', serif; font-size: 9.5px; letter-spacing: 0.35em;
-  color: var(--gold-shine); text-transform: uppercase; text-align: center;
+  color: var(--gold-light); text-transform: uppercase; text-align: center;
   margin-bottom: 14px; padding-bottom: 9px;
   border-bottom: 1px solid rgba(201,168,76,0.28);
 }
@@ -2248,7 +2247,7 @@ body.night .bs-header-cat-sub { color:var(--gold); }
 body.night .sub-card { background:var(--card-bg); border-color:var(--gold); }
 .sub-card.sunnah-card { border-color:rgba(201,168,76,0.5); }
 .sub-card-num { font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.2em; color:var(--gold); opacity:0.6; }
-body.night .sub-card-title { color:var(--gold-shine); }
+body.night .sub-card-title { color:var(--gold-light); }
 .sub-card.sunnah-card .sub-card-title { color:var(--gold); }
 
 /* ===== VUE DUA ===== */
@@ -2478,7 +2477,7 @@ body.night .juz-label { color:var(--gold-light); }
   position:relative; z-index:1; padding:0 8px;
 }
 
-body.night .juz-range { color:var(--gold-shine); opacity:0.7; }
+body.night .juz-range { color:var(--gold-light); opacity:0.7; }
 
 .juz-divider {
   width:24px; height:1px; background:rgba(201,168,76,0.35);
@@ -2645,7 +2644,7 @@ body.page-quran.night .bs-search-input { background:rgba(201,168,76,0.07); }
   color:var(--text); margin-top:1px;
 }
 
-body.night .surah-name-fr { color:var(--gold-shine); }
+body.night .surah-name-fr { color:var(--gold-light); }
 
 .surah-meta {
   font-family:'Cormorant Garamond', serif; font-style:italic;
@@ -2716,7 +2715,7 @@ body.night .surah-topbar { background: linear-gradient(160deg, #202819 0%, #1B24
   margin-top:4px;
 }
 
-body.night .surah-view-name-fr { color:var(--gold-shine); }
+body.night .surah-view-name-fr { color:var(--gold-light); }
 
 .surah-view-meta {
   font-family:'Cormorant Garamond', serif; font-style:italic;
@@ -3158,7 +3157,7 @@ body.night .qnav-icon { color: var(--gold); }
 }
 
 body.night .qnav-label {
-  color: var(--gold-shine);
+  color: var(--gold-light);
   background: rgba(30,32,22,0.85);
   border-color: rgba(240,192,64,0.30);
 }
@@ -3171,7 +3170,7 @@ body.night .qnav-label {
   opacity: 0.85;
 }
 
-body.night .qnav-sub { color: var(--gold-shine); opacity: 0.7; }
+body.night .qnav-sub { color: var(--gold-light); opacity: 0.7; }
 
 body.night .qnav-card {
   background: linear-gradient(160deg, rgba(45,55,35,0.55) 0%, rgba(22,24,16,0.7) 100%);
@@ -3225,7 +3224,7 @@ body.night .nav-item-icon {
   line-height: 1.4;
 }
 
-body.night .nav-item-sub { color: var(--gold-shine); opacity: 0.7; }
+body.night .nav-item-sub { color: var(--gold-light); opacity: 0.7; }
 
 .nav-item-arrow {
   color: var(--gold); opacity: 0.5; font-size: 12px;
