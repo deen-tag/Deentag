@@ -4,6 +4,7 @@
 (function () {
 
   var PASTEL_COLORS = ['#FFB3BA','#FFDFBA','#FFFFBA','#BAFFC9','#BAE1FF','#D4BAFF'];
+  var KIDS_MAX_PROFILES = 5; // Même limite que le mode adulte (profils partagés)
 
   var KP_I18N = {
     fr:{ who:'👤 C\'est qui ?', addBtn:'＋ Nouveau profil', newTitle:'✨ Nouveau profil', editTitle:'✏️ Modifier le profil', namePh:'Prénom', cancel:'Annuler', create:'Créer ✓', save:'Sauvegarder ✓', dupName:'Ce prénom existe déjà', onlyOne:'Tu ne peux pas supprimer le seul profil !', confirmDel:function(n){ return 'Supprimer le profil de ' + n + ' ? 😢'; }, deleteBtn:'Supprimer', ok:'Compris', tabLabel:'Profil' },
@@ -17,6 +18,7 @@
   };
   function kpLang() { return localStorage.getItem('deentag_lang') || 'fr'; }
   function kpT() { return KP_I18N[kpLang()] || KP_I18N.fr; }
+  function kEsc(str) { return window.DT_escapeHtml ? window.DT_escapeHtml(str) : String(str == null ? '' : str); }
 
   /* ── Délégation à window.DT (profiles.js) pour tout le stockage ── */
   function loadProfiles() {
@@ -93,12 +95,15 @@
     // Reconstruit systématiquement le squelette (titre + grille + bouton ajouter),
     // comme côté adulte, pour ne jamais laisser de contenu de formulaire périmé
     // (ex: après un "Annuler" depuis le formulaire d'ajout/modification).
+    var profilesCount = loadProfiles().length;
     var box = modal.querySelector('.kids-profile-box');
     if (box) {
       box.innerHTML =
         '<div class="kids-profile-title">' + kpT().who + '</div>' +
         '<div class="kids-profile-grid" id="kidsProfileGrid"></div>' +
-        '<button class="kids-profile-add-btn" onclick="kidsAddProfile()">' + kpT().addBtn + '</button>';
+        (profilesCount < KIDS_MAX_PROFILES
+          ? '<button class="kids-profile-add-btn" onclick="kidsAddProfile()">' + kpT().addBtn + '</button>'
+          : '');
     }
 
     var grid = document.getElementById('kidsProfileGrid');
@@ -195,6 +200,7 @@
     var box = document.querySelector('.kids-profile-box');
     if (!box) return;
     var profiles = loadProfiles();
+    if (profiles.length >= KIDS_MAX_PROFILES) return;
     var cidx = profiles.length % PASTEL_COLORS.length;
     window._kidsSelColor = PASTEL_COLORS[cidx];
 
@@ -499,7 +505,7 @@
     var name = inp ? inp.value.trim() : '';
     if (!name) { if (inp) inp.classList.add('error'); return; }
     var profiles = loadProfiles();
-    if (profiles.length >= 10) return;
+    if (profiles.length >= KIDS_MAX_PROFILES) return;
     // Vérification doublon de nom (insensible à la casse)
     var nameLower = name.toLowerCase();
     if (profiles.some(function(p){ return p.name.toLowerCase() === nameLower; })) {
@@ -548,7 +554,7 @@
         kidsDome(p, 52) +
       '</div>' +
       '<div class="kids-profile-colors">' + dots + '</div>' +
-      '<input id="kp-name" class="kids-profile-input" type="text" value="' + p.name + '" maxlength="12">' +
+      '<input id="kp-name" class="kids-profile-input" type="text" value="' + kEsc(p.name) + '" maxlength="12">' +
       '<div class="kids-profile-actions">' +
         '<button class="kids-profile-btn" onclick="openKidsProfileModal()">' + kpT().cancel + '</button>' +
         '<button class="kids-profile-btn kids-profile-btn-primary" onclick="kidsSaveEdit(\'' + id + '\')">' + kpT().save + '</button>' +
@@ -597,7 +603,7 @@
     }
     var p = profiles.find(function(x){ return x.id === id; });
     if (!p) return;
-    kpConfirm(kpT().confirmDel(p.name), function() {
+    kpConfirm(kpT().confirmDel(kEsc(p.name)), function() {
       var remaining = loadProfiles().filter(function(x){ return x.id !== id; });
       localStorage.setItem('deentag_profiles', JSON.stringify(remaining));
       // Si c'était le profil actif, basculer sur le premier
