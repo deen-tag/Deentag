@@ -254,6 +254,7 @@ function toggleTheme() {
   document.body.classList.toggle('day', !isDay);
   document.body.classList.toggle('night', isDay);
   localStorage.setItem('deentag_theme', isDay ? 'night' : 'day');
+  applyAllColors();
 }
 
 
@@ -997,8 +998,29 @@ function applyAllSizes() {
 
 // ============================================================
 // PALETTE DE COULEURS (Arabe / Phonétique / Traduction)
+// Chaque couleur a une variante jour et une variante nuit,
+// choisies pour rester lisibles sur fond clair ET sur fond sombre.
 // ============================================================
 const COLOR_VAR_MAP = { ar: '--arabic-color', ph: '--phonetic-color', tr: '--translation-color' };
+
+const COLOR_FAMILIES = {
+  gold:    { day: '#9A7730', night: '#A97D34' }, // = --gold-dark (couleur réelle du site)
+  ivory:   { day: '#6B5E48', night: '#91A69E' }, // = --hadith-color (couleur réelle du site)
+  emerald: { day: '#227A4D', night: '#7FD9A8' },
+  copper:  { day: '#96591F', night: '#E0A060' },
+  skyblue: { day: '#2E6FA6', night: '#8FC7E8' },
+  rose:    { day: '#A6486B', night: '#E8A8B8' },
+};
+
+function currentThemeMode() {
+  return document.body.classList.contains('night') ? 'night' : 'day';
+}
+
+function resolveFamilyColor(family) {
+  const f = COLOR_FAMILIES[family];
+  if (!f) return null;
+  return f[currentThemeMode()];
+}
 
 function toggleColorPicker(type) {
   const popover = document.getElementById('colorPopover-' + type);
@@ -1009,9 +1031,11 @@ function toggleColorPicker(type) {
   if (willOpen) popover.classList.add('open');
 }
 
-function selectColor(type, hex) {
+function selectColor(type, family) {
+  const hex = resolveFamilyColor(family);
+  if (!hex) return;
   document.body.style.setProperty(COLOR_VAR_MAP[type], hex);
-  localStorage.setItem('quran_color_' + type, hex);
+  localStorage.setItem('quran_color_' + type, family);
   const dot = document.getElementById('colorDot-' + type);
   if (dot) dot.style.setProperty('--dot-color', hex);
   const popover = document.getElementById('colorPopover-' + type);
@@ -1029,11 +1053,12 @@ function resetColor(type) {
 
 function applyAllColors() {
   ['ar', 'ph', 'tr'].forEach(type => {
-    const saved = localStorage.getItem('quran_color_' + type);
-    if (saved) {
-      document.body.style.setProperty(COLOR_VAR_MAP[type], saved);
+    const family = localStorage.getItem('quran_color_' + type);
+    if (family && COLOR_FAMILIES[family]) {
+      const hex = resolveFamilyColor(family);
+      document.body.style.setProperty(COLOR_VAR_MAP[type], hex);
       const dot = document.getElementById('colorDot-' + type);
-      if (dot) dot.style.setProperty('--dot-color', saved);
+      if (dot) dot.style.setProperty('--dot-color', hex);
     }
   });
 }
