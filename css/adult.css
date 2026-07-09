@@ -14,6 +14,7 @@
   --gold-light: #E8C97A;
   --gold-dark: #8B6914;
   --gold-shine: #F5E4A0;
+  --translation-color: var(--text2);
   --radius-lg: 20px;
   --radius-md: 14px;
   --radius-sm: 12px;
@@ -1482,8 +1483,8 @@ body.night .settings-panel {
 }
 
 .settings-panel-title {
-  font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.35em;
-  color: var(--gold-light); text-transform: uppercase; text-align: center;
+  font-family: 'Cinzel', serif; font-size: 9.5px; letter-spacing: 0.35em;
+  color: var(--gold-shine); text-transform: uppercase; text-align: center;
   margin-bottom: 14px; padding-bottom: 9px;
   border-bottom: 1px solid rgba(201,168,76,0.28);
 }
@@ -1527,9 +1528,46 @@ body.night .settings-panel {
 }
 /* Icônes A A A de tailles croissantes pour Petit/Moyen/Grand */
 .pill-a { font-family: 'Cinzel', serif; line-height: 1; color: inherit; }
-.pill-a-sm { font-size: 9px; }
-.pill-a-md { font-size: 12px; }
-.pill-a-lg { font-size: 15px; }
+.pill-a-sm { font-size: 8px; }
+.pill-a-md { font-size: 13px; }
+.pill-a-lg { font-size: 18px; }
+
+/* ===== BOUTON PALETTE (petit rond couleur à côté de chaque ligne) ===== */
+.color-dot-btn {
+  width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
+  border: 1px solid rgba(201,168,76,0.5);
+  background: var(--dot-color, var(--gold));
+  cursor: pointer; padding: 0; margin: 0 1px;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.15s, border-color 0.15s;
+}
+.color-dot-btn:hover { border-color: var(--gold-light); }
+.color-dot-btn:active { transform: scale(0.88); }
+
+/* ===== MINI PALETTE DÉPLIABLE (accordéon, ne recouvre rien) ===== */
+.color-popover {
+  display: flex; align-items: center; gap: 7px;
+  max-height: 0; opacity: 0; overflow: hidden;
+  margin: 0; padding-left: 126px;
+  transition: max-height 0.2s ease, opacity 0.15s ease, margin 0.2s ease;
+}
+.color-popover.open {
+  max-height: 28px; opacity: 1; margin: 6px 0 2px;
+}
+.color-swatch {
+  width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+  border: 1.5px solid rgba(255,255,255,0.22);
+  cursor: pointer; padding: 0;
+  transition: transform 0.15s, border-color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.color-swatch:hover, .color-swatch:active { transform: scale(1.18); border-color: var(--gold-light); }
+.color-swatch.reset-swatch {
+  background: transparent !important;
+  border: 1.5px dashed rgba(201,168,76,0.5);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px; line-height: 1; color: var(--text3);
+}
 
 /* ===== OVERLAY pour fermeture panel ===== */
 .settings-overlay { display: none; }
@@ -2449,13 +2487,13 @@ body.night .juz-range { color:var(--gold-shine); opacity:0.7; }
 
 .reciter-select {
   background:transparent; border:1px solid rgba(201,168,76,0.4);
-  border-radius:8px; color:var(--gold-light); padding:6px 24px 6px 10px;
+  border-radius:8px; color:var(--gold-light); padding:6px 26px 6px 10px;
   font-family:'Cinzel', serif; font-size:10px; letter-spacing:0.08em;
   cursor:pointer; width:100%; outline:none;
   -webkit-appearance:none; appearance:none;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path d='M1 1l4 4 4-4' fill='none' stroke='%23C9A84C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1.5l5 5 5-5' fill='none' stroke='%23F0C040' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
   background-repeat:no-repeat;
-  background-position:right 8px center;
+  background-position:right 9px center;
 }
 
 body.night .reciter-select { background:rgba(240,192,64,0.05); }
@@ -2754,7 +2792,7 @@ body.night .verse-arabic { color:var(--arabic-color); }
 
 .verse-translation {
   font-family:'Cormorant Garamond', serif; font-size:15px;
-  color:var(--text2); line-height:1.65; display:block;
+  color:var(--translation-color); line-height:1.65; display:block;
 }
 
 .verse-translation.hidden { display:none; }
