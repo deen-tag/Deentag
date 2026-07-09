@@ -390,31 +390,61 @@
   <!-- Taille arabe -->
   <div class="size-row">
     <span class="size-row-label">Arabe</span>
+    <button class="color-dot-btn" id="colorDot-ar" style="--dot-color:var(--arabic-color)" onclick="event.stopPropagation();toggleColorPicker('ar')" aria-label="Couleur Arabe"></button>
     <div class="size-pills">
       <button class="size-pill" data-type="ar" data-val="small"  onclick="event.stopPropagation();applySizeLevel('ar','small')" aria-label="Petit"><span class="pill-a pill-a-sm">A</span></button>
       <button class="size-pill active" data-type="ar" data-val="medium" onclick="event.stopPropagation();applySizeLevel('ar','medium')" aria-label="Moyen"><span class="pill-a pill-a-md">A</span></button>
       <button class="size-pill" data-type="ar" data-val="large"  onclick="event.stopPropagation();applySizeLevel('ar','large')" aria-label="Grand"><span class="pill-a pill-a-lg">A</span></button>
     </div>
   </div>
+  <div class="color-popover" id="colorPopover-ar">
+    <button class="color-swatch" style="background:#F0D060" onclick="event.stopPropagation();selectColor('ar','#F0D060')" aria-label="Or"></button>
+    <button class="color-swatch" style="background:#F5E9D0" onclick="event.stopPropagation();selectColor('ar','#F5E9D0')" aria-label="Ivoire"></button>
+    <button class="color-swatch" style="background:#7FD9A8" onclick="event.stopPropagation();selectColor('ar','#7FD9A8')" aria-label="Émeraude"></button>
+    <button class="color-swatch" style="background:#E0A060" onclick="event.stopPropagation();selectColor('ar','#E0A060')" aria-label="Cuivre"></button>
+    <button class="color-swatch" style="background:#8FC7E8" onclick="event.stopPropagation();selectColor('ar','#8FC7E8')" aria-label="Bleu ciel"></button>
+    <button class="color-swatch" style="background:#E8A8B8" onclick="event.stopPropagation();selectColor('ar','#E8A8B8')" aria-label="Rose poudré"></button>
+    <button class="color-swatch reset-swatch" onclick="event.stopPropagation();resetColor('ar')" aria-label="Réinitialiser">✕</button>
+  </div>
 
   <!-- Taille phonétique -->
   <div class="size-row">
     <span class="size-row-label">Phonétique</span>
+    <button class="color-dot-btn" id="colorDot-ph" style="--dot-color:var(--phonetic-color)" onclick="event.stopPropagation();toggleColorPicker('ph')" aria-label="Couleur Phonétique"></button>
     <div class="size-pills">
       <button class="size-pill" data-type="ph" data-val="small"  onclick="event.stopPropagation();applySizeLevel('ph','small')" aria-label="Petit"><span class="pill-a pill-a-sm">A</span></button>
       <button class="size-pill active" data-type="ph" data-val="medium" onclick="event.stopPropagation();applySizeLevel('ph','medium')" aria-label="Moyen"><span class="pill-a pill-a-md">A</span></button>
       <button class="size-pill" data-type="ph" data-val="large"  onclick="event.stopPropagation();applySizeLevel('ph','large')" aria-label="Grand"><span class="pill-a pill-a-lg">A</span></button>
     </div>
   </div>
+  <div class="color-popover" id="colorPopover-ph">
+    <button class="color-swatch" style="background:#F0D060" onclick="event.stopPropagation();selectColor('ph','#F0D060')" aria-label="Or"></button>
+    <button class="color-swatch" style="background:#F5E9D0" onclick="event.stopPropagation();selectColor('ph','#F5E9D0')" aria-label="Ivoire"></button>
+    <button class="color-swatch" style="background:#7FD9A8" onclick="event.stopPropagation();selectColor('ph','#7FD9A8')" aria-label="Émeraude"></button>
+    <button class="color-swatch" style="background:#E0A060" onclick="event.stopPropagation();selectColor('ph','#E0A060')" aria-label="Cuivre"></button>
+    <button class="color-swatch" style="background:#8FC7E8" onclick="event.stopPropagation();selectColor('ph','#8FC7E8')" aria-label="Bleu ciel"></button>
+    <button class="color-swatch" style="background:#E8A8B8" onclick="event.stopPropagation();selectColor('ph','#E8A8B8')" aria-label="Rose poudré"></button>
+    <button class="color-swatch reset-swatch" onclick="event.stopPropagation();resetColor('ph')" aria-label="Réinitialiser">✕</button>
+  </div>
 
   <!-- Taille traduction -->
   <div class="size-row">
     <span class="size-row-label">Traduction</span>
+    <button class="color-dot-btn" id="colorDot-tr" style="--dot-color:var(--translation-color)" onclick="event.stopPropagation();toggleColorPicker('tr')" aria-label="Couleur Traduction"></button>
     <div class="size-pills">
       <button class="size-pill" data-type="tr" data-val="small"  onclick="event.stopPropagation();applySizeLevel('tr','small')" aria-label="Petit"><span class="pill-a pill-a-sm">A</span></button>
       <button class="size-pill active" data-type="tr" data-val="medium" onclick="event.stopPropagation();applySizeLevel('tr','medium')" aria-label="Moyen"><span class="pill-a pill-a-md">A</span></button>
       <button class="size-pill" data-type="tr" data-val="large"  onclick="event.stopPropagation();applySizeLevel('tr','large')" aria-label="Grand"><span class="pill-a pill-a-lg">A</span></button>
     </div>
+  </div>
+  <div class="color-popover" id="colorPopover-tr">
+    <button class="color-swatch" style="background:#F0D060" onclick="event.stopPropagation();selectColor('tr','#F0D060')" aria-label="Or"></button>
+    <button class="color-swatch" style="background:#F5E9D0" onclick="event.stopPropagation();selectColor('tr','#F5E9D0')" aria-label="Ivoire"></button>
+    <button class="color-swatch" style="background:#7FD9A8" onclick="event.stopPropagation();selectColor('tr','#7FD9A8')" aria-label="Émeraude"></button>
+    <button class="color-swatch" style="background:#E0A060" onclick="event.stopPropagation();selectColor('tr','#E0A060')" aria-label="Cuivre"></button>
+    <button class="color-swatch" style="background:#8FC7E8" onclick="event.stopPropagation();selectColor('tr','#8FC7E8')" aria-label="Bleu ciel"></button>
+    <button class="color-swatch" style="background:#E8A8B8" onclick="event.stopPropagation();selectColor('tr','#E8A8B8')" aria-label="Rose poudré"></button>
+    <button class="color-swatch reset-swatch" onclick="event.stopPropagation();resetColor('tr')" aria-label="Réinitialiser">✕</button>
   </div>
 
   <!-- Toggle phonétique -->
