@@ -1011,8 +1011,10 @@ function toggleTranslation(el) {
 
 function openSettings() {
   const panel = document.getElementById('surahSettingsPanel');
+  const backdrop = document.getElementById('settingsBackdrop');
   if (!panel) return;
   panel.classList.toggle('open');
+  if (backdrop) backdrop.classList.toggle('open', panel.classList.contains('open'));
 }
 
 function setReciter(value) {
@@ -1023,7 +1025,9 @@ function setReciter(value) {
 
 function closeSettings() {
   const panel = document.getElementById('surahSettingsPanel');
+  const backdrop = document.getElementById('settingsBackdrop');
   if (panel) panel.classList.remove('open');
+  if (backdrop) backdrop.classList.remove('open');
 }
 
 // ============================================================
