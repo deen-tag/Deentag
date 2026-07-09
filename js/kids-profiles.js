@@ -88,14 +88,21 @@
   /* ── Ouvrir modal ── */
   function openKidsProfileModal() {
     var modal = ensureKidsModalDOM();
-    var grid  = document.getElementById('kidsProfileGrid');
-    if (!modal || !grid) return;
+    if (!modal) return;
 
-    var titleEl = modal.querySelector('.kids-profile-title');
-    var addBtnEl = modal.querySelector('.kids-profile-add-btn');
-    if (titleEl) titleEl.textContent = kpT().who;
-    if (addBtnEl) addBtnEl.textContent = kpT().addBtn;
+    // Reconstruit systématiquement le squelette (titre + grille + bouton ajouter),
+    // comme côté adulte, pour ne jamais laisser de contenu de formulaire périmé
+    // (ex: après un "Annuler" depuis le formulaire d'ajout/modification).
+    var box = modal.querySelector('.kids-profile-box');
+    if (box) {
+      box.innerHTML =
+        '<div class="kids-profile-title">' + kpT().who + '</div>' +
+        '<div class="kids-profile-grid" id="kidsProfileGrid"></div>' +
+        '<button class="kids-profile-add-btn" onclick="kidsAddProfile()">' + kpT().addBtn + '</button>';
+    }
 
+    var grid = document.getElementById('kidsProfileGrid');
+    if (!grid) return;
     var profiles = loadProfiles();
     var activeId = getActiveId();
     grid.innerHTML = '';
@@ -203,7 +210,7 @@
       '<div class="kids-profile-colors">' + dots + '</div>' +
       '<input id="kp-name" class="kids-profile-input" type="text" placeholder="' + kpT().namePh + '" maxlength="12">' +
       '<div class="kids-profile-actions">' +
-        '<button class="kids-profile-btn" onclick="closeKidsProfileModal()">' + kpT().cancel + '</button>' +
+        '<button class="kids-profile-btn" onclick="openKidsProfileModal()">' + kpT().cancel + '</button>' +
         '<button class="kids-profile-btn kids-profile-btn-primary" onclick="kidsSaveProfile()">' + kpT().create + '</button>' +
       '</div>';
 
@@ -543,7 +550,7 @@
       '<div class="kids-profile-colors">' + dots + '</div>' +
       '<input id="kp-name" class="kids-profile-input" type="text" value="' + p.name + '" maxlength="12">' +
       '<div class="kids-profile-actions">' +
-        '<button class="kids-profile-btn" onclick="closeKidsProfileModal();openKidsProfileModal();">' + kpT().cancel + '</button>' +
+        '<button class="kids-profile-btn" onclick="openKidsProfileModal()">' + kpT().cancel + '</button>' +
         '<button class="kids-profile-btn kids-profile-btn-primary" onclick="kidsSaveEdit(\'' + id + '\')">' + kpT().save + '</button>' +
       '</div>';
 
