@@ -14,7 +14,6 @@
   --gold-light: #E8C97A;
   --gold-dark: #8B6914;
   --gold-shine: #F5E4A0;
-  --ivory: #FFF8E7;
   --radius-lg: 20px;
   --radius-md: 14px;
   --radius-sm: 12px;
@@ -295,7 +294,7 @@ body.night .cat-card {
   box-shadow: none;
 }
 body.night .cat-label {
-  color: var(--ivory);
+  color: var(--gold-shine);
   background: rgba(30,32,22,0.85);
   border-color: rgba(240,192,64,0.30);
 }
@@ -2101,27 +2100,6 @@ body.night .cat-card.cat-highlight {
   gap:10px; padding:0 14px 20px;
 }
 
-/* ===== BANNIÈRE PLEINE LARGEUR (section Quotidien) ===== */
-.banner-list { display:flex; flex-direction:column; gap:12px; padding:0 14px 20px; }
-.banner-card {
-  display:flex; align-items:stretch; height:104px; border-radius:16px; overflow:hidden;
-  background:var(--card-bg); border:1px solid var(--card-border);
-  box-shadow:0 3px 12px var(--shadow); position:relative; cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
-  transition:transform 0.25s cubic-bezier(0.22,1,0.36,1);
-}
-.banner-card:active { transform:scale(0.98); }
-.banner-arch { width:104px; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center; }
-.banner-icon { position:absolute; width:88%; height:88%; object-fit:contain; top:50%; left:50%; transform:translate(-50%,-50%); z-index:2; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15)); }
-.banner-text { flex:1; display:flex; flex-direction:column; justify-content:center; gap:3px; padding:0 18px 0 8px; min-width:0; }
-.banner-name { font-family:'Cinzel',serif; font-size:14px; font-weight:600; letter-spacing:0.09em; color:var(--text); }
-.banner-sub { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:12.5px; color:var(--gold-dark); }
-body.night .banner-sub { color:var(--gold); }
-.banner-card::after {
-  content:''; position:absolute; top:0; right:0; width:14px; height:14px;
-  border-top:1px solid var(--gold); border-right:1px solid var(--gold); border-radius:0 15px 0 0;
-  opacity:0.35; pointer-events:none;
-}
 
 /* ===== OVERLAY ===== */
 .bs-overlay {
@@ -3294,7 +3272,7 @@ body.night .qnav-icon { color: var(--gold); }
 }
 
 body.night .qnav-label {
-  color: var(--ivory);
+  color: var(--gold-shine);
   background: rgba(30,32,22,0.85);
   border-color: rgba(240,192,64,0.30);
 }
