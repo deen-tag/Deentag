@@ -377,12 +377,13 @@
 
 </div><!-- fin bottomSheet -->
 
+<!-- BACKDROP (overlay léger derrière le panel) -->
+<div class="settings-backdrop" id="settingsBackdrop" onclick="closeSettings()"></div>
+
 <!-- SETTINGS PANEL -->
 <div class="settings-panel" id="surahSettingsPanel">
-  <button class="theme-knob-btn settings-panel-close" onclick="closeSettings()" aria-label="Fermer">
-    <div class="theme-knob-btn-inner">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-    </div>
+  <button class="settings-close-btn" onclick="closeSettings()" aria-label="Fermer">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
   <div class="settings-panel-title">Réglages</div>
 
@@ -390,9 +391,9 @@
   <div class="size-row">
     <span class="size-row-label">Arabe</span>
     <div class="size-pills">
-      <button class="size-pill" data-type="ar" data-val="small"  onclick="event.stopPropagation();applySizeLevel('ar','small')">P</button>
-      <button class="size-pill active" data-type="ar" data-val="medium" onclick="event.stopPropagation();applySizeLevel('ar','medium')">M</button>
-      <button class="size-pill" data-type="ar" data-val="large"  onclick="event.stopPropagation();applySizeLevel('ar','large')">G</button>
+      <button class="size-pill" data-type="ar" data-val="small"  onclick="event.stopPropagation();applySizeLevel('ar','small')" aria-label="Petit"><span class="pill-a pill-a-sm">A</span></button>
+      <button class="size-pill active" data-type="ar" data-val="medium" onclick="event.stopPropagation();applySizeLevel('ar','medium')" aria-label="Moyen"><span class="pill-a pill-a-md">A</span></button>
+      <button class="size-pill" data-type="ar" data-val="large"  onclick="event.stopPropagation();applySizeLevel('ar','large')" aria-label="Grand"><span class="pill-a pill-a-lg">A</span></button>
     </div>
   </div>
 
@@ -400,9 +401,9 @@
   <div class="size-row">
     <span class="size-row-label">Phonétique</span>
     <div class="size-pills">
-      <button class="size-pill" data-type="ph" data-val="small"  onclick="event.stopPropagation();applySizeLevel('ph','small')">P</button>
-      <button class="size-pill active" data-type="ph" data-val="medium" onclick="event.stopPropagation();applySizeLevel('ph','medium')">M</button>
-      <button class="size-pill" data-type="ph" data-val="large"  onclick="event.stopPropagation();applySizeLevel('ph','large')">G</button>
+      <button class="size-pill" data-type="ph" data-val="small"  onclick="event.stopPropagation();applySizeLevel('ph','small')" aria-label="Petit"><span class="pill-a pill-a-sm">A</span></button>
+      <button class="size-pill active" data-type="ph" data-val="medium" onclick="event.stopPropagation();applySizeLevel('ph','medium')" aria-label="Moyen"><span class="pill-a pill-a-md">A</span></button>
+      <button class="size-pill" data-type="ph" data-val="large"  onclick="event.stopPropagation();applySizeLevel('ph','large')" aria-label="Grand"><span class="pill-a pill-a-lg">A</span></button>
     </div>
   </div>
 
@@ -410,9 +411,9 @@
   <div class="size-row">
     <span class="size-row-label">Traduction</span>
     <div class="size-pills">
-      <button class="size-pill" data-type="tr" data-val="small"  onclick="event.stopPropagation();applySizeLevel('tr','small')">P</button>
-      <button class="size-pill active" data-type="tr" data-val="medium" onclick="event.stopPropagation();applySizeLevel('tr','medium')">M</button>
-      <button class="size-pill" data-type="tr" data-val="large"  onclick="event.stopPropagation();applySizeLevel('tr','large')">G</button>
+      <button class="size-pill" data-type="tr" data-val="small"  onclick="event.stopPropagation();applySizeLevel('tr','small')" aria-label="Petit"><span class="pill-a pill-a-sm">A</span></button>
+      <button class="size-pill active" data-type="tr" data-val="medium" onclick="event.stopPropagation();applySizeLevel('tr','medium')" aria-label="Moyen"><span class="pill-a pill-a-md">A</span></button>
+      <button class="size-pill" data-type="tr" data-val="large"  onclick="event.stopPropagation();applySizeLevel('tr','large')" aria-label="Grand"><span class="pill-a pill-a-lg">A</span></button>
     </div>
   </div>
 
