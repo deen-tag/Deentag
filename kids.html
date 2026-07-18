@@ -11,6 +11,34 @@
 </head>
 <body class="page-kids" data-page="kids">
 
+<!-- SPLASH DE LANCEMENT -->
+<div class="kids-splash" id="kidsSplash">
+  <div class="kids-splash-logo"></div>
+  <div class="kids-splash-brand">DEENTAG KIDS</div>
+</div>
+<script>
+(function(){
+  var t0 = performance.now();
+  var MIN_VISIBLE = 350;
+  var MAX_VISIBLE = 2500;
+  var hidden = false;
+  function hideSplash(){
+    if (hidden) return;
+    var elapsed = performance.now() - t0;
+    var wait = Math.max(0, MIN_VISIBLE - elapsed);
+    setTimeout(function(){
+      hidden = true;
+      var el = document.getElementById('kidsSplash');
+      if (!el) return;
+      el.classList.add('hide');
+      setTimeout(function(){ el.style.display = 'none'; }, 400);
+    }, wait);
+  }
+  window.addEventListener('load', hideSplash);
+  setTimeout(hideSplash, MAX_VISIBLE);
+})();
+</script>
+
 <!-- PAGE ACCUEIL -->
 <div id="page-home">
   <div class="kids-topbar">

@@ -52,6 +52,34 @@
 </head>
 <body class="day" data-page="index">
 
+<!-- SPLASH DE LANCEMENT -->
+<div class="app-splash" id="appSplash">
+  <div class="app-splash-logo"></div>
+  <div class="app-splash-brand">DEENTAG</div>
+</div>
+<script>
+(function(){
+  var t0 = performance.now();
+  var MIN_VISIBLE = 350; // évite un flash si le chargement est très rapide
+  var MAX_VISIBLE = 2500; // filet de sécurité si un événement de chargement ne se déclenche jamais
+  var hidden = false;
+  function hideSplash(){
+    if (hidden) return;
+    var elapsed = performance.now() - t0;
+    var wait = Math.max(0, MIN_VISIBLE - elapsed);
+    setTimeout(function(){
+      hidden = true;
+      var el = document.getElementById('appSplash');
+      if (!el) return;
+      el.classList.add('hide');
+      setTimeout(function(){ el.style.display = 'none'; }, 400);
+    }, wait);
+  }
+  window.addEventListener('load', hideSplash);
+  setTimeout(hideSplash, MAX_VISIBLE);
+})();
+</script>
+
 <!-- TOPBAR -->
 <div class="app-topbar">
   <!-- ETOILES (mode nuit) -->
