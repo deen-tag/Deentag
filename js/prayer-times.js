@@ -167,23 +167,30 @@
     var nowMin = now.getHours() * 60 + now.getMinutes();
     var bounds = PRAYER_ORDER.map(function (k) { return minutesFromTime(timings[k]); });
 
+    // On travaille sur une timeline relative au Fajr du jour (0 = Fajr, 1440 = Fajr du lendemain).
+    // Ça évite de confondre "avant Isha ce midi" et "après minuit, avant Fajr" — les deux cas où
+    // l'heure actuelle est "avant" l'heure d'Isha en minutes brutes, mais qui sont très différents.
+    var fajrAbs = bounds[0];
+    var rel = bounds.map(function (b) { return b - fajrAbs; });
+    var nowRel = nowMin - fajrAbs;
+    if (nowRel < 0) nowRel += 24 * 60;
+
     var segs = document.querySelectorAll('.pg-seg');
     var nextKey = null;
     var L = lang();
 
     segs.forEach(function (seg, i) {
       var key = PRAYER_ORDER[i];
-      var start = bounds[i];
-      var end = (i < bounds.length - 1) ? bounds[i + 1] : (bounds[0] + 24 * 60); // Isha -> Fajr du lendemain
+      var start = rel[i];
+      var end = (i < rel.length - 1) ? rel[i + 1] : 24 * 60; // Isha -> Fajr du lendemain
       var fill = seg.querySelector('.pg-seg-fill');
       var pt = seg.querySelector('.pg-pt');
       var label = seg.querySelector('.pg-label');
-      var effNow = nowMin >= start ? nowMin : nowMin + 24 * 60;
 
       var pct;
-      if (effNow >= end) { pct = 100; }
-      else if (effNow <= start) { pct = 0; }
-      else { pct = Math.round(((effNow - start) / (end - start)) * 100); }
+      if (nowRel >= end) { pct = 100; }
+      else if (nowRel <= start) { pct = 0; }
+      else { pct = Math.round(((nowRel - start) / (end - start)) * 100); }
 
       fill.style.width = pct + '%';
       pt.classList.toggle('done', pct >= 100);
