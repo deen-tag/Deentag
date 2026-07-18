@@ -106,6 +106,19 @@
   }
 
   // ---------- jauge segmentée ----------
+  var labelRevertTimers = {};
+
+  function onLabelTap(key, labelEl) {
+    if (!currentTimings) return;
+    clearTimeout(labelRevertTimers[key]);
+    labelEl.textContent = cleanTime(currentTimings[key]);
+    labelEl.classList.add('show-time');
+    labelRevertTimers[key] = setTimeout(function () {
+      labelEl.classList.remove('show-time');
+      labelEl.textContent = prayerLabel(key, lang());
+    }, 2500);
+  }
+
   function buildTrackSkeleton() {
     var track = document.getElementById('pgTrack');
     if (!track) return;
@@ -119,8 +132,15 @@
       fill.style.width = '0%';
       var pt = document.createElement('div');
       pt.className = 'pg-pt';
+      var label = document.createElement('div');
+      label.className = 'pg-label';
+      label.textContent = prayerLabel(key, lang());
+      var tap = function () { onLabelTap(key, label); };
+      pt.addEventListener('click', tap);
+      label.addEventListener('click', tap);
       seg.appendChild(fill);
       seg.appendChild(pt);
+      seg.appendChild(label);
       track.appendChild(seg);
     });
   }
@@ -149,12 +169,15 @@
 
     var segs = document.querySelectorAll('.pg-seg');
     var nextKey = null;
+    var L = lang();
 
     segs.forEach(function (seg, i) {
+      var key = PRAYER_ORDER[i];
       var start = bounds[i];
       var end = (i < bounds.length - 1) ? bounds[i + 1] : (bounds[0] + 24 * 60); // Isha -> Fajr du lendemain
       var fill = seg.querySelector('.pg-seg-fill');
       var pt = seg.querySelector('.pg-pt');
+      var label = seg.querySelector('.pg-label');
       var effNow = nowMin >= start ? nowMin : nowMin + 24 * 60;
 
       var pct;
@@ -168,7 +191,16 @@
 
       var isNow = pct > 0 && pct < 100;
       pt.classList.toggle('now', isNow);
-      if (isNow && !nextKey) nextKey = PRAYER_ORDER[i];
+      if (label) {
+        label.classList.toggle('now-label', isNow);
+        if (!label.classList.contains('show-time')) label.textContent = prayerLabel(key, L);
+      }
+      if (isNow && !nextKey) {
+        // la prière "prochaine" est celle qui MARQUE LA FIN de ce segment,
+        // pas celle qui l'a commencé — donc l'élément suivant (avec retour à Fajr après Isha).
+        var nextIdx = (i + 1) % PRAYER_ORDER.length;
+        nextKey = PRAYER_ORDER[nextIdx];
+      }
     });
 
     if (!nextKey) nextKey = 'Fajr'; // toutes les prières du jour sont passées
@@ -181,7 +213,6 @@
 
     var nameEl = document.getElementById('pgNextName');
     var cdEl = document.getElementById('pgCountdown');
-    var L = lang();
     if (nameEl) nameEl.textContent = prayerLabel(nextKey, L);
     if (cdEl) cdEl.textContent = (h > 0 ? h + 'h' : '') + String(m).padStart(2, '0');
   }
