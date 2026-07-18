@@ -120,6 +120,7 @@ function applyLang(lang) {
     if (i18n[lang][key]) el.textContent = i18n[lang][key];
   });
   if (window.DT_refreshNavLang) window.DT_refreshNavLang();
+  if (window.DT_refreshPrayerLang) window.DT_refreshPrayerLang();
 }
 
 function setLang(lang) {
