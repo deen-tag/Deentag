@@ -255,7 +255,7 @@
   }
 
   function tickCountdown() {
-    var cdEl = document.getElementById('pgCountdownText');
+    var cdEl = document.getElementById('pgCountdownText') || document.getElementById('pgCountdown');
     if (!cdEl || !nextPrayerTarget) return;
     cdEl.textContent = formatCountdown(nextPrayerTarget - new Date(), lang());
   }
