@@ -90,6 +90,35 @@ body.night {
   background-attachment: fixed, fixed, fixed, fixed;
 }
 
+/* ===== SPLASH DE LANCEMENT ===== */
+.app-splash {
+  position: fixed; inset: 0; z-index: 9999;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: radial-gradient(circle at 50% 38%, #1c4a52 0%, #0c2a30 70%, #061a1e 100%);
+  opacity: 1; transition: opacity 0.35s ease;
+}
+html[data-theme="night"] .app-splash {
+  background: radial-gradient(circle at 50% 38%, #0d2226 0%, #050f12 70%, #030a0c 100%);
+}
+.app-splash.hide { opacity: 0; pointer-events: none; }
+.app-splash-logo {
+  width: 72px; height: 72px;
+  background-image: url('images/logo.webp');
+  background-size: contain; background-repeat: no-repeat; background-position: center;
+  opacity: 0; animation: appSplashLogoIn 0.55s ease 0.05s forwards;
+}
+html[data-theme="night"] .app-splash-logo { background-image: url('images/logo-night.webp'); }
+.app-splash-brand {
+  font-family: 'Cinzel Decorative', serif; font-size: 19px; letter-spacing: 0.2em;
+  color: #DDB05C; margin-top: 14px; opacity: 0;
+  animation: appSplashTextIn 0.5s ease 0.30s forwards;
+}
+@keyframes appSplashLogoIn { from { opacity:0; transform:scale(0.88); } to { opacity:1; transform:scale(1); } }
+@keyframes appSplashTextIn { from { opacity:0; transform:translateY(5px); } to { opacity:1; transform:translateY(0); } }
+@media (prefers-reduced-motion: reduce) {
+  .app-splash-logo, .app-splash-brand { animation: none; opacity: 1; }
+}
+
 body {
   background: var(--bg); color: var(--text); transition: background 0.3s, color 0.3s;
   min-height: 100vh;
