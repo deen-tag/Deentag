@@ -2186,11 +2186,10 @@ body.night .pg-label-time.now-label { color:var(--gold-light); }
 }
 .pg-city svg { flex-shrink:0; }
 .pg-countdown {
-  display:inline-flex; align-items:center; gap:3px;
+  display:inline-flex; align-items:center;
   font-family:'Cormorant Garamond',serif; font-style:italic;
   font-size:12px; color:var(--text2);
 }
-.pg-countdown svg { flex-shrink:0; opacity:0.75; }
 
 .prayer-locate-btn {
   display:inline-flex; margin-top:10px; padding:7px 14px;
