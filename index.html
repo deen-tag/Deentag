@@ -110,6 +110,51 @@
   </div>
 </div>
 
+<!-- HORAIRES DE PRIÈRE — JAUGE -->
+<div class="prayer-gauge" id="prayerGauge">
+  <div class="pg-top">
+    <span class="pg-next">
+      <span class="pg-next-label">
+        <span class="lang-block" data-lang-block="fr">Prochaine</span>
+        <span class="lang-block" data-lang-block="en">Next</span>
+        <span class="lang-block" data-lang-block="es">Próxima</span>
+        <span class="lang-block" data-lang-block="de">Nächste</span>
+        <span class="lang-block" data-lang-block="it">Prossima</span>
+        <span class="lang-block" data-lang-block="nl">Volgende</span>
+        <span class="lang-block" data-lang-block="pt">Próxima</span>
+        <span class="lang-block" data-lang-block="tr">Sıradaki</span>
+      </span>
+      <span class="pg-next-name" id="pgNextName">—</span>
+    </span>
+    <button class="pg-cal-btn" id="pgCalBtn" onclick="DT_openPrayerCalendar()" aria-label="Calendrier">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>
+    </button>
+  </div>
+
+  <div class="pg-track" id="pgTrack"></div>
+
+  <div class="pg-bottom">
+    <span class="pg-city" id="pgCity">
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5 5 9c0 5.5 7 13 7 13s7-7.5 7-13c0-4-3-7-7-7z"/><circle cx="12" cy="9" r="2.2"/></svg>
+      <span id="pgCityName"></span>
+    </span>
+    <span class="pg-countdown" id="pgCountdown">--</span>
+  </div>
+
+  <button class="prayer-locate-btn" id="prayerLocateBtn" onclick="DT_requestPrayerLocation()" style="display:none;">
+    <span class="lang-block" data-lang-block="fr">Activer ma position</span>
+    <span class="lang-block" data-lang-block="en">Enable my location</span>
+    <span class="lang-block" data-lang-block="es">Activar mi ubicación</span>
+    <span class="lang-block" data-lang-block="de">Standort aktivieren</span>
+    <span class="lang-block" data-lang-block="it">Attiva la mia posizione</span>
+    <span class="lang-block" data-lang-block="nl">Mijn locatie inschakelen</span>
+    <span class="lang-block" data-lang-block="pt">Ativar minha localização</span>
+    <span class="lang-block" data-lang-block="tr">Konumumu etkinleştir</span>
+  </button>
+
+  <div class="prayer-error" id="prayerError" style="display:none;"></div>
+</div>
+
 <!-- CHIPS DE NAVIGATION RAPIDE -->
 <div class="section-nav" id="sectionNav">
   <button class="section-chip" data-jump="Quotidien" onclick="jumpToSection('Quotidien')">
@@ -602,6 +647,7 @@
 <script src="js/app.js"></script>
 <script src="js/nav.js"></script>
 <script src="js/profiles.js"></script>
+<script src="js/prayer-times.js"></script>
 
 </body>
 </html>
