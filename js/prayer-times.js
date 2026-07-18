@@ -108,19 +108,6 @@
   }
 
   // ---------- jauge segmentée ----------
-  var labelRevertTimers = {};
-
-  function onLabelTap(key, labelEl) {
-    if (!currentTimings) return;
-    clearTimeout(labelRevertTimers[key]);
-    labelEl.textContent = cleanTime(currentTimings[key]);
-    labelEl.classList.add('show-time');
-    labelRevertTimers[key] = setTimeout(function () {
-      labelEl.classList.remove('show-time');
-      labelEl.textContent = prayerLabel(key, lang());
-    }, 2500);
-  }
-
   function buildTrackSkeleton() {
     var track = document.getElementById('pgTrack');
     if (!track) return;
@@ -137,12 +124,13 @@
       var label = document.createElement('div');
       label.className = 'pg-label';
       label.textContent = prayerLabel(key, lang());
-      var tap = function () { onLabelTap(key, label); };
-      pt.addEventListener('click', tap);
-      label.addEventListener('click', tap);
+      var time = document.createElement('div');
+      time.className = 'pg-label-time';
+      time.textContent = '--:--';
       seg.appendChild(fill);
       seg.appendChild(pt);
       seg.appendChild(label);
+      seg.appendChild(time);
       track.appendChild(seg);
     });
   }
@@ -202,6 +190,7 @@
       var fill = seg.querySelector('.pg-seg-fill');
       var pt = seg.querySelector('.pg-pt');
       var label = seg.querySelector('.pg-label');
+      var timeEl = seg.querySelector('.pg-label-time');
 
       var pct;
       if (nowRel >= end) { pct = 100; }
@@ -216,7 +205,11 @@
       pt.classList.toggle('now', isNow);
       if (label) {
         label.classList.toggle('now-label', isNow);
-        if (!label.classList.contains('show-time')) label.textContent = prayerLabel(key, L);
+        label.textContent = prayerLabel(key, L);
+      }
+      if (timeEl) {
+        timeEl.classList.toggle('now-label', isNow);
+        timeEl.textContent = cleanTime(timings[key]);
       }
       if (isNow && !nextKey) {
         // la prière "prochaine" est celle qui MARQUE LA FIN de ce segment,
