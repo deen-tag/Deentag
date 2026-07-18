@@ -11,6 +11,8 @@
 
   var currentTimings = null; // today's timings (Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha)
   var tickerId = null;
+  var countdownTickerId = null;
+  var nextPrayerTarget = null; // Date object: exact moment of the next prayer
   var userLoc = null; // {lat, lon}
   var calState = { year: null, month: null }; // currently displayed month in panel
 
@@ -159,6 +161,11 @@
     return (PRAYER_LABELS_MAP[L] && PRAYER_LABELS_MAP[L][key]) || key;
   }
 
+  var COUNTDOWN_PREFIX = {
+    fr: 'dans', en: 'in', es: 'en', de: 'in', it: 'tra', nl: 'over', pt: 'em'
+    // tr: géré à part dans formatCountdown() — le mot se place après l'heure, pas avant
+  };
+
   function updateGauge(timings) {
     if (!document.getElementById('pgTrack')) return;
     if (!document.querySelector('.pg-seg')) buildTrackSkeleton();
@@ -222,15 +229,40 @@
     if (!nextKey) nextKey = 'Fajr'; // toutes les prières du jour sont passées
 
     var idx = PRAYER_ORDER.indexOf(nextKey);
-    var targetMin = bounds[idx];
-    var diff = targetMin - nowMin;
-    if (diff <= 0) diff += 24 * 60;
-    var h = Math.floor(diff / 60), m = diff % 60;
+    // Cible précise (avec secondes) pour le compte à rebours : l'heure de la prochaine
+    // prière aujourd'hui, ou demain si elle est déjà passée.
+    var targetParts = cleanTime(timings[nextKey]).split(':');
+    var target = new Date();
+    target.setHours(+targetParts[0], +targetParts[1], 0, 0);
+    if (target <= now) target.setDate(target.getDate() + 1);
+    nextPrayerTarget = target;
 
     var nameEl = document.getElementById('pgNextName');
-    var cdEl = document.getElementById('pgCountdown');
     if (nameEl) nameEl.textContent = prayerLabel(nextKey, L);
-    if (cdEl) cdEl.textContent = (h > 0 ? h + 'h' : '') + String(m).padStart(2, '0');
+    tickCountdown();
+  }
+
+  function formatCountdown(diffMs, L) {
+    if (diffMs < 0) diffMs = 0;
+    var diffSec = Math.floor(diffMs / 1000);
+    var h = Math.floor(diffSec / 3600);
+    var m = Math.floor((diffSec % 3600) / 60);
+    var s = diffSec % 60;
+    var timeStr = (h > 0 ? h + 'h' : '') + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    if (L === 'tr') return timeStr + ' sonra'; // en turc, le mot se place après l'heure
+    var prefix = COUNTDOWN_PREFIX[L] || COUNTDOWN_PREFIX.fr;
+    return (prefix ? prefix + ' ' : '') + timeStr;
+  }
+
+  function tickCountdown() {
+    var cdEl = document.getElementById('pgCountdownText');
+    if (!cdEl || !nextPrayerTarget) return;
+    cdEl.textContent = formatCountdown(nextPrayerTarget - new Date(), lang());
+  }
+
+  function startCountdownTicker() {
+    if (countdownTickerId) clearInterval(countdownTickerId);
+    countdownTickerId = setInterval(tickCountdown, 1000);
   }
 
   function startTicker() {
@@ -238,6 +270,7 @@
     tickerId = setInterval(function () {
       if (currentTimings) updateGauge(currentTimings);
     }, 30000);
+    startCountdownTicker();
   }
 
   // ---------- API Aladhan ----------
