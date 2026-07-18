@@ -11,7 +11,7 @@
 
   var currentTimings = null; // today's timings (Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha)
   var tickerId = null;
-  var countdownTickerId = null;
+  var countdownTimeoutId = null;
   var nextPrayerTarget = null; // Date object: exact moment of the next prayer
   var userLoc = null; // {lat, lon}
   var calState = { year: null, month: null }; // currently displayed month in panel
@@ -232,16 +232,19 @@
 
     var nameEl = document.getElementById('pgNextName');
     if (nameEl) nameEl.textContent = prayerLabel(nextKey, L);
-    tickCountdown();
+    scheduleCountdown();
   }
 
   function formatCountdown(diffMs, L) {
     if (diffMs < 0) diffMs = 0;
-    var diffSec = Math.floor(diffMs / 1000);
-    var h = Math.floor(diffSec / 3600);
-    var m = Math.floor((diffSec % 3600) / 60);
-    var s = diffSec % 60;
-    var timeStr = (h > 0 ? h + 'h' : '') + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
+    var totalSec = Math.floor(diffMs / 1000);
+    var h = Math.floor(totalSec / 3600);
+    var m = Math.floor((totalSec % 3600) / 60);
+    var s = totalSec % 60;
+    // Sous 1h restante : précision à la seconde (mm:ss). Au-delà : juste h + minutes,
+    // pas besoin des secondes quand il reste plusieurs heures.
+    var timeStr = (h > 0) ? (h + 'h' + String(m).padStart(2, '0'))
+                           : (String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0'));
     if (L === 'tr') return timeStr + ' sonra'; // en turc, le mot se place après l'heure
     var prefix = COUNTDOWN_PREFIX[L] || COUNTDOWN_PREFIX.fr;
     return (prefix ? prefix + ' ' : '') + timeStr;
@@ -253,9 +256,15 @@
     cdEl.textContent = formatCountdown(nextPrayerTarget - new Date(), lang());
   }
 
-  function startCountdownTicker() {
-    if (countdownTickerId) clearInterval(countdownTickerId);
-    countdownTickerId = setInterval(tickCountdown, 1000);
+  // Planification adaptative : tick chaque seconde seulement sous 1h restante,
+  // sinon toutes les 30s (aligné sur le rafraîchissement des données) — pas de travail inutile.
+  function scheduleCountdown() {
+    if (countdownTimeoutId) clearTimeout(countdownTimeoutId);
+    tickCountdown();
+    if (!nextPrayerTarget) return;
+    var diff = nextPrayerTarget - new Date();
+    var delay = diff < 3600000 ? 1000 : 30000;
+    countdownTimeoutId = setTimeout(scheduleCountdown, delay);
   }
 
   function startTicker() {
@@ -263,7 +272,6 @@
     tickerId = setInterval(function () {
       if (currentTimings) updateGauge(currentTimings);
     }, 30000);
-    startCountdownTicker();
   }
 
   // ---------- API Aladhan ----------
