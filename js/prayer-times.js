@@ -4,9 +4,9 @@
 (function () {
 
   var PRAYER_ORDER = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
-  var CACHE_KEY   = 'deentag_prayer_today';
+  var CACHE_KEY   = 'deentag_prayer_today_v2';
   var LOC_KEY     = 'deentag_prayer_loc';
-  var MONTH_CACHE_PREFIX = 'deentag_prayer_month_';
+  var MONTH_CACHE_PREFIX = 'deentag_prayer_month_v2_';
   var METHOD = 3; // Muslim World League
 
   var currentTimings = null; // today's timings (Fajr, Sunrise, Dhuhr, Asr, Maghrib, Isha)
@@ -171,7 +171,16 @@
     // Ça évite de confondre "avant Isha ce midi" et "après minuit, avant Fajr" — les deux cas où
     // l'heure actuelle est "avant" l'heure d'Isha en minutes brutes, mais qui sont très différents.
     var fajrAbs = bounds[0];
-    var rel = bounds.map(function (b) { return b - fajrAbs; });
+    // On rend rel[] strictement croissant : en été aux latitudes élevées (ex. Bretagne),
+    // Isha (et parfois Maghrib) peut tomber après minuit, donc numériquement AVANT Fajr.
+    // Sans ce "déroulement", les segments Maghrib/Isha se cassent et s'affichent comme
+    // "en cours" n'importe quand dans la journée.
+    var rel = [0];
+    for (var ri = 1; ri < bounds.length; ri++) {
+      var diff = bounds[ri] - fajrAbs;
+      while (diff <= rel[ri - 1]) diff += 24 * 60;
+      rel.push(diff);
+    }
     var nowRel = nowMin - fajrAbs;
     if (nowRel < 0) nowRel += 24 * 60;
 
@@ -233,8 +242,11 @@
 
   // ---------- API Aladhan ----------
   function fetchMonthCalendar(year, month, lat, lon) {
+    // latitudeAdjustmentMethod=3 (Angle Based) : évite les horaires de Fajr/Isha aberrants
+    // en été aux latitudes élevées (nuits courtes), recommandé pour l'Europe.
     var url = 'https://api.aladhan.com/v1/calendar/' + year + '/' + month +
-      '?latitude=' + lat + '&longitude=' + lon + '&method=' + METHOD;
+      '?latitude=' + lat + '&longitude=' + lon + '&method=' + METHOD +
+      '&latitudeAdjustmentMethod=3';
     return fetch(url).then(function (res) {
       if (!res.ok) throw new Error('network');
       return res.json();
