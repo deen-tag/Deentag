@@ -523,11 +523,14 @@
     buildTrackSkeleton();
     var saved = loadJSON(LOC_KEY);
     if (saved && saved.lat != null) {
+      // Localisation déjà connue (visite précédente) : on charge directement, pas de popup.
       userLoc = saved;
       resolveCityName(saved.lat, saved.lon);
       loadToday(saved.lat, saved.lon);
     } else {
-      requestLocation();
+      // Première visite : on ne déclenche pas la popup du navigateur automatiquement,
+      // on laisse la personne l'activer elle-même via le bouton.
+      showLocateBtn(true);
     }
   }
 

@@ -460,40 +460,8 @@ function copyAccordion(accId) {
 
 
 // ============================================================
-// MESSAGE DE BIENVENUE
+// (Message de bienvenue supprimé)
 // ============================================================
-
-function showWelcomeIfNeeded() {
-  if (localStorage.getItem('deentag_welcome_seen')) return;
-  const lang = getLang();
-  const msg = {
-    fr: 'Appuyez sur une catégorie pour découvrir ses invocations.',
-    en: 'Tap a category to discover its supplications.',
-    es: 'Toca una categoría para descubrir sus invocaciones.',
-    de: 'Tippe auf eine Kategorie, um die Gebete zu entdecken.',
-    it: 'Tocca una categoria per scoprire le sue invocazioni.',
-    nl: 'Tik op een categorie om de smeekgebeden te ontdekken.',
-    pt: 'Toca numa categoria para descobrir as suas invocações.',
-    tr: 'Bir kategoriye dokun ve duaları keşfet.',
-  };
-
-  const bubble = document.createElement('div');
-  bubble.id = 'welcome-bubble';
-  bubble.innerHTML =
-    '<div class="welcome-icon-wrap"><span class="welcome-icon">✦</span></div>' +
-    '<span class="welcome-text">' + (msg[lang] || msg['fr']) + '</span>' +
-    '<button class="welcome-close" onclick="dismissWelcome()">✕</button>' +
-    '<div class="welcome-progress"></div>';
-  document.body.appendChild(bubble);
-  setTimeout(() => bubble.classList.add('show'), 100);
-  setTimeout(() => dismissWelcome(), 5000);
-}
-
-function dismissWelcome() {
-  const b = document.getElementById('welcome-bubble');
-  if (b) { b.classList.remove('show'); setTimeout(() => b.remove(), 400); }
-  localStorage.setItem('deentag_welcome_seen', '1');
-}
 
 
 // ============================================================
@@ -1049,8 +1017,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const savedLang = localStorage.getItem('deentag_lang') || detectLang();
   applyLang(savedLang);
-
-  showWelcomeIfNeeded();
 
   document.addEventListener('touchstart', e => {
     const openPanel = document.querySelector('.settings-panel.open');
