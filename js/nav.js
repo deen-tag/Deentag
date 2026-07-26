@@ -106,7 +106,7 @@
   window.navConfirmExitKids = navConfirmExitKids;
 
   var ADULT_TABS = [
-    { id: 'duas',     href: 'index.html' },
+    { id: 'duas',     href: 'invocations.html' },
     { id: 'coran',    href: 'quran.html' },
     { id: 'enfants',  href: 'kids.html'  },
     { id: 'boutique', href: 'shop.html'  }
@@ -127,7 +127,7 @@
   }
 
   var PAGES = {
-    'index':      { mode: 'adult', active: 'duas',     tabs: ADULT_TABS },
+    'invocations':{ mode: 'adult', active: 'duas',     tabs: ADULT_TABS },
     'quran':      { mode: 'adult', active: 'coran',    tabs: ADULT_TABS },
     'shop':       { mode: 'adult', active: 'boutique', tabs: ADULT_TABS },
     'kids':       { mode: 'kids',  active: 'duas',     tabs: kidsTabs('index.html') },

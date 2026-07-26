@@ -121,6 +121,7 @@ function applyLang(lang) {
   });
   if (window.DT_refreshNavLang) window.DT_refreshNavLang();
   if (window.DT_refreshPrayerLang) window.DT_refreshPrayerLang();
+  if (window.DT_refreshHomeWidgetLang) window.DT_refreshHomeWidgetLang();
 }
 
 function setLang(lang) {
