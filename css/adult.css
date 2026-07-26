@@ -269,6 +269,10 @@ body.night .app-topbar::after {
   position:absolute; left:50%; transform:translateX(-50%);
   pointer-events:none;
 }
+.app-topbar-center a {
+  display:flex; flex-direction:column; align-items:center;
+  pointer-events:auto;
+}
 .app-topbar-logo {
   width:45px; height:45px; object-fit:contain;
   filter: drop-shadow(0 0 6px rgba(212,175,55,0.22)) drop-shadow(0 2px 4px rgba(180,140,40,0.15));
@@ -2370,6 +2374,38 @@ body.night .cat-card.cat-highlight {
   gap:10px; padding:12px 14px 20px;
 }
 
+/* ===== WIDGET INVOCATION DU MOMENT (accueil) ===== */
+.home-widget {
+  margin:18px 14px 6px; padding:18px 20px;
+  border-radius:18px; background:var(--card-bg);
+  border:1px solid rgba(201,168,76,0.25);
+  text-align:center;
+}
+.home-widget-label {
+  font-family:'Cinzel',serif; font-size:10.5px; font-weight:600;
+  letter-spacing:0.14em; text-transform:uppercase; color:var(--gold);
+  margin-bottom:10px;
+}
+.home-widget-arabe {
+  font-family:'Amiri','Scheherazade New',serif; font-size:22px;
+  line-height:1.7; color:var(--text); margin-bottom:8px; direction:rtl;
+}
+.home-widget-trad {
+  font-size:12.5px; line-height:1.5; color:var(--text); opacity:0.8;
+  margin-bottom:14px;
+}
+.home-widget-link {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:11px; font-weight:600; letter-spacing:0.06em;
+  color:var(--gold); text-decoration:none; text-transform:uppercase;
+}
+
+/* ===== CARTES DE NAVIGATION (accueil) ===== */
+.home-nav-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:10px; padding:6px 14px 20px;
+}
+
 
 /* ===== OVERLAY ===== */
 .bs-overlay {
@@ -3269,17 +3305,31 @@ body.has-tabbar {
 .app-tabbar .tab.active .tab-icon {
   opacity: 1;
   filter: saturate(1) brightness(1);
+  background: radial-gradient(circle, rgba(199,160,74,0.22) 0%, rgba(199,160,74,0.06) 70%, transparent 100%);
   box-shadow:
-    0 0 0 1.5px rgba(199,160,74,0.5),
-    0 4px 16px rgba(199,160,74,0.3),
-    0 0 20px rgba(199,160,74,0.15);
-  transform: translateY(-3px) scale(1.08);
+    0 0 0 1.5px rgba(199,160,74,0.55),
+    0 4px 16px rgba(199,160,74,0.35),
+    0 0 22px rgba(199,160,74,0.2);
+  transform: translateY(-3px) scale(1.1);
   border-radius: 14px;
 }
 
 .app-tabbar .tab.active span {
   color: var(--gold);
   opacity: 1;
+  font-weight: 700;
+}
+
+.app-tabbar .tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 6px rgba(199,160,74,0.7);
 }
 
 /* Tap feedback */
