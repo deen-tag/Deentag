@@ -286,7 +286,7 @@ window.__tealTestSwatches = {
 window.__setTealTest = function(key) {
   var s = window.__tealTestSwatches[key];
   if (!s) return;
-  var root = document.documentElement;
+  var root = document.body;
   root.style.setProperty('--gold', s.gold);
   root.style.setProperty('--gold-dark', s.dark);
   root.style.setProperty('--gold-light', s.light);
