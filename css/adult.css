@@ -91,24 +91,6 @@ body.night {
   background-attachment: fixed, fixed, fixed, fixed;
 }
 
-/* Variantes de teinte par section (nuit uniquement) : meme structure de degrade,
-   juste la couleur du halo change legerement pour differencier les pages au premier
-   coup d'oeil, sans casser l'identite teal/or globale. */
-body.night[data-page="quran"] {
-  background-image:
-    radial-gradient(ellipse at 50% 0%, rgba(30,120,190,0.34) 0%, transparent 62%),
-    radial-gradient(ellipse at 4% 105%, rgba(20,110,140,0.26) 0%, transparent 58%),
-    linear-gradient(160deg, #0B2530 0%, #050E12 100%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-body.night[data-page="invocations"] {
-  background-image:
-    radial-gradient(ellipse at 50% 0%, rgba(30,170,120,0.32) 0%, transparent 62%),
-    radial-gradient(ellipse at 4% 105%, rgba(40,140,90,0.24) 0%, transparent 58%),
-    linear-gradient(160deg, #0B2530 0%, #050E12 100%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-
 /* ===== SPLASH DE LANCEMENT ===== */
 .app-splash {
   position: fixed; inset: 0; z-index: 9999;
@@ -364,6 +346,7 @@ body.night .cat-card:active {
   width: calc(100% - 12px);
   box-shadow: 0 1px 4px rgba(150,115,30,0.10);
 }
+body.day .cat-label { background: rgba(253,248,236,0.92); }
 body.night .cat-card {
   background: linear-gradient(160deg, rgba(14,40,46,0.55) 0%, rgba(5,14,18,0.72) 100%);
   border: 1px solid rgba(237,242,238,0.07);
@@ -1982,6 +1965,7 @@ body.night .phonetic-block { color: var(--arabic-color); }
   -webkit-appearance: none;
 }
 .bs-search-input::placeholder { color: var(--text3); opacity: 0.7; }
+body.day .bs-search-input::placeholder { opacity: 0.9; }
 .bs-search-input:focus {
   border-color: var(--gold);
   box-shadow: 0 0 0 3px rgba(201,168,76,0.08);
@@ -2317,6 +2301,7 @@ body.night .cal-panel-table tbody tr.today td.cpt-val { color:var(--gold-light);
   -webkit-appearance:none;
 }
 .inv-search-input::placeholder { color:var(--text3); opacity:0.7; }
+body.day .inv-search-input::placeholder { opacity: 0.9; }
 .inv-search-input:focus { border-color:var(--gold); }
 body.night .inv-search-input { background:rgba(201,168,76,0.07); }
 .inv-search-results {
@@ -2963,6 +2948,7 @@ body.sheet-locked {
 }
 
 .page-quran .bs-search-input::placeholder { color:var(--text3); opacity:0.7; }
+body.day.page-quran .bs-search-input::placeholder { opacity: 0.9; }
 
 .page-quran .bs-search-input:focus { border-color:var(--gold); }
 
@@ -3121,6 +3107,7 @@ body.night .verse-block.playing { background:rgba(201,168,76,0.14); }
   display:flex; align-items:center; justify-content:center;
   font-family:'Cinzel', serif; font-size:9px; color:var(--gold);
 }
+body.day .verse-num-badge { border-color: rgba(28,106,99,0.4); }
 
 .verse-copy-btn {
   width:28px; height:28px; border-radius:50%;
@@ -3130,6 +3117,7 @@ body.night .verse-block.playing { background:rgba(201,168,76,0.14); }
   color:var(--gold); transition:background 0.2s;
   -webkit-tap-highlight-color:transparent;
 }
+body.day .verse-copy-btn { border-color: rgba(28,106,99,0.35); }
 
 .verse-copy-btn:active { background:rgba(201,168,76,0.10); }
 
@@ -3530,6 +3518,7 @@ body.night .qnav-icon { color: var(--gold); }
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
+body.day .qnav-label { background: rgba(253,248,236,0.92); }
 
 body.night .qnav-label {
   color: var(--gold-light);
@@ -3647,6 +3636,10 @@ body.night .nav-item-sub { color: var(--gold-light); opacity: 0.7; }
   box-shadow: 0 0 12px rgba(201,168,76,0.18);
 }
 
+/* Jour : la bordure dorée chaude a un contraste trop faible sur fond creme,
+   on la remplace par une teinte basee sur --gold (teal en jour) plus visible. */
+body.day .verse-memorize-btn { border-color: rgba(28,106,99,0.35); }
+
 /* Bouton mémorisé — sourate entière */
 .surah-memorize-block {
   display: flex; justify-content: center;
@@ -3671,6 +3664,7 @@ body.night .nav-item-sub { color: var(--gold-light); opacity: 0.7; }
   color: var(--gold-dark);
   box-shadow: 0 0 20px rgba(201,168,76,0.2);
 }
+body.day .surah-memorize-btn { border-color: rgba(28,106,99,0.4); }
 
 /* Anneau de progression — même esprit que les cercles de la page Profils */
 .verse-mem-ring, .surah-mem-ring {
