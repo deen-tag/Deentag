@@ -2287,6 +2287,47 @@ body.night .cal-panel-table tbody tr.today td.cpt-val { color:var(--gold-light);
   backdrop-filter: blur(18px) saturate(160%);
 }
 
+/* ===== RECHERCHE INVOCATIONS ===== */
+.inv-search-wrap { position:relative; padding:0 14px; margin:8px 0 14px; }
+.inv-search-input {
+  width:100%; box-sizing:border-box; padding:10px 14px;
+  border:1.5px solid rgba(201,168,76,0.35); border-radius:var(--radius-lg);
+  background:rgba(201,168,76,0.05);
+  font-family:'Cormorant Garamond', serif; font-size:15px;
+  color:var(--text); outline:none; transition:border-color 0.2s;
+  -webkit-appearance:none;
+}
+.inv-search-input::placeholder { color:var(--text3); opacity:0.7; }
+.inv-search-input:focus { border-color:var(--gold); }
+body.night .inv-search-input { background:rgba(201,168,76,0.07); }
+.inv-search-results {
+  display:none; position:absolute; left:14px; right:14px; top:calc(100% + 4px);
+  max-height:60vh; overflow-y:auto; z-index:60;
+  background:var(--card-bg); border:1px solid rgba(201,168,76,0.3);
+  border-radius:14px; box-shadow:0 12px 32px var(--shadow);
+}
+.inv-search-results.open { display:block; }
+.inv-search-result-item {
+  display:flex; align-items:center; gap:10px; padding:11px 14px;
+  cursor:pointer; border-bottom:1px solid rgba(201,168,76,0.12);
+  -webkit-tap-highlight-color:transparent;
+}
+.inv-search-result-item:last-child { border-bottom:none; }
+.inv-search-result-item:active { background:rgba(201,168,76,0.08); }
+.inv-search-result-title {
+  font-size:13.5px; color:var(--text); line-height:1.3;
+}
+.inv-search-result-cat {
+  font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.08em;
+  text-transform:uppercase; color:var(--gold); opacity:0.85;
+  margin-top:2px; display:block;
+}
+.inv-search-no-result {
+  text-align:center; padding:18px 14px;
+  font-family:'Cormorant Garamond', serif; font-size:14px;
+  color:var(--text3); font-style:italic;
+}
+
 /* ===== CHIPS DE NAVIGATION RAPIDE ===== */
 .section-nav {
   position: sticky;
@@ -2412,6 +2453,60 @@ body.night .cat-card.cat-highlight {
   font-size:11px; font-weight:600; letter-spacing:0.06em;
   color:var(--gold); text-decoration:none; text-transform:uppercase;
 }
+
+/* ===== REPRENDRE MA LECTURE (Coran) ===== */
+.resume-reading-card {
+  display:flex; align-items:center; gap:12px;
+  margin:12px 14px 8px; padding:13px 16px;
+  border-radius:16px; background:var(--card-bg);
+  border:1px solid rgba(201,168,76,0.3);
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+  transition:transform 0.2s ease;
+}
+.resume-reading-card:active { transform:scale(0.97); }
+.resume-reading-icon {
+  flex-shrink:0; width:38px; height:38px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(201,168,76,0.12); color:var(--gold);
+}
+.resume-reading-text { flex:1; min-width:0; }
+.resume-reading-label {
+  font-family:'Cinzel',serif; font-size:9.5px; font-weight:600;
+  letter-spacing:0.1em; text-transform:uppercase; color:var(--gold);
+  margin-bottom:3px;
+}
+.resume-reading-detail {
+  font-family:'Cormorant Garamond',serif; font-size:14.5px;
+  color:var(--text); font-style:italic;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.resume-reading-arrow { flex-shrink:0; color:var(--gold); }
+
+/* ===== CARTE MON COMPTE (accueil) ===== */
+.account-card {
+  display:flex; align-items:center; gap:14px;
+  margin:14px 14px 4px; padding:14px 16px;
+  border-radius:18px; background:var(--card-bg);
+  border:1px solid rgba(201,168,76,0.28);
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+  transition:transform 0.2s ease;
+}
+.account-card:active { transform:scale(0.98); }
+.account-card-avatar {
+  flex-shrink:0; width:44px; height:53px;
+  display:flex; align-items:center; justify-content:center;
+}
+.account-card-text { flex:1; min-width:0; }
+.account-card-name {
+  font-family:'Cinzel',serif; font-size:13px; font-weight:600;
+  color:var(--text); letter-spacing:0.02em; margin-bottom:3px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+}
+.account-card-stats {
+  font-family:'Cormorant Garamond',serif; font-size:13px;
+  color:var(--gold); font-style:italic;
+}
+.account-card-arrow { flex-shrink:0; color:var(--gold); }
 
 /* ===== CARTES DE NAVIGATION (accueil) ===== */
 .home-nav-grid {
