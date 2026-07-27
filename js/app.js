@@ -348,7 +348,7 @@ function buildPillsHTML(types) {
   const isAuto     = getAudioAutoPlay();
 
   html +=
-    '<div class="size-row" style="border-top:1px solid rgba(201,168,76,0.15);margin-top:6px;padding-top:6px">' +
+    '<div class="size-row" style="border-top:1px solid rgba(var(--gold-rgb),0.15);margin-top:6px;padding-top:6px">' +
       '<span class="size-row-label">' + (i18n[currentLang]['audio-mode'] || 'Audio') + '</span>' +
       '<div class="size-pills">' +
         '<button class="size-pill audio-mode-pill' + (isAuto  ? ' active' : '') + '" data-audio-val="auto"   onclick="event.stopPropagation();setAudioAutoPlay(true)">'  + (i18n[currentLang]['audio-auto']    || 'Auto')   + '</button>' +
