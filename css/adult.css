@@ -63,7 +63,7 @@ body.night {
   --gold-dark: #A97D34;
   --text: #EDF2EE;
   --text2: #A9C4BE;
-  --text3: #7A968F;
+  --text3: #93B0A8;
   --phonetic-color: #E0BD73;
   --hadith-color: #91A69E;
   --card-bg: linear-gradient(160deg, rgba(22,64,72,0.65) 0%, rgba(6,20,26,0.78) 100%);
@@ -89,6 +89,24 @@ body.night {
     linear-gradient(160deg, #0B2530 0%, #050E12 100%),
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-attachment: fixed, fixed, fixed, fixed;
+}
+
+/* Variantes de teinte par section (nuit uniquement) : meme structure de degrade,
+   juste la couleur du halo change legerement pour differencier les pages au premier
+   coup d'oeil, sans casser l'identite teal/or globale. */
+body.night[data-page="quran"] {
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(30,120,190,0.34) 0%, transparent 62%),
+    radial-gradient(ellipse at 4% 105%, rgba(20,110,140,0.26) 0%, transparent 58%),
+    linear-gradient(160deg, #0B2530 0%, #050E12 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+body.night[data-page="invocations"] {
+  background-image:
+    radial-gradient(ellipse at 50% 0%, rgba(30,170,120,0.32) 0%, transparent 62%),
+    radial-gradient(ellipse at 4% 105%, rgba(40,140,90,0.24) 0%, transparent 58%),
+    linear-gradient(160deg, #0B2530 0%, #050E12 100%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' result='t'/%3E%3CfeColorMatrix in='t' type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 /* ===== SPLASH DE LANCEMENT ===== */
