@@ -285,6 +285,10 @@ body.night .logo-night { display:block; }
 }
 
 /* ===== CARTES CATEGORIES + ETOILES (deplace depuis style.css) ===== */
+/* ATTENTION : .cat-card (index/invocations) et .qnav-card (coran, ligne ~3352) doivent
+   rester synchronisees sur height/min-height. Elles ne sont pas fusionnees en une seule
+   classe car le contenu differe (qnav-card a un sous-texte en plus), mais si tu changes
+   la taille de l'une, verifie l'autre pour eviter un ecart visuel comme celui deja rencontre. */
 .cat-card {
   display:flex; flex-direction:column; align-items:center;
   justify-content:flex-end; gap:0px; padding:0px 0px 6px;
