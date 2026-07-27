@@ -53,37 +53,24 @@
 
   document.addEventListener('DOMContentLoaded', renderHomeWidget);
 
-  // ── Carte "Mon compte" ──
+  // ── Badge profil (topbar) ──
   function renderAccountCard() {
     if (!window.DT) return;
-    var avatarEl = document.getElementById('accountCardAvatar');
-    var nameEl   = document.getElementById('accountCardName');
-    var statsEl  = document.getElementById('accountCardStats');
-    if (!avatarEl || !nameEl || !statsEl) return;
+    var avatarEl = document.getElementById('topbarProfileAvatar');
+    if (!avatarEl) return;
 
     var profile = window.DT.getActiveProfile ? window.DT.getActiveProfile() : null;
 
     if (!profile) {
-      avatarEl.innerHTML = window.DT._domeHTML ? window.DT._domeHTML('+', '#C9A84C', 40) : '';
-      nameEl.textContent  = window.DT.t ? window.DT.t('onboardTitle') : 'Créez votre profil';
-      statsEl.textContent = window.DT.t ? window.DT.t('onboardCta')  : 'Commencer';
+      avatarEl.innerHTML = window.DT._domeHTML ? window.DT._domeHTML('+', '#C9A84C', 24) : '';
       return;
     }
 
     var initial = (profile.name || '?').charAt(0).toUpperCase();
     if (profile.photo && window.DT._domePhotoHTML) {
-      avatarEl.innerHTML = window.DT._domePhotoHTML(profile.photo, 40, profile.id);
+      avatarEl.innerHTML = window.DT._domePhotoHTML(profile.photo, 24, profile.id);
     } else if (window.DT._domeHTML) {
-      avatarEl.innerHTML = window.DT._domeHTML(initial, profile.color || '#C9A84C', 40);
-    }
-    nameEl.textContent = (profile.name || '').split(' ')[0] || '';
-
-    var stats = window.DT.getStats ? window.DT.getStats() : { total: 0, surahs: 0, duas: 0 };
-    if (stats.total > 0) {
-      statsEl.textContent = stats.surahs + ' ' + (window.DT.t ? window.DT.t('surasMemorized') : 'sourates') +
-        ' \u00b7 ' + stats.duas + ' ' + (window.DT.t ? window.DT.t('duasMemorized') : 'invocations');
-    } else {
-      statsEl.textContent = window.DT.t ? window.DT.t('noRecentActivity') : 'Aucune activité récente';
+      avatarEl.innerHTML = window.DT._domeHTML(initial, profile.color || '#C9A84C', 24);
     }
   }
 
