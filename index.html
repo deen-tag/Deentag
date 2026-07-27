@@ -107,8 +107,11 @@
     <img src="images/logo-night.webp" class="app-topbar-logo logo-night" alt="Deentag">
   </div>
 
-  <!-- DROITE : thème -->
+  <!-- DROITE : profil + thème -->
   <div class="app-topbar-right">
+    <button class="topbar-profile-btn" id="topbarProfileBtn" onclick="window.DT && window.DT.openProfileModal && window.DT.openProfileModal()" aria-label="Mon profil">
+      <div class="topbar-profile-avatar" id="topbarProfileAvatar"></div>
+    </button>
     <button class="theme-knob-btn" onclick="toggleTheme()" id="theme-circle-btn" aria-label="Changer le thème">
       <div class="theme-knob-btn-inner">
         <svg class="tt-sun" width="18" height="18" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="6" fill="#c8922a"/><g stroke="#c8922a" stroke-width="2.2" stroke-linecap="round"><line x1="16" y1="3" x2="16" y2="7"/><line x1="16" y1="25" x2="16" y2="29"/><line x1="3" y1="16" x2="7" y2="16"/><line x1="25" y1="16" x2="29" y2="16"/><line x1="6.9" y1="6.9" x2="9.8" y2="9.8"/><line x1="22.2" y1="22.2" x2="25.1" y2="25.1"/><line x1="25.1" y1="6.9" x2="22.2" y2="9.8"/><line x1="9.8" y1="22.2" x2="6.9" y2="25.1"/></g></svg>
@@ -200,16 +203,6 @@
     <span class="lang-block" data-lang-block="tr">Tamamını oku</span>
     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
   </a>
-</div>
-
-<!-- CARTE MON COMPTE -->
-<div class="account-card" id="accountCard" onclick="window.DT && window.DT.openProfileModal && window.DT.openProfileModal()">
-  <div class="account-card-avatar" id="accountCardAvatar"></div>
-  <div class="account-card-text">
-    <div class="account-card-name" id="accountCardName">—</div>
-    <div class="account-card-stats" id="accountCardStats"></div>
-  </div>
-  <svg class="account-card-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
 </div>
 
 <!-- CARTES DE NAVIGATION -->
