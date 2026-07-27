@@ -267,5 +267,31 @@
 <script src="js/prayer-times.js"></script>
 <script src="js/home.js"></script>
 
+<!-- ===== OUTIL DE TEST TEMPORAIRE — À RETIRER APRÈS CHOIX ===== -->
+<!-- Permet de comparer en direct le doré actuel et 3 nuances de sarcelle,
+     sans avoir besoin de redéployer à chaque essai. -->
+<div id="tealTestBar" style="position:fixed;bottom:0;left:0;right:0;z-index:9999;display:flex;gap:6px;padding:10px 8px;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);">
+  <button onclick="window.__setTealTest('gold')" style="flex:1;padding:8px 4px;border-radius:8px;border:none;background:#C7A04A;color:#1E1A10;font-size:11px;font-weight:600;">Or (actuel)</button>
+  <button onclick="window.__setTealTest('t1')" style="flex:1;padding:8px 4px;border-radius:8px;border:none;background:#14514D;color:#fff;font-size:11px;font-weight:600;">Sarcelle 1</button>
+  <button onclick="window.__setTealTest('t2')" style="flex:1;padding:8px 4px;border-radius:8px;border:none;background:#1F7A72;color:#fff;font-size:11px;font-weight:600;">Sarcelle 2</button>
+  <button onclick="window.__setTealTest('t3')" style="flex:1;padding:8px 4px;border-radius:8px;border:none;background:#178C9E;color:#fff;font-size:11px;font-weight:600;">Sarcelle 3</button>
+</div>
+<script>
+window.__tealTestSwatches = {
+  gold: { gold:'#C7A04A', dark:'#9A7730', light:'#9A7730' },
+  t1:   { gold:'#14514D', dark:'#0E3B38', light:'#1D6B66' },
+  t2:   { gold:'#1F7A72', dark:'#155650', light:'#2A9990' },
+  t3:   { gold:'#178C9E', dark:'#106672', light:'#22A8BD' }
+};
+window.__setTealTest = function(key) {
+  var s = window.__tealTestSwatches[key];
+  if (!s) return;
+  var root = document.documentElement;
+  root.style.setProperty('--gold', s.gold);
+  root.style.setProperty('--gold-dark', s.dark);
+  root.style.setProperty('--gold-light', s.light);
+};
+</script>
+
 </body>
 </html>
