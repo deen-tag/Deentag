@@ -2482,31 +2482,15 @@ body.night .cat-card.cat-highlight {
 }
 .resume-reading-arrow { flex-shrink:0; color:var(--gold); }
 
-/* ===== CARTE MON COMPTE (accueil) ===== */
-.account-card {
-  display:flex; align-items:center; gap:14px;
-  margin:14px 14px 4px; padding:14px 16px;
-  border-radius:18px; background:var(--card-bg);
-  border:1px solid rgba(201,168,76,0.28);
-  cursor:pointer; -webkit-tap-highlight-color:transparent;
-  transition:transform 0.2s ease;
+/* ===== BADGE PROFIL (topbar accueil) ===== */
+.topbar-profile-btn {
+  display:inline-flex; align-items:center; justify-content:center;
+  background:none; border:none; padding:0; cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
 }
-.account-card:active { transform:scale(0.98); }
-.account-card-avatar {
-  flex-shrink:0; width:44px; height:53px;
-  display:flex; align-items:center; justify-content:center;
-}
-.account-card-text { flex:1; min-width:0; }
-.account-card-name {
-  font-family:'Cinzel',serif; font-size:13px; font-weight:600;
-  color:var(--text); letter-spacing:0.02em; margin-bottom:3px;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-}
-.account-card-stats {
-  font-family:'Cormorant Garamond',serif; font-size:13px;
-  color:var(--gold); font-style:italic;
-}
-.account-card-arrow { flex-shrink:0; color:var(--gold); }
+.topbar-profile-btn:active { transform:scale(0.92); }
+.topbar-profile-avatar { width:24px; display:flex; align-items:center; }
+.topbar-profile-avatar svg { width:100%; height:auto; }
 
 /* ===== CARTES DE NAVIGATION (accueil) ===== */
 .home-nav-grid {
