@@ -288,7 +288,7 @@ body.night .logo-night { display:block; }
 .cat-card {
   display:flex; flex-direction:column; align-items:center;
   justify-content:flex-end; gap:0px; padding:0px 0px 6px;
-  border-radius:14px; cursor:pointer; height:172px;
+  border-radius:14px; cursor:pointer; height:188px;
   background: var(--card-bg);
   border: none;
   box-shadow: none;
@@ -328,12 +328,13 @@ body.night .cat-card:active {
   object-fit:contain;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
 }
+/* Icones carrees (invocations) : reduites pour matcher le poids visuel des badges elances de l'accueil */
+.cat-grid .cat-icon-circle .cat-icon { max-height:126px; }
 .cat-label {
   font-family:'Cinzel',serif; font-size:9px; font-weight:600;
   letter-spacing:0.10em; color:var(--gold-dark); text-align:center;
   text-transform:uppercase;
-  flex-shrink:0;
-  background: rgba(255,255,255,0.92);
+  flex-shrink:0;  background: rgba(255,255,255,0.92);
   border: 1px solid rgba(201,168,76,0.45);
   border-radius: 20px;
   padding: 4px 10px;
