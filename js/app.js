@@ -122,6 +122,7 @@ function applyLang(lang) {
   if (window.DT_refreshNavLang) window.DT_refreshNavLang();
   if (window.DT_refreshPrayerLang) window.DT_refreshPrayerLang();
   if (window.DT_refreshHomeWidgetLang) window.DT_refreshHomeWidgetLang();
+  if (window.DT_refreshAccountCardLang) window.DT_refreshAccountCardLang();
 }
 
 function setLang(lang) {
@@ -1173,3 +1174,70 @@ function jumpToSection(name) {
 
   sections.forEach(s => io.observe(s));
 })();
+
+// ============================================================
+// RECHERCHE D'INVOCATIONS
+// ============================================================
+function normalizeSearch(str) {
+  return (str || '').toString().toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+function handleInvSearch(query) {
+  const box = document.getElementById('invSearchResults');
+  if (!box) return;
+  const q = normalizeSearch(query).trim();
+
+  if (q.length < 2) { box.classList.remove('open'); box.innerHTML = ''; return; }
+  if (!window.DUAS) { box.classList.remove('open'); return; }
+
+  const lang = (typeof getLang === 'function') ? getLang() : 'fr';
+  const results = [];
+
+  Object.keys(DUAS).forEach(cat => {
+    const catData = DUAS[cat];
+    const catTitle = (catData.meta && (catData.meta.titre[lang] || catData.meta.titre.fr)) || cat;
+    Object.keys(catData).forEach(accId => {
+      if (accId === 'meta') return;
+      const item = catData[accId];
+      const titre = item.titre ? (item.titre[lang] || item.titre.fr || '') : '';
+      const traduction = (!item.sunnah && item.traduction) ? (item.traduction[lang] || item.traduction.fr || '') : '';
+      const haystack = normalizeSearch(titre + ' ' + traduction);
+      if (haystack.indexOf(q) !== -1) {
+        results.push({ cat, accId, titre, catTitle });
+      }
+    });
+  });
+
+  if (!results.length) {
+    box.innerHTML = '<div class="inv-search-no-result">Aucune invocation trouvée</div>';
+    box.classList.add('open');
+    return;
+  }
+
+  box.innerHTML = results.slice(0, 30).map(r => `
+    <div class="inv-search-result-item" onclick="openDuaFromSearch('${r.cat}','${r.accId}')">
+      <div>
+        <div class="inv-search-result-title">${r.titre}</div>
+        <span class="inv-search-result-cat">${r.catTitle}</span>
+      </div>
+    </div>
+  `).join('');
+  box.classList.add('open');
+}
+
+function openDuaFromSearch(cat, accId) {
+  const box = document.getElementById('invSearchResults');
+  const input = document.getElementById('invSearchInput');
+  if (box) box.classList.remove('open');
+  if (input) input.blur();
+  if (typeof openSheet === 'function') openSheet(cat);
+  setTimeout(() => { if (typeof openDua === 'function') openDua(cat, accId); }, 320);
+}
+
+document.addEventListener('click', (e) => {
+  const wrap = document.querySelector('.inv-search-wrap');
+  const box  = document.getElementById('invSearchResults');
+  if (!wrap || !box) return;
+  if (!wrap.contains(e.target)) box.classList.remove('open');
+});

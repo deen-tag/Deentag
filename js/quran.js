@@ -219,6 +219,7 @@ function applyLang(lang) {
   });
   applyLangBlocks(lang);
   if (window.DT_refreshNavLang) window.DT_refreshNavLang();
+  renderResumeCard();
 }
 function setLang(lang) {
   stopAudio();
@@ -342,7 +343,68 @@ function openJuzSheet(juzNum) {
   document.body.classList.add('sheet-locked');
 }
 
+// ============================================================
+// REPRISE DE LECTURE
+// ============================================================
+function saveLastRead() {
+  if (!currentSurahId) return;
+  const scroll = document.getElementById('surahScroll');
+  const surah  = SURAHS.find(s => s.id === currentSurahId);
+  if (!scroll || !surah) return;
+
+  let verse = 1;
+  const containerTop = scroll.getBoundingClientRect().top;
+  const blocks = scroll.querySelectorAll('.verse-block');
+  blocks.forEach(b => {
+    const r = b.getBoundingClientRect();
+    if (r.top - containerTop <= 80) {
+      verse = parseInt(b.id.replace('verse-', ''), 10) || 1;
+    }
+  });
+
+  try {
+    localStorage.setItem('deentag_last_read', JSON.stringify({
+      surahId: currentSurahId,
+      verse: verse,
+      surahFr: surah.fr,
+      ts: Date.now()
+    }));
+  } catch (e) {}
+
+  renderResumeCard();
+}
+
+function getLastRead() {
+  try {
+    const raw = localStorage.getItem('deentag_last_read');
+    return raw ? JSON.parse(raw) : null;
+  } catch (e) { return null; }
+}
+
+function renderResumeCard() {
+  const card = document.getElementById('resumeReadingCard');
+  if (!card) return;
+  const data = getLastRead();
+  const surah = data ? SURAHS.find(s => s.id === data.surahId) : null;
+  if (!data || !surah) {
+    card.style.display = 'none';
+    return;
+  }
+  const lang   = getLang();
+  const detail = document.getElementById('resumeReadingDetail');
+  const verseWord = (VERSE_LABEL[lang] || 'verset').toLowerCase();
+  detail.textContent = `${surah.fr} \u00b7 ${verseWord} ${data.verse}`;
+  card.style.display = 'flex';
+}
+
+function resumeLastRead() {
+  const data = getLastRead();
+  if (!data) return;
+  openSurah(data.surahId, data.verse);
+}
+
 function closeSheet(fromSwipe) {
+  saveLastRead();
   stopAudio();
   currentNavType = null;
   currentProphet = null;
@@ -777,6 +839,7 @@ function copyVerse(verseNum) {
 function backToList() {
   if (sheetTransitioning) return;
   sheetTransitioning = true;
+  saveLastRead();
   stopAudio();
 
   const sheet     = document.getElementById('bottomSheet');
@@ -1233,6 +1296,7 @@ window.addEventListener('DOMContentLoaded', () => {
   applyAllColors();
 
   renderJuzCards();
+  renderResumeCard();
   handleNfcParams();
 
   // Fermer settings au clic extérieur
