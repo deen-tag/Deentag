@@ -296,7 +296,6 @@ body.night .logo-night { display:block; }
   display:flex; flex-direction:column; align-items:center;
   justify-content:flex-end; gap:0px; padding:0px 0px 6px;
   border-radius:14px; cursor:pointer; height:188px;
-  flex:0 0 148px; width:148px; scroll-snap-align:start;
   background: var(--card-bg);
   border: none;
   box-shadow: 0 1px 2px rgba(90,65,10,0.05), 0 6px 14px rgba(90,65,10,0.06);
@@ -304,6 +303,10 @@ body.night .logo-night { display:block; }
   -webkit-tap-highlight-color:transparent;
   transition:transform 0.25s cubic-bezier(0.22,1,0.36,1), opacity 0.35s ease;
   text-decoration:none;
+}
+/* Sur l'accueil, les cartes restent en rangée horizontale swipeable */
+.home-nav-grid .cat-card {
+  flex:0 0 148px; width:148px; scroll-snap-align:start;
 }
 .cat-card.dimmed { opacity:0.5; }
 .cat-card::before {
@@ -2286,6 +2289,19 @@ body.night .cal-panel-table tbody tr.today td.cpt-val { color:var(--gold-light);
 
 
 /* ===== SECTIONS DE CATÉGORIES ===== */
+.cat-pager {
+  display:flex; flex-wrap:nowrap;
+  overflow-x:auto; overflow-y:visible;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  width:100%;
+}
+.cat-pager::-webkit-scrollbar { display:none; }
+.cat-pager .cat-section {
+  flex:0 0 100%; width:100%; box-sizing:border-box;
+  scroll-snap-align:start;
+}
 .cat-section {
   margin-bottom: 6px;
 }
@@ -2454,19 +2470,11 @@ body.night .cat-card.cat-highlight {
     inset 0 1px 0 rgba(255,255,255,0.06);
 }
 
-/* ===== GRILLE CATÉGORIES — rangée horizontale swipeable ===== */
+/* ===== GRILLE CATÉGORIES (invocations) ===== */
 .cat-grid {
-  display:flex; flex-wrap:nowrap;
-  gap:12px; padding:12px 14px 20px;
-  overflow-x:auto; overflow-y:hidden;
-  scroll-snap-type:x mandatory;
-  scroll-padding-left:14px;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-  -webkit-mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
-  mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:10px; padding:12px 14px 20px;
 }
-.cat-grid::-webkit-scrollbar { display:none; }
 
 
 
