@@ -19,7 +19,7 @@
   }
 
   function init() {
-    document.querySelectorAll('.cat-grid, .home-nav-grid').forEach(initRow);
+    document.querySelectorAll('.home-nav-grid, #quranNavGrid').forEach(initRow);
   }
 
   if (document.readyState === 'loading') {

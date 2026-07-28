@@ -1141,28 +1141,28 @@ function generateStars() {
 /* Désactiver clic droit */
 document.addEventListener('contextmenu', e => { e.preventDefault(); return false; });
 
-/* ===== ACCORDÉON PAR SECTION (invocations) ===== */
+/* ===== ACCORDÉON PAR SECTION (invocations) — conservé pour compat, plus utilisé au clic ===== */
 function toggleCatSection(headerEl) {
   const section = headerEl.closest('.cat-section');
   if (section) section.classList.toggle('cat-section--open');
 }
 
-/* ===== CHIPS DE NAVIGATION RAPIDE (index) ===== */
+/* ===== CHIPS DE NAVIGATION RAPIDE (invocations) =====
+   Les 5 catégories sont des pages plein écran dans #catPager ;
+   cliquer un chip fait défiler le pager horizontalement vers la bonne page. */
 function jumpToSection(name) {
+  const pager = document.getElementById('catPager');
   const target = document.querySelector('.cat-section[data-section="' + name + '"]');
-  const navBar = document.getElementById('sectionNav');
-  if (!target) return;
-  target.classList.add('cat-section--open');
-  const offset = (navBar ? navBar.offsetHeight : 0) + 4;
-  const top = target.getBoundingClientRect().top + window.scrollY - offset;
-  window.scrollTo({ top, behavior: 'smooth' });
+  if (!pager || !target) return;
+  pager.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
 }
 
 (function initSectionNavSpy() {
   const navBar = document.getElementById('sectionNav');
-  if (!navBar) return;
+  const pager = document.getElementById('catPager');
+  if (!navBar || !pager) return;
   const chips = Array.from(navBar.querySelectorAll('.section-chip'));
-  const sections = Array.from(document.querySelectorAll('.cat-section[data-section]'));
+  const sections = Array.from(pager.querySelectorAll('.cat-section[data-section]'));
   if (!chips.length || !sections.length) return;
 
   function setActive(name) {
@@ -1177,7 +1177,7 @@ function jumpToSection(name) {
     entries.forEach(entry => {
       if (entry.isIntersecting) setActive(entry.target.getAttribute('data-section'));
     });
-  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+  }, { root: pager, threshold: 0.6 });
 
   sections.forEach(s => io.observe(s));
 })();
