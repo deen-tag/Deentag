@@ -1528,7 +1528,7 @@ const NAV_LABELS = {
 };
 
 const SELECT_LABEL = {
-  fr:'Sélectionnez', en:'Select', es:'Seleccione', de:'Auswählen', it:'Seleziona', nl:'Selecteer', pt:'Selecione', tr:'Seçin'
+  fr:'Rechercher une sourate', en:'Search a surah', es:'Buscar una sura', de:'Sure suchen', it:'Cerca una sura', nl:'Zoek een soera', pt:'Pesquisar uma sura', tr:'Sure ara'
 };
 
 const PASSAGE_LABEL = {

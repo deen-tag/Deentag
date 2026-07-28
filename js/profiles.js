@@ -861,7 +861,7 @@
     // Juz grid (repliable)
     html += '<div class="dt-juz-section">';
     html += '<div class="dt-section-header" onclick="window.DT._toggleSection(\'juz\')">';
-    html += '<div style="display:flex;align-items:center;gap:8px;"><div class="dt-section-title">'+t('juzCompleted')+'</div><div class="dt-section-count">'+juzDone.length+' / 30</div></div>';
+    html += '<div class="dt-section-title">'+t('juzCompleted')+'</div>';
     html += '<button class="dt-detail-btn" id="dt-btn-juz">'+t('detail')+' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>';
     html += '</div>';
     html += '<div class="dt-collapsible" id="dt-collapse-juz"><div class="dt-juz-grid">';
@@ -877,7 +877,7 @@
     // Sourates mémorisées (repliable)
     html += '<div class="dt-mem-section">';
     html += '<div class="dt-section-header" onclick="window.DT._toggleSection(\'mem\')">';
-    html += '<div style="display:flex;align-items:center;gap:8px;"><div class="dt-section-title">'+t('surasMemorized')+'</div><div class="dt-section-count">'+memSurahs.length+' / 114</div></div>';
+    html += '<div class="dt-section-title">'+t('surasMemorized')+'</div>';
     html += '<button class="dt-detail-btn" id="dt-btn-mem">'+t('detail')+' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>';
     html += '</div>';
     html += '<div class="dt-collapsible" id="dt-collapse-mem"><div class="dt-mem-list">';
@@ -900,7 +900,7 @@
     // Invocations mémorisées (repliable)
     html += '<div class="dt-mem-section">';
     html += '<div class="dt-section-header" onclick="window.DT._toggleSection(\'duas\')">';
-    html += '<div class="dt-section-title">'+t('duasMemorized')+'</div>';
+    html += '<div style="display:flex;align-items:center;gap:8px;"><div class="dt-section-title">'+t('duasMemorized')+'</div><div class="dt-section-count">'+memDuas.length+'</div></div>';
     html += '<button class="dt-detail-btn" id="dt-btn-duas">'+t('detail')+' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>';
     html += '</div>';
     html += '<div class="dt-collapsible" id="dt-collapse-duas"><div class="dt-mem-list">';
