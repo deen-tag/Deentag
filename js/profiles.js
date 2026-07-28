@@ -510,6 +510,7 @@
       /* Repliable */
       .dt-section-header { display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none; }
       .dt-section-header .dt-section-title { margin-bottom:0; }
+      .dt-section-count { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:var(--text2);flex-shrink:0; }
       .dt-detail-btn { display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;border:1px solid rgba(var(--gold-rgb),0.25);background:transparent;color:var(--gold);font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.1em;cursor:pointer;transition:all 0.2s; }
       .dt-detail-btn svg { transition:transform 0.3s cubic-bezier(0.4,0,0.2,1); }
       .dt-detail-btn.open svg { transform:rotate(180deg); }
@@ -807,6 +808,26 @@
     }
     html += '</div>';
 
+    // Switch profils (remonté ici, juste après l'identité : on change souvent de profil)
+    html += '<div class="dt-profiles-section"><div class="dt-section-title">'+t('chooseProfile')+'</div>';
+    profiles.forEach(function(p) {
+      var isActive = p.id === activeId;
+      var pStats   = loadProgress(p.id);
+      var pCount   = Object.keys(pStats).length;
+      var pColor   = p.color || PROFILE_COLORS[0];
+      var pInitial = (p.name || '?').charAt(0).toUpperCase();
+      html += '<div class="dt-profile-row'+(isActive?' active-row':'')+'" onclick="window.DT.selectProfile(\''+p.id+'\')">';
+      html += '<div style="flex-shrink:0;">'+domeHTML(pInitial, pColor, 36)+'</div>';
+      html += '<div style="flex:1;"><div class="dt-p-name">'+escapeHtml(p.name)+'</div><div class="dt-p-stats">'+pCount+' '+t('memorized').toLowerCase()+'</div></div>';
+      if (isActive) html += '<div class="dt-p-dot"></div>';
+      html += '<button class="dt-p-edit" onclick="event.stopPropagation();window.DT.editProfile(\''+p.id+'\')">✎</button>';
+      html += '</div>';
+    });
+    if (profiles.length < MAX_PROFILES) {
+      html += '<button class="dt-add-btn" onclick="window.DT.addProfile()">+ '+t('addProfile')+'</button>';
+    }
+    html += '</div>';
+
     // Ornement
     html += '<div class="dt-ornament"><div class="dt-orn-line"></div><span class="dt-orn-star">✦</span><div class="dt-orn-line"></div></div>';
 
@@ -818,10 +839,9 @@
       html += '<div class="dt-focus-bar-track"><div class="dt-focus-bar-fill" style="width:'+focus.pct+'%;"></div></div>';
       html += '<div class="dt-focus-sub">'+focus.done+' / '+focus.total+' · '+focus.pct+'%</div>';
       html += '</div>';
-      html += '<div class="dt-ornament"><div class="dt-orn-line"></div><span class="dt-orn-star">✦</span><div class="dt-orn-line"></div></div>';
     }
 
-    // Stats
+    // Stats (groupées avec l'objectif en cours, pas d'ornement entre les deux)
     html += '<div class="dt-stats-section">';
     html += '<div class="dt-section-title">'+t('progress')+'</div>';
     html += '<div class="dt-stats-row">';
@@ -855,26 +875,10 @@
     }
     html += '</div>';
 
-    // Ornement
+    // Ornement (sépare "activité" du groupe "détails" ci-dessous)
     html += '<div class="dt-ornament"><div class="dt-orn-line"></div><span class="dt-orn-star">✦</span><div class="dt-orn-line"></div></div>';
 
-    // Juz grid (repliable)
-    html += '<div class="dt-juz-section">';
-    html += '<div class="dt-section-header" onclick="window.DT._toggleSection(\'juz\')">';
-    html += '<div class="dt-section-title">'+t('juzCompleted')+'</div>';
-    html += '<button class="dt-detail-btn" id="dt-btn-juz">'+t('detail')+' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>';
-    html += '</div>';
-    html += '<div class="dt-collapsible" id="dt-collapse-juz"><div class="dt-juz-grid">';
-    for (var i = 1; i <= 30; i++) {
-      var cls = juzDone.indexOf(i) > -1 ? ' done' : juzPartial.indexOf(i) > -1 ? ' partial' : '';
-      html += '<div class="dt-juz-item'+cls+'">'+i+'</div>';
-    }
-    html += '</div></div></div>';
-
-    // Ornement
-    html += '<div class="dt-ornament"><div class="dt-orn-line"></div><span class="dt-orn-star">✦</span><div class="dt-orn-line"></div></div>';
-
-    // Sourates mémorisées (repliable)
+    // Sourates mémorisées (repliable) — remonté avant Juz, plus consulté au quotidien
     html += '<div class="dt-mem-section">';
     html += '<div class="dt-section-header" onclick="window.DT._toggleSection(\'mem\')">';
     html += '<div class="dt-section-title">'+t('surasMemorized')+'</div>';
@@ -894,10 +898,7 @@
     }
     html += '</div></div></div>';
 
-    // Ornement
-    html += '<div class="dt-ornament"><div class="dt-orn-line"></div><span class="dt-orn-star">✦</span><div class="dt-orn-line"></div></div>';
-
-    // Invocations mémorisées (repliable)
+    // Invocations mémorisées (repliable) — juste après les sourates, même logique de fréquence d'usage
     html += '<div class="dt-mem-section">';
     html += '<div class="dt-section-header" onclick="window.DT._toggleSection(\'duas\')">';
     html += '<div style="display:flex;align-items:center;gap:8px;"><div class="dt-section-title">'+t('duasMemorized')+'</div><div class="dt-section-count">'+memDuas.length+'</div></div>';
@@ -917,28 +918,18 @@
     }
     html += '</div></div></div>';
 
-    // Ornement
-    html += '<div class="dt-ornament"><div class="dt-orn-line"></div><span class="dt-orn-star">✦</span><div class="dt-orn-line"></div></div>';
-
-    // Switch profils
-    html += '<div class="dt-profiles-section"><div class="dt-section-title">'+t('chooseProfile')+'</div>';
-    profiles.forEach(function(p) {
-      var isActive = p.id === activeId;
-      var pStats   = loadProgress(p.id);
-      var pCount   = Object.keys(pStats).length;
-      var pColor   = p.color || PROFILE_COLORS[0];
-      var pInitial = (p.name || '?').charAt(0).toUpperCase();
-      html += '<div class="dt-profile-row'+(isActive?' active-row':'')+'" onclick="window.DT.selectProfile(\''+p.id+'\')">';
-      html += '<div style="flex-shrink:0;">'+domeHTML(pInitial, pColor, 36)+'</div>';
-      html += '<div style="flex:1;"><div class="dt-p-name">'+escapeHtml(p.name)+'</div><div class="dt-p-stats">'+pCount+' '+t('memorized').toLowerCase()+'</div></div>';
-      if (isActive) html += '<div class="dt-p-dot"></div>';
-      html += '<button class="dt-p-edit" onclick="event.stopPropagation();window.DT.editProfile(\''+p.id+'\')">✎</button>';
-      html += '</div>';
-    });
-    if (profiles.length < MAX_PROFILES) {
-      html += '<button class="dt-add-btn" onclick="window.DT.addProfile()">+ '+t('addProfile')+'</button>';
-    }
+    // Juz complétés (repliable) — en dernier : grille la plus longue, la moins consultée au quotidien
+    html += '<div class="dt-juz-section">';
+    html += '<div class="dt-section-header" onclick="window.DT._toggleSection(\'juz\')">';
+    html += '<div class="dt-section-title">'+t('juzCompleted')+'</div>';
+    html += '<button class="dt-detail-btn" id="dt-btn-juz">'+t('detail')+' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>';
     html += '</div>';
+    html += '<div class="dt-collapsible" id="dt-collapse-juz"><div class="dt-juz-grid">';
+    for (var i = 1; i <= 30; i++) {
+      var cls = juzDone.indexOf(i) > -1 ? ' done' : juzPartial.indexOf(i) > -1 ? ' partial' : '';
+      html += '<div class="dt-juz-item'+cls+'">'+i+'</div>';
+    }
+    html += '</div></div></div>';
 
     html += '<div style="height:40px;"></div>';
     return html;
