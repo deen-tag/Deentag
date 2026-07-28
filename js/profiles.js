@@ -456,7 +456,7 @@
 
       /* Stats */
       .dt-stats-section { padding:16px 24px 0; }
-      .dt-section-title { font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.2em;color:rgba(var(--gold-rgb),0.75);text-transform:uppercase;margin-bottom:16px; }
+      .dt-section-title { font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.2em;color:rgba(var(--gold-rgb),0.85);text-transform:uppercase;margin-bottom:16px; }
       .dt-stats-row { display:flex;gap:12px;justify-content:space-between; }
       .dt-stat-counter { flex:1;display:flex;flex-direction:column;align-items:center;gap:10px; }
       .dt-ring-wrap { position:relative;width:68px;height:68px;display:flex;align-items:center;justify-content:center; }
@@ -484,7 +484,7 @@
       .dt-ring-j { stroke:#8B6914;filter:drop-shadow(0 0 4px rgba(139,105,20,0.4)); }
       .dt-ring-inner { position:relative;z-index:1;display:flex;flex-direction:column;align-items:center; }
       .dt-ring-pct { font-family:'Cinzel',serif;font-size:16px;font-weight:700;color:var(--text);line-height:1; }
-      .dt-stat-label { font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.12em;color:rgba(var(--gold-rgb),0.75);text-transform:uppercase;text-align:center; }
+      .dt-stat-label { font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.12em;color:rgba(var(--gold-rgb),0.85);text-transform:uppercase;text-align:center; }
       .dt-stat-detail { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:var(--text2);text-align:center; }
 
       /* Objectif en cours */
@@ -495,7 +495,7 @@
       .dt-focus-name { font-family:'Cinzel',serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:10px; }
       .dt-focus-bar-track { width:100%;height:6px;border-radius:4px;background:rgba(var(--gold-rgb),0.12);overflow:hidden; }
       .dt-focus-bar-fill { height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold,#C9A84C),#E8C97A);transition:width 0.6s cubic-bezier(0.4,0,0.2,1); }
-      .dt-focus-sub { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:rgba(var(--gold-rgb),0.75);margin-top:8px; }
+      .dt-focus-sub { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:rgba(var(--gold-rgb),0.85);margin-top:8px; }
 
       /* Activité récente */
       .dt-activity-section { padding:16px 24px 0; }
@@ -503,9 +503,9 @@
       .dt-activity-item { display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;border:1px solid rgba(var(--gold-rgb),0.15);background:rgba(var(--gold-rgb),0.02); }
       .dt-activity-icon { width:26px;height:26px;border-radius:50%;background:rgba(var(--gold-rgb),0.1);border:1px solid rgba(var(--gold-rgb),0.3);color:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
       .dt-activity-label { font-family:'Cinzel',serif;font-size:12px;font-weight:600;color:var(--text); }
-      .dt-activity-sub { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:rgba(var(--gold-rgb),0.65);margin-top:1px; }
-      .dt-activity-date { font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.05em;color:rgba(var(--gold-rgb),0.55);flex-shrink:0;white-space:nowrap; }
-      .dt-activity-empty { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(var(--gold-rgb),0.4);text-align:center;padding:16px;margin-top:12px; }
+      .dt-activity-sub { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:rgba(var(--gold-rgb),0.80);margin-top:1px; }
+      .dt-activity-date { font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.05em;color:rgba(var(--gold-rgb),0.75);flex-shrink:0;white-space:nowrap; }
+      .dt-activity-empty { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(var(--gold-rgb),0.65);text-align:center;padding:16px;margin-top:12px; }
 
       /* Repliable */
       .dt-section-header { display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none; }
@@ -531,7 +531,7 @@
       @keyframes dtFadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
       .dt-mem-num { width:28px;height:28px;border-radius:50%;border:1px solid rgba(var(--gold-rgb),0.3);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:9px;color:var(--gold);flex-shrink:0; }
       .dt-mem-name { font-family:'Cinzel',serif;font-size:12px;font-weight:600;color:var(--text); }
-      .dt-mem-sub  { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:rgba(var(--gold-rgb),0.65);margin-top:1px; }
+      .dt-mem-sub  { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:rgba(var(--gold-rgb),0.80);margin-top:1px; }
       .dt-mem-check { width:20px;height:20px;border-radius:50%;background:rgba(var(--gold-rgb),0.1);border:1px solid rgba(var(--gold-rgb),0.4);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
       .dt-mem-check svg { stroke:var(--gold); }
 
@@ -542,7 +542,7 @@
       .dt-profile-row.active-row { border-color:rgba(var(--gold-rgb),0.5);background:rgba(var(--gold-rgb),0.06); }
       .dt-profile-row.active-row::before { background:var(--gold); }
       .dt-p-name  { font-family:'Cinzel',serif;font-size:13px;font-weight:600;color:var(--text);flex:1; }
-      .dt-p-stats { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:rgba(var(--gold-rgb),0.65);margin-top:2px; }
+      .dt-p-stats { font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;color:rgba(var(--gold-rgb),0.80);margin-top:2px; }
       .dt-p-dot   { width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px rgba(var(--gold-rgb),0.5); }
       .dt-p-edit  { background:rgba(var(--gold-rgb),0.1);border:1px solid rgba(var(--gold-rgb),0.3);border-radius:8px;color:var(--gold);cursor:pointer;padding:4px 8px;font-size:13px; }
       .dt-add-btn { width:100%;padding:14px;border-radius:16px;border:1.5px solid rgba(var(--gold-rgb),0.5);background:rgba(var(--gold-rgb),0.1);color:var(--gold);font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.1em;cursor:pointer;transition:all 0.2s;font-weight:600; }
@@ -553,7 +553,7 @@
       .dt-color-dot { width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:border 0.2s; }
       .dt-color-dot.selected { border-color:#fff; }
       .dt-save-btn { flex:2;padding:12px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--gold,#C9A84C),#a07020);color:#fff;font-family:'Cinzel',serif;font-size:13px;cursor:pointer;font-weight:600; }
-      .dt-cancel-btn { flex:1;padding:12px;border-radius:12px;border:1.5px solid rgba(var(--gold-rgb),0.2);background:transparent;color:rgba(var(--gold-rgb),0.6);font-family:'Cinzel',serif;font-size:13px;cursor:pointer; }
+      .dt-cancel-btn { flex:1;padding:12px;border-radius:12px;border:1.5px solid rgba(var(--gold-rgb),0.2);background:transparent;color:rgba(var(--gold-rgb),0.75);font-family:'Cinzel',serif;font-size:13px;cursor:pointer; }
       .dt-delete-btn { flex:0 0 auto;padding:12px 14px;border-radius:12px;border:1.5px solid rgba(220,80,80,0.3);background:transparent;color:#E05555;font-family:'Cinzel',serif;font-size:12px;cursor:pointer; }
 
       /* Tabbar avatar */
@@ -882,7 +882,7 @@
     html += '</div>';
     html += '<div class="dt-collapsible" id="dt-collapse-mem"><div class="dt-mem-list">';
     if (memSurahs.length === 0) {
-      html += '<div style="font-family:Cormorant Garamond,serif;font-style:italic;font-size:13px;color:rgba(var(--gold-rgb),0.4);text-align:center;padding:16px;">Aucune sourate mémorisée</div>';
+      html += '<div style="font-family:Cormorant Garamond,serif;font-style:italic;font-size:13px;color:rgba(var(--gold-rgb),0.65);text-align:center;padding:16px;">Aucune sourate mémorisée</div>';
     } else {
       memSurahs.forEach(function(s, i) {
         html += '<div class="dt-mem-item" style="animation-delay:'+(i*0.06)+'s">';
@@ -905,7 +905,7 @@
     html += '</div>';
     html += '<div class="dt-collapsible" id="dt-collapse-duas"><div class="dt-mem-list">';
     if (memDuas.length === 0) {
-      html += '<div style="font-family:Cormorant Garamond,serif;font-style:italic;font-size:13px;color:rgba(var(--gold-rgb),0.4);text-align:center;padding:16px;">'+t('noDuaMemorized')+'</div>';
+      html += '<div style="font-family:Cormorant Garamond,serif;font-style:italic;font-size:13px;color:rgba(var(--gold-rgb),0.65);text-align:center;padding:16px;">'+t('noDuaMemorized')+'</div>';
     } else {
       memDuas.forEach(function(d, i) {
         html += '<div class="dt-mem-item" style="animation-delay:'+(i*0.06)+'s">';
