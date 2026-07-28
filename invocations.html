@@ -639,6 +639,51 @@
 <script src="js/nav.js"></script>
 <script src="js/profiles.js"></script>
 <script src="js/prayer-times.js"></script>
+<script>
+// Ajoute un sous-texte "X invocations" sous chaque carte de categorie,
+// calcule automatiquement depuis DUAS pour ne jamais se desynchroniser du contenu.
+// Suit la meme convention que DT_refreshNavLang / DT_refreshHomeWidgetLang :
+// une fonction nommee, appelee au chargement ET a chaque changement de langue
+// (via applyLang() dans app.js), pour que le texte se retraduise a la volee.
+(function(){
+  var WORD = {
+    fr:['invocation','invocations'], en:['prayer','prayers'], es:['súplica','súplicas'],
+    de:['Bittgebet','Bittgebete'], it:['invocazione','invocazioni'], nl:['smeekbede','smeekbeden'],
+    pt:['súplica','súplicas'], tr:['dua','dua']
+  };
+  function countFor(key){
+    var cat = window.DUAS && DUAS[key];
+    if(!cat) return null;
+    var n = 0;
+    for(var k in cat){ if(k !== 'meta' && Object.prototype.hasOwnProperty.call(cat,k)) n++; }
+    return n;
+  }
+  function label(n, lang){
+    var w = WORD[lang] || WORD.fr;
+    return n + ' ' + (n > 1 ? w[1] : w[0]);
+  }
+  function renderCatSubs(){
+    var lang = (typeof getLang === 'function') ? getLang() : 'fr';
+    document.querySelectorAll('.cat-card[onclick*="openSheet("]').forEach(function(card){
+      var m = card.getAttribute('onclick').match(/openSheet\('([^']+)'\)/);
+      if(!m) return;
+      var n = countFor(m[1]);
+      if(!n) return;
+      var sub = card.querySelector('.cat-sub');
+      if(!sub){
+        sub = document.createElement('div');
+        sub.className = 'cat-sub';
+        var labelEl = card.querySelector('.cat-label');
+        if(labelEl) labelEl.insertAdjacentElement('afterend', sub);
+        else return;
+      }
+      sub.textContent = label(n, lang);
+    });
+  }
+  window.DT_refreshCatSubLang = renderCatSubs;
+  document.addEventListener('DOMContentLoaded', renderCatSubs);
+})();
+</script>
 
 </body>
 </html>
