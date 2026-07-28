@@ -296,14 +296,16 @@ body.night .logo-night { display:block; }
   display:flex; flex-direction:column; align-items:center;
   justify-content:flex-end; gap:0px; padding:0px 0px 6px;
   border-radius:14px; cursor:pointer; height:188px;
+  flex:0 0 148px; width:148px; scroll-snap-align:start;
   background: var(--card-bg);
   border: none;
   box-shadow: 0 1px 2px rgba(90,65,10,0.05), 0 6px 14px rgba(90,65,10,0.06);
   position:relative; overflow:hidden;
   -webkit-tap-highlight-color:transparent;
-  transition:transform 0.25s cubic-bezier(0.22,1,0.36,1);
+  transition:transform 0.25s cubic-bezier(0.22,1,0.36,1), opacity 0.35s ease;
   text-decoration:none;
 }
+.cat-card.dimmed { opacity:0.5; }
 .cat-card::before {
   content:'';
   position:absolute; inset:0; z-index:1; pointer-events:none;
@@ -2298,7 +2300,6 @@ body.night .cal-panel-table tbody tr.today td.cpt-val { color:var(--gold-light);
   padding: 10px 14px;
   background: var(--bg-translucent);
   backdrop-filter: blur(18px) saturate(160%);
-  cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -2315,9 +2316,6 @@ body.night .cal-panel-table tbody tr.today td.cpt-val { color:var(--gold-light);
 }
 .cat-section--open .cat-section-chevron {
   transform: rotate(180deg);
-}
-.cat-section:not(.cat-section--open) .cat-grid {
-  display: none;
 }
 
 /* ===== RECHERCHE INVOCATIONS ===== */
@@ -2456,11 +2454,19 @@ body.night .cat-card.cat-highlight {
     inset 0 1px 0 rgba(255,255,255,0.06);
 }
 
-/* ===== GRILLE CATÉGORIES ===== */
+/* ===== GRILLE CATÉGORIES — rangée horizontale swipeable ===== */
 .cat-grid {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:10px; padding:12px 14px 20px;
+  display:flex; flex-wrap:nowrap;
+  gap:12px; padding:12px 14px 20px;
+  overflow-x:auto; overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-padding-left:14px;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  -webkit-mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
+  mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
 }
+.cat-grid::-webkit-scrollbar { display:none; }
 
 
 
@@ -2528,11 +2534,19 @@ body.night .cat-card.cat-highlight {
 .topbar-profile-avatar { width:24px; display:flex; align-items:center; }
 .topbar-profile-avatar svg { width:100%; height:auto; }
 
-/* ===== CARTES DE NAVIGATION (accueil) ===== */
+/* ===== CARTES DE NAVIGATION (accueil) — rangée horizontale swipeable ===== */
 .home-nav-grid {
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:10px; padding:6px 14px 20px;
+  display:flex; flex-wrap:nowrap;
+  gap:12px; padding:6px 14px 20px;
+  overflow-x:auto; overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-padding-left:14px;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  -webkit-mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
+  mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
 }
+.home-nav-grid::-webkit-scrollbar { display:none; }
 
 
 /* ===== OVERLAY ===== */
@@ -3495,26 +3509,35 @@ body.has-tabbar {
 
 /* La tabbar doit rester sous la bottom-sheet (z-index:400) et l'overlay (300) */
 
-/* ===== QNAV CARDS (page Coran) ===== */
+/* ===== QNAV CARDS (page Coran) — rangée horizontale swipeable ===== */
 .cat-grid#quranNavGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  display: flex; flex-wrap: nowrap;
+  gap: 12px;
   padding: 0 14px 20px;
+  overflow-x:auto; overflow-y:hidden;
+  scroll-snap-type:x mandatory;
+  scroll-padding-left:14px;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  -webkit-mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
+  mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
 }
+.cat-grid#quranNavGrid::-webkit-scrollbar { display:none; }
 
 .qnav-card {
   display: flex; flex-direction: column; align-items: center;
   justify-content: flex-start; gap: 6px; padding: 16px 10px 14px;
   border-radius: 14px; cursor: pointer; height: 214px;
+  flex:0 0 148px; width:148px; scroll-snap-align:start;
   background: var(--card-bg);
   border: none;
   box-shadow: none;
   position: relative; overflow: hidden;
   -webkit-tap-highlight-color: transparent;
-  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1);
+  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), opacity 0.35s ease;
   text-align: center;
 }
+.qnav-card.dimmed { opacity:0.5; }
 
 .qnav-card:active {
   transform: scale(0.97);
