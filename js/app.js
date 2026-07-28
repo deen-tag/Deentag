@@ -123,7 +123,6 @@ function applyLang(lang) {
   if (window.DT_refreshPrayerLang) window.DT_refreshPrayerLang();
   if (window.DT_refreshHomeWidgetLang) window.DT_refreshHomeWidgetLang();
   if (window.DT_refreshAccountCardLang) window.DT_refreshAccountCardLang();
-  if (window.DT_refreshCatSubLang) window.DT_refreshCatSubLang();
 }
 
 function setLang(lang) {
@@ -1142,11 +1141,18 @@ function generateStars() {
 /* Désactiver clic droit */
 document.addEventListener('contextmenu', e => { e.preventDefault(); return false; });
 
+/* ===== ACCORDÉON PAR SECTION (invocations) ===== */
+function toggleCatSection(headerEl) {
+  const section = headerEl.closest('.cat-section');
+  if (section) section.classList.toggle('cat-section--open');
+}
+
 /* ===== CHIPS DE NAVIGATION RAPIDE (index) ===== */
 function jumpToSection(name) {
   const target = document.querySelector('.cat-section[data-section="' + name + '"]');
   const navBar = document.getElementById('sectionNav');
   if (!target) return;
+  target.classList.add('cat-section--open');
   const offset = (navBar ? navBar.offsetHeight : 0) + 4;
   const top = target.getBoundingClientRect().top + window.scrollY - offset;
   window.scrollTo({ top, behavior: 'smooth' });
