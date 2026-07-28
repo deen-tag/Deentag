@@ -839,7 +839,52 @@
       html += '</div>';
     }
 
-    // Stats (groupées avec l'objectif en cours, pas d'ornement entre les deux)
+    // Sourates mémorisées — remonté juste après "en cours" : c'est le contenu
+    // concret que l'utilisateur vient chercher en premier sur son profil.
+    // Ouvert automatiquement s'il y a du contenu, replié sinon (inutile d'étaler un vide).
+    html += '<div class="dt-mem-section">';
+    html += '<div class="dt-section-header" onclick="window.DT._toggleSection(\'mem\')">';
+    html += '<div class="dt-section-title">'+t('surasMemorized')+'</div>';
+    html += '<button class="dt-detail-btn'+(memSurahs.length>0?' open':'')+'" id="dt-btn-mem">'+t('detail')+' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>';
+    html += '</div>';
+    html += '<div class="dt-collapsible'+(memSurahs.length>0?' open':'')+'" id="dt-collapse-mem"><div class="dt-mem-list">';
+    if (memSurahs.length === 0) {
+      html += '<div style="font-family:Cormorant Garamond,serif;font-style:italic;font-size:13px;color:rgba(var(--gold-rgb),0.65);text-align:center;padding:16px;">'+t('noSurahMemorized')+'</div>';
+    } else {
+      memSurahs.forEach(function(s, i) {
+        html += '<div class="dt-mem-item" style="animation-delay:'+(i*0.06)+'s">';
+        html += '<div class="dt-mem-num">'+s.id+'</div>';
+        html += '<div style="flex:1;"><div class="dt-mem-name">'+(SURAH_NAMES[s.id]||'Sourate '+s.id)+'</div><div class="dt-mem-sub">'+s.date+'</div></div>';
+        html += '<div class="dt-mem-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div>';
+        html += '</div>';
+      });
+    }
+    html += '</div></div></div>';
+
+    // Invocations mémorisées — même logique, juste après les sourates
+    html += '<div class="dt-mem-section">';
+    html += '<div class="dt-section-header" onclick="window.DT._toggleSection(\'duas\')">';
+    html += '<div style="display:flex;align-items:center;gap:8px;"><div class="dt-section-title">'+t('duasMemorized')+'</div><div class="dt-section-count">'+memDuas.length+'</div></div>';
+    html += '<button class="dt-detail-btn'+(memDuas.length>0?' open':'')+'" id="dt-btn-duas">'+t('detail')+' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>';
+    html += '</div>';
+    html += '<div class="dt-collapsible'+(memDuas.length>0?' open':'')+'" id="dt-collapse-duas"><div class="dt-mem-list">';
+    if (memDuas.length === 0) {
+      html += '<div style="font-family:Cormorant Garamond,serif;font-style:italic;font-size:13px;color:rgba(var(--gold-rgb),0.65);text-align:center;padding:16px;">'+t('noDuaMemorized')+'</div>';
+    } else {
+      memDuas.forEach(function(d, i) {
+        html += '<div class="dt-mem-item" style="animation-delay:'+(i*0.06)+'s">';
+        html += '<div class="dt-mem-num">✦</div>';
+        html += '<div style="flex:1;"><div class="dt-mem-name">'+d.label+'</div><div class="dt-mem-sub">'+d.date+'</div></div>';
+        html += '<div class="dt-mem-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div>';
+        html += '</div>';
+      });
+    }
+    html += '</div></div></div>';
+
+    // Ornement
+    html += '<div class="dt-ornament"><div class="dt-orn-line"></div><span class="dt-orn-star">✦</span><div class="dt-orn-line"></div></div>';
+
+    // Stats (vue d'ensemble, plus abstraite — après le détail concret ci-dessus)
     html += '<div class="dt-stats-section">';
     html += '<div class="dt-section-title">'+t('progress')+'</div>';
     html += '<div class="dt-stats-row">';
@@ -875,48 +920,8 @@
     }
     html += '</div>';
 
-    // Ornement (sépare "activité" du groupe "détails" ci-dessous)
+    // Ornement (sépare "activité" de "juz complétés")
     html += '<div class="dt-ornament"><div class="dt-orn-line"></div><span class="dt-orn-star">✦</span><div class="dt-orn-line"></div></div>';
-
-    // Sourates mémorisées (repliable) — remonté avant Juz, plus consulté au quotidien
-    html += '<div class="dt-mem-section">';
-    html += '<div class="dt-section-header" onclick="window.DT._toggleSection(\'mem\')">';
-    html += '<div class="dt-section-title">'+t('surasMemorized')+'</div>';
-    html += '<button class="dt-detail-btn" id="dt-btn-mem">'+t('detail')+' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>';
-    html += '</div>';
-    html += '<div class="dt-collapsible" id="dt-collapse-mem"><div class="dt-mem-list">';
-    if (memSurahs.length === 0) {
-      html += '<div style="font-family:Cormorant Garamond,serif;font-style:italic;font-size:13px;color:rgba(var(--gold-rgb),0.65);text-align:center;padding:16px;">'+t('noSurahMemorized')+'</div>';
-    } else {
-      memSurahs.forEach(function(s, i) {
-        html += '<div class="dt-mem-item" style="animation-delay:'+(i*0.06)+'s">';
-        html += '<div class="dt-mem-num">'+s.id+'</div>';
-        html += '<div style="flex:1;"><div class="dt-mem-name">'+(SURAH_NAMES[s.id]||'Sourate '+s.id)+'</div><div class="dt-mem-sub">'+s.date+'</div></div>';
-        html += '<div class="dt-mem-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div>';
-        html += '</div>';
-      });
-    }
-    html += '</div></div></div>';
-
-    // Invocations mémorisées (repliable) — juste après les sourates, même logique de fréquence d'usage
-    html += '<div class="dt-mem-section">';
-    html += '<div class="dt-section-header" onclick="window.DT._toggleSection(\'duas\')">';
-    html += '<div style="display:flex;align-items:center;gap:8px;"><div class="dt-section-title">'+t('duasMemorized')+'</div><div class="dt-section-count">'+memDuas.length+'</div></div>';
-    html += '<button class="dt-detail-btn" id="dt-btn-duas">'+t('detail')+' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg></button>';
-    html += '</div>';
-    html += '<div class="dt-collapsible" id="dt-collapse-duas"><div class="dt-mem-list">';
-    if (memDuas.length === 0) {
-      html += '<div style="font-family:Cormorant Garamond,serif;font-style:italic;font-size:13px;color:rgba(var(--gold-rgb),0.65);text-align:center;padding:16px;">'+t('noDuaMemorized')+'</div>';
-    } else {
-      memDuas.forEach(function(d, i) {
-        html += '<div class="dt-mem-item" style="animation-delay:'+(i*0.06)+'s">';
-        html += '<div class="dt-mem-num">✦</div>';
-        html += '<div style="flex:1;"><div class="dt-mem-name">'+d.label+'</div><div class="dt-mem-sub">'+d.date+'</div></div>';
-        html += '<div class="dt-mem-check"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div>';
-        html += '</div>';
-      });
-    }
-    html += '</div></div></div>';
 
     // Juz complétés (repliable) — en dernier : grille la plus longue, la moins consultée au quotidien
     html += '<div class="dt-juz-section">';
