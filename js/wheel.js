@@ -75,8 +75,13 @@
 
   function renderRing(w) {
     var bestDepth = -2, frontIdx = 0;
-    var shear = 0.55;  // vue en biais : le fond de l'ellipse se décale sur le côté, pas juste vers le haut
-    var maxTilt = 9;   // inclinaison max des cartes selon leur position sur l'arc (degrés)
+    // La vue en biais + l'inclinaison des cartes ne concernent que le
+    // tourniquet Invocations (buildWheel fournit w.section). Les roues
+    // autonomes d'Accueil et Coran (buildGridWheel, sans w.section) gardent
+    // l'ancien rendu simple : ne pas les modifier ici.
+    var skewed = !!w.section;
+    var shear = 0.55;      // vue en biais (Invocations uniquement) : le fond se décale sur le côté
+    var maxTilt = skewed ? 9 : 5; // Accueil/Coran : inclinaison plus discrète, "premium", pas tordue
     w.items.forEach(function (item, i) {
       var base = parseFloat(item.dataset.angle);
       var total = base + w.angle;
@@ -84,14 +89,20 @@
       var depth = Math.cos(rad); // 1 = avant/centre, -1 = arrière
       var xRaw = Math.sin(rad) * w.rx;
       var y = depth * w.ry; // avant en bas, arrière en haut (comme le modèle de référence)
-      // Le décalage latéral supplémentaire ne s'applique qu'en s'éloignant de l'avant
-      // (0 au centre, maximal à l'arrière) : la carte centrale reste bien droite et
-      // centrée, seules celles qui reculent se décalent réellement sur le côté.
-      var shearFactor = (1 - depth) / 2;
-      var x = xRaw + y * shear * shearFactor;
-      var scale = 0.60 + 0.55 * ((depth + 1) / 2);
-      var op = 0.75 + 0.25 * ((depth + 1) / 2);
+      var x = xRaw;
+      if (skewed) {
+        // Le décalage latéral supplémentaire ne s'applique qu'en s'éloignant de l'avant
+        // (0 au centre, maximal à l'arrière) : la carte centrale reste bien droite et
+        // centrée, seules celles qui reculent se décalent réellement sur le côté.
+        var shearFactor = (1 - depth) / 2;
+        x = xRaw + y * shear * shearFactor;
+      }
+      // Sur Accueil/Coran, x = xRaw (pas de décalage) : la carte du fond, à
+      // x=0, reste donc parfaitement symétrique et centrée — seules les
+      // cartes sur les côtés (x != 0) penchent légèrement.
       var tilt = w.rx ? (x / w.rx) * maxTilt : 0;
+      var scale = skewed ? (0.60 + 0.55 * ((depth + 1) / 2)) : (0.55 + 0.6 * ((depth + 1) / 2));
+      var op = skewed ? (0.75 + 0.25 * ((depth + 1) / 2)) : (0.32 + 0.68 * ((depth + 1) / 2));
       item.style.transform = 'translate(' + x + 'px,' + y + 'px) rotate(' + tilt.toFixed(2) + 'deg) scale(' + scale + ')';
       item.style.opacity = String(op);
       item.style.zIndex = String(Math.round((depth + 1) * 100));
@@ -289,10 +300,22 @@
 
     var n = cards.length;
     var step = 360 / n;
-    var rx = Math.round(58 + (n - 1) * 13);
-    var ry = Math.round(rx * 0.45);
+    // Rayon compact (4-5 cartes seulement, pas besoin de la croissance prévue
+    // pour Invocations qui doit accueillir jusqu'à ~10 icônes).
+    var rx = Math.round(50 + (n - 1) * 8);
+    // Contrairement au tourniquet Invocations (ovale aplati pour gagner de la
+    // hauteur), ici on veut un vrai cercle qui tourne "comme une horloge" :
+    // pas besoin d'économiser de la hauteur sur Accueil/Coran.
+    var ry = rx;
     stage.dataset.rx = String(rx);
     stage.dataset.ry = String(ry);
+    // Le conteneur .orbit-stage (190px fixes en CSS) est calé sur l'ancien
+    // ovale aplati : avec un vrai cercle il faut plus de hauteur pour que
+    // rien ne soit rogné en haut/bas, calculée ici selon le rayon et la
+    // taille max de carte (front, scale ~1.15).
+    var cardHalf = cardClass === 'qnav-card' ? 73 : 68;
+    var neededHeight = Math.round(ry * 2 + cardHalf * 1.15 * 2 + 16);
+    stage.style.height = neededHeight + 'px';
 
     cards.forEach(function (card, i) {
       var angle = i * step;
