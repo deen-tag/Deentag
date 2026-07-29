@@ -307,6 +307,14 @@ body.night .logo-night { display:block; }
 /* Sur l'accueil, grille statique 2 colonnes (plus de rangée horizontale swipeable) */
 .home-nav-grid .cat-card {
   width: 100%;
+  /* Pas de cadre de carte : juste l'écusson + le label, comme sur la roue
+     d'origine — rendu plus "premium", moins "app store générique". */
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.home-nav-grid .cat-card::before {
+  display: none;
 }
 .cat-card.dimmed { opacity:0.5; }
 .cat-card::before {
@@ -3529,7 +3537,8 @@ body.has-tabbar {
   justify-content: flex-start; gap: 6px; padding: 16px 10px 14px;
   border-radius: 14px; cursor: pointer; height: 214px;
   flex: none; width: 100%;
-  background: var(--card-bg);
+  /* Pas de cadre de carte : juste l'écusson + le label. */
+  background: none !important;
   border: none;
   box-shadow: none;
   position: relative; overflow: hidden;
