@@ -38,7 +38,7 @@
     var step = 360 / n;
     // Ovale aplati : plus large que haut, s'élargit un peu avec le nombre d'icônes.
     var rx = Math.round(58 + (n - 1) * 13);
-    var ry = Math.round(rx * 0.5);
+    var ry = Math.round(rx * 0.45);
     stage.dataset.rx = String(rx);
     stage.dataset.ry = String(ry);
 
@@ -90,7 +90,16 @@
       if (depth > bestDepth) { bestDepth = depth; frontIdx = i; }
     });
     w.items.forEach(function (item, i) {
-      item.classList.toggle('is-front', i === frontIdx);
+      var isFront = i === frontIdx;
+      item.classList.toggle('is-front', isFront);
+      if (isFront && !item.dataset.pulsed) {
+        item.classList.add('is-pulsing');
+        item.dataset.pulsed = 'true';
+        setTimeout(function () {
+          item.classList.remove('is-pulsing');
+          setTimeout(function () { item.dataset.pulsed = ''; }, 100);
+        }, 800);
+      }
     });
     w.frontIndex = frontIdx;
   }
@@ -196,8 +205,8 @@
       var center = r.top + r.height / 2;
       var dist = Math.abs(center - anchorY);
       var t = Math.max(0, 1 - dist / maxDist);
-      var scale = 0.78 + 0.3 * t;
-      var opacity = 0.45 + 0.55 * t;
+      var scale = 0.92 + 0.08 * t;
+      var opacity = 0.75 + 0.25 * t;
       w.section.style.transform = 'scale(' + scale + ')';
       w.section.style.opacity = String(opacity);
       w.section.style.zIndex = String(Math.round(t * 100));
@@ -220,20 +229,73 @@
     target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
   };
 
+  function showSwipeHint(w) {
+    var stage = w.stage;
+
+    var leftArrow = document.createElement('div');
+    leftArrow.className = 'swipe-hint swipe-hint-left';
+    leftArrow.textContent = '‹';
+
+    var rightArrow = document.createElement('div');
+    rightArrow.className = 'swipe-hint swipe-hint-right';
+    rightArrow.textContent = '›';
+
+    stage.appendChild(leftArrow);
+    stage.appendChild(rightArrow);
+
+    setTimeout(function () {
+      leftArrow.classList.add('swipe-hint--visible');
+      rightArrow.classList.add('swipe-hint--visible');
+    }, 400);
+
+    var hideHint = function () {
+      leftArrow.classList.remove('swipe-hint--visible');
+      rightArrow.classList.remove('swipe-hint--visible');
+      setTimeout(function () {
+        leftArrow.remove();
+        rightArrow.remove();
+      }, 600);
+      stage.removeEventListener('pointerdown', hideHint);
+      stage.removeEventListener('touchstart', hideHint);
+    };
+
+    setTimeout(hideHint, 4500);
+    stage.addEventListener('pointerdown', hideHint);
+    stage.addEventListener('touchstart', hideHint);
+  }
+
+  function showInviteAnimation(w) {
+    var stage = w.stage;
+    stage.classList.add('invite');
+    setTimeout(function () {
+      stage.classList.remove('invite');
+    }, 1400);
+  }
+
   function init() {
     var pager = document.getElementById('catPager');
     if (!pager) return;
     pager.classList.add('cat-pager--wheel');
 
-    Array.prototype.slice.call(pager.querySelectorAll('.cat-section')).forEach(function (section) {
+    var firstWheel = null;
+    Array.prototype.slice.call(pager.querySelectorAll('.cat-section')).forEach(function (section, index) {
       var w = buildWheel(section);
       if (!w) return;
       renderRing(w);
       attachDrag(w);
       wheels.push(w);
+      if (index === 0) firstWheel = w;
     });
 
     if (!wheels.length) return;
+
+    if (firstWheel && !reduceMotion) {
+      setTimeout(function () {
+        showInviteAnimation(firstWheel);
+        showSwipeHint(firstWheel);
+      }, 500);
+    }
+
     window.addEventListener('scroll', onScroll, { passive: true });
     window.addEventListener('resize', onScroll);
     updateScales();
