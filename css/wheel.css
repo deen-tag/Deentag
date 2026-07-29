@@ -71,9 +71,12 @@
   height: 136px;
   margin: 0;
   /* Supprime le "cadre carte" (fond, ombre, coins arrondis) : ne garde que
-     l'image et le label, sans rectangle visible derrière. */
-  background: none;
-  box-shadow: none;
+     l'image et le label, sans rectangle visible derrière. !important pour
+     empêcher toute règle plus spécifique (cat-highlight, :active, thème
+     nuit...) de faire réapparaître le cadre. */
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
   border-radius: 0;
   overflow: visible;
   transition: transform 0.25s ease;
@@ -86,9 +89,9 @@
    cadre (fond/bordure/ombre) revenait en theme nuit alors qu'il avait bien
    disparu en theme jour. On la neutralise explicitement ici. */
 body.night .item .cat-card {
-  background: none;
-  border: none;
-  box-shadow: none;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 .item .cat-card .cat-label {
   font-size: 7.5px;
@@ -122,16 +125,17 @@ body.night .item .cat-card {
   margin: 0;
   padding: 6px 4px 4px;
   gap: 3px;
-  background: none;
-  box-shadow: none;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
   border-radius: 0;
   overflow: visible;
   transition: transform 0.25s ease;
 }
 body.night .item .qnav-card {
-  background: none;
-  border: none;
-  box-shadow: none;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
 }
 .item .qnav-card .qnav-icon {
   height: 64px;
@@ -212,44 +216,5 @@ body.night .item .qnav-card {
   .item.is-front.is-pulsing .cat-card,
   .item.is-front.is-pulsing .cat-card .cat-icon-circle .cat-icon {
     animation: none;
-  }
-}
-
-/* ==========================================================================
-   CARROUSEL PLAT — Accueil (.home-nav-grid) & Coran (#quranNavGrid)
-   js/wheel.js (initFlatCarousel) ajoute les classes ci-dessous sur la grille
-   d'origine et ses cartes : le scroll horizontal reste 100% natif (drag au
-   doigt, snap, pas d'auto-scroll géré par le navigateur), seule une légère
-   rotation 3D (rotateY) est appliquée en JS selon la distance au centre.
-   Toutes les cartes gardent la même taille (celle déjà définie dans
-   adult.css) : aucune règle ici ne touche width/height/scale.
-   ========================================================================== */
-.home-nav-grid.flat-carousel,
-#quranNavGrid.flat-carousel {
-  perspective: 900px;
-  scroll-snap-type: x mandatory;
-  scroll-padding: 0;
-  /* Le fondu de bord de l'ancienne grille masquait des cartes entières :
-     ici on veut que l'utilisateur voie d'emblée qu'il y a plusieurs cartes
-     de poids égal, donc pas de fondu. */
-  -webkit-mask-image: none;
-  mask-image: none;
-  /* Marge latérale calculée pour que la première/dernière carte puisse
-     atteindre le centre de l'écran au bout du scroll (carte = 148px). */
-  padding-left: calc(50% - 74px);
-  padding-right: calc(50% - 74px);
-}
-.flat-carousel-item.cat-card,
-.flat-carousel-item.qnav-card {
-  scroll-snap-align: center;
-  transform-style: preserve-3d;
-  transition: transform 0.15s linear;
-  will-change: transform;
-}
-@media (prefers-reduced-motion: reduce) {
-  .flat-carousel-item.cat-card,
-  .flat-carousel-item.qnav-card {
-    transition: none !important;
-    transform: none !important;
   }
 }
