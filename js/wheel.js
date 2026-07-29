@@ -264,14 +264,6 @@
     stage.addEventListener('touchstart', hideHint);
   }
 
-  function showInviteAnimation(w) {
-    var stage = w.stage;
-    stage.classList.add('invite');
-    setTimeout(function () {
-      stage.classList.remove('invite');
-    }, 1400);
-  }
-
   // Version generique : transforme n'importe quelle grille de cartes (pas
   // seulement les .cat-section d'invocations.html) en roue autonome, a
   // taille fixe (pas de mise a l'echelle liee au scroll, il n'y a qu'une
@@ -324,7 +316,6 @@
     attachDrag(w);
     if (!reduceMotion) {
       setTimeout(function () {
-        showInviteAnimation(w);
         showSwipeHint(w);
       }, 500);
     }
@@ -348,7 +339,6 @@
       if (wheels.length) {
         if (firstWheel && !reduceMotion) {
           setTimeout(function () {
-            showInviteAnimation(firstWheel);
             showSwipeHint(firstWheel);
           }, 500);
         }
