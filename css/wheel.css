@@ -162,6 +162,48 @@ body.night .item .qnav-card {
   color: var(--gold);
 }
 
+/* ===== Accueil (cat-card) / Coran (qnav-card) : roues autonomes agrandies,
+   cercle plus large + cartes/icônes plus grandes. Scopé à .orbit-stage--nav
+   uniquement pour ne jamais toucher au tourniquet Invocations, qui partage
+   les mêmes classes .cat-card / .item. ===== */
+.orbit-stage--nav .item .cat-card {
+  left: -60px;
+  top: -82px;
+  width: 120px;
+  height: 164px;
+}
+.orbit-stage--nav .item .cat-card .cat-label {
+  font-size: 8.5px;
+  padding: 4px 7px;
+}
+.orbit-stage--nav .item .cat-card .cat-icon-circle .cat-icon {
+  max-height: 96px;
+}
+.orbit-stage--nav .item.is-front .cat-card .cat-icon-circle .cat-icon {
+  max-height: 112px;
+}
+.orbit-stage--nav .item .qnav-card {
+  left: -60px;
+  top: -88px;
+  width: 120px;
+  height: 176px;
+}
+.orbit-stage--nav .item .qnav-card .qnav-icon {
+  height: 78px;
+  flex: 0 0 78px;
+}
+.orbit-stage--nav .item .qnav-card .qnav-icon .qnav-img {
+  max-height: 68px;
+}
+.orbit-stage--nav .item .qnav-card .qnav-label {
+  font-size: 8px;
+  padding: 4px 7px;
+  min-height: 32px;
+}
+.orbit-stage--nav .item.is-front .qnav-card .qnav-icon .qnav-img {
+  max-height: 82px;
+}
+
 /* Pulse + glow quand une carte arrive au centre */
 @keyframes frontPulse {
   0% { transform: scale(1); }
