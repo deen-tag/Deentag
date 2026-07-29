@@ -304,9 +304,9 @@ body.night .logo-night { display:block; }
   transition:transform 0.25s cubic-bezier(0.22,1,0.36,1), opacity 0.35s ease;
   text-decoration:none;
 }
-/* Sur l'accueil, les cartes restent en rangée horizontale swipeable */
+/* Sur l'accueil, grille statique 2 colonnes (plus de rangée horizontale swipeable) */
 .home-nav-grid .cat-card {
-  flex:0 0 148px; width:148px; scroll-snap-align:start;
+  width: 100%;
 }
 .cat-card.dimmed { opacity:0.5; }
 .cat-card::before {
@@ -2544,17 +2544,10 @@ body.night .cat-card.cat-highlight {
 
 /* ===== CARTES DE NAVIGATION (accueil) — rangée horizontale swipeable ===== */
 .home-nav-grid {
-  display:flex; flex-wrap:nowrap;
-  gap:12px; padding:6px 14px 20px;
-  overflow-x:auto; overflow-y:hidden;
-  scroll-snap-type:x mandatory;
-  scroll-padding-left:14px;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-  -webkit-mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
-  mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 14px 10px;
+  padding: 6px 14px 20px;
 }
-.home-nav-grid::-webkit-scrollbar { display:none; }
 
 
 /* ===== OVERLAY ===== */
@@ -3519,24 +3512,23 @@ body.has-tabbar {
 
 /* ===== QNAV CARDS (page Coran) — rangée horizontale swipeable ===== */
 .cat-grid#quranNavGrid {
-  display: flex; flex-wrap: nowrap;
-  gap: 12px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 14px 10px;
   padding: 0 14px 20px;
-  overflow-x:auto; overflow-y:hidden;
-  scroll-snap-type:x mandatory;
-  scroll-padding-left:14px;
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-  -webkit-mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
-  mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
 }
-.cat-grid#quranNavGrid::-webkit-scrollbar { display:none; }
+/* 5 cartes = nombre impair : la dernière se centre sur les 2 colonnes au
+   lieu de rester collée à gauche avec un vide à droite. */
+.cat-grid#quranNavGrid > .qnav-card:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  width: calc(50% - 5px);
+  justify-self: center;
+}
 
 .qnav-card {
   display: flex; flex-direction: column; align-items: center;
   justify-content: flex-start; gap: 6px; padding: 16px 10px 14px;
   border-radius: 14px; cursor: pointer; height: 214px;
-  flex:0 0 148px; width:148px; scroll-snap-align:start;
+  flex: none; width: 100%;
   background: var(--card-bg);
   border: none;
   box-shadow: none;
