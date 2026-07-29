@@ -75,16 +75,24 @@
 
   function renderRing(w) {
     var bestDepth = -2, frontIdx = 0;
+    var shear = 0.55;  // vue en biais : le fond de l'ellipse se décale sur le côté, pas juste vers le haut
+    var maxTilt = 9;   // inclinaison max des cartes selon leur position sur l'arc (degrés)
     w.items.forEach(function (item, i) {
       var base = parseFloat(item.dataset.angle);
       var total = base + w.angle;
       var rad = (total * Math.PI) / 180;
       var depth = Math.cos(rad); // 1 = avant/centre, -1 = arrière
-      var x = Math.sin(rad) * w.rx;
+      var xRaw = Math.sin(rad) * w.rx;
       var y = depth * w.ry; // avant en bas, arrière en haut (comme le modèle de référence)
+      // Le décalage latéral supplémentaire ne s'applique qu'en s'éloignant de l'avant
+      // (0 au centre, maximal à l'arrière) : la carte centrale reste bien droite et
+      // centrée, seules celles qui reculent se décalent réellement sur le côté.
+      var shearFactor = (1 - depth) / 2;
+      var x = xRaw + y * shear * shearFactor;
       var scale = 0.60 + 0.55 * ((depth + 1) / 2);
       var op = 0.75 + 0.25 * ((depth + 1) / 2);
-      item.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')';
+      var tilt = w.rx ? (x / w.rx) * maxTilt : 0;
+      item.style.transform = 'translate(' + x + 'px,' + y + 'px) rotate(' + tilt.toFixed(2) + 'deg) scale(' + scale + ')';
       item.style.opacity = String(op);
       item.style.zIndex = String(Math.round((depth + 1) * 100));
       if (depth > bestDepth) { bestDepth = depth; frontIdx = i; }
@@ -264,49 +272,61 @@
     stage.addEventListener('touchstart', hideHint);
   }
 
-  // ===== Carrousel plat (Accueil / Coran) =====
-  // Contrairement au tourniquet orbital d'Invocations (buildWheel/renderRing
-  // ci-dessus), ici on garde le scroll horizontal natif du navigateur (le
-  // vrai drag au doigt + snap, sans rien réimplémenter) et on se contente de
-  // calculer, à chaque frame de scroll, une légère rotation 3D (rotateY)
-  // selon la distance de chaque carte au centre de la vue. Toutes les cartes
-  // gardent la même taille — aucune variation de scale/opacité.
-  function initFlatCarousel(grid, cardClass) {
-    if (!grid) return;
+  // Version generique : transforme n'importe quelle grille de cartes (pas
+  // seulement les .cat-section d'invocations.html) en roue autonome, a
+  // taille fixe (pas de mise a l'echelle liee au scroll, il n'y a qu'une
+  // seule roue sur ces pages).
+  function buildGridWheel(grid, cardClass) {
     var cards = Array.prototype.slice.call(grid.children).filter(function (c) {
       return c.classList.contains(cardClass);
     });
-    if (!cards.length) return;
+    if (!cards.length) return null;
 
-    grid.classList.add('flat-carousel');
-    cards.forEach(function (c) { c.classList.add('flat-carousel-item'); });
+    var stage = document.createElement('div');
+    stage.className = 'orbit-stage';
+    var ring = document.createElement('div');
+    ring.className = 'orbit-ring';
 
-    var maxDeg = 7; // inclinaison max, discrète comme demandé (5-8°)
-    var ticking = false;
+    var n = cards.length;
+    var step = 360 / n;
+    var rx = Math.round(58 + (n - 1) * 13);
+    var ry = Math.round(rx * 0.45);
+    stage.dataset.rx = String(rx);
+    stage.dataset.ry = String(ry);
 
-    function update() {
-      ticking = false;
-      if (reduceMotion) return;
-      var stageRect = grid.getBoundingClientRect();
-      var centerX = stageRect.left + stageRect.width / 2;
-      cards.forEach(function (card) {
-        var r = card.getBoundingClientRect();
-        var cardCenter = r.left + r.width / 2;
-        var delta = cardCenter - centerX;
-        var norm = Math.max(1, r.width); // une carte de distance = angle max
-        var t = Math.max(-1, Math.min(1, delta / norm));
-        var deg = -t * maxDeg;
-        card.style.transform = 'rotateY(' + deg.toFixed(2) + 'deg)';
-      });
+    cards.forEach(function (card, i) {
+      var angle = i * step;
+      var item = document.createElement('div');
+      item.className = 'item';
+      item.dataset.angle = String(angle);
+      item.appendChild(card);
+      ring.appendChild(item);
+    });
+
+    stage.appendChild(ring);
+    grid.replaceWith(stage);
+
+    return {
+      stage: stage,
+      ring: ring,
+      items: Array.prototype.slice.call(ring.children),
+      n: n, rx: rx, ry: ry, angle: 0,
+      dragging: false, moved: 0, startX: 0, startAngle: 0,
+      animId: null, suppressClick: false, frontIndex: 0
+    };
+  }
+
+  function initStandaloneWheel(grid, cardClass) {
+    if (!grid) return;
+    var w = buildGridWheel(grid, cardClass);
+    if (!w) return;
+    renderRing(w);
+    attachDrag(w);
+    if (!reduceMotion) {
+      setTimeout(function () {
+        showSwipeHint(w);
+      }, 500);
     }
-
-    function onGridScroll() {
-      if (!ticking) { ticking = true; requestAnimationFrame(update); }
-    }
-
-    grid.addEventListener('scroll', onGridScroll, { passive: true });
-    window.addEventListener('resize', onGridScroll);
-    update();
   }
 
   function init() {
@@ -337,10 +357,10 @@
     }
 
     // Accueil : les 4 cartes de navigation (Invocations/Coran/Enfants/Boutique)
-    initFlatCarousel(document.querySelector('.home-nav-grid'), 'cat-card');
+    initStandaloneWheel(document.querySelector('.home-nav-grid'), 'cat-card');
 
     // Coran : les 5 cartes de navigation
-    initFlatCarousel(document.getElementById('quranNavGrid'), 'qnav-card');
+    initStandaloneWheel(document.getElementById('quranNavGrid'), 'qnav-card');
   }
 
   if (document.readyState === 'loading') {
