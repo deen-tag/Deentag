@@ -1,8 +1,9 @@
 /* ==========================================================================
-   ANNEAUX 3D — invocations.html
+   ARCS OVALES — invocations.html
    Amélioration progressive : js/wheel.js transforme chaque .cat-grid existant
-   en anneau 3D. Si le JS ne tourne pas, la grille 2 colonnes d'origine reste
-   affichée et fonctionnelle (aucune règle ici ne masque .cat-grid).
+   en arc ovale aplati (2D, sans perspective 3D). Si le JS ne tourne pas, la
+   grille 2 colonnes d'origine reste affichée et fonctionnelle (aucune règle
+   ici ne masque .cat-grid).
    Toutes les couleurs reprennent les variables du thème (--gold, --gold-rgb,
    --card-bg, --card-border, --shadow) pour rester synchronisées jour/nuit.
    ========================================================================== */
@@ -34,29 +35,20 @@
   padding: 10px 14px 2px;
 }
 
-/* ===== Scène 3D ===== */
-.ring-stage {
+/* ===== Scène ovale (2D, sans perspective) ===== */
+.orbit-stage {
   position: relative;
-  height: 272px;
-  perspective: 900px;
-  perspective-origin: 50% 42%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  height: 190px; /* arc aplati : nettement moins haut que l'ancien anneau 3D */
+  margin: 4px 0 8px;
   touch-action: pan-y;
   -webkit-tap-highlight-color: transparent;
 }
-.ring-wrap {
-  position: relative;
-  width: 1px;
-  height: 1px;
-  transform-style: preserve-3d;
-}
-.ring {
+.orbit-ring {
   position: absolute;
-  left: 0;
-  top: 0;
-  transform-style: preserve-3d;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 0;
 }
 .item {
   position: absolute;
@@ -64,44 +56,21 @@
   top: 0;
   width: 0;
   height: 0;
-  transform-style: preserve-3d;
-}
-
-/* Cadran décoratif façon astrolabe, purement visuel */
-.dial {
-  position: absolute;
-  width: 218px;
-  height: 218px;
-  left: 50%;
-  top: 50%;
-  margin: -109px 0 0 -109px;
-  border-radius: 50%;
-  border: 1px solid rgba(var(--gold-rgb), 0.22);
-  background:
-    repeating-conic-gradient(from 0deg, rgba(var(--gold-rgb), 0.05) 0deg 2deg, transparent 2deg 12deg),
-    radial-gradient(circle, rgba(255, 255, 255, 0.14) 0%, transparent 70%);
-  transform: translateZ(-52px) rotateX(74deg);
-  box-shadow: inset 0 0 22px rgba(var(--gold-rgb), 0.10);
-}
-body.night .dial {
-  background:
-    repeating-conic-gradient(from 0deg, rgba(var(--gold-rgb), 0.07) 0deg 2deg, transparent 2deg 12deg),
-    radial-gradient(circle, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
+  will-change: transform, opacity;
 }
 
 /* Les .cat-card d'origine sont déplacées telles quelles (mêmes images, même
    onclick="openSheet(...)") dans .item ; on les redimensionne seulement
-   pour qu'elles tiennent bien sur le pourtour de l'anneau. */
+   pour qu'elles tiennent bien sur l'arc, et c'est .item qui porte le
+   déplacement + l'échelle (la carte ne pivote jamais sur elle-même). */
 .item .cat-card {
   position: absolute;
-  left: -56px;
-  top: -80px;
-  width: 112px;
-  height: 148px;
+  left: -50px;
+  top: -68px;
+  width: 100px;
+  height: 136px;
   margin: 0;
-  transform-origin: center center;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  transition: box-shadow 0.25s ease, outline-color 0.25s ease;
 }
 .item .cat-card .cat-label {
   font-size: 7.5px;
@@ -109,11 +78,22 @@ body.night .dial {
   letter-spacing: 0.06em;
 }
 .item .cat-card .cat-icon-circle .cat-icon {
-  max-height: 84px;
+  max-height: 78px;
+}
+
+/* Carte actuellement au centre (avant de l'arc) : mise en avant dorée. */
+.item.is-front .cat-card {
+  outline: 1.5px solid var(--gold);
+  outline-offset: 2px;
+  box-shadow: 0 10px 24px rgba(var(--gold-rgb), 0.30), 0 6px 14px rgba(90, 65, 10, 0.08);
+}
+.item.is-front .cat-card .cat-label {
+  color: var(--gold);
 }
 
 @media (prefers-reduced-motion: reduce) {
   .cat-pager--wheel .cat-section,
+  .item,
   .item .cat-card {
     transition: none !important;
   }
