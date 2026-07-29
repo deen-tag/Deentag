@@ -264,61 +264,49 @@
     stage.addEventListener('touchstart', hideHint);
   }
 
-  // Version generique : transforme n'importe quelle grille de cartes (pas
-  // seulement les .cat-section d'invocations.html) en roue autonome, a
-  // taille fixe (pas de mise a l'echelle liee au scroll, il n'y a qu'une
-  // seule roue sur ces pages).
-  function buildGridWheel(grid, cardClass) {
+  // ===== Carrousel plat (Accueil / Coran) =====
+  // Contrairement au tourniquet orbital d'Invocations (buildWheel/renderRing
+  // ci-dessus), ici on garde le scroll horizontal natif du navigateur (le
+  // vrai drag au doigt + snap, sans rien réimplémenter) et on se contente de
+  // calculer, à chaque frame de scroll, une légère rotation 3D (rotateY)
+  // selon la distance de chaque carte au centre de la vue. Toutes les cartes
+  // gardent la même taille — aucune variation de scale/opacité.
+  function initFlatCarousel(grid, cardClass) {
+    if (!grid) return;
     var cards = Array.prototype.slice.call(grid.children).filter(function (c) {
       return c.classList.contains(cardClass);
     });
-    if (!cards.length) return null;
+    if (!cards.length) return;
 
-    var stage = document.createElement('div');
-    stage.className = 'orbit-stage';
-    var ring = document.createElement('div');
-    ring.className = 'orbit-ring';
+    grid.classList.add('flat-carousel');
+    cards.forEach(function (c) { c.classList.add('flat-carousel-item'); });
 
-    var n = cards.length;
-    var step = 360 / n;
-    var rx = Math.round(58 + (n - 1) * 13);
-    var ry = Math.round(rx * 0.45);
-    stage.dataset.rx = String(rx);
-    stage.dataset.ry = String(ry);
+    var maxDeg = 7; // inclinaison max, discrète comme demandé (5-8°)
+    var ticking = false;
 
-    cards.forEach(function (card, i) {
-      var angle = i * step;
-      var item = document.createElement('div');
-      item.className = 'item';
-      item.dataset.angle = String(angle);
-      item.appendChild(card);
-      ring.appendChild(item);
-    });
-
-    stage.appendChild(ring);
-    grid.replaceWith(stage);
-
-    return {
-      stage: stage,
-      ring: ring,
-      items: Array.prototype.slice.call(ring.children),
-      n: n, rx: rx, ry: ry, angle: 0,
-      dragging: false, moved: 0, startX: 0, startAngle: 0,
-      animId: null, suppressClick: false, frontIndex: 0
-    };
-  }
-
-  function initStandaloneWheel(grid, cardClass) {
-    if (!grid) return;
-    var w = buildGridWheel(grid, cardClass);
-    if (!w) return;
-    renderRing(w);
-    attachDrag(w);
-    if (!reduceMotion) {
-      setTimeout(function () {
-        showSwipeHint(w);
-      }, 500);
+    function update() {
+      ticking = false;
+      if (reduceMotion) return;
+      var stageRect = grid.getBoundingClientRect();
+      var centerX = stageRect.left + stageRect.width / 2;
+      cards.forEach(function (card) {
+        var r = card.getBoundingClientRect();
+        var cardCenter = r.left + r.width / 2;
+        var delta = cardCenter - centerX;
+        var norm = Math.max(1, r.width); // une carte de distance = angle max
+        var t = Math.max(-1, Math.min(1, delta / norm));
+        var deg = -t * maxDeg;
+        card.style.transform = 'rotateY(' + deg.toFixed(2) + 'deg)';
+      });
     }
+
+    function onGridScroll() {
+      if (!ticking) { ticking = true; requestAnimationFrame(update); }
+    }
+
+    grid.addEventListener('scroll', onGridScroll, { passive: true });
+    window.addEventListener('resize', onGridScroll);
+    update();
   }
 
   function init() {
@@ -349,10 +337,10 @@
     }
 
     // Accueil : les 4 cartes de navigation (Invocations/Coran/Enfants/Boutique)
-    initStandaloneWheel(document.querySelector('.home-nav-grid'), 'cat-card');
+    initFlatCarousel(document.querySelector('.home-nav-grid'), 'cat-card');
 
     // Coran : les 5 cartes de navigation
-    initStandaloneWheel(document.getElementById('quranNavGrid'), 'qnav-card');
+    initFlatCarousel(document.getElementById('quranNavGrid'), 'qnav-card');
   }
 
   if (document.readyState === 'loading') {
