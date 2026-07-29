@@ -100,6 +100,8 @@ body.night .dial {
   height: 148px;
   margin: 0;
   transform-origin: center center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 .item .cat-card .cat-label {
   font-size: 7.5px;
