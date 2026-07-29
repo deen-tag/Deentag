@@ -1,16 +1,17 @@
 /* ==========================================================================
-   ANNEAUX 3D — invocations.html
+   ARCS OVALES — invocations.html
    Amélioration progressive : transforme chaque .cat-grid (grille 2 colonnes
    existante, avec les vraies .cat-card / images / onclick="openSheet(...)")
-   en anneau 3D. N'invente aucune donnée : déplace les noeuds DOM existants,
-   ne les recrée pas — labels multilingues (.lang-block) et openSheet()
-   restent intacts sans rien toucher à app.js / duas.js.
+   en arc ovale aplati. N'invente aucune donnée : déplace les noeuds DOM
+   existants, ne les recrée pas — labels multilingues (.lang-block) et
+   openSheet() restent intacts sans rien toucher à app.js / duas.js.
 
    Comportement :
-   - glisser horizontalement sur un anneau le fait tourner (avec inertie
-     légère + alignement sur l'icône la plus proche au relâchement)
-   - un tap net (sans glissement) ouvre la bottom sheet existante
-   - en scrollant la page, l'anneau le plus proche du centre de l'écran
+   - glisser horizontalement sur un arc le fait tourner (avec alignement sur
+     l'icône la plus proche au relâchement)
+   - taper sur une carte qui n'est pas au centre la ramène au centre
+   - taper sur la carte déjà au centre ouvre la bottom sheet existante
+   - en scrollant la page, l'arc le plus proche du centre de l'écran
      grossit, les autres rétrécissent — et le chip actif (.section-chip) se
      met à jour en conséquence
    ========================================================================== */
@@ -18,7 +19,7 @@
   if (!('IntersectionObserver' in window)) return; // même garde-fou que hscroll.js
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  var wheels = []; // état de chaque anneau
+  var wheels = []; // état de chaque arc
 
   function buildWheel(section) {
     var grid = section.querySelector('.cat-grid');
@@ -29,31 +30,28 @@
     if (!cards.length) return null;
 
     var stage = document.createElement('div');
-    stage.className = 'ring-stage';
-    var ringWrap = document.createElement('div');
-    ringWrap.className = 'ring-wrap';
-    var dial = document.createElement('div');
-    dial.className = 'dial';
+    stage.className = 'orbit-stage';
     var ring = document.createElement('div');
-    ring.className = 'ring';
+    ring.className = 'orbit-ring';
 
     var n = cards.length;
     var step = 360 / n;
-    var radius = Math.round(84 + (n - 1) * 9); // plus il y a d'icônes, plus l'anneau est large
+    // Ovale aplati : plus large que haut, s'élargit un peu avec le nombre d'icônes.
+    var rx = Math.round(58 + (n - 1) * 13);
+    var ry = Math.round(rx * 0.5);
+    stage.dataset.rx = String(rx);
+    stage.dataset.ry = String(ry);
 
     cards.forEach(function (card, i) {
       var angle = i * step;
       var item = document.createElement('div');
       item.className = 'item';
       item.dataset.angle = String(angle);
-      item.style.transform = 'rotateY(' + angle + 'deg) translateZ(' + radius + 'px)';
       item.appendChild(card); // déplace la vraie carte (image + onclick + labels), ne la clone pas
       ring.appendChild(item);
     });
 
-    ringWrap.appendChild(dial);
-    ringWrap.appendChild(ring);
-    stage.appendChild(ringWrap);
+    stage.appendChild(ring);
     grid.replaceWith(stage);
 
     return {
@@ -62,37 +60,45 @@
       ring: ring,
       items: Array.prototype.slice.call(ring.children),
       n: n,
+      rx: rx,
+      ry: ry,
       angle: 0,
       dragging: false,
       moved: 0,
       startX: 0,
       startAngle: 0,
       animId: null,
-      suppressClick: false
+      suppressClick: false,
+      frontIndex: 0
     };
   }
 
   function renderRing(w) {
-    // L'axe tourne réellement : chaque carte reste fixée à son emplacement
-    // sur l'anneau (comme sur un manège) au lieu de pivoter sur elle-même.
-    w.ring.style.transform = 'rotateY(' + w.angle + 'deg)';
-    w.items.forEach(function (item) {
+    var bestDepth = -2, frontIdx = 0;
+    w.items.forEach(function (item, i) {
       var base = parseFloat(item.dataset.angle);
-      var total = (base + w.angle) % 360;
+      var total = base + w.angle;
       var rad = (total * Math.PI) / 180;
-      var depth = Math.cos(rad); // 1 = face caméra, -1 = arrière
-      var op = 0.35 + 0.65 * ((depth + 1) / 2);
-      var card = item.firstElementChild;
-      if (!card) return;
-      card.style.opacity = String(op);
+      var depth = Math.cos(rad); // 1 = avant/centre, -1 = arrière
+      var x = Math.sin(rad) * w.rx;
+      var y = depth * w.ry; // avant en bas, arrière en haut (comme le modèle de référence)
+      var scale = 0.55 + 0.6 * ((depth + 1) / 2);
+      var op = 0.32 + 0.68 * ((depth + 1) / 2);
+      item.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')';
+      item.style.opacity = String(op);
       item.style.zIndex = String(Math.round((depth + 1) * 100));
+      if (depth > bestDepth) { bestDepth = depth; frontIdx = i; }
     });
+    w.items.forEach(function (item, i) {
+      item.classList.toggle('is-front', i === frontIdx);
+    });
+    w.frontIndex = frontIdx;
   }
 
   function animateTo(w, target) {
     if (w.animId) cancelAnimationFrame(w.animId);
     if (reduceMotion) { w.angle = target; renderRing(w); return; }
-    var from = w.angle, diff = target - from, dur = 260, t0 = performance.now();
+    var from = w.angle, diff = target - from, dur = 300, t0 = performance.now();
     function step(t) {
       var p = Math.min(1, (t - t0) / dur);
       var ease = 1 - Math.pow(1 - p, 3);
@@ -107,6 +113,15 @@
     var step = 360 / w.n;
     var target = Math.round(w.angle / step) * step;
     animateTo(w, target);
+  }
+
+  // Ramène la carte d'index i au centre (avant), par le chemin le plus court.
+  function selectIndex(w, i) {
+    var step = 360 / w.n;
+    var base = i * step;
+    var wanted = -base; // angle qui annule base + angle = 0
+    var diff = ((wanted - w.angle + 540) % 360) - 180;
+    animateTo(w, w.angle + diff);
   }
 
   function attachDrag(w) {
@@ -136,13 +151,25 @@
     }
     stage.addEventListener('pointerup', up);
     stage.addEventListener('pointercancel', up);
-    // Capture-phase : intercepte le clic natif de la .cat-card si on vient de glisser
+    // Capture-phase : intercepte le clic natif de la .cat-card
     stage.addEventListener('click', function (e) {
       if (w.suppressClick) {
         e.stopPropagation();
         e.preventDefault();
         w.suppressClick = false;
+        return;
       }
+      var item = e.target.closest ? e.target.closest('.item') : null;
+      if (!item) return;
+      var idx = w.items.indexOf(item);
+      if (idx === -1) return;
+      if (idx !== w.frontIndex) {
+        // Pas encore au centre : on l'y amène, on n'ouvre pas la sheet cette fois-ci.
+        e.stopPropagation();
+        e.preventDefault();
+        selectIndex(w, idx);
+      }
+      // Si idx === w.frontIndex, on laisse le clic natif ouvrir openSheet(...).
     }, true);
   }
 
