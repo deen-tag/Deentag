@@ -369,11 +369,12 @@
       }
     }
 
-    // Accueil : les 4 cartes de navigation (Invocations/Coran/Enfants/Boutique)
-    initStandaloneWheel(document.querySelector('.home-nav-grid'), 'cat-card');
-
-    // Coran : les 5 cartes de navigation
-    initStandaloneWheel(document.getElementById('quranNavGrid'), 'qnav-card');
+    // Accueil et Coran : retour à une grille statique classique (plus de
+    // roue interactive ici, cf. discussion — gardé uniquement pour
+    // Invocations, seule page où le nombre d'icônes justifie de faire
+    // défiler). Les deux lignes ci-dessous restent commentées volontairement.
+    // initStandaloneWheel(document.querySelector('.home-nav-grid'), 'cat-card');
+    // initStandaloneWheel(document.getElementById('quranNavGrid'), 'qnav-card');
   }
 
   if (document.readyState === 'loading') {
