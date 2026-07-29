@@ -100,6 +100,48 @@
   color: var(--gold);
 }
 
+/* Meme principe pour les .qnav-card de quran.html : la structure differe
+   (watermark, sous-titre en plus) donc les regles sont adaptees, mais
+   l'esprit est identique : pas de cadre, image + label mis en valeur. */
+.item .qnav-card {
+  position: absolute;
+  left: -50px;
+  top: -73px;
+  width: 100px;
+  height: 146px;
+  margin: 0;
+  padding: 6px 4px 4px;
+  gap: 3px;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  overflow: visible;
+  transition: transform 0.25s ease;
+}
+.item .qnav-card .qnav-icon {
+  height: 64px;
+  flex: 0 0 64px;
+}
+.item .qnav-card .qnav-icon .qnav-img {
+  max-height: 56px;
+  transition: filter 0.25s ease;
+}
+.item .qnav-card .qnav-label {
+  font-size: 7px;
+  padding: 3px 6px;
+  letter-spacing: 0.05em;
+  min-height: 28px;
+}
+.item .qnav-card .qnav-sub {
+  display: none; /* pas la place sur l'arc : le sous-titre reste dans la bottom sheet */
+}
+.item.is-front .qnav-card .qnav-icon .qnav-img {
+  filter: drop-shadow(0 0 10px rgba(var(--gold-rgb), 0.40)) drop-shadow(0 4px 8px rgba(90, 65, 10, 0.15));
+}
+.item.is-front .qnav-card .qnav-label {
+  color: var(--gold);
+}
+
 /* Pulse + glow quand une carte arrive au centre */
 @keyframes frontPulse {
   0% { transform: scale(1); }
@@ -156,7 +198,8 @@
 @media (prefers-reduced-motion: reduce) {
   .cat-pager--wheel .cat-section,
   .item,
-  .item .cat-card {
+  .item .cat-card,
+  .item .qnav-card {
     transition: none !important;
   }
   .item.is-front.is-pulsing .cat-card,
