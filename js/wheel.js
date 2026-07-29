@@ -83,7 +83,7 @@
       var x = Math.sin(rad) * w.rx;
       var y = depth * w.ry; // avant en bas, arrière en haut (comme le modèle de référence)
       var scale = 0.60 + 0.55 * ((depth + 1) / 2);
-      var op = 0.12 + 0.88 * ((depth + 1) / 2);
+      var op = 0.75 + 0.25 * ((depth + 1) / 2);
       item.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')';
       item.style.opacity = String(op);
       item.style.zIndex = String(Math.round((depth + 1) * 100));
