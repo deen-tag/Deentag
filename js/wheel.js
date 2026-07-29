@@ -80,7 +80,6 @@
     // autonomes d'Accueil et Coran (buildGridWheel, sans w.section) gardent
     // l'ancien rendu simple : ne pas les modifier ici.
     var skewed = !!w.section;
-    var maxTilt = 5; // Accueil/Coran : inclinaison discrète, "premium", pas tordue (ne concerne pas Invocations, cf. ci-dessous)
     w.items.forEach(function (item, i) {
       var base = parseFloat(item.dataset.angle);
       var total = base + w.angle;
@@ -88,12 +87,13 @@
       var depth = Math.cos(rad); // 1 = avant/centre, -1 = arrière
       var x = Math.sin(rad) * w.rx;
       var y = depth * w.ry; // avant en bas, arrière en haut (comme le modèle de référence)
-      // Invocations (skewed) : aucune inclinaison. Accueil/Coran : légère
-      // inclinaison selon la position latérale (0 au centre).
-      var tilt = (!skewed && w.rx) ? (x / w.rx) * maxTilt : 0;
-      var scale = skewed ? (0.60 + 0.55 * ((depth + 1) / 2)) : (0.55 + 0.6 * ((depth + 1) / 2));
-      var op = skewed ? (0.75 + 0.25 * ((depth + 1) / 2)) : (0.32 + 0.68 * ((depth + 1) / 2));
-      item.style.transform = 'translate(' + x + 'px,' + y + 'px) rotate(' + tilt.toFixed(2) + 'deg) scale(' + scale + ')';
+      // Invocations (skewed) garde l'effet de profondeur (cartes qui
+      // grossissent/s'estompent). Accueil/Coran : vue plate, de face, comme
+      // une horloge — toutes les cartes ont la même taille et opacité, sans
+      // inclinaison, seule leur position tourne sur le cercle.
+      var scale = skewed ? (0.60 + 0.55 * ((depth + 1) / 2)) : 1;
+      var op = skewed ? (0.75 + 0.25 * ((depth + 1) / 2)) : 1;
+      item.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')';
       item.style.opacity = String(op);
       item.style.zIndex = String(Math.round((depth + 1) * 100));
       if (depth > bestDepth) { bestDepth = depth; frontIdx = i; }
@@ -182,9 +182,9 @@
       var idx = w.items.indexOf(item);
       if (idx === -1) return;
       if (idx !== w.frontIndex) {
-        // Pas encore au centre : on l'y amène, on n'ouvre pas la sheet cette fois-ci.
-        e.stopPropagation();
-        e.preventDefault();
+        // On centre quand même la carte cliquée (cohérence visuelle : elle
+        // devient "l'avant"), mais sans bloquer l'ouverture de la sheet —
+        // le clic natif sur la .cat-card (onclick="openSheet(...)") continue.
         selectIndex(w, idx);
       }
       // Si idx === w.frontIndex, on laisse le clic natif ouvrir openSheet(...).
