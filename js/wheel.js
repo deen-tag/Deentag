@@ -80,27 +80,17 @@
     // autonomes d'Accueil et Coran (buildGridWheel, sans w.section) gardent
     // l'ancien rendu simple : ne pas les modifier ici.
     var skewed = !!w.section;
-    var shear = 0.55;      // vue en biais (Invocations uniquement) : le fond se décale sur le côté
-    var maxTilt = skewed ? 9 : 5; // Accueil/Coran : inclinaison plus discrète, "premium", pas tordue
+    var maxTilt = 5; // Accueil/Coran : inclinaison discrète, "premium", pas tordue (ne concerne pas Invocations, cf. ci-dessous)
     w.items.forEach(function (item, i) {
       var base = parseFloat(item.dataset.angle);
       var total = base + w.angle;
       var rad = (total * Math.PI) / 180;
       var depth = Math.cos(rad); // 1 = avant/centre, -1 = arrière
-      var xRaw = Math.sin(rad) * w.rx;
+      var x = Math.sin(rad) * w.rx;
       var y = depth * w.ry; // avant en bas, arrière en haut (comme le modèle de référence)
-      var x = xRaw;
-      if (skewed) {
-        // Le décalage latéral supplémentaire ne s'applique qu'en s'éloignant de l'avant
-        // (0 au centre, maximal à l'arrière) : la carte centrale reste bien droite et
-        // centrée, seules celles qui reculent se décalent réellement sur le côté.
-        var shearFactor = (1 - depth) / 2;
-        x = xRaw + y * shear * shearFactor;
-      }
-      // Sur Accueil/Coran, x = xRaw (pas de décalage) : la carte du fond, à
-      // x=0, reste donc parfaitement symétrique et centrée — seules les
-      // cartes sur les côtés (x != 0) penchent légèrement.
-      var tilt = w.rx ? (x / w.rx) * maxTilt : 0;
+      // Invocations (skewed) : aucune inclinaison. Accueil/Coran : légère
+      // inclinaison selon la position latérale (0 au centre).
+      var tilt = (!skewed && w.rx) ? (x / w.rx) * maxTilt : 0;
       var scale = skewed ? (0.60 + 0.55 * ((depth + 1) / 2)) : (0.55 + 0.6 * ((depth + 1) / 2));
       var op = skewed ? (0.75 + 0.25 * ((depth + 1) / 2)) : (0.32 + 0.68 * ((depth + 1) / 2));
       item.style.transform = 'translate(' + x + 'px,' + y + 'px) rotate(' + tilt.toFixed(2) + 'deg) scale(' + scale + ')';
