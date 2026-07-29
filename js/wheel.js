@@ -59,6 +59,7 @@
     return {
       section: section,
       stage: stage,
+      ring: ring,
       items: Array.prototype.slice.call(ring.children),
       n: n,
       angle: 0,
@@ -72,16 +73,17 @@
   }
 
   function renderRing(w) {
+    // L'axe tourne réellement : chaque carte reste fixée à son emplacement
+    // sur l'anneau (comme sur un manège) au lieu de pivoter sur elle-même.
+    w.ring.style.transform = 'rotateY(' + w.angle + 'deg)';
     w.items.forEach(function (item) {
       var base = parseFloat(item.dataset.angle);
       var total = (base + w.angle) % 360;
       var rad = (total * Math.PI) / 180;
       var depth = Math.cos(rad); // 1 = face caméra, -1 = arrière
-      var scale = 0.6 + 0.42 * ((depth + 1) / 2);
-      var op = 0.22 + 0.78 * ((depth + 1) / 2);
+      var op = 0.35 + 0.65 * ((depth + 1) / 2);
       var card = item.firstElementChild;
       if (!card) return;
-      card.style.transform = 'rotateY(' + -total + 'deg) scale(' + scale + ')';
       card.style.opacity = String(op);
       item.style.zIndex = String(Math.round((depth + 1) * 100));
     });
