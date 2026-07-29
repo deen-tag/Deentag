@@ -16,7 +16,7 @@
      met à jour en conséquence
    ========================================================================== */
 (function () {
-  if (!('IntersectionObserver' in window)) return; // même garde-fou que hscroll.js
+  if (!('IntersectionObserver' in window)) return; // garde-fou navigateurs anciens
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var wheels = []; // état de chaque arc
