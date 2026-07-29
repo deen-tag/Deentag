@@ -272,33 +272,97 @@
     }, 1400);
   }
 
-  function init() {
-    var pager = document.getElementById('catPager');
-    if (!pager) return;
-    pager.classList.add('cat-pager--wheel');
+  // Version generique : transforme n'importe quelle grille de cartes (pas
+  // seulement les .cat-section d'invocations.html) en roue autonome, a
+  // taille fixe (pas de mise a l'echelle liee au scroll, il n'y a qu'une
+  // seule roue sur ces pages).
+  function buildGridWheel(grid, cardClass) {
+    var cards = Array.prototype.slice.call(grid.children).filter(function (c) {
+      return c.classList.contains(cardClass);
+    });
+    if (!cards.length) return null;
 
-    var firstWheel = null;
-    Array.prototype.slice.call(pager.querySelectorAll('.cat-section')).forEach(function (section, index) {
-      var w = buildWheel(section);
-      if (!w) return;
-      renderRing(w);
-      attachDrag(w);
-      wheels.push(w);
-      if (index === 0) firstWheel = w;
+    var stage = document.createElement('div');
+    stage.className = 'orbit-stage';
+    var ring = document.createElement('div');
+    ring.className = 'orbit-ring';
+
+    var n = cards.length;
+    var step = 360 / n;
+    var rx = Math.round(58 + (n - 1) * 13);
+    var ry = Math.round(rx * 0.45);
+    stage.dataset.rx = String(rx);
+    stage.dataset.ry = String(ry);
+
+    cards.forEach(function (card, i) {
+      var angle = i * step;
+      var item = document.createElement('div');
+      item.className = 'item';
+      item.dataset.angle = String(angle);
+      item.appendChild(card);
+      ring.appendChild(item);
     });
 
-    if (!wheels.length) return;
+    stage.appendChild(ring);
+    grid.replaceWith(stage);
 
-    if (firstWheel && !reduceMotion) {
+    return {
+      stage: stage,
+      ring: ring,
+      items: Array.prototype.slice.call(ring.children),
+      n: n, rx: rx, ry: ry, angle: 0,
+      dragging: false, moved: 0, startX: 0, startAngle: 0,
+      animId: null, suppressClick: false, frontIndex: 0
+    };
+  }
+
+  function initStandaloneWheel(grid, cardClass) {
+    if (!grid) return;
+    var w = buildGridWheel(grid, cardClass);
+    if (!w) return;
+    renderRing(w);
+    attachDrag(w);
+    if (!reduceMotion) {
       setTimeout(function () {
-        showInviteAnimation(firstWheel);
-        showSwipeHint(firstWheel);
+        showInviteAnimation(w);
+        showSwipeHint(w);
       }, 500);
     }
+  }
 
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    updateScales();
+  function init() {
+    var pager = document.getElementById('catPager');
+    if (pager) {
+      pager.classList.add('cat-pager--wheel');
+
+      var firstWheel = null;
+      Array.prototype.slice.call(pager.querySelectorAll('.cat-section')).forEach(function (section, index) {
+        var w = buildWheel(section);
+        if (!w) return;
+        renderRing(w);
+        attachDrag(w);
+        wheels.push(w);
+        if (index === 0) firstWheel = w;
+      });
+
+      if (wheels.length) {
+        if (firstWheel && !reduceMotion) {
+          setTimeout(function () {
+            showInviteAnimation(firstWheel);
+            showSwipeHint(firstWheel);
+          }, 500);
+        }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        updateScales();
+      }
+    }
+
+    // Accueil : les 4 cartes de navigation (Invocations/Coran/Enfants/Boutique)
+    initStandaloneWheel(document.querySelector('.home-nav-grid'), 'cat-card');
+
+    // Coran : les 5 cartes de navigation
+    initStandaloneWheel(document.getElementById('quranNavGrid'), 'qnav-card');
   }
 
   if (document.readyState === 'loading') {
