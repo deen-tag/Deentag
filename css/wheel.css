@@ -32,7 +32,7 @@
   position: static;
   background: none;
   backdrop-filter: none;
-  padding: 10px 14px 2px;
+  padding: 14px 14px 12px;
 }
 
 /* ===== Scène ovale (2D, sans perspective) ===== */
@@ -88,12 +88,13 @@
 }
 .item .cat-card .cat-icon-circle .cat-icon {
   max-height: 78px;
-  transition: filter 0.25s ease;
+  transition: filter 0.25s ease, max-height 0.25s ease;
 }
 
 /* Carte actuellement au centre (avant de l'arc) : le halo doré se pose sur
    l'image elle-même, plus sur un cadre rectangulaire. */
 .item.is-front .cat-card .cat-icon-circle .cat-icon {
+  max-height: 92px;
   filter: drop-shadow(0 0 10px rgba(var(--gold-rgb), 0.40)) drop-shadow(0 4px 8px rgba(90, 65, 10, 0.15));
 }
 .item.is-front .cat-card .cat-label {
@@ -124,7 +125,7 @@
 }
 .item .qnav-card .qnav-icon .qnav-img {
   max-height: 56px;
-  transition: filter 0.25s ease;
+  transition: filter 0.25s ease, max-height 0.25s ease;
 }
 .item .qnav-card .qnav-label {
   font-size: 7px;
@@ -136,6 +137,7 @@
   display: none; /* pas la place sur l'arc : le sous-titre reste dans la bottom sheet */
 }
 .item.is-front .qnav-card .qnav-icon .qnav-img {
+  max-height: 66px;
   filter: drop-shadow(0 0 10px rgba(var(--gold-rgb), 0.40)) drop-shadow(0 4px 8px rgba(90, 65, 10, 0.15));
 }
 .item.is-front .qnav-card .qnav-label {
@@ -183,17 +185,8 @@
   50% { opacity: 0.9; transform: translateY(-50%) scale(1.1); }
 }
 
-/* Petite rotation d'invitation sur le premier arc */
-@keyframes firstArcInvite {
-  0% { transform: rotate(0deg); }
-  40% { transform: rotate(8deg); }
-  60% { transform: rotate(-4deg); }
-  80% { transform: rotate(2deg); }
-  100% { transform: rotate(0deg); }
-}
-.orbit-stage.invite .orbit-ring {
-  animation: firstArcInvite 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-}
+/* Petite rotation d'invitation sur le premier arc : supprimée (effet jugé
+   gadget / balancement inutile). Il ne reste que les flèches swipe-hint. */
 
 @media (prefers-reduced-motion: reduce) {
   .cat-pager--wheel .cat-section,
@@ -203,8 +196,7 @@
     transition: none !important;
   }
   .item.is-front.is-pulsing .cat-card,
-  .item.is-front.is-pulsing .cat-card .cat-icon-circle .cat-icon,
-  .orbit-stage.invite .orbit-ring {
+  .item.is-front.is-pulsing .cat-card .cat-icon-circle .cat-icon {
     animation: none;
   }
 }
