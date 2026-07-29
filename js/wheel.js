@@ -284,15 +284,15 @@
     if (!cards.length) return null;
 
     var stage = document.createElement('div');
-    stage.className = 'orbit-stage';
+    stage.className = 'orbit-stage orbit-stage--nav';
     var ring = document.createElement('div');
     ring.className = 'orbit-ring';
 
     var n = cards.length;
     var step = 360 / n;
-    // Rayon compact (4-5 cartes seulement, pas besoin de la croissance prévue
-    // pour Invocations qui doit accueillir jusqu'à ~10 icônes).
-    var rx = Math.round(50 + (n - 1) * 8);
+    // Rayon agrandi (cartes plus grandes ci-dessous, il faut plus d'espace
+    // entre elles pour ne pas qu'elles se chevauchent).
+    var rx = Math.round(65 + (n - 1) * 10);
     // Contrairement au tourniquet Invocations (ovale aplati pour gagner de la
     // hauteur), ici on veut un vrai cercle qui tourne "comme une horloge" :
     // pas besoin d'économiser de la hauteur sur Accueil/Coran.
@@ -302,9 +302,9 @@
     // Le conteneur .orbit-stage (190px fixes en CSS) est calé sur l'ancien
     // ovale aplati : avec un vrai cercle il faut plus de hauteur pour que
     // rien ne soit rogné en haut/bas, calculée ici selon le rayon et la
-    // taille max de carte (front, scale ~1.15).
-    var cardHalf = cardClass === 'qnav-card' ? 73 : 68;
-    var neededHeight = Math.round(ry * 2 + cardHalf * 1.15 * 2 + 16);
+    // taille de carte (marge de sécurité pour le petit pulse d'arrivée).
+    var cardHalf = cardClass === 'qnav-card' ? 88 : 82;
+    var neededHeight = Math.round(ry * 2 + cardHalf * 1.1 * 2 + 16);
     stage.style.height = neededHeight + 'px';
 
     cards.forEach(function (card, i) {
