@@ -81,6 +81,15 @@
 .item .cat-card::before {
   display: none; /* liseré doré + reflets de coin du modèle "carte" : inutile ici */
 }
+/* body.night .cat-card (adult.css) est plus spécifique que .item .cat-card
+   a cause de l'element "body" dans son selecteur : sans cette regle, le
+   cadre (fond/bordure/ombre) revenait en theme nuit alors qu'il avait bien
+   disparu en theme jour. On la neutralise explicitement ici. */
+body.night .item .cat-card {
+  background: none;
+  border: none;
+  box-shadow: none;
+}
 .item .cat-card .cat-label {
   font-size: 7.5px;
   padding: 3px 6px;
@@ -118,6 +127,11 @@
   border-radius: 0;
   overflow: visible;
   transition: transform 0.25s ease;
+}
+body.night .item .qnav-card {
+  background: none;
+  border: none;
+  box-shadow: none;
 }
 .item .qnav-card .qnav-icon {
   height: 64px;
