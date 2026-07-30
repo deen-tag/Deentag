@@ -2483,6 +2483,17 @@ body.night .cat-card.cat-highlight {
   display:grid; grid-template-columns:1fr 1fr;
   gap:10px; padding:12px 14px 20px;
 }
+/* Section à 2 cartes seulement (ex. Circonstances) : pas de roulette, elles
+   restent simplement côte à côte, sans cadre, cohérent avec le style
+   "premium" du reste du site. */
+.cat-grid--static-pair .cat-card {
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+.cat-grid--static-pair .cat-card::before {
+  display: none;
+}
 
 
 
