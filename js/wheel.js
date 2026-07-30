@@ -28,6 +28,14 @@
       return c.classList.contains('cat-card');
     });
     if (!cards.length) return null;
+    if (cards.length <= 2) {
+      // Pas assez de cartes pour justifier une roulette : elles tiennent
+      // déjà toutes à l'écran côte à côte, donc on garde la grille statique
+      // d'origine (.cat-grid, 2 colonnes) et on retire juste le cadre pour
+      // rester cohérent avec le style "premium" du reste du site.
+      grid.classList.add('cat-grid--static-pair');
+      return null;
+    }
 
     var stage = document.createElement('div');
     stage.className = 'orbit-stage';
@@ -38,9 +46,19 @@
     var step = 360 / n;
     // Ovale aplati : plus large que haut, s'élargit un peu avec le nombre d'icônes.
     var rx = Math.round(58 + (n - 1) * 13);
-    var ry = Math.round(rx * 0.45);
+    // Rayon vertical agrandi (0.58 au lieu de 0.45, compromis modéré) : les
+    // cartes à l'arrière de l'arc se séparent davantage de la carte centrale
+    // pour réduire le chevauchement, sans réduire leur taille ni leur
+    // opacité (cf. discussion).
+    var ry = Math.round(rx * 0.58);
     stage.dataset.rx = String(rx);
     stage.dataset.ry = String(ry);
+    // La hauteur fixe (190px, définie dans wheel.css) ne suffit plus avec un
+    // ry agrandi : recalculée ici par roulette pour que rien ne déborde sur
+    // la section suivante (même logique que buildGridWheel).
+    var cardHalf = 68; // moitié de la hauteur d'une .cat-card (136px)
+    var neededHeight = Math.round(ry * 2 + cardHalf * 1.15 * 2 + 16);
+    stage.style.height = neededHeight + 'px';
 
     cards.forEach(function (card, i) {
       var angle = i * step;
