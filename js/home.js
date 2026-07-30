@@ -89,7 +89,8 @@
       textEl.textContent = 'Salam · ' + profile.name;
       if (dotEl) dotEl.style.background = profile.color || '#C9A84C';
     } else {
-      textEl.textContent = 'Salam · Crée ton profil';
+      var createProfileLabel = (window.DT.t ? window.DT.t('greetingCreateProfile') : 'Crée ton profil');
+      textEl.textContent = 'Salam · ' + createProfileLabel;
       if (dotEl) dotEl.style.background = '#C9A84C';
     }
   }
