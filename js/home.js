@@ -75,10 +75,39 @@
   }
 
   window.DT_refreshAccountCardLang = renderAccountCard;
+
+  // ── Badge "Salam · <prénom>" (sous le titre Accueil) ──
+  function renderGreeting() {
+    if (!window.DT) return;
+    var textEl = document.getElementById('homeGreetingText');
+    var dotEl  = document.getElementById('homeGreetingDot');
+    if (!textEl) return;
+
+    var profile = window.DT.getActiveProfile ? window.DT.getActiveProfile() : null;
+
+    if (profile && profile.name) {
+      textEl.textContent = 'Salam · ' + profile.name;
+      if (dotEl) dotEl.style.background = profile.color || '#C9A84C';
+    } else {
+      textEl.textContent = 'Salam · Crée ton profil';
+      if (dotEl) dotEl.style.background = '#C9A84C';
+    }
+  }
+
+  window.DT_refreshGreetingLang = renderGreeting;
+
   document.addEventListener('DOMContentLoaded', function () {
     // profiles.js s'initialise sur le même DOMContentLoaded : on laisse
     // un court délai pour être sûr que window.DT soit prêt.
     setTimeout(renderAccountCard, 50);
+    setTimeout(renderGreeting, 50);
+  });
+
+  // Rafraîchit dès qu'un profil est créé, modifié ou changé (profiles.js
+  // envoie cet événement après chaque sauvegarde/sélection de profil).
+  window.addEventListener('deentag:profileChanged', function () {
+    renderAccountCard();
+    renderGreeting();
   });
 
 })();
