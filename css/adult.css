@@ -2556,15 +2556,26 @@ body.night .cat-card.cat-highlight {
 }
 .resume-reading-arrow { flex-shrink:0; color:var(--gold); }
 
-/* ===== BADGE PROFIL (topbar accueil) ===== */
-.topbar-profile-btn {
-  display:inline-flex; align-items:center; justify-content:center;
-  background:none; border:none; padding:0; cursor:pointer;
-  -webkit-tap-highlight-color:transparent;
+/* ===== BADGE PROFIL (sous le titre Accueil) ===== */
+.home-greeting-btn {
+  display:flex; align-items:center; gap:8px;
+  margin:14px auto 0; padding:7px 18px;
+  border-radius:20px; border:1px solid rgba(var(--gold-rgb),0.5);
+  background:rgba(var(--gold-rgb),0.1);
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+  transition:transform 0.2s ease;
+  width:max-content;
 }
-.topbar-profile-btn:active { transform:scale(0.92); }
-.topbar-profile-avatar { width:24px; display:flex; align-items:center; }
-.topbar-profile-avatar svg { width:100%; height:auto; }
+.home-greeting-btn:active { transform:scale(0.96); }
+.home-greeting-dot {
+  width:8px; height:8px; border-radius:50%;
+  background:#C9A84C; flex-shrink:0;
+}
+.home-greeting-btn span:last-child {
+  font-family:'Cinzel',serif; font-size:11px; font-weight:600;
+  letter-spacing:0.08em; text-transform:uppercase; color:var(--gold);
+  white-space:nowrap;
+}
 
 /* ===== CARTES DE NAVIGATION (accueil) — rangée horizontale swipeable ===== */
 .home-nav-grid {
