@@ -2358,7 +2358,7 @@ body.day .inv-search-input::placeholder { opacity: 0.9; }
 body.night .inv-search-input { background:rgba(var(--gold-rgb),0.07); }
 .inv-search-results {
   display:none; position:absolute; left:14px; right:14px; top:calc(100% + 4px);
-  max-height:60vh; overflow-y:auto; z-index:60;
+  max-height:60vh; overflow-y:auto; z-index:70;
   background:var(--card-bg); border:1px solid rgba(var(--gold-rgb),0.3);
   border-radius:14px; box-shadow:0 12px 32px var(--shadow);
 }
@@ -2390,16 +2390,20 @@ body.night .inv-search-input { background:rgba(var(--gold-rgb),0.07); }
   top: 0;
   z-index: 60;
   display: flex;
-  gap: 8px;
-  padding: 10px 14px;
+  gap: 7px;
+  padding: 9px 14px;
   overflow-x: auto;
   scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+  scroll-padding: 0 14px;
   background: var(--bg-translucent);
   backdrop-filter: blur(18px) saturate(160%);
   -webkit-backdrop-filter: blur(18px) saturate(160%);
   border-bottom: 1px solid rgba(var(--gold-rgb),0.18);
-  -webkit-mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
-  mask-image: linear-gradient(to right, black calc(100% - 32px), transparent 100%);
+  /* Fondu des deux côtés : indique qu'il y a d'autres chips à glisser,
+     que ce soit à gauche ou à droite selon la position du scroll. */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, black 24px, black calc(100% - 24px), transparent 100%);
 }
 .section-nav::-webkit-scrollbar { display: none; }
 body.night .section-nav {
@@ -2414,16 +2418,17 @@ body.night .cat-section-header {
 }
 .section-chip {
   flex-shrink: 0;
+  scroll-snap-align: center;
   font-family: 'Cinzel', serif;
-  font-size: 12.5px;
+  font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--gold-dark);
   background: rgba(var(--gold-rgb),0.14);
   border: 1px solid rgba(var(--gold-rgb),0.40);
-  border-radius: 20px;
-  padding: 7px 14px;
+  border-radius: 18px;
+  padding: 6px 11px;
   white-space: nowrap;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
