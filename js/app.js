@@ -1157,6 +1157,16 @@ function jumpToSection(name) {
   pager.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
 }
 
+/* ===== ANCIEN SPY DE NAV (invocations) — DÉSACTIVÉ =====
+   Reliquat de l'ancien pager horizontal (root: pager, pager.scrollTo({left...})).
+   Depuis le passage à un scroll vertical, `#catPager` ne défile plus lui-même :
+   utiliser root: pager rendait quasi toutes les sections "intersectantes" dès
+   le chargement, et le callback finissait toujours par retomber sur la
+   dernière section ("Circonstances"), quel que soit le navigateur — écrasant
+   en boucle ce que wheel.js calculait correctement à partir du scroll réel.
+   wheel.js (updateScales / setActiveChip) reprend entièrement ce rôle pour
+   le nouveau layout : ce bloc reste commenté pour référence, ne pas
+   réactiver sans adapter root/threshold au nouveau scroll vertical.
 (function initSectionNavSpy() {
   const navBar = document.getElementById('sectionNav');
   const pager = document.getElementById('catPager');
@@ -1181,6 +1191,7 @@ function jumpToSection(name) {
 
   sections.forEach(s => io.observe(s));
 })();
+===== FIN DU BLOC DÉSACTIVÉ ===== */
 
 // ============================================================
 // RECHERCHE D'INVOCATIONS
