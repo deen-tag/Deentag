@@ -124,7 +124,7 @@
   }
 
   var GREETING_WORDS = {
-    fr: 'As-salāmou ʿaleykoum',
+    fr: "As-salāmou 'aleykoum",
     en: 'As-salamu alaykum',
     es: 'As-salamu alaikum',
     de: 'As-salamu alaikum',
