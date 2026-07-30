@@ -123,6 +123,7 @@ function applyLang(lang) {
   if (window.DT_refreshPrayerLang) window.DT_refreshPrayerLang();
   if (window.DT_refreshHomeWidgetLang) window.DT_refreshHomeWidgetLang();
   if (window.DT_refreshAccountCardLang) window.DT_refreshAccountCardLang();
+  if (window.DT_refreshGreetingLang) window.DT_refreshGreetingLang();
 }
 
 function setLang(lang) {
