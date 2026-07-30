@@ -57,7 +57,11 @@
     // ry agrandi : recalculée ici par roulette pour que rien ne déborde sur
     // la section suivante (même logique que buildGridWheel).
     var cardHalf = 68; // moitié de la hauteur d'une .cat-card (136px)
-    var neededHeight = Math.round(ry * 2 + cardHalf * 1.15 * 2 + 16);
+    // popOffset : décalage supplémentaire de la carte centrale, en plus de
+    // sa position normale sur l'ellipse — pour qu'elle se détache
+    // visuellement du reste des cartes (essai demandé par l'utilisateur).
+    var popOffset = 22;
+    var neededHeight = Math.round(ry * 2 + cardHalf * 1.15 * 2 + 16 + popOffset);
     stage.style.height = neededHeight + 'px';
 
     cards.forEach(function (card, i) {
@@ -68,6 +72,13 @@
       item.appendChild(card); // déplace la vraie carte (image + onclick + labels), ne la clone pas
       ring.appendChild(item);
     });
+
+    // Trait de séparation entre le groupe de petites cartes et la grande
+    // carte centrale, qui semble alors "sortir" du groupe.
+    var divider = document.createElement('div');
+    divider.className = 'orbit-divider';
+    divider.style.transform = 'translateY(' + Math.round(ry * 0.42) + 'px)';
+    ring.appendChild(divider);
 
     stage.appendChild(ring);
     grid.replaceWith(stage);
@@ -113,6 +124,17 @@
     // autonomes d'Accueil et Coran (buildGridWheel, sans w.section) gardent
     // l'ancien rendu simple : ne pas les modifier ici.
     var skewed = !!w.section;
+
+    // Premier passage : juste repérer quelle carte est à l'avant, avant de
+    // positionner quoi que ce soit (nécessaire pour lui appliquer un
+    // décalage supplémentaire au second passage).
+    w.items.forEach(function (item, i) {
+      var base = parseFloat(item.dataset.angle);
+      var total = base + w.angle;
+      var depth = Math.cos((total * Math.PI) / 180);
+      if (depth > bestDepth) { bestDepth = depth; frontIdx = i; }
+    });
+
     w.items.forEach(function (item, i) {
       var base = parseFloat(item.dataset.angle);
       var total = base + w.angle;
@@ -125,6 +147,13 @@
       // une horloge — toutes les cartes ont la même taille et opacité, sans
       // inclinaison, seule leur position tourne sur le cercle.
       var scale = skewed ? (0.60 + 0.55 * ((depth + 1) / 2)) : 1;
+      // La carte centrale se détache du groupe : décalage supplémentaire
+      // vers le bas + léger gain de taille, comme si elle était attirée
+      // hors du reste des cartes.
+      if (skewed && i === frontIdx) {
+        y += 22;
+        scale *= 1.05;
+      }
       item.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')';
       item.style.zIndex = String(Math.round((depth + 1) * 100));
       // Correctif lisibilité : on ne baisse plus l'opacité de la carte entière
@@ -135,7 +164,6 @@
         var iconEl = item.querySelector('.cat-icon-circle') || item.querySelector('.qnav-icon');
         if (iconEl) iconEl.style.opacity = String(iconOp);
       }
-      if (depth > bestDepth) { bestDepth = depth; frontIdx = i; }
     });
     w.items.forEach(function (item, i) {
       var isFront = i === frontIdx;
