@@ -2557,9 +2557,13 @@ body.night .cat-card.cat-highlight {
 .resume-reading-arrow { flex-shrink:0; color:var(--gold); }
 
 /* ===== BADGE PROFIL (sous le titre Accueil) ===== */
+.home-greeting-wrap {
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+  margin:14px auto 0; width:max-content; max-width:90vw;
+}
 .home-greeting-btn {
   display:flex; align-items:center; gap:8px;
-  margin:14px auto 0; padding:7px 18px;
+  margin:0; padding:7px 18px;
   border-radius:20px; border:1px solid rgba(var(--gold-rgb),0.5);
   background:rgba(var(--gold-rgb),0.1);
   cursor:pointer; -webkit-tap-highlight-color:transparent;
@@ -2571,11 +2575,18 @@ body.night .cat-card.cat-highlight {
   width:8px; height:8px; border-radius:50%;
   background:#C9A84C; flex-shrink:0;
 }
-.home-greeting-btn span:last-child {
+#homeGreetingText {
   font-family:'Cinzel',serif; font-size:11px; font-weight:600;
   letter-spacing:0.08em; text-transform:uppercase; color:var(--gold);
   white-space:nowrap;
 }
+.home-greeting-phrase {
+  font-family:'Cormorant Garamond',serif; font-style:italic; font-size:12px;
+  color:rgba(var(--gold-rgb),0.75); text-align:center;
+  max-width:280px; line-height:1.4;
+  display:none;
+}
+.home-greeting-phrase.visible { display:block; }
 
 /* ===== CARTES DE NAVIGATION (accueil) — rangée horizontale swipeable ===== */
 .home-nav-grid {
