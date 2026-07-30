@@ -366,7 +366,7 @@ body.night .cat-card:active {
 .cat-grid .cat-icon-circle .cat-icon { max-height:126px; }
 .cat-label {
   font-family:'Cinzel',serif; font-size:9px; font-weight:600;
-  letter-spacing:0.10em; color:var(--gold-dark); text-align:center;
+  letter-spacing:0.10em; color:var(--text3); text-align:center;
   text-transform:uppercase;
   flex-shrink:0;  background: rgba(255,255,255,0.92);
   border: 1px solid rgba(var(--gold-rgb),0.45);
