@@ -267,6 +267,14 @@
   var navBar = document.getElementById('sectionNav');
   var chips = navBar ? Array.prototype.slice.call(navBar.querySelectorAll('.section-chip')) : [];
   var currentActiveChip = null;
+  // Etat par défaut correct dès le départ (avant tout calcul basé sur le
+  // scroll) : évite qu'un chip incorrect (ex. le dernier de la liste)
+  // s'affiche actif une fraction de seconde si le tout premier calcul de
+  // position tourne avant que la mise en page (polices/images) soit stable.
+  if (chips.length) {
+    chips.forEach(function (c, i) { c.classList.toggle('active', i === 0); });
+    currentActiveChip = chips[0].getAttribute('data-jump');
+  }
 
   function setActiveChip(name) {
     if (name === currentActiveChip) return; // déjà actif, rien à refaire
@@ -475,6 +483,11 @@
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', onScroll);
         updateScales();
+        // Relance une fois toutes les ressources chargées (images, polices) :
+        // le tout premier calcul peut être basé sur une mise en page pas
+        // encore stabilisée, ce qui pouvait donner un chip actif incorrect
+        // au chargement.
+        window.addEventListener('load', updateScales);
       }
     }
 
