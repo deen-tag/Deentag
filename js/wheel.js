@@ -20,6 +20,7 @@
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var wheels = []; // état de chaque arc
+  var allSections = []; // TOUTES les .cat-section (roulettes + statiques comme "Circonstances")
 
   function buildWheel(section) {
     var grid = section.querySelector('.cat-grid');
@@ -300,8 +301,10 @@
     var vh = window.innerHeight;
     var anchorY = vh * 0.42; // légèrement au-dessus du centre, sous la recherche/chips sticky
     var maxDist = vh * 0.6;
-    var bestT = -1, focused = null;
 
+    // Effet zoom/opacité au scroll : réservé aux vraies roulettes (celles
+    // qui ont un .orbit-stage). Les sections restées statiques (ex.
+    // "Circonstances", 2 cartes) n'ont pas ce comportement, volontairement.
     wheels.forEach(function (w) {
       var r = w.stage.getBoundingClientRect();
       var center = r.top + r.height / 2;
@@ -312,7 +315,19 @@
       w.section.style.transform = 'scale(' + scale + ')';
       w.section.style.opacity = String(opacity);
       w.section.style.zIndex = String(Math.round(t * 100));
-      if (t > bestT) { bestT = t; focused = w.section.getAttribute('data-section'); }
+    });
+
+    // Chip actif : calculé sur TOUTES les sections (roulettes + statiques),
+    // sinon une section exclue de `wheels` (comme "Circonstances") ne peut
+    // jamais être détectée comme celle actuellement à l'écran, même quand
+    // elle occupe tout le viewport.
+    var bestT = -1, focused = null;
+    allSections.forEach(function (section) {
+      var r = section.getBoundingClientRect();
+      var center = r.top + r.height / 2;
+      var dist = Math.abs(center - anchorY);
+      var t = Math.max(0, 1 - dist / maxDist);
+      if (t > bestT) { bestT = t; focused = section.getAttribute('data-section'); }
     });
 
     if (focused) setActiveChip(focused);
@@ -449,7 +464,8 @@
     if (pager) {
       pager.classList.add('cat-pager--wheel');
 
-      Array.prototype.slice.call(pager.querySelectorAll('.cat-section')).forEach(function (section) {
+      allSections = Array.prototype.slice.call(pager.querySelectorAll('.cat-section'));
+      allSections.forEach(function (section) {
         var w = buildWheel(section);
         if (!w) return;
         renderRing(w);
