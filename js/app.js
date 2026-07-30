@@ -1209,7 +1209,7 @@ function handleInvSearch(query) {
       const item = catData[accId];
       const titre = item.titre ? (item.titre[lang] || item.titre.fr || '') : '';
       const traduction = (!item.sunnah && item.traduction) ? (item.traduction[lang] || item.traduction.fr || '') : '';
-      const haystack = normalizeSearch(titre + ' ' + traduction);
+      const haystack = normalizeSearch(catTitle + ' ' + titre + ' ' + traduction);
       if (haystack.indexOf(q) !== -1) {
         results.push({ cat, accId, titre, catTitle });
       }
