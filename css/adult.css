@@ -382,7 +382,7 @@ body.night .cat-card {
   box-shadow: 0 1px 2px rgba(0,0,0,0.25), 0 6px 16px rgba(0,0,0,0.22);
 }
 body.night .cat-label {
-  color: var(--gold-light);
+  color: var(--text3);
   background: rgba(5,14,18,0.85);
   border-color: rgba(221,176,92,0.30);
 }
@@ -2087,10 +2087,10 @@ body.night .dua-close-btn:active {
 /* Repere de section sobre, sous le logo - police principale (pas la police du logo), sans emoji/cadre */
 .section-title {
   font-family:'Cormorant Garamond',serif; font-weight:600;
-  font-size:18px; color:var(--gold-dark); text-align:center;
+  font-size:18px; color:var(--text2); text-align:center;
   margin-bottom:8px; letter-spacing:0.01em; line-height:1.2;
 }
-body.night .section-title { color:var(--gold); }
+body.night .section-title { color:var(--text2); }
 
 /* ===== JAUGE HORAIRES DE PRIÈRE ===== */
 .prayer-gauge {
