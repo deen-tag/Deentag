@@ -230,7 +230,7 @@
   function loadProfiles() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e) { return []; } }
   function saveProfiles(p) { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
   function getActiveId()   { return localStorage.getItem(ACTIVE_KEY) || null; }
-  function setActiveId(id) { localStorage.setItem(ACTIVE_KEY, id); }
+  function setActiveId(id) { if (id) localStorage.setItem(ACTIVE_KEY, id); else localStorage.removeItem(ACTIVE_KEY); }
   function getActiveProfile() {
     var id = getActiveId(); var profiles = loadProfiles();
     return profiles.find(function(p){ return p.id === id; }) || profiles[0] || null;
@@ -1069,10 +1069,14 @@
     showConfirmDialog(t('confirmDelete'), msg, function() {
       var profiles = loadProfiles().filter(function(p){ return p.id !== id; });
       saveProfiles(profiles);
-      if (getActiveId() === id) setActiveId(profiles.length ? profiles[0].id : null);
+      var wasActive = getActiveId() === id;
+      if (wasActive) setActiveId(profiles.length ? profiles[0].id : null);
       localStorage.removeItem(progressKey(id));
       updateTabbarAvatar();
       openProfileModal();
+      if (wasActive) {
+        window.dispatchEvent(new CustomEvent('deentag:profileChanged', { detail:{ id: getActiveId() } }));
+      }
     });
   };
   window.DT.selectProfile = function(id) {
