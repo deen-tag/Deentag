@@ -238,11 +238,24 @@
   /* ===== Effet d'agrandissement au scroll + chip actif ===== */
   var navBar = document.getElementById('sectionNav');
   var chips = navBar ? Array.prototype.slice.call(navBar.querySelectorAll('.section-chip')) : [];
+  var currentActiveChip = null;
 
   function setActiveChip(name) {
+    if (name === currentActiveChip) return; // déjà actif, rien à refaire
+    currentActiveChip = name;
+    var target = null;
     chips.forEach(function (c) {
-      c.classList.toggle('active', c.getAttribute('data-jump') === name);
+      var isActive = c.getAttribute('data-jump') === name;
+      c.classList.toggle('active', isActive);
+      if (isActive) target = c;
     });
+    // Fait défiler la barre de chips elle-même pour que le chip actif soit
+    // toujours visible, sans que l'utilisateur ait à la glisser à la main.
+    if (target && !reduceMotion) {
+      target.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+    } else if (target) {
+      target.scrollIntoView({ behavior: 'auto', inline: 'center', block: 'nearest' });
+    }
   }
 
   var ticking = false;
@@ -272,6 +285,15 @@
   function onScroll() {
     if (!ticking) { ticking = true; requestAnimationFrame(updateScales); }
   }
+
+  // Surligne le chip cliqué immédiatement, sans attendre que le scroll (qui
+  // est encore en cours d'animation vers la section) le détecte tout seul —
+  // évite le petit flottement/délai avant que le bon chip s'allume.
+  chips.forEach(function (c) {
+    c.addEventListener('click', function () {
+      setActiveChip(c.getAttribute('data-jump'));
+    });
+  });
 
   /* jumpToSection() existe déjà dans app.js pour l'ancien pager horizontal ;
      on la redéfinit ici pour le nouveau flux vertical (dernière déclaration
