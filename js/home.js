@@ -123,6 +123,22 @@
     return NO_PROFILE_PHRASE[lang] || NO_PROFILE_PHRASE.fr;
   }
 
+  var GREETING_WORDS = {
+    fr: 'As-salāmou ʿaleykoum',
+    en: 'As-salamu alaykum',
+    es: 'As-salamu alaikum',
+    de: 'As-salamu alaikum',
+    it: 'As-salamu alaikum',
+    nl: 'As-salamu alaikum',
+    pt: 'As-salamu alaikum',
+    tr: 'Selamün aleyküm'
+  };
+
+  function getGreetingWord() {
+    var lang = getLang();
+    return GREETING_WORDS[lang] || GREETING_WORDS.fr;
+  }
+
   function renderGreeting() {
     if (!window.DT) return;
     var textEl = document.getElementById('homeGreetingText');
@@ -132,8 +148,10 @@
 
     var profile = window.DT.getActiveProfile ? window.DT.getActiveProfile() : null;
 
+    var GREETING_WORD = getGreetingWord();
+
     if (profile && profile.name) {
-      textEl.textContent = 'Salam · ' + profile.name;
+      textEl.textContent = GREETING_WORD + ' · ' + profile.name;
       if (dotEl) dotEl.style.background = profile.color || '#C9A84C';
       if (phraseEl) {
         phraseEl.textContent = getDailyGreetingPhrase();
@@ -141,12 +159,19 @@
       }
     } else {
       var createProfileLabel = (window.DT.t ? window.DT.t('greetingCreateProfile') : 'Crée ton profil');
-      textEl.textContent = 'Salam · ' + createProfileLabel;
+      textEl.textContent = GREETING_WORD + ' · ' + createProfileLabel;
       if (dotEl) dotEl.style.background = '#C9A84C';
       if (phraseEl) {
         phraseEl.textContent = getNoProfilePhrase();
         phraseEl.classList.add('visible');
       }
+    }
+
+    // Réduit la police si le texte devient trop long pour tenir sur une ligne
+    var btnEl = document.getElementById('homeGreetingBtn');
+    if (btnEl) {
+      if (textEl.textContent.length > 26) btnEl.classList.add('compact-text');
+      else btnEl.classList.remove('compact-text');
     }
   }
 
