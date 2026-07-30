@@ -2580,6 +2580,12 @@ body.night .cat-card.cat-highlight {
   letter-spacing:0.08em; text-transform:uppercase; color:var(--gold);
   white-space:nowrap;
 }
+.home-greeting-btn.compact-text {
+  padding:7px 14px;
+}
+.home-greeting-btn.compact-text #homeGreetingText {
+  font-size:8.5px; letter-spacing:0.04em;
+}
 .home-greeting-phrase {
   font-family:'Cormorant Garamond',serif; font-style:italic; font-size:12px;
   color:rgba(var(--gold-rgb),0.75); text-align:center;
