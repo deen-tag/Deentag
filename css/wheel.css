@@ -50,6 +50,19 @@
   width: 0;
   height: 0;
 }
+/* Trait fin entre le groupe de petites cartes et la grande carte centrale
+   qui s'en détache — essai pour renforcer la sensation qu'elle "sort" du
+   groupe plutôt que d'être juste une carte parmi d'autres. */
+.orbit-divider {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 70px;
+  margin-left: -35px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--gold-rgb), 0.55), transparent);
+  pointer-events: none;
+}
 .item {
   position: absolute;
   left: 0;
