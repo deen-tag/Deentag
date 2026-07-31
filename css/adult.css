@@ -363,7 +363,7 @@ body.night .cat-card:active {
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
 }
 /* Icones carrees (invocations) : reduites pour matcher le poids visuel des badges elances de l'accueil */
-.cat-grid .cat-icon-circle .cat-icon { max-height:126px; }
+.cat-grid .cat-icon-circle .cat-icon { max-height:138px; }
 .cat-label {
   font-family:'Cinzel',serif; font-size:9px; font-weight:600;
   letter-spacing:0.10em; color:var(--text3); text-align:center;
