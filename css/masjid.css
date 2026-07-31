@@ -1,0 +1,370 @@
+/* ============================================================
+   LE MASJID DES LUMIÈRES — styles du jeu
+   S'appuie sur les tokens définis dans kids.css (:root)
+   ============================================================ */
+
+.mj-screen {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  position: relative;
+  z-index: 1;
+}
+
+/* ----- Écran choix du palier ----- */
+.mj-palier-title {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  color: var(--sky-7);
+  text-align: center;
+  margin: 48px 24px 6px;
+}
+.mj-palier-sub {
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  color: var(--sky-6);
+  text-align: center;
+  margin: 0 24px 28px;
+  opacity: .85;
+}
+.mj-palier-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 0 24px;
+}
+.mj-palier-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--paper-warm);
+  border: none;
+  border-radius: var(--kids-radius);
+  padding: 16px 18px;
+  box-shadow: var(--kids-shadow-card);
+  text-align: left;
+  cursor: pointer;
+}
+.mj-palier-emoji { font-size: 32px; }
+.mj-palier-name {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--ink);
+}
+.mj-palier-desc {
+  font-family: 'Nunito', sans-serif;
+  font-size: 12.5px;
+  color: var(--ink-60);
+}
+
+/* ----- Écran carte / masjid ----- */
+.mj-map-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px 4px;
+  position: relative;
+  z-index: 5;
+}
+.mj-palier-badge {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 12.5px;
+  color: var(--gold-deep);
+  background: var(--tint);
+  border: none;
+  border-radius: 999px;
+  padding: 7px 13px;
+  cursor: pointer;
+}
+
+.mj-masjid-hero {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 10px auto 4px;
+}
+.mj-masjid-hero img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: grayscale(1) brightness(.55) contrast(.9);
+  opacity: .35;
+}
+.mj-masjid-hero img.mj-masjid-fill {
+  filter: none;
+  opacity: 1;
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1s ease;
+}
+.mj-masjid-pct {
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--sky-7);
+  margin-bottom: 10px;
+}
+
+.mj-lantern-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  max-width: 280px;
+  margin: 0 auto 6px;
+  font-size: 15px;
+}
+.mj-lantern { opacity: .25; filter: grayscale(1); }
+.mj-lantern-lit { opacity: 1; filter: none; text-shadow: 0 0 8px rgba(232,184,75,.7); }
+
+.mj-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 4px 20px 14px;
+  justify-content: center;
+}
+.mj-tab {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--sky-6);
+  background: transparent;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+.mj-tab-active {
+  color: var(--gold-deep);
+  background: var(--tint);
+  border-color: var(--gold);
+}
+
+.mj-path {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding: 10px 20px 60px;
+  position: relative;
+  z-index: 2;
+}
+.sp-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: 92px;
+  border: none;
+  border-radius: 20px;
+  padding: 12px 8px 10px;
+  font-family: 'Nunito', sans-serif;
+  background: var(--paper-warm);
+  box-shadow: var(--kids-shadow-press);
+}
+.sp-node-icon { font-size: 20px; }
+.sp-node-ar {
+  font-family: 'Amiri', serif;
+  font-size: 15px;
+  color: var(--ink);
+}
+.sp-node-fr {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--ink-60);
+}
+.sp-locked { opacity: .45; }
+.sp-unlocked { box-shadow: 0 0 0 2px var(--gold), var(--kids-shadow-press); }
+.sp-done {
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+}
+.sp-done .sp-node-fr, .sp-done .sp-node-ar { color: var(--gold-deep); }
+
+/* ----- Écran jeu (exercice par verset) ----- */
+.mj-game-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px 8px;
+  position: relative;
+  z-index: 5;
+}
+.mj-back-btn {
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: var(--tint);
+  color: var(--sky-7);
+  font-size: 16px;
+  cursor: pointer;
+}
+.mj-game-title-ar {
+  font-family: 'Amiri', serif;
+  font-size: 18px;
+  color: var(--sky-7);
+}
+.mj-game-title-fr {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--sky-6);
+  opacity: .85;
+}
+.mj-progress-track {
+  height: 6px;
+  border-radius: 4px;
+  background: var(--line-soft);
+  margin: 0 18px 14px;
+  overflow: hidden;
+}
+.mj-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--gold), var(--violet));
+  transition: width .4s ease;
+}
+
+.mj-game-content {
+  flex: 1;
+  padding: 4px 20px 40px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.mj-loading {
+  text-align: center;
+  font-family: 'Nunito', sans-serif;
+  color: var(--sky-6);
+  margin-top: 60px;
+  padding: 0 20px;
+}
+.mj-verse-ar {
+  font-family: 'Amiri', serif;
+  font-size: 30px;
+  line-height: 1.9;
+  color: var(--sky-7);
+  text-align: center;
+  margin: 18px 0 20px;
+  direction: rtl;
+}
+.mj-listen-btn {
+  font-family: 'Baloo 2', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--gold-deep);
+  background: var(--paper-warm);
+  border: none;
+  border-radius: 999px;
+  padding: 10px 20px;
+  box-shadow: var(--kids-shadow-press);
+  cursor: pointer;
+  margin-bottom: 14px;
+}
+.mj-translation-hint {
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  color: var(--sky-6);
+  text-align: center;
+  opacity: .9;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+.mj-instruction {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 13.5px;
+  color: var(--sky-7);
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.mj-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 340px;
+}
+.mj-option-card {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 14.5px;
+  color: var(--ink);
+  background: var(--paper-warm);
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: var(--kids-shadow-press);
+  cursor: pointer;
+  transition: transform .15s ease;
+}
+.mj-option-card:active { transform: scale(.97); }
+.mj-option-card.mj-correct { border-color: #52B788; background: #E7F7EF; }
+.mj-option-card.mj-wrong { border-color: #FF6B6B; background: #FFECEC; }
+
+.mj-slots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  direction: rtl;
+  margin-bottom: 18px;
+  min-height: 40px;
+}
+.mj-slot {
+  min-width: 44px;
+  height: 38px;
+  border-radius: 10px;
+  border: 2px dashed var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Amiri', serif;
+  font-size: 18px;
+  color: var(--ink);
+  padding: 0 6px;
+}
+.mj-slot-filled {
+  border-style: solid;
+  border-color: var(--gold);
+  background: var(--tint);
+  cursor: pointer;
+}
+.mj-bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  direction: rtl;
+}
+.mj-chip {
+  font-family: 'Amiri', serif;
+  font-size: 18px;
+  color: var(--ink);
+  background: var(--paper-warm);
+  border: none;
+  border-radius: 10px;
+  padding: 7px 12px;
+  box-shadow: var(--kids-shadow-press);
+  cursor: pointer;
+}
+.mj-feedback {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 13.5px;
+  text-align: center;
+  margin-top: 16px;
+  min-height: 18px;
+}
+.mj-feedback-ok { color: #2F9E64; }
+.mj-feedback-retry { color: #E0A100; }
+
+@media (min-width: 480px) {
+  .mj-path { align-items: center; }
+  .mj-options { margin: 0 auto; }
+}
