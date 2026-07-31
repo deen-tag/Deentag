@@ -22,6 +22,17 @@
   var wheels = []; // état de chaque arc
   var allSections = []; // TOUTES les .cat-section (roulettes + statiques comme "Circonstances")
 
+  // Réglages par nombre de cartes (issus de l'outil reglage-roulette.html).
+  // Une catégorie à 4 cartes n'a pas besoin du même arc / zoom / sensibilité
+  // qu'une catégorie à 6+ cartes : "default" couvre tout le reste (5, 6, 8...).
+  var WHEEL_PROFILES = {
+    4: { rxBase: 56, rxStep: 16, ryRatio: 0.77, pop: 0, scaleMin: 1.00, scaleAmp: 0.33, frontBoost: 1.30, dragSens: 0.59 },
+    default: { rxBase: 30, rxStep: 19, ryRatio: 0.75, pop: 0, scaleMin: 0.96, scaleAmp: 0.21, frontBoost: 1.40, dragSens: 0.37 }
+  };
+  function profileFor(n) {
+    return WHEEL_PROFILES[n] || WHEEL_PROFILES.default;
+  }
+
   function buildWheel(section) {
     var grid = section.querySelector('.cat-grid');
     if (!grid) return null;
@@ -45,11 +56,13 @@
 
     var n = cards.length;
     var step = 360 / n;
+    var profile = profileFor(n);
     // Ovale aplati : plus large que haut, s'élargit un peu avec le nombre d'icônes.
-    // Valeurs reglées via l'outil de test (arc plus large, moins de variation par carte).
-    var rx = Math.round(30 + (n - 1) * 19);
+    // Valeurs reglées via l'outil de test (arc plus large, moins de variation par carte),
+    // avec un profil dédié pour les catégories à 4 cartes (voir WHEEL_PROFILES).
+    var rx = Math.round(profile.rxBase + (n - 1) * profile.rxStep);
     // Rayon vertical : ratio réglé via l'outil de test.
-    var ry = Math.round(rx * 0.75);
+    var ry = Math.round(rx * profile.ryRatio);
     stage.dataset.rx = String(rx);
     stage.dataset.ry = String(ry);
     // La hauteur fixe (190px, définie dans wheel.css) ne suffit plus avec un
@@ -59,7 +72,7 @@
     // popOffset : décalage supplémentaire de la carte centrale, en plus de
     // sa position normale sur l'ellipse — pour qu'elle se détache
     // visuellement du reste des cartes (réglé via l'outil de test).
-    var popOffset = 0;
+    var popOffset = profile.pop;
     var neededHeight = Math.round(ry * 2 + cardHalf * 1.15 * 2 + 16 + popOffset);
     stage.style.height = neededHeight + 'px';
 
@@ -104,6 +117,10 @@
       rx: rx,
       ry: ry,
       popOffset: popOffset,
+      scaleMin: profile.scaleMin,
+      scaleAmp: profile.scaleAmp,
+      frontBoost: profile.frontBoost,
+      dragSens: profile.dragSens,
       angle: 0,
       dragging: false,
       moved: 0,
@@ -149,13 +166,13 @@
       // grossissent/s'estompent). Accueil/Coran : vue plate, de face, comme
       // une horloge — toutes les cartes ont la même taille et opacité, sans
       // inclinaison, seule leur position tourne sur le cercle.
-      var scale = skewed ? (0.96 + 0.21 * ((depth + 1) / 2)) : 1;
+      var scale = skewed ? (w.scaleMin + w.scaleAmp * ((depth + 1) / 2)) : 1;
       // La carte centrale se détache du groupe : décalage supplémentaire
       // vers le bas (popOffset, réglé à 0 pour l'instant) + gain de taille
       // plus marqué, comme si elle était attirée hors du reste des cartes.
       if (skewed && i === frontIdx) {
         y += w.popOffset;
-        scale *= 1.40;
+        scale *= w.frontBoost;
       }
       item.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')';
       item.style.zIndex = String(Math.round((depth + 1) * 100));
@@ -254,7 +271,7 @@
 
       if (!w.dragging) return;
       w.moved = Math.max(w.moved, Math.abs(dx));
-      w.angle = w.startAngle + dx * 0.37;
+      w.angle = w.startAngle + dx * w.dragSens;
       renderRing(w);
     });
     function up() {
@@ -468,6 +485,8 @@
       ring: ring,
       items: Array.prototype.slice.call(ring.children),
       n: n, rx: rx, ry: ry, angle: 0,
+      popOffset: 0, scaleMin: 1, scaleAmp: 0, frontBoost: 1,
+      dragSens: WHEEL_PROFILES.default.dragSens,
       dragging: false, moved: 0, startX: 0, startAngle: 0,
       animId: null, suppressClick: false, frontIndex: 0
     };
