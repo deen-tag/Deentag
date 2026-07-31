@@ -47,11 +47,11 @@
     var step = 360 / n;
     // Ovale aplati : plus large que haut, s'élargit un peu avec le nombre d'icônes.
     // Valeurs reglées via l'outil de test (arc plus large, moins de variation par carte).
-    var rx = Math.round(89 + (n - 1) * 10);
-    // Rayon vertical agrandi (0.63) : les cartes à l'arrière de l'arc se
+    var rx = Math.round(88 + (n - 1) * 9);
+    // Rayon vertical agrandi (0.68) : les cartes à l'arrière de l'arc se
     // séparent davantage de la carte centrale pour réduire le chevauchement,
     // sans réduire leur taille ni leur opacité (cf. discussion).
-    var ry = Math.round(rx * 0.63);
+    var ry = Math.round(rx * 0.68);
     stage.dataset.rx = String(rx);
     stage.dataset.ry = String(ry);
     // La hauteur fixe (190px, définie dans wheel.css) ne suffit plus avec un
@@ -60,10 +60,8 @@
     var cardHalf = 68; // moitié de la hauteur d'une .cat-card (136px)
     // popOffset : décalage supplémentaire de la carte centrale, en plus de
     // sa position normale sur l'ellipse — pour qu'elle se détache
-    // visuellement du reste des cartes. Remis à 0 (essai précédent retiré
-    // via l'outil de réglage : la carte centrale se distingue déjà assez
-    // avec le nouveau "boost" de taille ci-dessous).
-    var popOffset = 0;
+    // visuellement du reste des cartes (réglé via l'outil de test).
+    var popOffset = 3;
     var neededHeight = Math.round(ry * 2 + cardHalf * 1.15 * 2 + 16 + popOffset);
     stage.style.height = neededHeight + 'px';
 
@@ -154,7 +152,7 @@
       // grossissent/s'estompent). Accueil/Coran : vue plate, de face, comme
       // une horloge — toutes les cartes ont la même taille et opacité, sans
       // inclinaison, seule leur position tourne sur le cercle.
-      var scale = skewed ? (1.00 + 0.41 * ((depth + 1) / 2)) : 1;
+      var scale = skewed ? (1.00 + 0.35 * ((depth + 1) / 2)) : 1;
       // La carte centrale se détache du groupe : décalage supplémentaire
       // vers le bas (popOffset, réglé à 0 pour l'instant) + gain de taille
       // plus marqué, comme si elle était attirée hors du reste des cartes.
@@ -235,7 +233,7 @@
       if (!w.dragging) return;
       var dx = e.clientX - w.startX;
       w.moved = Math.max(w.moved, Math.abs(dx));
-      w.angle = w.startAngle + dx * 0.52;
+      w.angle = w.startAngle + dx * 0.34;
       renderRing(w);
     });
     function up() {
