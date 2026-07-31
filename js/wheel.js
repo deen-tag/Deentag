@@ -47,9 +47,9 @@
     var step = 360 / n;
     // Ovale aplati : plus large que haut, s'élargit un peu avec le nombre d'icônes.
     // Valeurs reglées via l'outil de test (arc plus large, moins de variation par carte).
-    var rx = Math.round(67 + (n - 1) * 11);
+    var rx = Math.round(36 + (n - 1) * 13);
     // Rayon vertical : ratio réglé via l'outil de test.
-    var ry = Math.round(rx * 0.59);
+    var ry = Math.round(rx * 0.61);
     stage.dataset.rx = String(rx);
     stage.dataset.ry = String(ry);
     // La hauteur fixe (190px, définie dans wheel.css) ne suffit plus avec un
@@ -149,13 +149,13 @@
       // grossissent/s'estompent). Accueil/Coran : vue plate, de face, comme
       // une horloge — toutes les cartes ont la même taille et opacité, sans
       // inclinaison, seule leur position tourne sur le cercle.
-      var scale = skewed ? (0.85 + 0.13 * ((depth + 1) / 2)) : 1;
+      var scale = skewed ? (0.93 + 0.13 * ((depth + 1) / 2)) : 1;
       // La carte centrale se détache du groupe : décalage supplémentaire
       // vers le bas (popOffset, réglé à 0 pour l'instant) + gain de taille
       // plus marqué, comme si elle était attirée hors du reste des cartes.
       if (skewed && i === frontIdx) {
         y += w.popOffset;
-        scale *= 1.22;
+        scale *= 1.21;
       }
       item.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')';
       item.style.zIndex = String(Math.round((depth + 1) * 100));
@@ -254,7 +254,7 @@
 
       if (!w.dragging) return;
       w.moved = Math.max(w.moved, Math.abs(dx));
-      w.angle = w.startAngle + dx * 0.33;
+      w.angle = w.startAngle + dx * 0.35;
       renderRing(w);
     });
     function up() {
