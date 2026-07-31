@@ -221,40 +221,44 @@
 
   function attachDrag(w) {
     var stage = w.stage;
-    // "Verrou de direction" : au début d'un geste, on ne sait pas encore si
-    // la personne veut faire défiler la page (vertical) ou tourner la
-    // roulette (horizontal). On observe les premiers pixels du geste avant
-    // de décider, pour ne plus décaler la roulette pendant un simple scroll.
-    var axisLocked = null; // null = pas encore décidé, 'x' = roulette, 'y' = scroll
-    var startY = 0;
+    // Le CSS met touch-action:none sur la scène : plus aucun geste natif du
+    // navigateur ici. On gère tout nous-mêmes, y compris le scroll vertical,
+    // qu'on relaie à la page pour qu'elle défile normalement.
+    var axisLocked = null; // null = pas encore décidé, 'x' = roulette, 'y' = scroll relayé
+    var startY = 0, lastY = 0;
+    var active = false;
     var LOCK_THRESHOLD = 6; // px avant de trancher la direction du geste
 
     stage.addEventListener('pointerdown', function (e) {
+      active = true;
       w.dragging = false; // pas encore : on attend de connaître la direction
       w.moved = 0;
       w.startX = e.clientX;
       startY = e.clientY;
+      lastY = e.clientY;
       w.startAngle = w.angle;
       axisLocked = null;
       if (w.animId) cancelAnimationFrame(w.animId);
-      // Pas de setPointerCapture ici : on la met seulement si le geste
-      // s'avère être une rotation horizontale (voir plus bas), sinon le
-      // scroll vertical natif de la page doit rester libre.
+      try { stage.setPointerCapture(e.pointerId); } catch (err) {}
     });
     stage.addEventListener('pointermove', function (e) {
-      if (axisLocked === 'y') return; // scroll de page en cours : on ignore
+      if (!active) return;
       var dx = e.clientX - w.startX;
       var dy = e.clientY - startY;
 
       if (axisLocked === null) {
         if (Math.abs(dx) < LOCK_THRESHOLD && Math.abs(dy) < LOCK_THRESHOLD) return; // pas assez de mouvement pour trancher
-        if (Math.abs(dy) > Math.abs(dx)) {
-          axisLocked = 'y'; // c'est un scroll vertical : on laisse la page défiler
-          return;
-        }
-        axisLocked = 'x'; // c'est une vraie rotation horizontale
-        w.dragging = true;
-        try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+        axisLocked = Math.abs(dy) > Math.abs(dx) ? 'y' : 'x';
+        if (axisLocked === 'x') w.dragging = true;
+      }
+
+      if (axisLocked === 'y') {
+        // Scroll vertical : comme le navigateur ne le fait plus tout seul
+        // (touch-action:none), on avance la page nous-mêmes, au pixel près.
+        var deltaY = e.clientY - lastY;
+        window.scrollBy(0, -deltaY);
+        lastY = e.clientY;
+        return;
       }
 
       if (!w.dragging) return;
@@ -263,6 +267,7 @@
       renderRing(w);
     });
     function up() {
+      active = false;
       axisLocked = null;
       if (!w.dragging) return;
       w.dragging = false;
