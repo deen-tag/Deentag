@@ -13,7 +13,12 @@
    sans ça, la page entière devient scrollable horizontalement, ce qui fait
    apparaître/disparaître une barre de scroll et perturbe la tabbar du bas.
    Les cartes restent coupées visuellement sur les bords (effet voulu), mais
-   la page elle-même ne défile plus jamais horizontalement. */
+   la page elle-même ne défile plus jamais horizontalement.
+   Important : sur mobile c'est <html> (pas <body>) qui est l'élément
+   scrollable réel de la page — le overflow-x doit donc être posé dessus. */
+html {
+  overflow-x: hidden;
+}
 body[data-page="invocations"] {
   overflow-x: hidden;
 }
