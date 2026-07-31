@@ -47,7 +47,7 @@
     var step = 360 / n;
     // Ovale aplati : plus large que haut, s'élargit un peu avec le nombre d'icônes.
     // Valeurs reglées via l'outil de test (arc plus large, moins de variation par carte).
-    var rx = Math.round(88 + (n - 1) * 9);
+    var rx = Math.round(61 + (n - 1) * 11);
     // Empêche l'arc de déborder de l'écran : la carte la plus excentrée
     // (autour de ±90°, ni la plus grande ni la plus petite, cf. renderRing)
     // ne doit jamais dépasser le bord de l'écran, sinon toute la page
@@ -58,10 +58,8 @@
     var edgeMargin = 12; // marge de sécurité
     var maxRx = Math.floor(window.innerWidth / 2 - cardHalfWidth * maxSideScale - edgeMargin);
     rx = Math.max(60, Math.min(rx, maxRx));
-    // Rayon vertical agrandi (0.68) : les cartes à l'arrière de l'arc se
-    // séparent davantage de la carte centrale pour réduire le chevauchement,
-    // sans réduire leur taille ni leur opacité (cf. discussion).
-    var ry = Math.round(rx * 0.68);
+    // Rayon vertical : ratio réglé via l'outil de test.
+    var ry = Math.round(rx * 0.64);
     stage.dataset.rx = String(rx);
     stage.dataset.ry = String(ry);
     // La hauteur fixe (190px, définie dans wheel.css) ne suffit plus avec un
@@ -71,7 +69,7 @@
     // popOffset : décalage supplémentaire de la carte centrale, en plus de
     // sa position normale sur l'ellipse — pour qu'elle se détache
     // visuellement du reste des cartes (réglé via l'outil de test).
-    var popOffset = 3;
+    var popOffset = 0;
     var neededHeight = Math.round(ry * 2 + cardHalf * 1.15 * 2 + 16 + popOffset);
     stage.style.height = neededHeight + 'px';
 
@@ -152,23 +150,20 @@
       var total = base + w.angle;
       var rad = (total * Math.PI) / 180;
       var depth = Math.cos(rad); // 1 = avant/centre, -1 = arrière
-      // Tracé "piste / stade" (bords aplatis, plutôt qu'un ovale classique) :
-      // superellipse d'exposant 2/4, réglée via l'outil de test.
-      var s = Math.sin(rad);
-      var c = Math.cos(rad);
-      var x = w.rx * (s < 0 ? -1 : s > 0 ? 1 : 0) * Math.pow(Math.abs(s), 0.5);
-      var y = w.ry * (c < 0 ? -1 : c > 0 ? 1 : 0) * Math.pow(Math.abs(c), 0.5); // avant en bas, arrière en haut
+      // Tracé en ellipse classique (rx, ry), réglé via l'outil de test.
+      var x = w.rx * Math.sin(rad);
+      var y = w.ry * Math.cos(rad); // avant en bas, arrière en haut
       // Invocations (skewed) garde l'effet de profondeur (cartes qui
       // grossissent/s'estompent). Accueil/Coran : vue plate, de face, comme
       // une horloge — toutes les cartes ont la même taille et opacité, sans
       // inclinaison, seule leur position tourne sur le cercle.
-      var scale = skewed ? (1.00 + 0.35 * ((depth + 1) / 2)) : 1;
+      var scale = skewed ? (0.74 + 0.23 * ((depth + 1) / 2)) : 1;
       // La carte centrale se détache du groupe : décalage supplémentaire
       // vers le bas (popOffset, réglé à 0 pour l'instant) + gain de taille
       // plus marqué, comme si elle était attirée hors du reste des cartes.
       if (skewed && i === frontIdx) {
         y += w.popOffset;
-        scale *= 1.40;
+        scale *= 1.28;
       }
       item.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')';
       item.style.zIndex = String(Math.round((depth + 1) * 100));
@@ -267,7 +262,7 @@
 
       if (!w.dragging) return;
       w.moved = Math.max(w.moved, Math.abs(dx));
-      w.angle = w.startAngle + dx * 0.34;
+      w.angle = w.startAngle + dx * 0.51;
       renderRing(w);
     });
     function up() {
