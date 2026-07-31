@@ -206,6 +206,21 @@
       <button data-loop="infinite">🔁 Boucle infinie</button>
     </div>
     <p class="sub" style="margin:2px 0 10px;">« Chemin fini » : la carte 1 est fixe au début, la dernière carte marque la fin — impossible d'aller plus loin dans un sens ou dans l'autre.</p>
+
+    <div class="panel-title" style="margin-top:14px;">Sens du parcours (ordre des cartes)</div>
+    <div class="mode-switch" id="reverseSwitch">
+      <button data-reverse="false" class="active">➡️ Carte 1 → dernière</button>
+      <button data-reverse="true">⬅️ Dernière → carte 1</button>
+    </div>
+    <p class="sub" style="margin:2px 0 10px;">Inverse l'ordre dans lequel les cartes sont placées le long du S — la carte de départ reste au point zéro, mais tout le parcours se déroule dans l'autre sens.</p>
+
+    <div class="panel-title" style="margin-top:14px;">Sens du glisser</div>
+    <div class="mode-switch" id="swipeSwitch">
+      <button data-swipe="up" class="active">👆 Glisser vers le haut = avancer</button>
+      <button data-swipe="down">👇 Glisser vers le bas = avancer</button>
+    </div>
+    <p class="sub" style="margin:2px 0 10px;">Choisit si un glissement du doigt vers le haut ou vers le bas fait avancer vers la carte suivante.</p>
+
     <div class="row">
       <label>Largeur des vagues (amplitude) <span class="val" id="v_amplitude">70</span> px</label>
       <input type="range" id="amplitude" min="10" max="140" step="1" value="70">
@@ -390,7 +405,9 @@
     dragSens: 35, manual: 0, shape: 'circle', orbitShape: 'ellipse',
     startIndex: 1, lockStart: false,
     amplitude: 70, wavelength: 220, spacing: 90, viewHeight: 380,
-    conveyorLoop: 'finite' // 'finite' (début → fin) ou 'infinite' (boucle sans fin)
+    conveyorLoop: 'finite', // 'finite' (début → fin) ou 'infinite' (boucle sans fin)
+    conveyorReverse: false, // false: carte 1 → dernière ; true: dernière → carte 1
+    swipeDir: 'up' // 'up': glisser vers le haut = avancer ; 'down': glisser vers le bas = avancer
   };
   var pos = 0; // angle (°) en mode orbite, offset vertical (px) en mode tapis roulant
   var items = [];
@@ -499,6 +516,10 @@
     }
   }
 
+  function effIndex(i){
+    return state.conveyorReverse ? (state.n - 1 - i) : i;
+  }
+
   function maxFinitePos(){
     return (state.n - 1) * state.spacing;
   }
@@ -530,11 +551,12 @@
     var bestAbs = Infinity, frontIdx = 0;
     var wVals = [];
     items.forEach(function(item, i){
+      var ei = effIndex(i);
       var w;
       if (finite){
-        w = i * spacing - pos; // pas de modulo : chemin fini avec un vrai début et une vraie fin
+        w = ei * spacing - pos; // pas de modulo : chemin fini avec un vrai début et une vraie fin
       } else {
-        var raw = i * spacing - pos;
+        var raw = ei * spacing - pos;
         w = ((raw % totalLength) + totalLength) % totalLength;
       }
       wVals.push(w);
@@ -618,7 +640,8 @@
     if (state.mode === 'conveyor'){
       var dy = e.clientY - startY;
       moved = Math.max(moved, Math.abs(dy));
-      pos = clampFinitePos(startPos - dy * (state.dragSens / 100));
+      var sign = (state.swipeDir === 'down') ? 1 : -1;
+      pos = clampFinitePos(startPos + sign * dy * (state.dragSens / 100));
     } else {
       var dx = e.clientX - startX;
       moved = Math.max(moved, Math.abs(dx));
@@ -662,7 +685,7 @@
     var step = currentStep();
     suppressManual = true;
     if (state.mode === 'conveyor'){
-      pos = clampFinitePos((state.startIndex - 1) * step);
+      pos = clampFinitePos(effIndex(state.startIndex - 1) * step);
     } else {
       pos = -(state.startIndex - 1) * step;
     }
@@ -699,6 +722,8 @@
         lines.push('Longueur totale de la boucle : <b>' + (n * state.spacing) + ' px</b>');
       }
       lines.push('Carte au point zéro (départ) : <b>#' + (frontIdx + 1) + ' — ' + frontCat + '</b>');
+      lines.push('Sens du parcours : <b>' + (state.conveyorReverse ? 'dernière carte → carte 1' : 'carte 1 → dernière carte') + '</b>');
+      lines.push('Sens du glisser : <b>' + (state.swipeDir === 'down' ? 'vers le bas = avancer' : 'vers le haut = avancer') + '</b>');
     } else {
       var stepDeg = Math.round((360 / n) * 10) / 10;
       lines.push('Mode : <b>Orbite (roue classique)</b>');
@@ -716,7 +741,9 @@
               'var amplitude = ' + state.amplitude + '; // largeur des vagues en S (px)\n' +
               'var wavelength = ' + state.wavelength + '; // hauteur d\'un cycle en S complet (px)\n' +
               'var totalLength = n * spacing; // longueur de la boucle fermée\n' +
-              '// position carte i : raw = i*spacing - offset; wrapped = ((raw % totalLength)+totalLength) % totalLength;\n' +
+              '// sens du parcours : ' + (state.conveyorReverse ? '"reverse" — carte i -> index effectif (n-1-i)' : '"normal" — carte i -> index effectif i') + '\n' +
+              '// sens du glisser : ' + (state.swipeDir === 'down' ? 'glisser vers le BAS fait avancer' : 'glisser vers le HAUT fait avancer') + '\n' +
+              '// position carte i : ei = ' + (state.conveyorReverse ? '(n-1-i)' : 'i') + '; raw = ei*spacing - offset; wrapped = ((raw % totalLength)+totalLength) % totalLength;\n' +
               '// y = ancrage - wrapped;  x = amplitude * Math.sin(2*Math.PI*wrapped/wavelength);\n' +
               '// -> boucle fermée (modulo), mais jamais de redescente visible : la carte ressort en bas.\n';
     } else {
@@ -793,6 +820,31 @@
     b.addEventListener('click', function(){ setConveyorLoop(b.dataset.loop); });
   });
 
+  // ===== Bascule sens du parcours (ordre des cartes le long du S) =====
+  var reverseSwitch = document.getElementById('reverseSwitch');
+  function setConveyorReverse(reversed){
+    state.conveyorReverse = reversed;
+    Array.prototype.forEach.call(reverseSwitch.children, function(b){
+      b.classList.toggle('active', (b.dataset.reverse === 'true') === reversed);
+    });
+    goToStartIndex();
+  }
+  Array.prototype.forEach.call(reverseSwitch.children, function(b){
+    b.addEventListener('click', function(){ setConveyorReverse(b.dataset.reverse === 'true'); });
+  });
+
+  // ===== Bascule sens du glisser (haut ou bas = avancer) =====
+  var swipeSwitch = document.getElementById('swipeSwitch');
+  function setSwipeDir(dir){
+    state.swipeDir = dir;
+    Array.prototype.forEach.call(swipeSwitch.children, function(b){
+      b.classList.toggle('active', b.dataset.swipe === dir);
+    });
+  }
+  Array.prototype.forEach.call(swipeSwitch.children, function(b){
+    b.addEventListener('click', function(){ setSwipeDir(b.dataset.swipe); });
+  });
+
   // ===== Grille de sélection de forme d'orbite (le tracé, mode orbite) =====
   var orbitShapeGrid = document.getElementById('orbitShapeGrid');
   var orbitShapeSwatches = [];
@@ -863,7 +915,7 @@
     dragSens: 35, manual: 0, shape: 'circle', orbitShape: 'ellipse',
     startIndex: 1, lockStart: false,
     amplitude: 70, wavelength: 220, spacing: 90, viewHeight: 380,
-    conveyorLoop: 'finite'
+    conveyorLoop: 'finite', conveyorReverse: false, swipeDir: 'up'
   };
   document.getElementById('reset').addEventListener('click', function(){
     Object.keys(DEFAULTS).forEach(function(id){
@@ -877,6 +929,8 @@
     setOrbitShape(DEFAULTS.orbitShape);
     setMode(DEFAULTS.mode);
     setConveyorLoop(DEFAULTS.conveyorLoop);
+    setConveyorReverse(DEFAULTS.conveyorReverse);
+    setSwipeDir(DEFAULTS.swipeDir);
     buildCards(state.n);
     updateStartIndexMax();
     setLockStart(false);
