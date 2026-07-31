@@ -201,6 +201,11 @@
 
   <div class="mode-panel" id="conveyorPanel">
     <div class="panel-title">Réglages du tapis roulant en S</div>
+    <div class="mode-switch" id="loopSwitch">
+      <button data-loop="finite" class="active">⏹ Chemin fini (début → fin)</button>
+      <button data-loop="infinite">🔁 Boucle infinie</button>
+    </div>
+    <p class="sub" style="margin:2px 0 10px;">« Chemin fini » : la carte 1 est fixe au début, la dernière carte marque la fin — impossible d'aller plus loin dans un sens ou dans l'autre.</p>
     <div class="row">
       <label>Largeur des vagues (amplitude) <span class="val" id="v_amplitude">70</span> px</label>
       <input type="range" id="amplitude" min="10" max="140" step="1" value="70">
@@ -384,7 +389,8 @@
     scaleMin: 60, scaleAmp: 55, frontBoost: 105, opMin: 45,
     dragSens: 35, manual: 0, shape: 'circle', orbitShape: 'ellipse',
     startIndex: 1, lockStart: false,
-    amplitude: 70, wavelength: 220, spacing: 90, viewHeight: 380
+    amplitude: 70, wavelength: 220, spacing: 90, viewHeight: 380,
+    conveyorLoop: 'finite' // 'finite' (début → fin) ou 'infinite' (boucle sans fin)
   };
   var pos = 0; // angle (°) en mode orbite, offset vertical (px) en mode tapis roulant
   var items = [];
@@ -493,7 +499,17 @@
     }
   }
 
-  // ===== Mode Tapis roulant en S (boucle fermée, jamais de redescente visible) =====
+  function maxFinitePos(){
+    return (state.n - 1) * state.spacing;
+  }
+  function clampFinitePos(p){
+    if (state.mode === 'conveyor' && state.conveyorLoop === 'finite'){
+      return Math.max(0, Math.min(maxFinitePos(), p));
+    }
+    return p;
+  }
+
+  // ===== Mode Tapis roulant en S =====
   function renderConveyor(){
     var n = state.n;
     var spacing = state.spacing;
@@ -501,6 +517,7 @@
     var amplitude = state.amplitude;
     var wavelength = state.wavelength;
     var viewHeight = state.viewHeight;
+    var finite = (state.conveyorLoop === 'finite');
     stage.style.height = viewHeight + 'px';
     ring.querySelector('.orbit-divider').style.display = 'none';
     var marker = ring.querySelector('.start-marker');
@@ -510,20 +527,25 @@
     var anchorY = (viewHeight / 2) - 56;
     marker.style.transform = 'translate(0px,' + anchorY + 'px)';
 
-    var bestWrapped = Infinity, frontIdx = 0;
-    var wrappedVals = [];
+    var bestAbs = Infinity, frontIdx = 0;
+    var wVals = [];
     items.forEach(function(item, i){
-      var raw = i * spacing - pos;
-      var wrapped = ((raw % totalLength) + totalLength) % totalLength;
-      wrappedVals.push(wrapped);
-      if (wrapped < bestWrapped){ bestWrapped = wrapped; frontIdx = i; }
+      var w;
+      if (finite){
+        w = i * spacing - pos; // pas de modulo : chemin fini avec un vrai début et une vraie fin
+      } else {
+        var raw = i * spacing - pos;
+        w = ((raw % totalLength) + totalLength) % totalLength;
+      }
+      wVals.push(w);
+      if (Math.abs(w) < bestAbs){ bestAbs = Math.abs(w); frontIdx = i; }
     });
 
     items.forEach(function(item, i){
-      var wrapped = wrappedVals[i];
-      var y = anchorY - wrapped;
-      var x = amplitude * Math.sin(2 * Math.PI * wrapped / wavelength);
-      var frac = Math.min(1, wrapped / viewHeight);
+      var w = wVals[i];
+      var y = anchorY - w;
+      var x = amplitude * Math.sin(2 * Math.PI * w / wavelength);
+      var frac = Math.min(1, Math.abs(w) / viewHeight);
       var scaleMin = state.scaleMin / 100;
       var scaleAmp = state.scaleAmp / 100;
       var scale = (scaleMin + scaleAmp) - scaleAmp * frac;
@@ -541,11 +563,25 @@
     updateReadout(frontIdx, null);
   }
 
+  function updateNavButtons(){
+    var prevDisabled = state.lockStart;
+    var nextDisabled = state.lockStart;
+    if (!state.lockStart && state.mode === 'conveyor' && state.conveyorLoop === 'finite'){
+      var max = maxFinitePos();
+      if (pos <= 0.5) prevDisabled = true;
+      if (pos >= max - 0.5) nextDisabled = true;
+    }
+    document.getElementById('prev').disabled = prevDisabled;
+    document.getElementById('next').disabled = nextDisabled;
+  }
+
   function renderRing(){
     if (state.mode === 'conveyor') renderConveyor(); else renderOrbit();
+    updateNavButtons();
   }
 
   function animateTo(target, dur){
+    target = clampFinitePos(target);
     if (animId) cancelAnimationFrame(animId);
     var from = pos, diff = target - from, t0 = performance.now();
     dur = dur || 300;
@@ -582,7 +618,7 @@
     if (state.mode === 'conveyor'){
       var dy = e.clientY - startY;
       moved = Math.max(moved, Math.abs(dy));
-      pos = startPos - dy * (state.dragSens / 100);
+      pos = clampFinitePos(startPos - dy * (state.dragSens / 100));
     } else {
       var dx = e.clientX - startX;
       moved = Math.max(moved, Math.abs(dx));
@@ -626,7 +662,7 @@
     var step = currentStep();
     suppressManual = true;
     if (state.mode === 'conveyor'){
-      pos = (state.startIndex - 1) * step;
+      pos = clampFinitePos((state.startIndex - 1) * step);
     } else {
       pos = -(state.startIndex - 1) * step;
     }
@@ -645,10 +681,8 @@
     state.lockStart = locked;
     lockBtn.textContent = locked ? '🔒 Point zéro bloqué (toucher pour débloquer)' : '🔓 Bloquer le point zéro';
     lockBtn.classList.toggle('primary', locked);
-    document.getElementById('prev').disabled = locked;
-    document.getElementById('next').disabled = locked;
     stage.style.opacity = locked ? '0.92' : '1';
-    if (locked) goToStartIndex();
+    if (locked) goToStartIndex(); else { updateNavButtons(); }
   }
   lockBtn.addEventListener('click', function(){ setLockStart(!state.lockStart); });
 
@@ -657,8 +691,13 @@
     var frontCat = CATEGORIES[frontIdx % CATEGORIES.length].label;
     var lines = [];
     if (state.mode === 'conveyor'){
-      lines.push('Mode : <b>Tapis roulant en S (vertical, boucle fermée)</b>');
-      lines.push('Longueur totale de la boucle : <b>' + (n * state.spacing) + ' px</b>');
+      lines.push('Mode : <b>Tapis roulant en S (' + (state.conveyorLoop === 'finite' ? 'chemin fini, début → fin' : 'boucle infinie') + ')</b>');
+      if (state.conveyorLoop === 'finite'){
+        lines.push('Progression : <b>carte ' + (frontIdx + 1) + ' / ' + n + '</b>' +
+          (pos <= 0.5 ? ' — au tout début' : (pos >= maxFinitePos() - 0.5 ? ' — à la toute fin' : '')));
+      } else {
+        lines.push('Longueur totale de la boucle : <b>' + (n * state.spacing) + ' px</b>');
+      }
       lines.push('Carte au point zéro (départ) : <b>#' + (frontIdx + 1) + ' — ' + frontCat + '</b>');
     } else {
       var stepDeg = Math.round((360 / n) * 10) / 10;
@@ -740,6 +779,20 @@
     b.addEventListener('click', function(){ setMode(b.dataset.mode); });
   });
 
+  // ===== Bascule chemin fini / boucle infinie (mode tapis roulant) =====
+  var loopSwitch = document.getElementById('loopSwitch');
+  function setConveyorLoop(loop){
+    state.conveyorLoop = loop;
+    Array.prototype.forEach.call(loopSwitch.children, function(b){
+      b.classList.toggle('active', b.dataset.loop === loop);
+    });
+    pos = clampFinitePos(pos);
+    renderRing();
+  }
+  Array.prototype.forEach.call(loopSwitch.children, function(b){
+    b.addEventListener('click', function(){ setConveyorLoop(b.dataset.loop); });
+  });
+
   // ===== Grille de sélection de forme d'orbite (le tracé, mode orbite) =====
   var orbitShapeGrid = document.getElementById('orbitShapeGrid');
   var orbitShapeSwatches = [];
@@ -809,7 +862,8 @@
     scaleMin: 60, scaleAmp: 55, frontBoost: 105, opMin: 45,
     dragSens: 35, manual: 0, shape: 'circle', orbitShape: 'ellipse',
     startIndex: 1, lockStart: false,
-    amplitude: 70, wavelength: 220, spacing: 90, viewHeight: 380
+    amplitude: 70, wavelength: 220, spacing: 90, viewHeight: 380,
+    conveyorLoop: 'finite'
   };
   document.getElementById('reset').addEventListener('click', function(){
     Object.keys(DEFAULTS).forEach(function(id){
@@ -822,6 +876,7 @@
     setShape(DEFAULTS.shape);
     setOrbitShape(DEFAULTS.orbitShape);
     setMode(DEFAULTS.mode);
+    setConveyorLoop(DEFAULTS.conveyorLoop);
     buildCards(state.n);
     updateStartIndexMax();
     setLockStart(false);
