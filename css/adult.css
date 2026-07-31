@@ -13,7 +13,7 @@
   --gold: #C9A84C;
   --gold-light: #9A7730;
   --gold-dark: #8B6914;
-  --hadith-color: #6B5E48;
+  --hadith-color: #4C6961;
   --translation-color: var(--text2);
   --radius-lg: 20px;
   --radius-md: 14px;
@@ -34,10 +34,10 @@ body.day {
   --bg: #EDE8D5;
   --bg2: #F5F0E3;
   --text: #1E1A10;
-  --text2: #4A4030;
-  --text3: #6B5E48;
+  --text2: #33544D;
+  --text3: #4C6961;
   --phonetic-color: #9A7730;
-  --hadith-color: #6B5E48;
+  --hadith-color: #4C6961;
   --card-bg: linear-gradient(160deg, #F7F3E8 0%, #EDE8D8 100%);
   --card-border: rgba(199,160,74,0.20);
   --shadow: rgba(120,90,20,0.10);
