@@ -90,6 +90,7 @@
   button:active{background:rgba(var(--gold-rgb),.18);}
   button.primary{background:var(--gold);color:#221d13;border-color:var(--gold);font-weight:600;}
   button.wide{flex:1;text-align:center;}
+  button:disabled{opacity:.4;pointer-events:none;}
 
   .readout{background:var(--bg2);border:1px solid var(--card-border);border-radius:12px;padding:12px;
     font-size:11.5px;color:var(--text2);line-height:1.7;margin-top:6px;}
@@ -146,8 +147,18 @@
   <div class="presets" id="presets"></div>
   <div class="row">
     <label>Cartes dans cette catégorie <span class="val" id="v_n">6</span></label>
-    <input type="range" id="n" min="3" max="22" step="1" value="6">
+    <input type="range" id="n" min="3" max="115" step="1" value="6">
   </div>
+
+  <div class="panel-title">Départ (position initiale)</div>
+  <div class="row">
+    <label>Carte de départ <span class="val" id="v_startIndex">1</span> / <span id="v_startMax">6</span></label>
+    <input type="range" id="startIndex" min="1" max="6" step="1" value="1">
+  </div>
+  <div class="btnrow">
+    <button id="lockStart" class="wide">🔓 Bloquer le départ</button>
+  </div>
+  <p class="sub" style="margin:2px 0 4px;">Une fois bloqué, impossible de glisser ou de changer de carte : la roulette reste figée sur la carte de départ choisie.</p>
 
   <div class="panel-title">Forme de l'arc</div>
   <div class="row">
@@ -269,8 +280,21 @@
     {id:'stade', label:'Piste / stade', svg:'<rect x="8" y="28" width="84" height="44" rx="22" ry="22" />'},
     {id:'squircle', label:'Carré arrondi', svg:'<rect x="14" y="14" width="72" height="72" rx="20" ry="20" />'},
     {id:'diamond', label:'Losange', svg:'<polygon points="50,6 94,50 50,94 6,50" />'},
-    {id:'infinity', label:'Huit / infini', svg:'<path d="M50,50 C50,28 30,20 20,32 C10,44 20,66 35,58 C45,52 45,48 35,42 C20,34 10,56 20,68 C30,80 50,72 50,50 C50,28 70,20 80,32 C90,44 80,66 65,58 C55,52 55,48 65,42 C80,34 90,56 80,68 C70,80 50,72 50,50 Z" />'}
+    {id:'infinity', label:'Huit / infini', svg:'<path d="M50,50 C50,28 30,20 20,32 C10,44 20,66 35,58 C45,52 45,48 35,42 C20,34 10,56 20,68 C30,80 50,72 50,50 C50,28 70,20 80,32 C90,44 80,66 65,58 C55,52 55,48 65,42 C80,34 90,56 80,68 C70,80 50,72 50,50 Z" />'},
+    {id:'montagne', label:'Route de montagne', svg:'<path d="M6,66 L24,26 L40,58 L56,18 L72,58 L94,30" />'},
+    {id:'s-route', label:'Route en S', svg:'<path d="M28,10 C58,10 8,50 38,50 C68,50 18,90 48,90" />'},
+    {id:'chicane', label:'Chicane', svg:'<path d="M6,50 L20,26 L34,66 L48,26 L62,66 L76,26 L94,50" />'},
+    {id:'serpentin', label:'Serpentin', svg:'<path d="M50,10 C74,10 90,26 90,50 C90,70 76,82 58,82 C44,82 34,74 34,60 C34,48 44,42 54,42" />'}
   ];
+
+  // Onde triangulaire périodique (utilisée pour les routes en zigzag) :
+  // retourne une valeur entre -1 et 1, avec "freq" pics complets par tour.
+  function triangleWave(rad, freq){
+    var period = (2 * Math.PI) / freq;
+    var t = (rad % period) / period;
+    if (t < 0) t += 1;
+    return 4 * Math.abs(t - 0.5) - 1;
+  }
 
   function getOrbitXY(shapeId, rad, rx, ry){
     var s = Math.sin(rad), c = Math.cos(rad);
@@ -296,6 +320,25 @@
       }
       case 'infinity':
         return { x: rx * s, y: ry * Math.sin(2 * rad) * 0.9 };
+      case 'montagne': {
+        // route de montagne : pics et creux nets superposés à l'arc de base
+        var tw = triangleWave(rad, 4);
+        return { x: rx * s, y: ry * 0.55 * c + ry * 0.45 * tw };
+      }
+      case 's-route': {
+        // route en S : ondulation large et fluide
+        return { x: rx * s, y: ry * 0.5 * c + ry * 0.5 * Math.sin(2 * rad) };
+      }
+      case 'chicane': {
+        // chicane : zigzag serré à angles marqués
+        var twC = triangleWave(rad, 6);
+        return { x: rx * s, y: ry * 0.35 * c + ry * 0.65 * twC };
+      }
+      case 'serpentin': {
+        // serpentin : le rayon respire en tournant, effet de coulée serpentine
+        var rMod = 0.72 + 0.28 * Math.cos(5 * rad);
+        return { x: rx * s * rMod, y: ry * c * rMod };
+      }
       default: // ellipse
         return { x: rx * s, y: ry * c };
     }
@@ -304,7 +347,8 @@
   var state = {
     n: 6, rxBase: 58, rxStep: 13, ryRatio: 58, pop: 22,
     scaleMin: 60, scaleAmp: 55, frontBoost: 105, opMin: 45,
-    dragSens: 35, manual: 0, shape: 'circle', orbitShape: 'ellipse'
+    dragSens: 35, manual: 0, shape: 'circle', orbitShape: 'ellipse',
+    startIndex: 1, lockStart: false
   };
   var angle = 0; // angle courant de l'anneau (piloté par glisser + boutons)
   var items = [];
@@ -434,6 +478,7 @@
 
   // ===== Glisser sur l'arc =====
   stage.addEventListener('pointerdown', function(e){
+    if (state.lockStart) return;
     dragging = true; moved = 0; startX = e.clientX; startAngle = angle;
     if (animId) cancelAnimationFrame(animId);
     try { stage.setPointerCapture(e.pointerId); } catch(err){}
@@ -454,8 +499,8 @@
   stage.addEventListener('pointercancel', up);
 
   // ===== Boutons précédent / suivant =====
-  document.getElementById('prev').addEventListener('click', function(){ stepBy(-1); });
-  document.getElementById('next').addEventListener('click', function(){ stepBy(1); });
+  document.getElementById('prev').addEventListener('click', function(){ if (!state.lockStart) stepBy(-1); });
+  document.getElementById('next').addEventListener('click', function(){ if (!state.lockStart) stepBy(1); });
 
   // ===== Réglette de rotation manuelle =====
   document.getElementById('manual').addEventListener('input', function(e){
@@ -465,6 +510,44 @@
     renderRing();
     suppressManual = false;
   });
+
+  // ===== Carte de départ =====
+  function updateStartIndexMax(){
+    var el = document.getElementById('startIndex');
+    el.max = state.n;
+    document.getElementById('v_startMax').textContent = state.n;
+    if (state.startIndex > state.n){
+      state.startIndex = state.n;
+      el.value = state.n;
+      document.getElementById('v_startIndex').textContent = state.n;
+    }
+  }
+  function goToStartIndex(){
+    var step = 360 / state.n;
+    suppressManual = true;
+    angle = -(state.startIndex - 1) * step;
+    renderRing();
+    suppressManual = false;
+  }
+  document.getElementById('startIndex').addEventListener('input', function(e){
+    state.startIndex = parseInt(e.target.value, 10);
+    document.getElementById('v_startIndex').textContent = state.startIndex;
+    goToStartIndex();
+  });
+
+  // ===== Bloquer / débloquer le départ =====
+  var lockBtn = document.getElementById('lockStart');
+  function setLockStart(locked){
+    state.lockStart = locked;
+    lockBtn.textContent = locked ? '🔒 Départ bloqué (toucher pour débloquer)' : '🔓 Bloquer le départ';
+    lockBtn.classList.toggle('primary', locked);
+    document.getElementById('prev').disabled = locked;
+    document.getElementById('next').disabled = locked;
+    stage.style.touchAction = locked ? 'none' : 'pan-y';
+    stage.style.opacity = locked ? '0.92' : '1';
+    if (locked) goToStartIndex();
+  }
+  lockBtn.addEventListener('click', function(){ setLockStart(!state.lockStart); });
 
   function updateReadout(geo, frontIdx){
     var stepDeg = Math.round((360 / state.n) * 10) / 10;
@@ -485,7 +568,8 @@
       'var iconOp = ' + (state.opMin/100).toFixed(2) + ' + ' + (1-state.opMin/100).toFixed(2) + ' * ((depth + 1) / 2);\n' +
       '// sensibilité du glisser : dx * ' + (state.dragSens/100).toFixed(2) + '\n' +
       '// forme de l\'icône : class="icon-circle shape-' + state.shape + '" (voir shape-* dans le CSS)\n' +
-      '// forme de l\'orbite (le tracé) : "' + state.orbitShape + '" — voir getOrbitXY() dans ce fichier';
+      '// forme de l\'orbite (le tracé) : "' + state.orbitShape + '" — voir getOrbitXY() dans ce fichier\n' +
+      '// carte de départ : #' + state.startIndex + (state.lockStart ? ' — départ BLOQUÉ (pas de rotation possible)' : ' — libre');
   }
 
   // ===== Réglettes =====
@@ -498,8 +582,8 @@
       label.textContent = el.value;
       if (id === 'n'){
         buildCards(state.n);
-        angle = 0;
-        renderRing();
+        updateStartIndexMax();
+        goToStartIndex();
       } else {
         renderRing();
       }
@@ -552,7 +636,7 @@
   setShape(state.shape);
 
   // ===== Préréglages rapides du nombre de cartes =====
-  var PRESETS = [3, 4, 6, 8, 10, 12, 14, 18, 22];
+  var PRESETS = [3, 4, 6, 8, 10, 12, 14, 18, 22, 30, 45, 60, 80, 100, 115];
   var presetsRow = document.getElementById('presets');
   PRESETS.forEach(function(p){
     var b = document.createElement('button');
@@ -562,8 +646,8 @@
       document.getElementById('n').value = p;
       document.getElementById('v_n').textContent = p;
       buildCards(p);
-      angle = 0;
-      renderRing();
+      updateStartIndexMax();
+      goToStartIndex();
     });
     presetsRow.appendChild(b);
   });
@@ -572,7 +656,8 @@
   var DEFAULTS = {
     n: 6, rxBase: 58, rxStep: 13, ryRatio: 58, pop: 22,
     scaleMin: 60, scaleAmp: 55, frontBoost: 105, opMin: 45,
-    dragSens: 35, manual: 0, shape: 'circle', orbitShape: 'ellipse'
+    dragSens: 35, manual: 0, shape: 'circle', orbitShape: 'ellipse',
+    startIndex: 1, lockStart: false
   };
   document.getElementById('reset').addEventListener('click', function(){
     Object.keys(DEFAULTS).forEach(function(id){
@@ -585,8 +670,9 @@
     setShape(DEFAULTS.shape);
     setOrbitShape(DEFAULTS.orbitShape);
     buildCards(state.n);
-    angle = 0;
-    renderRing();
+    updateStartIndexMax();
+    setLockStart(false);
+    goToStartIndex();
   });
 
   // ===== Copier les valeurs =====
@@ -606,6 +692,7 @@
 
   // ===== Démarrage =====
   buildCards(state.n);
+  updateStartIndexMax();
   renderRing();
 })();
 </script>
