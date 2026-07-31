@@ -221,22 +221,49 @@
 
   function attachDrag(w) {
     var stage = w.stage;
+    // "Verrou de direction" : au début d'un geste, on ne sait pas encore si
+    // la personne veut faire défiler la page (vertical) ou tourner la
+    // roulette (horizontal). On observe les premiers pixels du geste avant
+    // de décider, pour ne plus décaler la roulette pendant un simple scroll.
+    var axisLocked = null; // null = pas encore décidé, 'x' = roulette, 'y' = scroll
+    var startY = 0;
+    var LOCK_THRESHOLD = 6; // px avant de trancher la direction du geste
+
     stage.addEventListener('pointerdown', function (e) {
-      w.dragging = true;
+      w.dragging = false; // pas encore : on attend de connaître la direction
       w.moved = 0;
       w.startX = e.clientX;
+      startY = e.clientY;
       w.startAngle = w.angle;
+      axisLocked = null;
       if (w.animId) cancelAnimationFrame(w.animId);
-      try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+      // Pas de setPointerCapture ici : on la met seulement si le geste
+      // s'avère être une rotation horizontale (voir plus bas), sinon le
+      // scroll vertical natif de la page doit rester libre.
     });
     stage.addEventListener('pointermove', function (e) {
-      if (!w.dragging) return;
+      if (axisLocked === 'y') return; // scroll de page en cours : on ignore
       var dx = e.clientX - w.startX;
+      var dy = e.clientY - startY;
+
+      if (axisLocked === null) {
+        if (Math.abs(dx) < LOCK_THRESHOLD && Math.abs(dy) < LOCK_THRESHOLD) return; // pas assez de mouvement pour trancher
+        if (Math.abs(dy) > Math.abs(dx)) {
+          axisLocked = 'y'; // c'est un scroll vertical : on laisse la page défiler
+          return;
+        }
+        axisLocked = 'x'; // c'est une vraie rotation horizontale
+        w.dragging = true;
+        try { stage.setPointerCapture(e.pointerId); } catch (err) {}
+      }
+
+      if (!w.dragging) return;
       w.moved = Math.max(w.moved, Math.abs(dx));
       w.angle = w.startAngle + dx * 0.34;
       renderRing(w);
     });
     function up() {
+      axisLocked = null;
       if (!w.dragging) return;
       w.dragging = false;
       if (w.moved >= 6) {
