@@ -47,9 +47,9 @@
     var step = 360 / n;
     // Ovale aplati : plus large que haut, s'élargit un peu avec le nombre d'icônes.
     // Valeurs reglées via l'outil de test (arc plus large, moins de variation par carte).
-    var rx = Math.round(61 + (n - 1) * 11);
+    var rx = Math.round(67 + (n - 1) * 11);
     // Rayon vertical : ratio réglé via l'outil de test.
-    var ry = Math.round(rx * 0.64);
+    var ry = Math.round(rx * 0.59);
     stage.dataset.rx = String(rx);
     stage.dataset.ry = String(ry);
     // La hauteur fixe (190px, définie dans wheel.css) ne suffit plus avec un
@@ -140,20 +140,22 @@
       var total = base + w.angle;
       var rad = (total * Math.PI) / 180;
       var depth = Math.cos(rad); // 1 = avant/centre, -1 = arrière
-      // Tracé en ellipse classique (rx, ry), réglé via l'outil de test.
-      var x = w.rx * Math.sin(rad);
-      var y = w.ry * Math.cos(rad); // avant en bas, arrière en haut
+      // Tracé "piste / stade" (superellipse, exposant 0.5), réglé via l'outil de test.
+      var s = Math.sin(rad);
+      var c = Math.cos(rad);
+      var x = w.rx * (s < 0 ? -1 : s > 0 ? 1 : 0) * Math.pow(Math.abs(s), 0.5);
+      var y = w.ry * (c < 0 ? -1 : c > 0 ? 1 : 0) * Math.pow(Math.abs(c), 0.5); // avant en bas, arrière en haut
       // Invocations (skewed) garde l'effet de profondeur (cartes qui
       // grossissent/s'estompent). Accueil/Coran : vue plate, de face, comme
       // une horloge — toutes les cartes ont la même taille et opacité, sans
       // inclinaison, seule leur position tourne sur le cercle.
-      var scale = skewed ? (0.74 + 0.23 * ((depth + 1) / 2)) : 1;
+      var scale = skewed ? (0.85 + 0.13 * ((depth + 1) / 2)) : 1;
       // La carte centrale se détache du groupe : décalage supplémentaire
       // vers le bas (popOffset, réglé à 0 pour l'instant) + gain de taille
       // plus marqué, comme si elle était attirée hors du reste des cartes.
       if (skewed && i === frontIdx) {
         y += w.popOffset;
-        scale *= 1.28;
+        scale *= 1.22;
       }
       item.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')';
       item.style.zIndex = String(Math.round((depth + 1) * 100));
@@ -252,7 +254,7 @@
 
       if (!w.dragging) return;
       w.moved = Math.max(w.moved, Math.abs(dx));
-      w.angle = w.startAngle + dx * 0.51;
+      w.angle = w.startAngle + dx * 0.33;
       renderRing(w);
     });
     function up() {
