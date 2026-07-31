@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Réglage de la roulette — Deentag</title>
+<style>
+  :root{
+    --gold:#C9A84C; --gold-rgb:201,168,76;
+    --bg:#14110A; --bg2:#1C1810;
+    --card-bg:#242017; --card-border:rgba(201,168,76,.28);
+    --text:#F3EEDD; --text2:#B9AF95;
+    --accent:#5A8F86;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    height:100%;overflow:hidden;}
+
+  /* ===== Mise en page : rendu fixe en haut, réglages en dessous qui scrollent ===== */
+  .app{display:flex;flex-direction:column;height:100vh;height:100dvh;}
+  .fixed-top{flex:0 0 auto;background:var(--bg);border-bottom:1px solid var(--card-border);
+    box-shadow:0 8px 16px -8px rgba(0,0,0,.4);position:relative;z-index:20;}
+  .scroll-panel{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+
+  header{padding:10px 16px 4px;}
+  h1{font-size:14px;margin:0 0 2px;letter-spacing:.02em;color:var(--gold);}
+  p.sub{margin:0;font-size:11px;color:var(--text2);line-height:1.35;}
+
+  /* ===== Scène (identique à orbit-stage de wheel.css) ===== */
+  .stage-wrap{padding:2px 0 0;}
+  .orbit-stage{position:relative;margin:2px 0 2px;touch-action:pan-y;overflow:hidden;
+    transition:height .2s ease;}
+  .orbit-ring{position:absolute;left:50%;top:50%;width:0;height:0;}
+  .item{position:absolute;left:0;top:0;width:0;height:0;}
+  .item .cat-card{position:absolute;left:-50px;top:-68px;width:100px;height:136px;
+    display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;
+    transition:transform .25s ease;}
+  .icon-circle{width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#3a3222,#221d13);
+    border:1px solid var(--card-border);display:flex;align-items:center;justify-content:center;font-size:28px;
+    transition:border-radius .25s ease, clip-path .25s ease;}
+
+  /* ===== Formes disponibles (appliquées directement sur .icon-circle ou
+     sur les pastilles d'aperçu .sw, via une classe shape-XXX) ===== */
+  .shape-circle{border-radius:50%;clip-path:none;}
+  .shape-squircle{border-radius:30%;clip-path:none;}
+  .shape-rounded-square{border-radius:16px;clip-path:none;}
+  .shape-square{border-radius:2px;clip-path:none;}
+  .shape-hexagon{border-radius:0;clip-path:polygon(25% 3%,75% 3%,100% 50%,75% 97%,25% 97%,0% 50%);}
+  .shape-octagon{border-radius:0;clip-path:polygon(30% 0%,70% 0%,100% 30%,100% 70%,70% 100%,30% 100%,0% 70%,0% 30%);}
+  .shape-diamond{border-radius:0;clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);}
+  .shape-star{border-radius:0;clip-path:polygon(50% 0%,63% 35%,100% 38%,72% 60%,82% 96%,50% 76%,18% 96%,28% 60%,0% 38%,37% 35%);}
+  .shape-shield{border-radius:0;clip-path:polygon(50% 0%,100% 18%,100% 58%,50% 100%,0% 58%,0% 18%);}
+  .shape-blob{clip-path:none;border-radius:63% 37% 54% 46% / 55% 45% 55% 45%;}
+  .shape-drop{clip-path:none;border-radius:50% 50% 50% 4%;}
+
+  .cat-label{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);
+    background:rgba(0,0,0,.25);padding:3px 6px;border-radius:8px;white-space:nowrap;}
+  .item.is-front .cat-label{color:var(--gold);}
+  .item.is-front .icon-circle{filter:drop-shadow(0 0 10px rgba(var(--gold-rgb),.4));border-color:var(--gold);}
+  .orbit-divider{position:absolute;left:0;top:0;width:70px;margin-left:-35px;height:1px;
+    background:linear-gradient(90deg,transparent,rgba(var(--gold-rgb),.55),transparent);pointer-events:none;}
+
+  .wheel-dots{display:flex;justify-content:center;gap:6px;margin:0 0 4px;}
+  .wheel-dot{width:5px;height:5px;border-radius:50%;background:rgba(var(--gold-rgb),.35);transition:transform .2s,background .2s;}
+  .wheel-dot.active{background:var(--gold);transform:scale(1.7);}
+
+  .hint-row{display:flex;justify-content:center;gap:6px;font-size:11px;color:var(--text2);margin:2px 0 10px;}
+
+  /* ===== Panneau de réglages ===== */
+  .panel{padding:0 16px;}
+  .panel-title{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);
+    margin:18px 0 8px;border-top:1px solid var(--card-border);padding-top:14px;}
+  .panel-title:first-child{border-top:none;margin-top:6px;padding-top:0;}
+  .row{margin-bottom:14px;}
+  .row label{display:flex;justify-content:space-between;font-size:12.5px;color:var(--text);margin-bottom:4px;}
+  .row label span.val{color:var(--gold);font-variant-numeric:tabular-nums;}
+  input[type=range]{width:100%;height:22px;-webkit-appearance:none;background:transparent;}
+  input[type=range]::-webkit-slider-runnable-track{height:4px;border-radius:2px;background:var(--card-border);}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:17px;height:17px;border-radius:50%;
+    background:var(--gold);margin-top:-6.5px;border:2px solid var(--bg);}
+  input[type=range]::-moz-range-track{height:4px;border-radius:2px;background:var(--card-border);}
+  input[type=range]::-moz-range-thumb{width:17px;height:17px;border-radius:50%;background:var(--gold);border:2px solid var(--bg);}
+
+  .btnrow{display:flex;gap:8px;margin:4px 0 6px;flex-wrap:wrap;}
+  button{font:inherit;font-size:12.5px;padding:9px 14px;border-radius:10px;border:1px solid var(--card-border);
+    background:var(--card-bg);color:var(--text);}
+  button:active{background:rgba(var(--gold-rgb),.18);}
+  button.primary{background:var(--gold);color:#221d13;border-color:var(--gold);font-weight:600;}
+  button.wide{flex:1;text-align:center;}
+
+  .readout{background:var(--bg2);border:1px solid var(--card-border);border-radius:12px;padding:12px;
+    font-size:11.5px;color:var(--text2);line-height:1.7;margin-top:6px;}
+  .readout b{color:var(--gold);font-weight:600;}
+
+  pre{background:#0E0C07;border:1px solid var(--card-border);border-radius:10px;padding:10px;
+    font-size:10.5px;color:#D9CFA8;overflow-x:auto;white-space:pre;margin:8px 0 0;}
+  .copied{color:var(--accent);font-size:11px;margin-top:6px;display:none;}
+
+  .presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:4px;}
+  .presets button{font-size:11.5px;padding:7px 11px;}
+
+  .shape-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:6px;}
+  .shape-swatch{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;
+    padding:8px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;}
+  .shape-swatch .sw{width:34px;height:34px;background:radial-gradient(circle at 32% 28%,#3a3222,#221d13);
+    border:1px solid var(--card-border);}
+  .shape-swatch svg{width:34px;height:34px;display:block;}
+  .shape-swatch span{font-size:9.5px;color:var(--text2);text-align:center;line-height:1.15;}
+  .shape-swatch.active{border-color:var(--gold);background:rgba(var(--gold-rgb),.14);}
+  .shape-swatch.active span{color:var(--gold);}
+  .shape-swatch.active .sw{border-color:var(--gold);}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+<div class="fixed-top">
+  <header>
+    <h1>🕋 Réglage de la roulette d'orbite</h1>
+    <p class="sub">Le rendu reste fixe ici en haut — glissez l'arc ou réglez les curseurs plus bas, tout se voit en direct.</p>
+  </header>
+
+  <div class="stage-wrap">
+    <div class="orbit-stage" id="stage">
+      <div class="orbit-ring" id="ring"></div>
+    </div>
+    <div class="wheel-dots" id="dots"></div>
+    <div class="hint-row">‹ glisser pour tourner ›</div>
+  </div>
+</div>
+
+<div class="scroll-panel">
+<div class="panel">
+
+  <div class="panel-title">Forme de l'orbite (le tracé)</div>
+  <div class="shape-grid" id="orbitShapeGrid"></div>
+
+  <div class="panel-title">Forme des icônes (chaque carte)</div>
+  <div class="shape-grid" id="shapeGrid"></div>
+
+  <div class="panel-title">Nombre de cartes</div>
+  <div class="presets" id="presets"></div>
+  <div class="row">
+    <label>Cartes dans cette catégorie <span class="val" id="v_n">6</span></label>
+    <input type="range" id="n" min="3" max="14" step="1" value="6">
+  </div>
+
+  <div class="panel-title">Forme de l'arc</div>
+  <div class="row">
+    <label>Largeur de base (rx) <span class="val" id="v_rxBase">58</span> px</label>
+    <input type="range" id="rxBase" min="30" max="100" step="1" value="58">
+  </div>
+  <div class="row">
+    <label>Largeur ajoutée par carte <span class="val" id="v_rxStep">13</span> px</label>
+    <input type="range" id="rxStep" min="0" max="30" step="1" value="13">
+  </div>
+  <div class="row">
+    <label>Aplatissement vertical (ry / rx) <span class="val" id="v_ryRatio">58</span> %</label>
+    <input type="range" id="ryRatio" min="20" max="100" step="1" value="58">
+  </div>
+  <div class="row">
+    <label>Décalage de la carte centrale (pop) <span class="val" id="v_pop">22</span> px</label>
+    <input type="range" id="pop" min="0" max="60" step="1" value="22">
+  </div>
+
+  <div class="panel-title">Profondeur (avant / arrière)</div>
+  <div class="row">
+    <label>Taille mini à l'arrière <span class="val" id="v_scaleMin">60</span> %</label>
+    <input type="range" id="scaleMin" min="30" max="100" step="1" value="60">
+  </div>
+  <div class="row">
+    <label>Amplitude de zoom vers l'avant <span class="val" id="v_scaleAmp">55</span> %</label>
+    <input type="range" id="scaleAmp" min="0" max="100" step="1" value="55">
+  </div>
+  <div class="row">
+    <label>Boost carte centrale <span class="val" id="v_frontBoost">105</span> %</label>
+    <input type="range" id="frontBoost" min="100" max="140" step="1" value="105">
+  </div>
+  <div class="row">
+    <label>Opacité mini de l'icône à l'arrière <span class="val" id="v_opMin">45</span> %</label>
+    <input type="range" id="opMin" min="0" max="100" step="1" value="45">
+  </div>
+
+  <div class="panel-title">Rotation / glisser</div>
+  <div class="row">
+    <label>Sensibilité du glisser <span class="val" id="v_dragSens">35</span> %</label>
+    <input type="range" id="dragSens" min="10" max="100" step="1" value="35">
+  </div>
+  <div class="row">
+    <label>Rotation manuelle (test) <span class="val" id="v_manual">0</span>°</label>
+    <input type="range" id="manual" min="-180" max="180" step="1" value="0">
+  </div>
+
+  <div class="btnrow">
+    <button id="prev" class="wide">‹ Carte précédente</button>
+    <button id="next" class="wide">Carte suivante ›</button>
+  </div>
+  <div class="btnrow">
+    <button id="reset" class="wide">↺ Réinitialiser les réglages</button>
+    <button id="copy" class="wide primary">Copier les valeurs</button>
+  </div>
+  <div class="copied" id="copiedMsg">✓ Copié — colle-le dans notre discussion et je l'applique au site.</div>
+
+  <div class="panel-title">Valeurs calculées</div>
+  <div class="readout" id="readout"></div>
+
+  <pre id="code"></pre>
+
+  <div style="height:40px"></div>
+</div>
+</div>
+
+</div><!-- /.app -->
+
+<script>
+(function(){
+  var stage = document.getElementById('stage');
+  var ring = document.getElementById('ring');
+  var dotsRow = document.getElementById('dots');
+
+  var ICONS = ['🌙','🕌','📿','🤲','🌿','🌊','🔥','⭐','🕋','🌸','🍃','🪷','🌾','🌤️'];
+  var LABELS = ['Réveil','Voyage','Sommeil','Repas','Maison','Marché','École','Pluie','Douleur','Joie','Colère','Départ','Retour','Doute'];
+  var SHAPES = [
+    {id:'circle', label:'Cercle'},
+    {id:'squircle', label:'Squircle'},
+    {id:'rounded-square', label:'Carré arrondi'},
+    {id:'square', label:'Carré'},
+    {id:'hexagon', label:'Hexagone'},
+    {id:'octagon', label:'Octogone'},
+    {id:'diamond', label:'Losange'},
+    {id:'shield', label:'Blason'},
+    {id:'star', label:'Étoile'},
+    {id:'blob', label:'Organique'},
+    {id:'drop', label:'Goutte'}
+  ];
+
+  // ===== Formes du TRACÉ de l'orbite (le chemin suivi par les cartes,
+  // pas l'icône) — chaque forme retourne x,y à partir de l'angle courant. =====
+  var ORBIT_SHAPES = [
+    {id:'ellipse', label:'Ovale aplati', svg:'<ellipse cx="50" cy="50" rx="42" ry="24" />'},
+    {id:'circle', label:'Cercle', svg:'<circle cx="50" cy="50" r="33" />'},
+    {id:'stade', label:'Piste / stade', svg:'<rect x="8" y="28" width="84" height="44" rx="22" ry="22" />'},
+    {id:'squircle', label:'Carré arrondi', svg:'<rect x="14" y="14" width="72" height="72" rx="20" ry="20" />'},
+    {id:'diamond', label:'Losange', svg:'<polygon points="50,6 94,50 50,94 6,50" />'},
+    {id:'infinity', label:'Huit / infini', svg:'<path d="M50,50 C50,28 30,20 20,32 C10,44 20,66 35,58 C45,52 45,48 35,42 C20,34 10,56 20,68 C30,80 50,72 50,50 C50,28 70,20 80,32 C90,44 80,66 65,58 C55,52 55,48 65,42 C80,34 90,56 80,68 C70,80 50,72 50,50 Z" />'}
+  ];
+
+  function getOrbitXY(shapeId, rad, rx, ry){
+    var s = Math.sin(rad), c = Math.cos(rad);
+    var sign = Math.sign || function(v){ return v > 0 ? 1 : (v < 0 ? -1 : 0); };
+    switch (shapeId){
+      case 'circle':
+        return { x: s * rx, y: c * rx }; // rayon unique basé sur la largeur réglée
+      case 'stade': {
+        var e = 0.5; // piste ovale aux bords aplatis (superellipse, exposant 2/4)
+        return { x: rx * sign(s) * Math.pow(Math.abs(s), e), y: ry * sign(c) * Math.pow(Math.abs(c), e) };
+      }
+      case 'squircle': {
+        var e2 = 0.667; // carré aux coins arrondis (superellipse, exposant 2/3)
+        return { x: rx * sign(s) * Math.pow(Math.abs(s), e2), y: ry * sign(c) * Math.pow(Math.abs(c), e2) };
+      }
+      case 'diamond': {
+        // avance le long des 4 arêtes du losange, par fraction de l'angle
+        var deg = ((rad * 180 / Math.PI) % 360 + 360) % 360;
+        var q = Math.floor(deg / 90), f = (deg % 90) / 90;
+        var pts = [[0, ry], [rx, 0], [0, -ry], [-rx, 0], [0, ry]];
+        var p0 = pts[q], p1 = pts[q + 1];
+        return { x: p0[0] + (p1[0] - p0[0]) * f, y: p0[1] + (p1[1] - p0[1]) * f };
+      }
+      case 'infinity':
+        return { x: rx * s, y: ry * Math.sin(2 * rad) * 0.9 };
+      default: // ellipse
+        return { x: rx * s, y: ry * c };
+    }
+  }
+
+  var state = {
+    n: 6, rxBase: 58, rxStep: 13, ryRatio: 58, pop: 22,
+    scaleMin: 60, scaleAmp: 55, frontBoost: 105, opMin: 45,
+    dragSens: 35, manual: 0, shape: 'circle', orbitShape: 'ellipse'
+  };
+  var angle = 0; // angle courant de l'anneau (piloté par glisser + boutons)
+  var items = [];
+  var dots = [];
+  var dragging = false, startX = 0, startAngle = 0, moved = 0, animId = null, suppressManual = false;
+
+  var controls = ['n','rxBase','rxStep','ryRatio','pop','scaleMin','scaleAmp','frontBoost','opMin','dragSens','manual'];
+
+  function buildCards(n){
+    ring.innerHTML = '';
+    items = [];
+    var step = 360 / n;
+    for (var i = 0; i < n; i++){
+      var angleDeg = i * step;
+      var item = document.createElement('div');
+      item.className = 'item';
+      item.dataset.angle = String(angleDeg);
+      var card = document.createElement('div');
+      card.className = 'cat-card';
+      card.innerHTML = '<div class="icon-circle shape-' + state.shape + '">' + ICONS[i % ICONS.length] + '</div>' +
+                        '<div class="cat-label">' + LABELS[i % LABELS.length] + '</div>';
+      item.appendChild(card);
+      ring.appendChild(item);
+      items.push(item);
+    }
+    var divider = document.createElement('div');
+    divider.className = 'orbit-divider';
+    ring.appendChild(divider);
+
+    dotsRow.innerHTML = '';
+    dots = [];
+    for (var d = 0; d < n; d++){
+      var dot = document.createElement('span');
+      dot.className = 'wheel-dot';
+      dotsRow.appendChild(dot);
+      dots.push(dot);
+    }
+  }
+
+  function computeGeometry(){
+    var rx = Math.round(state.rxBase + (state.n - 1) * state.rxStep);
+    var ry = Math.round(rx * (state.ryRatio / 100));
+    // Le cercle et le losange utilisent rx comme rayon vertical effectif
+    // (au lieu de ry) : la hauteur de la scène doit en tenir compte pour
+    // ne rien rogner en haut/bas.
+    var ryEffective = (state.orbitShape === 'circle') ? rx : ry;
+    var cardHalf = 68;
+    var neededHeight = Math.round(ryEffective * 2 + cardHalf * 1.15 * 2 + 16 + state.pop);
+    return {rx: rx, ry: ry, neededHeight: neededHeight};
+  }
+
+  function renderRing(){
+    var geo = computeGeometry();
+    stage.style.height = geo.neededHeight + 'px';
+
+    var bestDepth = -2, frontIdx = 0;
+    items.forEach(function(item, i){
+      var base = parseFloat(item.dataset.angle);
+      var total = base + angle;
+      var depth = Math.cos(total * Math.PI / 180);
+      if (depth > bestDepth){ bestDepth = depth; frontIdx = i; }
+    });
+
+    items.forEach(function(item, i){
+      var base = parseFloat(item.dataset.angle);
+      var total = base + angle;
+      var rad = total * Math.PI / 180;
+      var depth = Math.cos(rad);
+      var pos = getOrbitXY(state.orbitShape, rad, geo.rx, geo.ry);
+      var x = pos.x;
+      var y = pos.y;
+      var scaleMin = state.scaleMin / 100;
+      var scaleAmp = state.scaleAmp / 100;
+      var scale = scaleMin + scaleAmp * ((depth + 1) / 2);
+      if (i === frontIdx){
+        y += state.pop;
+        scale *= (state.frontBoost / 100);
+      }
+      item.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')';
+      item.style.zIndex = String(Math.round((depth + 1) * 100));
+      var opMin = state.opMin / 100;
+      var iconOp = opMin + (1 - opMin) * ((depth + 1) / 2);
+      var iconEl = item.querySelector('.icon-circle');
+      if (iconEl) iconEl.style.opacity = String(iconOp);
+      item.classList.toggle('is-front', i === frontIdx);
+    });
+
+    dots.forEach(function(dot, i){ dot.classList.toggle('active', i === frontIdx); });
+
+    updateReadout(geo, frontIdx);
+
+    // Synchronise la réglette "rotation manuelle" avec l'angle courant,
+    // sauf quand c'est justement cette réglette qui pilote (évite une boucle).
+    if (!suppressManual){
+      var m = document.getElementById('manual');
+      var norm = ((angle % 360) + 540) % 360 - 180;
+      m.value = Math.round(norm);
+      document.getElementById('v_manual').textContent = Math.round(norm);
+    }
+  }
+
+  function animateTo(target, dur){
+    if (animId) cancelAnimationFrame(animId);
+    var from = angle, diff = target - from, t0 = performance.now();
+    dur = dur || 300;
+    function step(t){
+      var p = Math.min(1, (t - t0) / dur);
+      var ease = 1 - Math.pow(1 - p, 3);
+      angle = from + diff * ease;
+      renderRing();
+      if (p < 1) animId = requestAnimationFrame(step);
+    }
+    animId = requestAnimationFrame(step);
+  }
+
+  function snap(){
+    var step = 360 / state.n;
+    var target = Math.round(angle / step) * step;
+    animateTo(target);
+  }
+
+  function stepBy(dir){
+    var step = 360 / state.n;
+    animateTo(angle + dir * step);
+  }
+
+  // ===== Glisser sur l'arc =====
+  stage.addEventListener('pointerdown', function(e){
+    dragging = true; moved = 0; startX = e.clientX; startAngle = angle;
+    if (animId) cancelAnimationFrame(animId);
+    try { stage.setPointerCapture(e.pointerId); } catch(err){}
+  });
+  stage.addEventListener('pointermove', function(e){
+    if (!dragging) return;
+    var dx = e.clientX - startX;
+    moved = Math.max(moved, Math.abs(dx));
+    angle = startAngle + dx * (state.dragSens / 100);
+    renderRing();
+  });
+  function up(){
+    if (!dragging) return;
+    dragging = false;
+    if (moved >= 6) snap();
+  }
+  stage.addEventListener('pointerup', up);
+  stage.addEventListener('pointercancel', up);
+
+  // ===== Boutons précédent / suivant =====
+  document.getElementById('prev').addEventListener('click', function(){ stepBy(-1); });
+  document.getElementById('next').addEventListener('click', function(){ stepBy(1); });
+
+  // ===== Réglette de rotation manuelle =====
+  document.getElementById('manual').addEventListener('input', function(e){
+    suppressManual = true;
+    angle = parseFloat(e.target.value);
+    document.getElementById('v_manual').textContent = e.target.value;
+    renderRing();
+    suppressManual = false;
+  });
+
+  function updateReadout(geo, frontIdx){
+    var stepDeg = Math.round((360 / state.n) * 10) / 10;
+    document.getElementById('readout').innerHTML =
+      'Largeur de l\'arc (rx) : <b>' + geo.rx + ' px</b><br>' +
+      'Hauteur de l\'arc (ry) : <b>' + geo.ry + ' px</b><br>' +
+      'Hauteur totale de la scène : <b>' + geo.neededHeight + ' px</b><br>' +
+      'Écart entre deux cartes : <b>' + stepDeg + '°</b><br>' +
+      'Carte actuellement au centre : <b>#' + (frontIdx + 1) + ' — ' + LABELS[frontIdx % LABELS.length] + '</b>';
+
+    document.getElementById('code').textContent =
+      '// Valeurs pour ' + state.n + ' cartes — à reporter dans js/wheel.js\n' +
+      'var rx = Math.round(' + state.rxBase + ' + (n - 1) * ' + state.rxStep + ');\n' +
+      'var ry = Math.round(rx * ' + (state.ryRatio/100).toFixed(2) + ');\n' +
+      'var popOffset = ' + state.pop + ';\n' +
+      'var scale = ' + (state.scaleMin/100).toFixed(2) + ' + ' + (state.scaleAmp/100).toFixed(2) + ' * ((depth + 1) / 2);\n' +
+      '// carte centrale : y += popOffset; scale *= ' + (state.frontBoost/100).toFixed(2) + ';\n' +
+      'var iconOp = ' + (state.opMin/100).toFixed(2) + ' + ' + (1-state.opMin/100).toFixed(2) + ' * ((depth + 1) / 2);\n' +
+      '// sensibilité du glisser : dx * ' + (state.dragSens/100).toFixed(2) + '\n' +
+      '// forme de l\'icône : class="icon-circle shape-' + state.shape + '" (voir shape-* dans le CSS)\n' +
+      '// forme de l\'orbite (le tracé) : "' + state.orbitShape + '" — voir getOrbitXY() dans ce fichier';
+  }
+
+  // ===== Réglettes =====
+  controls.forEach(function(id){
+    if (id === 'manual') return; // gérée à part plus haut
+    var el = document.getElementById(id);
+    var label = document.getElementById('v_' + id);
+    el.addEventListener('input', function(){
+      state[id] = parseFloat(el.value);
+      label.textContent = el.value;
+      if (id === 'n'){
+        buildCards(state.n);
+        angle = 0;
+        renderRing();
+      } else {
+        renderRing();
+      }
+    });
+  });
+
+  // ===== Grille de sélection de forme d'orbite (le tracé) =====
+  var orbitShapeGrid = document.getElementById('orbitShapeGrid');
+  var orbitShapeSwatches = [];
+  function setOrbitShape(id){
+    state.orbitShape = id;
+    orbitShapeSwatches.forEach(function(s){
+      s.el.classList.toggle('active', s.id === id);
+    });
+    renderRing();
+  }
+  ORBIT_SHAPES.forEach(function(s){
+    var b = document.createElement('button');
+    b.className = 'shape-swatch';
+    b.type = 'button';
+    b.innerHTML = '<svg viewBox="0 0 100 100" fill="none" stroke="var(--gold)" stroke-width="7">' + s.svg + '</svg>' +
+                  '<span>' + s.label + '</span>';
+    b.addEventListener('click', function(){ setOrbitShape(s.id); });
+    orbitShapeGrid.appendChild(b);
+    orbitShapeSwatches.push({id: s.id, el: b});
+  });
+  orbitShapeSwatches.forEach(function(s){ s.el.classList.toggle('active', s.id === state.orbitShape); });
+
+  // ===== Grille de sélection de forme d'icône =====
+  var shapeGrid = document.getElementById('shapeGrid');
+  var shapeSwatches = [];
+  function setShape(id){
+    state.shape = id;
+    document.querySelectorAll('.item .icon-circle').forEach(function(el){
+      el.className = 'icon-circle shape-' + id;
+    });
+    shapeSwatches.forEach(function(s){
+      s.el.classList.toggle('active', s.id === id);
+    });
+  }
+  SHAPES.forEach(function(s){
+    var b = document.createElement('button');
+    b.className = 'shape-swatch';
+    b.type = 'button';
+    b.innerHTML = '<div class="sw shape-' + s.id + '"></div><span>' + s.label + '</span>';
+    b.addEventListener('click', function(){ setShape(s.id); });
+    shapeGrid.appendChild(b);
+    shapeSwatches.push({id: s.id, el: b});
+  });
+  setShape(state.shape);
+
+  // ===== Préréglages rapides du nombre de cartes =====
+  var PRESETS = [3, 4, 6, 8, 10, 12];
+  var presetsRow = document.getElementById('presets');
+  PRESETS.forEach(function(p){
+    var b = document.createElement('button');
+    b.textContent = p + ' cartes';
+    b.addEventListener('click', function(){
+      state.n = p;
+      document.getElementById('n').value = p;
+      document.getElementById('v_n').textContent = p;
+      buildCards(p);
+      angle = 0;
+      renderRing();
+    });
+    presetsRow.appendChild(b);
+  });
+
+  // ===== Réinitialiser =====
+  var DEFAULTS = {
+    n: 6, rxBase: 58, rxStep: 13, ryRatio: 58, pop: 22,
+    scaleMin: 60, scaleAmp: 55, frontBoost: 105, opMin: 45,
+    dragSens: 35, manual: 0, shape: 'circle', orbitShape: 'ellipse'
+  };
+  document.getElementById('reset').addEventListener('click', function(){
+    Object.keys(DEFAULTS).forEach(function(id){
+      state[id] = DEFAULTS[id];
+      var el = document.getElementById(id);
+      if (el){ el.value = DEFAULTS[id]; }
+      var label = document.getElementById('v_' + id);
+      if (label){ label.textContent = DEFAULTS[id]; }
+    });
+    setShape(DEFAULTS.shape);
+    setOrbitShape(DEFAULTS.orbitShape);
+    buildCards(state.n);
+    angle = 0;
+    renderRing();
+  });
+
+  // ===== Copier les valeurs =====
+  document.getElementById('copy').addEventListener('click', function(){
+    var text = document.getElementById('code').textContent +
+      '\n\n// Paramètres bruts\n' + JSON.stringify(state, null, 2);
+    var msg = document.getElementById('copiedMsg');
+    function showMsg(){ msg.style.display = 'block'; setTimeout(function(){ msg.style.display = 'none'; }, 2500); }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(showMsg, function(){
+        window.prompt('Copie manuelle (Ctrl/Cmd+C) :', text);
+      });
+    } else {
+      window.prompt('Copie manuelle (Ctrl/Cmd+C) :', text);
+    }
+  });
+
+  // ===== Démarrage =====
+  buildCards(state.n);
+  renderRing();
+})();
+</script>
+</body>
+</html>
