@@ -48,6 +48,16 @@
     // Ovale aplati : plus large que haut, s'élargit un peu avec le nombre d'icônes.
     // Valeurs reglées via l'outil de test (arc plus large, moins de variation par carte).
     var rx = Math.round(88 + (n - 1) * 9);
+    // Empêche l'arc de déborder de l'écran : la carte la plus excentrée
+    // (autour de ±90°, ni la plus grande ni la plus petite, cf. renderRing)
+    // ne doit jamais dépasser le bord de l'écran, sinon toute la page
+    // devient scrollable horizontalement (cause du bug de tabbar qui
+    // "vibrait" : la barre de scroll horizontal qui apparaît/disparaît).
+    var cardHalfWidth = 50; // .item .cat-card fait 100px de large (wheel.css)
+    var maxSideScale = 1.18; // échelle max d'une carte latérale (renderRing)
+    var edgeMargin = 12; // marge de sécurité
+    var maxRx = Math.floor(window.innerWidth / 2 - cardHalfWidth * maxSideScale - edgeMargin);
+    rx = Math.max(60, Math.min(rx, maxRx));
     // Rayon vertical agrandi (0.68) : les cartes à l'arrière de l'arc se
     // séparent davantage de la carte centrale pour réduire le chevauchement,
     // sans réduire leur taille ni leur opacité (cf. discussion).
