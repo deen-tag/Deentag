@@ -46,12 +46,12 @@
     var n = cards.length;
     var step = 360 / n;
     // Ovale aplati : plus large que haut, s'élargit un peu avec le nombre d'icônes.
-    var rx = Math.round(58 + (n - 1) * 13);
-    // Rayon vertical agrandi (0.58 au lieu de 0.45, compromis modéré) : les
-    // cartes à l'arrière de l'arc se séparent davantage de la carte centrale
-    // pour réduire le chevauchement, sans réduire leur taille ni leur
-    // opacité (cf. discussion).
-    var ry = Math.round(rx * 0.58);
+    // Valeurs reglées via l'outil de test (arc plus large, moins de variation par carte).
+    var rx = Math.round(89 + (n - 1) * 10);
+    // Rayon vertical agrandi (0.63) : les cartes à l'arrière de l'arc se
+    // séparent davantage de la carte centrale pour réduire le chevauchement,
+    // sans réduire leur taille ni leur opacité (cf. discussion).
+    var ry = Math.round(rx * 0.63);
     stage.dataset.rx = String(rx);
     stage.dataset.ry = String(ry);
     // La hauteur fixe (190px, définie dans wheel.css) ne suffit plus avec un
@@ -60,8 +60,10 @@
     var cardHalf = 68; // moitié de la hauteur d'une .cat-card (136px)
     // popOffset : décalage supplémentaire de la carte centrale, en plus de
     // sa position normale sur l'ellipse — pour qu'elle se détache
-    // visuellement du reste des cartes (essai demandé par l'utilisateur).
-    var popOffset = 22;
+    // visuellement du reste des cartes. Remis à 0 (essai précédent retiré
+    // via l'outil de réglage : la carte centrale se distingue déjà assez
+    // avec le nouveau "boost" de taille ci-dessous).
+    var popOffset = 0;
     var neededHeight = Math.round(ry * 2 + cardHalf * 1.15 * 2 + 16 + popOffset);
     stage.style.height = neededHeight + 'px';
 
@@ -105,6 +107,7 @@
       n: n,
       rx: rx,
       ry: ry,
+      popOffset: popOffset,
       angle: 0,
       dragging: false,
       moved: 0,
@@ -141,29 +144,32 @@
       var total = base + w.angle;
       var rad = (total * Math.PI) / 180;
       var depth = Math.cos(rad); // 1 = avant/centre, -1 = arrière
-      var x = Math.sin(rad) * w.rx;
-      var y = depth * w.ry; // avant en bas, arrière en haut (comme le modèle de référence)
+      // Tracé "piste / stade" (bords aplatis, plutôt qu'un ovale classique) :
+      // superellipse d'exposant 2/4, réglée via l'outil de test.
+      var s = Math.sin(rad);
+      var c = Math.cos(rad);
+      var x = w.rx * (s < 0 ? -1 : s > 0 ? 1 : 0) * Math.pow(Math.abs(s), 0.5);
+      var y = w.ry * (c < 0 ? -1 : c > 0 ? 1 : 0) * Math.pow(Math.abs(c), 0.5); // avant en bas, arrière en haut
       // Invocations (skewed) garde l'effet de profondeur (cartes qui
       // grossissent/s'estompent). Accueil/Coran : vue plate, de face, comme
       // une horloge — toutes les cartes ont la même taille et opacité, sans
       // inclinaison, seule leur position tourne sur le cercle.
-      var scale = skewed ? (0.60 + 0.55 * ((depth + 1) / 2)) : 1;
+      var scale = skewed ? (1.00 + 0.41 * ((depth + 1) / 2)) : 1;
       // La carte centrale se détache du groupe : décalage supplémentaire
-      // vers le bas + léger gain de taille, comme si elle était attirée
-      // hors du reste des cartes.
+      // vers le bas (popOffset, réglé à 0 pour l'instant) + gain de taille
+      // plus marqué, comme si elle était attirée hors du reste des cartes.
       if (skewed && i === frontIdx) {
-        y += 22;
-        scale *= 1.05;
+        y += w.popOffset;
+        scale *= 1.40;
       }
       item.style.transform = 'translate(' + x + 'px,' + y + 'px) scale(' + scale + ')';
       item.style.zIndex = String(Math.round((depth + 1) * 100));
       // Correctif lisibilité : on ne baisse plus l'opacité de la carte entière
-      // (ça assombrissait aussi le label). Seule l'icône s'estompe avec la
-      // profondeur ; le label reste pleinement lisible même hors du centre.
+      // (ça assombrissait aussi le label). L'icône reste pleinement opaque
+      // quelle que soit la profondeur (réglé via l'outil de test).
       if (skewed) {
-        var iconOp = 0.45 + 0.55 * ((depth + 1) / 2);
         var iconEl = item.querySelector('.cat-icon-circle') || item.querySelector('.qnav-icon');
-        if (iconEl) iconEl.style.opacity = String(iconOp);
+        if (iconEl) iconEl.style.opacity = '1';
       }
     });
     w.items.forEach(function (item, i) {
@@ -229,7 +235,7 @@
       if (!w.dragging) return;
       var dx = e.clientX - w.startX;
       w.moved = Math.max(w.moved, Math.abs(dx));
-      w.angle = w.startAngle + dx * 0.35;
+      w.angle = w.startAngle + dx * 0.52;
       renderRing(w);
     });
     function up() {
