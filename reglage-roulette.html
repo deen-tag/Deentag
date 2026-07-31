@@ -38,7 +38,9 @@
     transition:transform .25s ease;}
   .icon-circle{width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#3a3222,#221d13);
     border:1px solid var(--card-border);display:flex;align-items:center;justify-content:center;font-size:28px;
+    overflow:hidden;
     transition:border-radius .25s ease, clip-path .25s ease;}
+  .icon-circle img{width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none;}
 
   /* ===== Formes disponibles (appliquées directement sur .icon-circle ou
      sur les pastilles d'aperçu .sw, via une classe shape-XXX) ===== */
@@ -144,7 +146,7 @@
   <div class="presets" id="presets"></div>
   <div class="row">
     <label>Cartes dans cette catégorie <span class="val" id="v_n">6</span></label>
-    <input type="range" id="n" min="3" max="14" step="1" value="6">
+    <input type="range" id="n" min="3" max="22" step="1" value="6">
   </div>
 
   <div class="panel-title">Forme de l'arc</div>
@@ -220,8 +222,31 @@
   var ring = document.getElementById('ring');
   var dotsRow = document.getElementById('dots');
 
-  var ICONS = ['🌙','🕌','📿','🤲','🌿','🌊','🔥','⭐','🕋','🌸','🍃','🪷','🌾','🌤️'];
-  var LABELS = ['Réveil','Voyage','Sommeil','Repas','Maison','Marché','École','Pluie','Douleur','Joie','Colère','Départ','Retour','Doute'];
+  // Vraies catégories du site (icône + titre FR, tirés de js/duas.js)
+  var CATEGORIES = [
+    {icon:'images/repas.webp',      label:'Repas'},
+    {icon:'images/ablution.webp',   label:'Ablution'},
+    {icon:'images/lit.webp',        label:'Réveil & Couché'},
+    {icon:'images/wc.webp',         label:'Toilettes'},
+    {icon:'images/maison.webp',     label:'Maison'},
+    {icon:'images/tristesse.webp',  label:'Tristesse'},
+    {icon:'images/enfants.webp',    label:'Enfants'},
+    {icon:'images/voiture.webp',    label:'Transport & Voyage'},
+    {icon:'images/mosquee.webp',    label:'Mosquée'},
+    {icon:'images/maladie.webp',    label:'Maladie'},
+    {icon:'images/colere.webp',     label:'Colère'},
+    {icon:'images/rizq.webp',       label:'Rizq'},
+    {icon:'images/ruqya.webp',      label:'Ruqya'},
+    {icon:'images/mariage.webp',    label:'Mariage'},
+    {icon:'images/ramadan.webp',    label:'Ramadan'},
+    {icon:'images/azan.webp',       label:'Azan'},
+    {icon:'images/salah.webp',      label:'Salah'},
+    {icon:'images/istikhara.webp',  label:'Istikhara'},
+    {icon:'images/mort.webp',       label:'Mort & Funérailles'},
+    {icon:'images/hajjumra.webp',   label:'Hajj & Umra'},
+    {icon:'images/nouveaune.webp',  label:'Nouveau-né'},
+    {icon:'images/pluie.webp',      label:'Pluie'}
+  ];
   var SHAPES = [
     {id:'circle', label:'Cercle'},
     {id:'squircle', label:'Squircle'},
@@ -299,8 +324,9 @@
       item.dataset.angle = String(angleDeg);
       var card = document.createElement('div');
       card.className = 'cat-card';
-      card.innerHTML = '<div class="icon-circle shape-' + state.shape + '">' + ICONS[i % ICONS.length] + '</div>' +
-                        '<div class="cat-label">' + LABELS[i % LABELS.length] + '</div>';
+      var cat = CATEGORIES[i % CATEGORIES.length];
+      card.innerHTML = '<div class="icon-circle shape-' + state.shape + '"><img src="' + cat.icon + '" alt="" draggable="false"></div>' +
+                        '<div class="cat-label">' + cat.label + '</div>';
       item.appendChild(card);
       ring.appendChild(item);
       items.push(item);
@@ -447,7 +473,7 @@
       'Hauteur de l\'arc (ry) : <b>' + geo.ry + ' px</b><br>' +
       'Hauteur totale de la scène : <b>' + geo.neededHeight + ' px</b><br>' +
       'Écart entre deux cartes : <b>' + stepDeg + '°</b><br>' +
-      'Carte actuellement au centre : <b>#' + (frontIdx + 1) + ' — ' + LABELS[frontIdx % LABELS.length] + '</b>';
+      'Carte actuellement au centre : <b>#' + (frontIdx + 1) + ' — ' + CATEGORIES[frontIdx % CATEGORIES.length].label + '</b>';
 
     document.getElementById('code').textContent =
       '// Valeurs pour ' + state.n + ' cartes — à reporter dans js/wheel.js\n' +
@@ -526,7 +552,7 @@
   setShape(state.shape);
 
   // ===== Préréglages rapides du nombre de cartes =====
-  var PRESETS = [3, 4, 6, 8, 10, 12];
+  var PRESETS = [3, 4, 6, 8, 10, 12, 14, 18, 22];
   var presetsRow = document.getElementById('presets');
   PRESETS.forEach(function(p){
     var b = document.createElement('button');
