@@ -1579,6 +1579,20 @@ body.night .settings-panel {
   border-bottom: 1px solid rgba(var(--gold-rgb),0.28);
 }
 
+.settings-col-header {
+  display: flex; align-items: center; gap: 10px;
+  margin: -4px 0 10px;
+}
+.settings-col-header-spacer { width: 90px; flex-shrink: 0; }
+.settings-col-header-color,
+.settings-col-header-size {
+  font-family: 'Cinzel', serif; font-size: 7.5px; letter-spacing: 0.08em;
+  color: var(--text3, var(--gold-light)); text-transform: uppercase;
+  opacity: 0.75; white-space: nowrap;
+}
+.settings-col-header-color { width: 34px; flex-shrink: 0; text-align: center; margin-left: -6px; }
+.settings-col-header-size { flex: 1; text-align: center; }
+
 /* ===== BOUTONS TAILLE : Petit / Moyen / Grand ===== */
 /* ===== BLOCS TAILLE : label au-dessus, pills en dessous ===== */
 .size-block {
@@ -1624,14 +1638,15 @@ body.night .settings-panel {
 
 /* ===== BOUTON PALETTE (petit rond couleur à côté de chaque ligne) ===== */
 .color-dot-btn {
-  width: 14px; height: 14px; border-radius: 50%; flex-shrink: 0;
-  border: 1px solid rgba(var(--gold-rgb),0.5);
+  width: 18px; height: 18px; border-radius: 50%; flex-shrink: 0;
+  border: 1.5px solid rgba(var(--gold-rgb),0.55);
   background: var(--dot-color, var(--gold));
-  cursor: pointer; padding: 0; margin: 0 1px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.18), inset 0 0 0 1.5px rgba(255,255,255,0.10);
+  cursor: pointer; padding: 0; margin: 0 2px;
   -webkit-tap-highlight-color: transparent;
-  transition: transform 0.15s, border-color 0.15s;
+  transition: transform 0.15s, border-color 0.15s, box-shadow 0.15s;
 }
-.color-dot-btn:hover { border-color: var(--gold-light); }
+.color-dot-btn:hover { border-color: var(--gold-light); box-shadow: 0 2px 5px rgba(0,0,0,0.22), inset 0 0 0 1.5px rgba(255,255,255,0.10); }
 .color-dot-btn:active { transform: scale(0.88); }
 
 /* ===== MINI PALETTE DÉPLIABLE (accordéon, ne recouvre rien) ===== */
@@ -3362,7 +3377,7 @@ body.night .audio-play-btn svg { stroke: var(--gold); }
   width:36px; height:36px; border-radius:50%;
   border:1.5px solid rgba(var(--gold-rgb),0.4); background:transparent;
   color:var(--gold); cursor:pointer;
-  font-family:'Cinzel', serif; font-size:9px; letter-spacing:0.05em;
+  font-family:'Cinzel', serif; font-size:11px; letter-spacing:0.02em;
   display:flex; align-items:center; justify-content:center;
   transition:background 0.2s; flex-shrink:0;
   -webkit-tap-highlight-color:transparent;
