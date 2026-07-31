@@ -40,8 +40,9 @@
   position: relative;
   height: 190px; /* arc aplati : nettement moins haut que l'ancien anneau 3D */
   margin: 4px 0 8px;
-  touch-action: none; /* le geste est entièrement géré à la main (js/wheel.js),
-  y compris le scroll vertical, pour éviter tout conflit avec la page */
+  touch-action: pan-y; /* seul l'axe horizontal est géré à la main (js/wheel.js) ;
+  le scroll vertical est laissé nativement au navigateur, qui coupe alors
+  proprement le geste JS (pointercancel) au lieu qu'on le relaie nous-mêmes */
   -webkit-tap-highlight-color: transparent;
 }
 .orbit-ring {
