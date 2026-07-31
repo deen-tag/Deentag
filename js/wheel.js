@@ -221,11 +221,13 @@
 
   function attachDrag(w) {
     var stage = w.stage;
-    // Le CSS met touch-action:none sur la scène : plus aucun geste natif du
-    // navigateur ici. On gère tout nous-mêmes, y compris le scroll vertical,
-    // qu'on relaie à la page pour qu'elle défile normalement.
-    var axisLocked = null; // null = pas encore décidé, 'x' = roulette, 'y' = scroll relayé
-    var startY = 0, lastY = 0;
+    // Le CSS met touch-action:pan-y sur la scène : le navigateur gère le
+    // scroll vertical tout seul, nativement, sans qu'on y touche. Si le
+    // geste part en scroll, il envoie un pointercancel (géré par up()) au
+    // lieu de continuer les pointermove — plus besoin de relayer nous-mêmes
+    // le scroll à la main (ancien scrollBy, source du bug de "vibration").
+    var axisLocked = null; // null = pas encore décidé, 'x' = rotation, 'y' = scroll (on ignore, le navigateur s'en charge)
+    var startY = 0;
     var active = false;
     var LOCK_THRESHOLD = 6; // px avant de trancher la direction du geste
 
@@ -235,7 +237,6 @@
       w.moved = 0;
       w.startX = e.clientX;
       startY = e.clientY;
-      lastY = e.clientY;
       w.startAngle = w.angle;
       axisLocked = null;
       if (w.animId) cancelAnimationFrame(w.animId);
@@ -252,14 +253,7 @@
         if (axisLocked === 'x') w.dragging = true;
       }
 
-      if (axisLocked === 'y') {
-        // Scroll vertical : comme le navigateur ne le fait plus tout seul
-        // (touch-action:none), on avance la page nous-mêmes, au pixel près.
-        var deltaY = e.clientY - lastY;
-        window.scrollBy(0, -deltaY);
-        lastY = e.clientY;
-        return;
-      }
+      if (axisLocked === 'y') return; // scroll : le navigateur s'en occupe seul, rien à faire ici
 
       if (!w.dragging) return;
       w.moved = Math.max(w.moved, Math.abs(dx));
