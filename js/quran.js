@@ -1022,8 +1022,8 @@ function cycleSpeed() {
   const speeds = [1, 0.75, 0.5];
   const idx    = speeds.indexOf(audioSpeed);
   audioSpeed   = speeds[(idx + 1) % speeds.length];
-  const btn    = document.getElementById('audioSpeedBtn');
-  if (btn) btn.textContent = audioSpeed + 'x';
+  const val    = document.getElementById('audioSpeedVal');
+  if (val) val.textContent = audioSpeed + '×';
   if (audioPlayer) audioPlayer.playbackRate = audioSpeed;
 }
 
