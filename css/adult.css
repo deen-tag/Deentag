@@ -3568,7 +3568,7 @@ body.has-tabbar {
 /* ===== QNAV CARDS (page Coran) — rangée horizontale swipeable ===== */
 .cat-grid#quranNavGrid {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 14px 10px;
+  gap: 4px 8px;
   padding: 0 14px 20px;
 }
 /* 5 cartes = nombre impair : la dernière se centre sur les 2 colonnes au
