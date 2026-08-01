@@ -337,35 +337,62 @@ function radialOpen(cardEl) {
     });
   });
 
-  // Les sous-catégories se répartissent TOUT AUTOUR de l'icône, sur un
-  // RAYON UNIQUE (cercle parfait, pas une ellipse) pour que les 4 cartes
-  // soient rigoureusement symétriques entre elles et alignées avec le
-  // centre de l'illustration. Clampé à l'écran par sécurité.
+  // Les sous-catégories se répartissent TOUT AUTOUR de l'icône. Avec un
+  // rayon fixe, 3 ou 5 fiches finissent par se toucher en bas de l'écran
+  // (deux points tombent presque côte à côte) : on adapte donc la TAILLE
+  // des fiches au nombre d'entre elles, on utilise une ellipse un peu plus
+  // large que haute (les téléphones ont plus de marge horizontale utile
+  // une fois la carte centrée), puis on écarte les fiches qui restent trop
+  // proches les unes des autres (anti-collision).
   const n = Math.min(items.length, 8);
-  const BUBBLE_HALF = 68;  // ~ moitié de max-width (126px) + marge
-  const SCREEN_MARGIN = 14;
+  const SCREEN_MARGIN = 16;
+  const viewportW = document.documentElement.clientWidth || window.innerWidth;
+  const viewportH = window.innerHeight;
 
-  const baseRadius = ICON_TARGET_WIDTH * 0.55 + 45 + 15; // +15px de distance en plus
-  const maxRadius   = Math.min(window.innerWidth, window.innerHeight) / 2 - BUBBLE_HALF - SCREEN_MARGIN;
-  const RADIUS = Math.max(80, Math.min(baseRadius, maxRadius));
+  let bubbleMaxWidth;
+  if (n <= 3)       bubbleMaxWidth = 126;
+  else if (n === 4) bubbleMaxWidth = 120;
+  else if (n === 5) bubbleMaxWidth = 106;
+  else               bubbleMaxWidth = 94;
+  const BUBBLE_HALF = bubbleMaxWidth / 2 + 8;
+
+  const baseRadius = ICON_TARGET_WIDTH * 0.55 + 45 + 15;
+  let RADIUS_X = Math.min(baseRadius * 1.18, viewportW / 2 - BUBBLE_HALF - SCREEN_MARGIN);
+  let RADIUS_Y = Math.min(baseRadius * 0.88, viewportH / 2 - BUBBLE_HALF - SCREEN_MARGIN);
+  RADIUS_X = Math.max(66, RADIUS_X);
+  RADIUS_Y = Math.max(66, RADIUS_Y);
 
   const positions = items.slice(0, n).map((item, i) => {
     const thetaDeg = (360 / n) * i - 90; // -90° = on démarre en haut, puis sens horaire
     const theta = thetaDeg * Math.PI / 180;
-    return {
-      item,
-      tx: Math.round(Math.cos(theta) * RADIUS),
-      ty: Math.round(Math.sin(theta) * RADIUS)
-    };
+    return { item, tx: Math.cos(theta) * RADIUS_X, ty: Math.sin(theta) * RADIUS_Y };
   });
 
-  playEffectWave(stage, cat, positions, RADIUS);
+  // Anti-collision : écarte deux fiches voisines si leurs boîtes se
+  // chevaucheraient (pousse chacune le long de l'axe qui les sépare).
+  const MIN_GAP = bubbleMaxWidth + 16;
+  for (let pass = 0; pass < 3; pass++) {
+    for (let i = 0; i < positions.length; i++) {
+      const a = positions[i], b = positions[(i + 1) % positions.length];
+      const dx = b.tx - a.tx, dy = b.ty - a.ty;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist > 0 && dist < MIN_GAP) {
+        const push = (MIN_GAP - dist) / 2;
+        const nx = dx / dist, ny = dy / dist;
+        a.tx -= nx * push; a.ty -= ny * push;
+        b.tx += nx * push; b.ty += ny * push;
+      }
+    }
+  }
+  positions.forEach(p => { p.tx = Math.round(p.tx); p.ty = Math.round(p.ty); });
+
+  playEffectWave(stage, cat, positions, Math.max(RADIUS_X, RADIUS_Y), bubbleMaxWidth);
 }
 
 // L'onde dorée grandit vite jusqu'au rayon des cartes, les touche, puis
 // s'efface aussitôt : un effet de RÉVÉLATION du menu, pas une décoration
 // qui continue à grossir pour rien. Tout tient en ~250-300ms.
-function playEffectWave(stage, cat, positions, RADIUS) {
+function playEffectWave(stage, cat, positions, RADIUS, bubbleMaxWidth) {
   const wave = document.createElement('div');
   wave.className = 'radial-wave';
   const waveSize = (RADIUS + 55) * 2; // atteint tout juste le corps des cartes
@@ -393,22 +420,24 @@ function playEffectWave(stage, cat, positions, RADIUS) {
     linesSvg.appendChild(line);
     setTimeout(() => line.classList.add('draw'), Math.max(60, bubbleDelay - 100));
 
-    const b = makeBubble(pos, cat);
+    const b = makeBubble(pos, cat, bubbleMaxWidth);
     stage.appendChild(b);
     setTimeout(() => b.classList.add('show'), bubbleDelay);
   });
 }
 
 // Fabrique une fiche de sous-catégorie (même pilule que le reste du site)
-function makeBubble(pos, cat) {
+function makeBubble(pos, cat, bubbleMaxWidth) {
   const { item, tx, ty } = pos;
   const b = document.createElement('div');
   b.className = 'radial-bubble' + (item.sunnah ? ' is-sunnah' : '');
+  b.style.maxWidth = (bubbleMaxWidth || 126) + 'px';
   b.style.setProperty('--tx', tx + 'px');
   b.style.setProperty('--ty', ty + 'px');
   b.style.setProperty('--tx-start', Math.round(tx * 0.4) + 'px');
   b.style.setProperty('--ty-start', Math.round(ty * 0.4) + 'px');
-  b.innerHTML = '<div class="radial-bubble-title">' + item.titre + '</div>';
+  const titleFontSize = bubbleMaxWidth && bubbleMaxWidth < 110 ? '7.8px' : '8.5px';
+  b.innerHTML = '<div class="radial-bubble-title" style="font-size:' + titleFontSize + '">' + item.titre + '</div>';
   b.onclick = (e) => {
     e.stopPropagation();
     b.classList.add('pop');
