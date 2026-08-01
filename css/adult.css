@@ -6,7 +6,7 @@
 
 /* ===== DEENTAG — COMMON.CSS ===== */
 /* Styles partagés entre toutes les pages */
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Cinzel:wght@400;500;600&family=Cinzel+Decorative:wght@400;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,700&family=Cinzel:wght@400;500;600&family=Cinzel+Decorative:wght@400;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap');
 
 /* ===== VARIABLES ===== */
 :root {
@@ -22,7 +22,7 @@
 
 /* ===== RESET ===== */
 * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
-html, body { font-family:'Cormorant Garamond', serif; }
+html, body { font-family:'Spectral', serif; }
 body { -webkit-user-select:none; user-select:none; }
 
 /* ===== THEMES ===== */
@@ -735,7 +735,7 @@ body.night .theme-toggle .knob { transform:translateX(20px); }
   color:var(--text); font-weight:600; margin:4px 0 2px;
 }
 .brand-script {
-  font-family:'Cormorant Garamond', serif; font-style:italic;
+  font-family:'Spectral', serif; font-style:italic;
   font-size:26px; color:var(--gold); font-weight:300; line-height:1.1;
   margin-top:10px; margin-bottom:4px;
 }
@@ -790,7 +790,7 @@ body.night .theme-toggle .knob { transform:translateX(20px); }
   line-height:1.4;
 }
 .coming-badge {
-  font-family:'Cormorant Garamond', serif; font-size:8px; font-style:italic;
+  font-family:'Spectral', serif; font-size:8px; font-style:italic;
   color:var(--gold); margin-top:2px;
 }
 
@@ -835,7 +835,7 @@ body.night .inv-header-icon {
   color:var(--gold); font-weight:600; text-align:center;
 }
 .inv-header-sub {
-  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-family:'Spectral',serif; font-style:italic;
   font-size:13px; color:var(--text3); letter-spacing:0.06em;
 }
 .inv-header-ornament {
@@ -853,7 +853,7 @@ body.night .inv-header-icon {
 }
 .inv-logo { width:42px; height:42px; object-fit:contain; }
 .inv-brand { font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.25em; color:var(--text); }
-.inv-script { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:24px; color:var(--gold); font-weight:300; }
+.inv-script { font-family:'Spectral',serif; font-style:italic; font-size:24px; color:var(--gold); font-weight:300; }
 .inv-cat { font-family:'Cinzel',serif; font-size:8px; letter-spacing:0.5em; color:var(--text2); text-transform:uppercase; margin-top:2px; }
 
 .inv-content { width:100%; max-width:500px; margin:0 auto; padding:0 12px 40px; }
@@ -973,7 +973,7 @@ body.direct-view { scrollbar-width:none; }
   padding:8px 22px; margin:5px 0;
 }
 .section-title {
-  font-family:'Cormorant Garamond', serif; font-size:26px; font-style:italic;
+  font-family:'Spectral', serif; font-size:26px; font-style:italic;
   color:var(--gold); text-align:center; font-weight:300; letter-spacing:0.05em;
 }
 
@@ -1068,7 +1068,7 @@ body.direct-view { scrollbar-width:none; }
 }
 .closing-dua {
   text-align:center; margin:28px 0 10px;
-  font-family:'Cormorant Garamond', serif; font-style:italic;
+  font-family:'Spectral', serif; font-style:italic;
   font-size:17px; color:var(--gold); line-height:1.8;
 }
 
@@ -1150,11 +1150,11 @@ body.night .accordion.open .accordion-header {
 
 /* ===== INVOCATION HEADER ===== */
 .inv-script {
-  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-family: 'Spectral', serif; font-style: italic;
   font-size: 28px; color: var(--gold); font-weight: 300; line-height: 1.1;
 }
 .inv-cat {
-  font-family: 'Cormorant Garamond', serif; font-size: 28px; font-style: italic;
+  font-family: 'Spectral', serif; font-size: 28px; font-style: italic;
   color: var(--gold); margin-top: 4px; font-weight: 300; letter-spacing: 0.03em;
   text-transform: none;
 }
@@ -1286,7 +1286,7 @@ body.night .audio-player-lbl { color: var(--gold-light); }
 }
 .audio-center-ornament { color: var(--gold); font-size: 13px; letter-spacing: 3px; }
 .audio-center-title {
-  font-family: 'Cormorant Garamond', serif; font-size: 14px;
+  font-family: 'Spectral', serif; font-size: 14px;
   font-style: italic; color: #7A6010; white-space: nowrap;
 }
 body.night .audio-center-title { color: var(--gold); }
@@ -1922,7 +1922,7 @@ body.night .inv-subbar { background:var(--bg); border-bottom-color:rgba(var(--go
 .spacer-sm { height: 20px; }
 .text-gold { color: var(--gold); }
 .bs-subtitle {
-  text-align: center; font-family: 'Cormorant Garamond', serif;
+  text-align: center; font-family: 'Spectral', serif;
   font-style: italic; font-size: 13px; color: var(--text2);
   opacity: 0.7; margin: -4px 0 14px;
 }
@@ -1997,7 +1997,7 @@ body.night .phonetic-block { color: var(--arabic-color); }
   border: 1.5px solid rgba(var(--gold-rgb),0.35);
   border-radius: var(--radius-lg);
   background: rgba(var(--gold-rgb),0.05);
-  font-family: 'Cormorant Garamond', serif; font-size: 15px;
+  font-family: 'Spectral', serif; font-size: 15px;
   color: var(--text); outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
   -webkit-appearance: none;
@@ -2011,7 +2011,7 @@ body.day .bs-search-input::placeholder { opacity: 0.9; }
 body.night .bs-search-input { background: rgba(var(--gold-rgb),0.07); }
 .bs-no-result {
   text-align: center; padding: 24px 16px;
-  font-family: 'Cormorant Garamond', serif; font-size: 15px;
+  font-family: 'Spectral', serif; font-size: 15px;
   color: var(--text3); font-style: italic;
 }
 
@@ -2095,13 +2095,13 @@ body.night .dua-close-btn:active {
 }
 .index-ornament-line { flex:1; height:1px; background:rgba(var(--gold-rgb),0.4); }
 .index-tagline {
-  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-family:'Spectral',serif; font-style:italic;
   font-size:13px; color:var(--gold); margin-bottom:14px;
   opacity: 0.85;
 }
 /* Repere de section sobre, sous le logo - police principale (pas la police du logo), sans emoji/cadre */
 .section-title {
-  font-family:'Cormorant Garamond',serif; font-weight:600;
+  font-family:'Spectral',serif; font-weight:600;
   font-size:18px; color:var(--text2); text-align:center;
   margin-bottom:8px; letter-spacing:0.01em; line-height:1.2;
 }
@@ -2178,7 +2178,7 @@ body.night .pg-pt.now { box-shadow:0 0 0 4px rgba(221,176,92,0.22); }
 body.night .pg-label.now-label { color:var(--gold-light); }
 .pg-label-time {
   position:absolute; left:0; top:22px; transform:translateX(-50%);
-  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-family:'Spectral',serif; font-style:italic;
   font-size:9px; color:var(--text3); white-space:nowrap; user-select:none;
 }
 .pg-label-time.now-label { color:var(--gold-dark); }
@@ -2187,13 +2187,13 @@ body.night .pg-label-time.now-label { color:var(--gold-light); }
 .pg-bottom { display:flex; align-items:center; margin-top:2px; }
 .pg-city {
   display:flex; align-items:center; gap:3px;
-  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-family:'Spectral',serif; font-style:italic;
   font-size:11px; color:var(--text3);
 }
 .pg-city svg { flex-shrink:0; }
 .pg-countdown {
   display:inline-flex; align-items:center;
-  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-family:'Spectral',serif; font-style:italic;
   font-size:12px; color:var(--text2);
 }
 
@@ -2207,7 +2207,7 @@ body.night .pg-label-time.now-label { color:var(--gold-light); }
 body.night .prayer-locate-btn { color: var(--gold-light); border-color: rgba(221,176,92,0.40); }
 
 .prayer-error {
-  margin-top:8px; font-family:'Cormorant Garamond',serif; font-style:italic;
+  margin-top:8px; font-family:'Spectral',serif; font-style:italic;
   font-size:12px; color:var(--text3);
 }
 
@@ -2272,7 +2272,7 @@ body.night .cal-arrow-btn { color:var(--gold-light); border-color:rgba(221,176,9
   color:var(--gold); font-weight:600;
 }
 .cal-panel-hijri {
-  font-family:'Cormorant Garamond',serif; font-style:italic;
+  font-family:'Spectral',serif; font-style:italic;
   font-size:10.5px; color:var(--text3); margin-top:1px;
 }
 
@@ -2301,12 +2301,12 @@ body.night .cal-panel-table tbody tr.today { background:rgba(221,176,92,0.16); }
 .cpt-g-dow { font-family:'Cinzel',serif; font-size:5.6px; text-transform:uppercase; color:var(--text3); }
 .cpt-h-num { font-family:'Amiri',serif; font-size:9.5px; color:var(--gold-dark); }
 body.night .cpt-h-num { color:var(--gold-light); }
-.cal-panel-table tbody td.cpt-val { color:var(--text2); font-family:'Cormorant Garamond',serif; }
+.cal-panel-table tbody td.cpt-val { color:var(--text2); font-family:'Spectral',serif; }
 .cal-panel-table tbody tr.today td.cpt-val { color:var(--gold-dark); font-weight:600; }
 body.night .cal-panel-table tbody tr.today td.cpt-val { color:var(--gold-light); }
 
 .cal-panel-loading, .cal-panel-err {
-  text-align:center; font-family:'Cormorant Garamond',serif; font-style:italic;
+  text-align:center; font-family:'Spectral',serif; font-style:italic;
   font-size:12px; color:var(--text3); padding:20px 10px;
 }
 
@@ -2363,7 +2363,7 @@ body.night .cal-panel-table tbody tr.today td.cpt-val { color:var(--gold-light);
   width:100%; box-sizing:border-box; padding:10px 14px;
   border:1.5px solid rgba(var(--gold-rgb),0.35); border-radius:var(--radius-lg);
   background:rgba(var(--gold-rgb),0.05);
-  font-family:'Cormorant Garamond', serif; font-size:15px;
+  font-family:'Spectral', serif; font-size:15px;
   color:var(--text); outline:none; transition:border-color 0.2s, box-shadow 0.2s;
   -webkit-appearance:none;
 }
@@ -2395,7 +2395,7 @@ body.night .inv-search-input { background:rgba(var(--gold-rgb),0.07); }
 }
 .inv-search-no-result {
   text-align:center; padding:18px 14px;
-  font-family:'Cormorant Garamond', serif; font-size:14px;
+  font-family:'Spectral', serif; font-size:14px;
   color:var(--text3); font-style:italic;
 }
 
@@ -2565,7 +2565,7 @@ body.night .cat-card.cat-highlight {
   margin-bottom:3px;
 }
 .resume-reading-detail {
-  font-family:'Cormorant Garamond',serif; font-size:14.5px;
+  font-family:'Spectral',serif; font-size:14.5px;
   color:var(--text); font-style:italic;
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
@@ -2602,7 +2602,7 @@ body.night .cat-card.cat-highlight {
   font-size:8.5px; letter-spacing:0.04em;
 }
 .home-greeting-phrase {
-  font-family:'Cormorant Garamond',serif; font-style:italic; font-size:12px;
+  font-family:'Spectral',serif; font-style:italic; font-size:12px;
   color:rgba(var(--gold-rgb),0.75); text-align:center;
   max-width:280px; line-height:1.4;
   display:none;
@@ -2668,7 +2668,7 @@ body.night .cat-card.cat-highlight {
   color:var(--gold); font-weight:600;
 }
 .bs-header-cat-sub {
-  font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13.5px;
+  font-family:'Spectral',serif; font-style:italic; font-size:13.5px;
   color:var(--gold-dark); margin-top:-4px;
 }
 body.night .bs-header-cat-sub { color:var(--gold); }
@@ -2699,7 +2699,7 @@ body.night .bs-header-cat-sub { color:var(--gold); }
   border-radius:0 12px 0 0; opacity:0.4; pointer-events:none;
 }
 .sub-card-title { font-family:'Cinzel',serif; font-size:10px; font-weight:500; letter-spacing:0.08em; color:var(--text); text-align:center; line-height:1.4; }
-.sub-card-sub { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:11px; color:var(--gold); text-align:center; }
+.sub-card-sub { font-family:'Spectral',serif; font-style:italic; font-size:11px; color:var(--gold); text-align:center; }
 .sub-card.show { opacity:1; transform:translateY(0); transition:opacity 0.3s ease, transform 0.3s cubic-bezier(0.2,0.9,0.4,1.1); }
 .sub-card:active { transform:scale(0.96); box-shadow:0 1px 4px var(--shadow); }
 body.night .sub-card { background:var(--card-bg); border-color:var(--gold); }
@@ -2814,7 +2814,7 @@ body.night .soon-modal { background:var(--card-bg); }
 .soon-modal::after { content:''; position:absolute; top:0; right:0; width:30px; height:30px; border-top:1.5px solid var(--gold); border-right:1.5px solid var(--gold); border-radius:0 22px 0 0; opacity:0.6; pointer-events:none; }
 .soon-icon { font-size:38px; margin-bottom:14px; display:block; animation:heroFloat 2.5s ease-in-out infinite; }
 .soon-title { font-family:'Cinzel',serif; font-size:13px; letter-spacing:0.25em; color:var(--gold); text-transform:uppercase; margin-bottom:10px; }
-.soon-text { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:16px; color:var(--text2); line-height:1.7; margin-bottom:24px; }
+.soon-text { font-family:'Spectral',serif; font-style:italic; font-size:16px; color:var(--text2); line-height:1.7; margin-bottom:24px; }
 .soon-close {
   padding:11px 32px; border-radius:30px; border:1.5px solid var(--gold);
   background:transparent; cursor:pointer;
@@ -2828,7 +2828,7 @@ body.day .soon-close { color:var(--gold-dark); border-color:var(--gold-dark); }
 .shop-footer { padding:16px 20px 32px; display:flex; flex-direction:column; align-items:center; gap:14px; }
 .shop-footer-ornament { display:flex; align-items:center; gap:10px; width:100%; }
 .shop-footer-line { flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--gold),transparent); opacity:0.35; }
-.shop-footer-text { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:var(--text3); text-align:center; line-height:1.7; }
+.shop-footer-text { font-family:'Spectral',serif; font-style:italic; font-size:13px; color:var(--text3); text-align:center; line-height:1.7; }
 
 
 
@@ -2868,7 +2868,7 @@ body.page-quran::before {
 }
 
 .quran-tagline {
-  font-family:'Cormorant Garamond', serif; font-style:italic;
+  font-family:'Spectral', serif; font-style:italic;
   font-size:12px; color:var(--gold); text-align:center; padding:0 20px 2px;
   opacity:0.85;
 }
@@ -2930,7 +2930,7 @@ body.night .juz-watermark { opacity:0.12; }
 body.night .juz-label { color:var(--gold-light); }
 
 .juz-range {
-  font-family:'Cormorant Garamond', serif; font-style:italic;
+  font-family:'Spectral', serif; font-style:italic;
   font-size:13px; color:var(--text3); text-align:center; line-height:1.6;
   position:relative; z-index:1; padding:0 8px;
 }
@@ -3039,12 +3039,12 @@ body.sheet-locked {
 }
 
 .bs-header-sub {
-  font-family:'Cormorant Garamond', serif; font-style:italic;
+  font-family:'Spectral', serif; font-style:italic;
   font-size:13px; color:var(--text3);
 }
 
 .page-quran .bs-subtitle {
-  font-family:'Cormorant Garamond', serif; font-style:italic;
+  font-family:'Spectral', serif; font-style:italic;
   font-size:14px; color:var(--text3); text-align:center;
   padding:0 20px 14px;
 }
@@ -3057,7 +3057,7 @@ body.sheet-locked {
   width:100%; padding:10px 14px;
   border:1px solid var(--card-border); border-radius:12px;
   background:rgba(var(--gold-rgb),0.05); color:var(--text);
-  font-family:'Cormorant Garamond', serif; font-size:15px;
+  font-family:'Spectral', serif; font-size:15px;
   outline:none; transition:border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -3111,7 +3111,7 @@ body.night .surah-num {
 body.night .surah-name-fr { color:var(--gold-light); }
 
 .surah-meta {
-  font-family:'Cormorant Garamond', serif; font-style:italic;
+  font-family:'Spectral', serif; font-style:italic;
   font-size:12px; color:var(--text3); margin-top:1px;
 }
 
@@ -3160,7 +3160,7 @@ body.night .surah-topbar { background: var(--bg-sheet); }
 }
 
 .surah-topbar-meta {
-  font-family:'Cormorant Garamond', serif; font-style:italic; font-size:10px;
+  font-family:'Spectral', serif; font-style:italic; font-size:10px;
   color:var(--text3); opacity:0.75; margin-top:1px;
 }
 
@@ -3182,7 +3182,7 @@ body.night .surah-topbar { background: var(--bg-sheet); }
 body.night .surah-view-name-fr { color:var(--gold-light); }
 
 .surah-view-meta {
-  font-family:'Cormorant Garamond', serif; font-style:italic;
+  font-family:'Spectral', serif; font-style:italic;
   font-size:13px; color:var(--text3); margin-top:4px;
 }
 
@@ -3251,7 +3251,7 @@ body.night .verse-num-badge {
 body.night .verse-arabic { color:var(--arabic-color); }
 
 .verse-phonetic {
-  font-family:'Cormorant Garamond', serif; font-style:italic;
+  font-family:'Spectral', serif; font-style:italic;
   font-size:16px; color:var(--phonetic-color); line-height:1.6;
   margin-bottom:6px; display:block;
 }
@@ -3259,7 +3259,7 @@ body.night .verse-arabic { color:var(--arabic-color); }
 .verse-phonetic.hidden { display:none; }
 
 .verse-translation {
-  font-family:'Cormorant Garamond', serif; font-size:15px;
+  font-family:'Spectral', serif; font-size:15px;
   color:var(--translation-color); line-height:1.65; display:block;
 }
 
@@ -3369,7 +3369,7 @@ body.night .audio-play-btn svg { stroke: var(--gold); }
 }
 
 .audio-verse-num {
-  font-family:'Cormorant Garamond', serif; font-style:italic;
+  font-family:'Spectral', serif; font-style:italic;
   font-size:20px; color:var(--gold-light);
 }
 
@@ -3442,7 +3442,7 @@ body.night .audio-play-btn svg { stroke: var(--gold); }
 
 .error-block {
   text-align:center; padding:32px 20px;
-  font-family:'Cormorant Garamond', serif; font-style:italic;
+  font-family:'Spectral', serif; font-style:italic;
   font-size:15px; color:var(--text3);
 }
 
@@ -3663,7 +3663,7 @@ body.night .qnav-label {
 }
 
 .qnav-sub {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-style: italic; font-size: 11px;
   color: var(--text3); line-height: 1.4;
   position: relative; z-index: 1;
@@ -3721,7 +3721,7 @@ body.night .nav-item-icon {
 }
 
 .nav-item-sub {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Spectral', serif;
   font-style: italic; font-size: 12px;
   color: var(--text3); margin-top: 2px;
   line-height: 1.4;
