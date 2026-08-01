@@ -25,7 +25,7 @@
      c'est ce qui règle le problème des bords évoqué par Lio. */
   .radial-overlay {
     position: fixed; inset: 0; z-index: 500;
-    background: rgba(20,15,5,0.55);
+    background: rgba(20,15,5,0.64);
     display: flex; align-items: center; justify-content: center;
     opacity: 0; pointer-events: none;
     transition: opacity 0.22s ease;
@@ -54,19 +54,21 @@
     transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
   }
 
-  /* Onde dorée qui part de l'icône */
+  /* Onde dorée : "révèle" les cartes plutôt que décorer l'écran. Sa taille
+     cible dépend du rayon réel des fiches (fixée en JS via --wave-size),
+     donc pas de keyframe fixe : elle grandit jusqu'à toucher les cartes,
+     puis s'efface aussitôt. Tout dure ~250-300ms au total. */
   .radial-wave {
     position: absolute; top: 50%; left: 50%; z-index: 1;
     width: 14px; height: 14px; border-radius: 50%;
     border: 1.5px solid rgba(197,160,40,0.9);
     transform: translate(-50%,-50%); opacity: 0; pointer-events: none;
+    transition: width 0.2s cubic-bezier(0.16,0.84,0.44,1),
+                height 0.2s cubic-bezier(0.16,0.84,0.44,1),
+                opacity 0.14s ease-out;
   }
-  .radial-wave.play { animation: radialWaveOut 1.15s cubic-bezier(0.16,0.84,0.44,1) forwards; }
-  @keyframes radialWaveOut {
-    0%   { width: 14px; height: 14px; opacity: 0.9; }
-    65%  { opacity: 0.35; }
-    100% { width: 640px; height: 640px; opacity: 0; }
-  }
+  .radial-wave.grow  { width: var(--wave-size, 200px); height: var(--wave-size, 200px); opacity: 0.85; }
+  .radial-wave.fade  { opacity: 0; }
 
   /* Traits fins dorés reliant chaque fiche à l'illustration centrale :
      soude visuellement l'ensemble plutôt que des fiches qui "flottent". */
@@ -75,7 +77,7 @@
     stroke: rgba(197,160,40,0.5); stroke-width: 1;
     stroke-dasharray: 260; stroke-dashoffset: 260;
   }
-  .radial-line.draw { transition: stroke-dashoffset 0.85s cubic-bezier(0.65,0,0.35,1); stroke-dashoffset: 0; }
+  .radial-line.draw { transition: stroke-dashoffset 0.22s cubic-bezier(0.65,0,0.35,1); stroke-dashoffset: 0; }
 
   /* Fiche de sous-catégorie — carte premium (pas une pilule/bouton) : fond
      parchemin en dégradé, double liseré doré, petits ornements en losange
@@ -83,7 +85,7 @@
      centre pour rester un ensemble cohérent avec l'illustration. */
   .radial-bubble {
     position: absolute; top: 50%; left: 50%; z-index: 2;
-    width: auto; max-width: 112px; min-height: 0;
+    width: auto; max-width: 126px; min-height: 0;
     border-radius: 12px;
     background: linear-gradient(160deg, rgba(253,248,236,0.98) 0%, rgba(243,233,208,0.95) 100%);
     border: 1.5px solid rgba(var(--gold-rgb, 201,168,76), 0.7);
@@ -92,7 +94,7 @@
       inset 0 1px 0 rgba(255,255,255,0.75),
       inset 0 0 0 1px rgba(var(--gold-rgb, 201,168,76), 0.18);
     display: flex; align-items: center; justify-content: center;
-    padding: 12px 13px;
+    padding: 12px 15px;
     cursor: pointer; -webkit-tap-highlight-color: transparent;
     /* Départ = matérialisation, pas une apparition franche : déjà partiellement
        visible, à mi-chemin de sa position finale, légèrement plus petite. */
@@ -256,7 +258,7 @@ let radialStartRect = null; // sa position/taille d'origine, pour le retour
 // Largeur cible de l'icône une fois centrée : taille FIXE (pas un % de
 // l'écran) pour que l'agrandissement reste toujours le même, quel que
 // soit l'appareil. Ajuste cette seule valeur si besoin.
-const ICON_TARGET_WIDTH = 170;
+const ICON_TARGET_WIDTH = 155;
 
 // La vraie <img> est affichée en object-fit:contain dans une boîte
 // (.cat-icon-circle) qui n'est pas forcément carrée. getBoundingClientRect()
@@ -335,64 +337,65 @@ function radialOpen(cardEl) {
     });
   });
 
-  // Les sous-catégories se répartissent TOUT AUTOUR de l'icône (cercle complet),
-  // resserrées près du centre (~30% plus proches qu'avant) pour rester un
-  // ensemble visuel cohérent avec l'illustration plutôt que des fiches qui
-  // flottent loin d'elle. Le rayon reste clampé à l'écran par sécurité.
+  // Les sous-catégories se répartissent TOUT AUTOUR de l'icône, sur un
+  // RAYON UNIQUE (cercle parfait, pas une ellipse) pour que les 4 cartes
+  // soient rigoureusement symétriques entre elles et alignées avec le
+  // centre de l'illustration. Clampé à l'écran par sécurité.
   const n = Math.min(items.length, 8);
-  const BUBBLE_HALF_W = 62;  // ~ moitié de max-width (112px) + marge
-  const BUBBLE_HALF_H = 42;
+  const BUBBLE_HALF = 68;  // ~ moitié de max-width (126px) + marge
   const SCREEN_MARGIN = 14;
 
-  const baseRadius = ICON_TARGET_WIDTH * 0.55 + 45;
-  const maxRadiusX  = window.innerWidth  / 2 - BUBBLE_HALF_W - SCREEN_MARGIN;
-  const maxRadiusY  = window.innerHeight / 2 - BUBBLE_HALF_H - SCREEN_MARGIN;
-  const RADIUS_X = Math.max(80, Math.min(baseRadius, maxRadiusX));
-  const RADIUS_Y = Math.max(80, Math.min(baseRadius, maxRadiusY));
+  const baseRadius = ICON_TARGET_WIDTH * 0.55 + 45 + 15; // +15px de distance en plus
+  const maxRadius   = Math.min(window.innerWidth, window.innerHeight) / 2 - BUBBLE_HALF - SCREEN_MARGIN;
+  const RADIUS = Math.max(80, Math.min(baseRadius, maxRadius));
 
   const positions = items.slice(0, n).map((item, i) => {
     const thetaDeg = (360 / n) * i - 90; // -90° = on démarre en haut, puis sens horaire
     const theta = thetaDeg * Math.PI / 180;
     return {
       item,
-      tx: Math.round(Math.cos(theta) * RADIUS_X),
-      ty: Math.round(Math.sin(theta) * RADIUS_Y)
+      tx: Math.round(Math.cos(theta) * RADIUS),
+      ty: Math.round(Math.sin(theta) * RADIUS)
     };
   });
 
-  playEffectWave(stage, cat, positions, Math.max(RADIUS_X, RADIUS_Y));
+  playEffectWave(stage, cat, positions, RADIUS);
 }
 
-// Une onde dorée part de l'icône, les fiches se matérialisent à son passage
-// plutôt que de "voler" vers leur position. Un fin trait doré relie chaque
-// fiche à l'illustration centrale pour souder visuellement l'ensemble.
+// L'onde dorée grandit vite jusqu'au rayon des cartes, les touche, puis
+// s'efface aussitôt : un effet de RÉVÉLATION du menu, pas une décoration
+// qui continue à grossir pour rien. Tout tient en ~250-300ms.
 function playEffectWave(stage, cat, positions, RADIUS) {
   const wave = document.createElement('div');
   wave.className = 'radial-wave';
+  const waveSize = (RADIUS + 55) * 2; // atteint tout juste le corps des cartes
+  wave.style.setProperty('--wave-size', waveSize + 'px');
   stage.appendChild(wave);
-  setTimeout(() => wave.classList.add('play'), 260);
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => wave.classList.add('grow'));
+  });
+  setTimeout(() => wave.classList.add('fade'), 200);  // s'efface dès qu'elle touche les cartes
+  setTimeout(() => wave.remove(), 360);
 
   const svgNS = 'http://www.w3.org/2000/svg';
   const linesSvg = document.createElementNS(svgNS, 'svg');
   linesSvg.setAttribute('class', 'radial-lines');
   stage.appendChild(linesSvg);
 
-  const WAVE_MAX_RADIUS = 320; // ~ 640px / 2, doit matcher le keyframe CSS
-  const WAVE_DURATION   = 1150;
-
-  positions.forEach(pos => {
-    const delay = 260 + (RADIUS / WAVE_MAX_RADIUS) * WAVE_DURATION * 0.72;
+  positions.forEach((pos, i) => {
+    const bubbleDelay = 185 + i * 25; // apparaît juste quand l'onde les atteint
 
     const line = document.createElementNS(svgNS, 'line');
     line.setAttribute('x1', 0); line.setAttribute('y1', 0);
     line.setAttribute('x2', pos.tx); line.setAttribute('y2', pos.ty);
     line.setAttribute('class', 'radial-line');
     linesSvg.appendChild(line);
-    setTimeout(() => line.classList.add('draw'), Math.max(200, delay - 320));
+    setTimeout(() => line.classList.add('draw'), Math.max(60, bubbleDelay - 100));
 
     const b = makeBubble(pos, cat);
     stage.appendChild(b);
-    setTimeout(() => b.classList.add('show'), delay);
+    setTimeout(() => b.classList.add('show'), bubbleDelay);
   });
 }
 
