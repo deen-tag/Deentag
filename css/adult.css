@@ -3558,18 +3558,6 @@ body.has-tabbar {
   font-weight: 700;
 }
 
-.app-tabbar .tab.active::after {
-  content: '';
-  position: absolute;
-  bottom: 1px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: var(--gold);
-  box-shadow: 0 0 6px rgba(199,160,74,0.7);
-}
-
 /* Tap feedback */
 .app-tabbar .tab:active .tab-icon {
   transform: scale(0.93);
