@@ -498,7 +498,8 @@ function renderSheetItems(cat) {
     const el      = document.createElement('div');
     el.className  = 'sub-card' + (item.sunnah ? ' sunnah-card' : '');
     el.innerHTML  =
-      '<div class="sub-card-title">' + item.sub + '</div>';
+      '<div class="sub-card-title">' + item.titre + '</div>' +
+      '<div class="sub-card-sub">'   + item.sub   + '</div>';
     el.addEventListener('click', () => openDua(cat, item.id));
     list.appendChild(el);
     setTimeout(() => el.classList.add('show'), 20 + i * 50);
