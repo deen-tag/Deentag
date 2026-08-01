@@ -77,6 +77,7 @@ var currentLang      = 'fr';
 var currentCat       = null;
 var currentAccId     = null;
 var sheetTransitioning = false;
+var savedScrollY     = 0;
 
 
 // ============================================================
@@ -700,6 +701,7 @@ function openSheet(cat) {
 
   document.getElementById('bsOverlay').classList.add('active');
   sheet.classList.add('open');
+  savedScrollY = window.scrollY || window.pageYOffset || 0;
   document.body.style.overscrollBehavior          = 'none';
   document.documentElement.style.overscrollBehavior = 'none';
   document.body.style.overflow  = 'hidden';
@@ -720,6 +722,7 @@ function closeSheet(fromSwipe) {
     document.body.style.overflow = '';
     document.body.style.position = '';
     document.body.style.width    = '';
+    window.scrollTo(0, savedScrollY);
   };
 
   if (fromSwipe) {

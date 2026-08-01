@@ -254,6 +254,7 @@
       w.startAngle = w.angle;
       axisLocked = null;
       if (w.animId) cancelAnimationFrame(w.animId);
+      if (w.wiggleAnimId) cancelAnimationFrame(w.wiggleAnimId);
       try { stage.setPointerCapture(e.pointerId); } catch (err) {}
     });
     stage.addEventListener('pointermove', function (e) {
@@ -399,6 +400,45 @@
     target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
   };
 
+  // Petit mouvement de va-et-vient joué automatiquement au premier affichage :
+  // montre sans mot que la roue se glisse, en complément des flèches
+  // showSwipeHint. Rythme "humain" en 3 temps plutôt qu'un aller-retour
+  // mécanique symétrique : départ rapide, retour plus lent, léger rebond
+  // avant de se stabiliser — comme si on avait poussé la roue du doigt.
+  function wiggleHint(w) {
+    if (reduceMotion) return;
+    var step = 360 / w.n;
+    var nudge = Math.min(step * 0.45, 20);
+    var bounce = Math.min(nudge * 0.18, 4); // petit dépassement avant l'arrêt
+
+    var stages = [
+      { from: 0, to: -nudge, dur: 260, ease: function (p) { return 1 - Math.pow(1 - p, 2); } },   // départ rapide
+      { from: -nudge, to: bounce, dur: 380, ease: function (p) { return 1 - Math.pow(1 - p, 3); } }, // retour plus lent, dépasse légèrement 0
+      { from: bounce, to: 0, dur: 220, ease: function (p) { return 1 - Math.pow(1 - p, 2); } }     // stabilisation
+    ];
+
+    var stageIndex = 0;
+    function runStage() {
+      if (w.dragging) return;
+      var s = stages[stageIndex];
+      var t0 = performance.now();
+      function step(t) {
+        if (w.dragging) return;
+        var p = Math.min(1, (t - t0) / s.dur);
+        w.angle = s.from + (s.to - s.from) * s.ease(p);
+        renderRing(w);
+        if (p < 1) {
+          w.wiggleAnimId = requestAnimationFrame(step);
+        } else {
+          stageIndex++;
+          if (stageIndex < stages.length) runStage();
+        }
+      }
+      w.wiggleAnimId = requestAnimationFrame(step);
+    }
+    runStage();
+  }
+
   function showSwipeHint(w) {
     var stage = w.stage;
 
@@ -501,6 +541,7 @@
     if (!reduceMotion) {
       setTimeout(function () {
         showSwipeHint(w);
+        wiggleHint(w);
       }, 500);
     }
   }
@@ -533,6 +574,7 @@
               if (w && !w.hinted) {
                 w.hinted = true;
                 showSwipeHint(w);
+                wiggleHint(w);
               }
               hintObserver.unobserve(entry.target);
             });
