@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Deentag — Test radial menu (éventail)</title>
 <link rel="stylesheet" href="css/adult.css">
+<link rel="stylesheet" href="css/wheel.css">
 <script>
 (function(){
   document.documentElement.setAttribute('data-theme','day');
@@ -55,17 +56,20 @@
     box-shadow: 0 0 0 2px rgba(197,160,40,0.55), 0 20px 42px rgba(0,0,0,0.4);
   }
 
-  /* Bulle de sous-catégorie -> mini carte DeenTag (plus une bulle générique) :
-     icône + titre, fond/typo/liseré doré identiques aux cartes catégories.
-     Position calculée en JS via --tx/--ty (éventail, pas cercle complet). */
+  /* Fiche de sous-catégorie — style "manuscrit" :
+     pas de cadre/bordure fermée, pas d'icône (le texte des sous-catégories
+     est souvent une phrase entière, une icône n'aiderait pas et prendrait
+     la place dont le texte a besoin). À la place : quelques fioritures
+     dorées discrètes aux coins, façon enluminure, et un petit ornement
+     au-dessus du titre pour garder l'identité DeenTag. */
   .radial-bubble {
     position: absolute; top: 50%; left: 50%;
-    width: 86px; height: 92px; border-radius: 18px;
-    background: var(--card-bg, #fdf8ec);
-    box-shadow: 0 1px 2px rgba(90,65,10,0.10), 0 8px 18px rgba(90,65,10,0.20);
-    border: 1.5px solid rgba(var(--gold-rgb, 201,168,76), 0.55);
+    width: 134px; min-height: 78px;
+    border-radius: 8px;
+    background: linear-gradient(160deg, rgba(253,248,236,0.97) 0%, rgba(237,230,208,0.94) 100%);
+    box-shadow: 0 6px 18px rgba(90,65,10,0.20);
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 5px; padding: 8px 6px;
+    gap: 5px; padding: 14px 14px;
     cursor: pointer; -webkit-tap-highlight-color: transparent;
     transform: translate(-50%, -50%) scale(0.3); opacity: 0;
     transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease, box-shadow 0.15s ease;
@@ -76,30 +80,30 @@
     opacity: 1;
   }
   .radial-bubble.pop {
-    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.18);
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.06);
   }
-  .radial-bubble:active {
-    box-shadow: 0 0 0 2px rgba(var(--gold-rgb, 201,168,76), 0.6);
-  }
+  .radial-bubble:active { box-shadow: 0 2px 8px rgba(90,65,10,0.28); }
 
-  .radial-bubble-icon {
-    width: 30px; height: 30px; object-fit: contain;
-    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));
+  /* Fioritures d'angle façon enluminure — remplacent le cadre fermé */
+  .radial-bubble-corner {
+    position: absolute; width: 13px; height: 13px;
+    border: 1.3px solid transparent; pointer-events: none;
+  }
+  .radial-bubble-corner.tl { top: 5px;    left: 5px;  border-top-color: var(--gold, #C9A84C); border-left-color: var(--gold, #C9A84C); border-radius: 3px 0 0 0; }
+  .radial-bubble-corner.tr { top: 5px;    right: 5px; border-top-color: var(--gold, #C9A84C); border-right-color: var(--gold, #C9A84C); border-radius: 0 3px 0 0; }
+  .radial-bubble-corner.bl { bottom: 5px; left: 5px;  border-bottom-color: var(--gold, #C9A84C); border-left-color: var(--gold, #C9A84C); border-radius: 0 0 0 3px; }
+  .radial-bubble-corner.br { bottom: 5px; right: 5px; border-bottom-color: var(--gold, #C9A84C); border-right-color: var(--gold, #C9A84C); border-radius: 0 0 3px 0; }
+
+  .radial-bubble-ornament {
+    font-size: 8px; color: var(--gold, #C9A84C); opacity: 0.85; line-height: 1;
   }
   .radial-bubble-title {
-    font-family: 'Cinzel', serif; font-size: 8.5px; font-weight: 600;
-    letter-spacing: 0.03em; color: var(--text3, #4a3d1a); text-align: center;
-    line-height: 1.18;
-    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
-    overflow: hidden;
+    font-family: 'Cinzel', serif; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.02em; color: var(--text3, #4a3d1a); text-align: center;
+    line-height: 1.35;
   }
-  /* Petit repère doré pour les invocations sunnah, cohérent avec le reste de l'app */
-  .radial-bubble.is-sunnah { border-color: rgba(var(--gold-rgb, 201,168,76), 0.85); }
-  .radial-bubble.is-sunnah::after {
-    content: '✦';
-    position: absolute; top: 4px; right: 6px;
-    font-size: 7px; color: var(--gold, #C9A84C); opacity: 0.85;
-  }
+  /* Repère sunnah : l'ornement devient une petite étoile pleine dorée */
+  .radial-bubble.is-sunnah .radial-bubble-ornament { opacity: 1; }
 
   .radial-hint {
     position: absolute; bottom: 6%; left: 0; right: 0;
@@ -119,12 +123,14 @@
 </div>
 
 <div class="proto-note">
-  Tape une carte : elle se centre, les sous-catégories éclosent en éventail
-  au-dessus/autour d'elle (2 à 5 éléments, jamais de cercle complet). Tape une
-  bulle → ouverture directe de l'invocation. Istikhara (1 seule dua) → saut direct.
+  Vraie roulette (js/wheel.js) : glisse pour faire tourner, tape la carte du
+  centre → elle s'extrait et grossit, les sous-catégories éclosent en éventail
+  autour d'elle (2 à 5, jamais de cercle complet). Fiches sans icône, style
+  manuscrit (fioritures dorées, tout l'espace pour le texte). Istikhara
+  (1 seule dua) → saut direct.
 </div>
 
-<div class="cat-pager">
+<div class="cat-pager" id="catPager">
 <div class="cat-section cat-section--open" data-section="Quotidien">
   <div class="cat-section-header">
     <span class="cat-section-line"></span>
@@ -204,6 +210,7 @@
 
 <script src="js/duas.js"></script>
 <script src="js/app.js"></script>
+<script src="js/wheel.js"></script>
 
 <script>
 // ============================================================
@@ -278,8 +285,10 @@ function radialOpen(cardEl) {
   const deltaX = targetCenterX - startCenterX;
   const deltaY = targetCenterY - startCenterY;
 
-  // Rayon de l'éventail : adapté à la taille réelle de la carte agrandie
-  const RADIUS = Math.max(newWidth, newHeight) / 2 + 78;
+  // Rayon de l'éventail : adapté à la taille réelle de la carte agrandie,
+  // avec une marge plus large car les fiches (134px de large) ont besoin
+  // de plus d'espace entre elles qu'une bulle ronde.
+  const RADIUS = Math.max(newWidth, newHeight) / 2 + 100;
 
   // Double rAF pour garantir que l'état de départ est bien peint avant
   // de déclencher la transition (sinon le navigateur saute l'anim).
@@ -305,7 +314,11 @@ function radialOpen(cardEl) {
     b.style.setProperty('--tx', tx);
     b.style.setProperty('--ty', ty);
     b.innerHTML =
-      '<img class="radial-bubble-icon" src="' + cardEl.dataset.icon + '" alt="">' +
+      '<span class="radial-bubble-corner tl"></span>' +
+      '<span class="radial-bubble-corner tr"></span>' +
+      '<span class="radial-bubble-corner bl"></span>' +
+      '<span class="radial-bubble-corner br"></span>' +
+      '<div class="radial-bubble-ornament">✦</div>' +
       '<div class="radial-bubble-title">' + item.titre + '</div>';
     b.onclick = (e) => {
       e.stopPropagation();
