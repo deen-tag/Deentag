@@ -301,3 +301,105 @@ body.night .item .qnav-card {
     animation: none;
   }
 }
+
+/* ============================================================
+   MENU RADIAL (éventail de sous-catégories)
+   Remplace l'ancien sheet à moitié. Voir js/radial.js.
+   ============================================================ */
+
+.radial-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(20,15,5,0.64);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.22s ease;
+}
+.radial-overlay.show { opacity: 1; pointer-events: auto; }
+
+.radial-stage {
+  position: relative;
+  width: 300px; height: 300px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Clone FLIP de l'icône seule (pas de la carte) : le .webp a déjà son
+   arche/branches dorées détourées avec fond transparent. */
+.radial-icon-clone {
+  position: fixed;
+  z-index: 510;
+  pointer-events: none;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 32px rgba(0,0,0,0.4));
+  transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
+}
+
+.radial-wave {
+  position: absolute; top: 50%; left: 50%; z-index: 1;
+  width: 14px; height: 14px; border-radius: 50%;
+  border: 1.5px solid rgba(197,160,40,0.9);
+  transform: translate(-50%,-50%); opacity: 0; pointer-events: none;
+  transition: width 0.2s cubic-bezier(0.16,0.84,0.44,1),
+              height 0.2s cubic-bezier(0.16,0.84,0.44,1),
+              opacity 0.14s ease-out;
+}
+.radial-wave.grow  { width: var(--wave-size, 200px); height: var(--wave-size, 200px); opacity: 0.85; }
+.radial-wave.fade  { opacity: 0; }
+
+.radial-lines { position: absolute; top: 50%; left: 50%; width: 0; height: 0; overflow: visible; z-index: 0; pointer-events: none; }
+.radial-line {
+  stroke: rgba(197,160,40,0.5); stroke-width: 1;
+  stroke-dasharray: 260; stroke-dashoffset: 260;
+}
+.radial-line.draw { transition: stroke-dashoffset 0.22s cubic-bezier(0.65,0,0.35,1); stroke-dashoffset: 0; }
+
+/* Fiche de sous-catégorie — capsule premium : fond parchemin en dégradé,
+   double liseré doré, petits losanges dorés aux coins (même esprit que
+   les écussons de l'app). */
+.radial-bubble {
+  position: absolute; top: 50%; left: 50%; z-index: 2;
+  width: auto; max-width: 126px; min-height: 0;
+  border-radius: 12px;
+  background: linear-gradient(160deg, rgba(253,248,236,0.98) 0%, rgba(243,233,208,0.95) 100%);
+  border: 1.5px solid rgba(var(--gold-rgb, 201,168,76), 0.7);
+  box-shadow:
+    0 8px 20px rgba(90,65,10,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.75),
+    inset 0 0 0 1px rgba(var(--gold-rgb, 201,168,76), 0.18);
+  display: flex; align-items: center; justify-content: center;
+  padding: 12px 15px;
+  cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transform: translate(calc(-50% + var(--tx-start, 0px)), calc(-50% + var(--ty-start, 0px))) scale(0.9);
+  opacity: 0.6;
+  transition: transform 0.38s cubic-bezier(0.34,1.56,0.64,1), opacity 0.34s ease, box-shadow 0.15s ease;
+}
+.radial-bubble::before,
+.radial-bubble::after {
+  content: ''; position: absolute; width: 6px; height: 6px;
+  background: linear-gradient(135deg, #f0dc93, #b3852a);
+  transform: rotate(45deg);
+  box-shadow: 0 1px 2px rgba(60,40,5,0.35);
+}
+.radial-bubble::before { top: -3px; left: 11px; }
+.radial-bubble::after  { bottom: -3px; right: 11px; }
+
+.radial-bubble.show {
+  transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
+  opacity: 1;
+}
+.radial-bubble.pop {
+  transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.06);
+}
+.radial-bubble:active { box-shadow: 0 1px 4px rgba(150,115,30,0.22); }
+
+.radial-bubble-title {
+  font-family: 'Cinzel', serif; font-size: 8.5px; font-weight: 600;
+  letter-spacing: 0.06em; color: var(--text3, #4a3d1a); text-align: center;
+  text-transform: uppercase; line-height: 1.35;
+}
+.radial-bubble.is-sunnah { border-color: rgba(var(--gold-rgb, 201,168,76), 0.85); }
+
+.radial-hint {
+  position: absolute; bottom: 6%; left: 0; right: 0;
+  text-align: center; font-family: system-ui, sans-serif; font-size: 11px;
+  color: rgba(255,255,255,0.75);
+}
