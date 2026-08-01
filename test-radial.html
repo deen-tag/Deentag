@@ -357,8 +357,11 @@ function radialOpen(cardEl) {
   const BUBBLE_HALF = bubbleMaxWidth / 2 + 8;
 
   const baseRadius = ICON_TARGET_WIDTH * 0.55 + 45 + 15;
-  let RADIUS_X = Math.min(baseRadius * 1.18, viewportW / 2 - BUBBLE_HALF - SCREEN_MARGIN);
-  let RADIUS_Y = Math.min(baseRadius * 0.88, viewportH / 2 - BUBBLE_HALF - SCREEN_MARGIN);
+  // Ellipse à peine étirée (1.05 / 0.95) : reste un vrai menu radial visuel,
+  // le petit écart horizontal/vertical sert juste de coup de pouce, tout le
+  // gros du travail anti-collision est fait par l'algorithme ci-dessous.
+  let RADIUS_X = Math.min(baseRadius * 1.05, viewportW / 2 - BUBBLE_HALF - SCREEN_MARGIN);
+  let RADIUS_Y = Math.min(baseRadius * 0.95, viewportH / 2 - BUBBLE_HALF - SCREEN_MARGIN);
   RADIUS_X = Math.max(66, RADIUS_X);
   RADIUS_Y = Math.max(66, RADIUS_Y);
 
@@ -368,22 +371,43 @@ function radialOpen(cardEl) {
     return { item, tx: Math.cos(theta) * RADIUS_X, ty: Math.sin(theta) * RADIUS_Y };
   });
 
-  // Anti-collision : écarte deux fiches voisines si leurs boîtes se
-  // chevaucheraient (pousse chacune le long de l'axe qui les sépare).
-  const MIN_GAP = bubbleMaxWidth + 16;
-  for (let pass = 0; pass < 3; pass++) {
+  // Anti-collision : compare TOUTES les paires de fiches (pas seulement les
+  // voisines) — avec 7-8 fiches, deux non-adjacentes pourraient sinon se
+  // rapprocher sans être détectées. Boucle "tant qu'il reste une collision",
+  // plafonnée pour éviter tout calcul inutile une fois l'espacement correct.
+  const MIN_GAP = bubbleMaxWidth + 34;
+  const MAX_PASSES = 10;
+  for (let pass = 0; pass < MAX_PASSES; pass++) {
+    let hadCollision = false;
     for (let i = 0; i < positions.length; i++) {
-      const a = positions[i], b = positions[(i + 1) % positions.length];
-      const dx = b.tx - a.tx, dy = b.ty - a.ty;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist > 0 && dist < MIN_GAP) {
-        const push = (MIN_GAP - dist) / 2;
-        const nx = dx / dist, ny = dy / dist;
-        a.tx -= nx * push; a.ty -= ny * push;
-        b.tx += nx * push; b.ty += ny * push;
+      for (let j = i + 1; j < positions.length; j++) {
+        const a = positions[i], b = positions[j];
+        const dx = b.tx - a.tx, dy = b.ty - a.ty;
+        const dist = Math.hypot(dx, dy);
+        if (dist > 0 && dist < MIN_GAP) {
+          hadCollision = true;
+          const push = (MIN_GAP - dist) / 2;
+          const nx = dx / dist, ny = dy / dist;
+          a.tx -= nx * push; a.ty -= ny * push;
+          b.tx += nx * push; b.ty += ny * push;
+        }
       }
     }
+    if (!hadCollision) break;
   }
+
+  // La poussée anti-collision déplace librement les fiches (angle ET
+  // distance), ce qui peut au fil des passes les faire dériver hors de leur
+  // orbite -> cassure de la symétrie sur 7-8 fiches. On les re-projette donc
+  // une dernière fois sur l'ellipse : seul l'angle gagné pendant la
+  // résolution de collision est conservé, la distance au centre revient
+  // exactement sur le rayon d'origine.
+  positions.forEach(p => {
+    const angle = Math.atan2(p.ty / RADIUS_Y, p.tx / RADIUS_X);
+    p.tx = Math.cos(angle) * RADIUS_X;
+    p.ty = Math.sin(angle) * RADIUS_Y;
+  });
+
   positions.forEach(p => { p.tx = Math.round(p.tx); p.ty = Math.round(p.ty); });
 
   playEffectWave(stage, cat, positions, Math.max(RADIUS_X, RADIUS_Y), bubbleMaxWidth);
