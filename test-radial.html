@@ -38,23 +38,52 @@
     display: flex; align-items: center; justify-content: center;
   }
 
-  /* Clone FLIP de la vraie carte tapée : positionné en fixed, il part
-     exactement de sa position/taille d'origine dans la grille puis anime
-     vers le centre agrandi. C'est la carte réelle (cadre, icône, pilule),
-     pas une reconstruction -> effet "extraite du site". */
-  .radial-center-clone {
+  /* Clone FLIP de l'ICÔNE SEULE (pas de la carte) : le .webp a déjà son
+     arche/branches dorées détourées avec fond transparent, donc on ne clone
+     que l'<img>, sans cadre ni pilule autour -> effet "objet qui prend vie",
+     pas "carte à jouer". Positionné en fixed, part exactement de sa
+     position/taille d'origine dans la grille puis anime vers le centre. */
+  .radial-icon-clone {
     position: fixed;
     z-index: 510;
-    margin: 0;
-    pointer-events: none; /* on ferme via l'overlay, pas via le clone */
-    box-shadow: 0 14px 34px rgba(0,0,0,0.38);
-    transition:
-      transform 0.4s cubic-bezier(0.34,1.45,0.64,1),
-      box-shadow 0.34s ease;
+    pointer-events: none;
+    filter: drop-shadow(0 16px 32px rgba(0,0,0,0.4));
+    transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
   }
-  .radial-center-clone.expanded {
-    box-shadow: 0 0 0 2px rgba(197,160,40,0.55), 0 20px 42px rgba(0,0,0,0.4);
+
+  /* Toggle de test pour comparer les 2 effets */
+  .effect-toggle {
+    display: flex; gap: 8px; justify-content: center; margin: 0 auto 14px;
   }
+  .effect-tab {
+    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.06em;
+    padding: 8px 14px; border-radius: 18px; cursor: pointer;
+    border: 1px solid rgba(197,160,40,0.4); background: rgba(255,255,255,0.5);
+    color: #4a3d1a;
+  }
+  .effect-tab.active { background: #c9a84c; color: #2b2408; border-color: #c9a84c; }
+
+  /* Effet A — onde dorée qui part de l'icône */
+  .radial-wave {
+    position: absolute; top: 50%; left: 50%; z-index: 1;
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 1.5px solid rgba(197,160,40,0.9);
+    transform: translate(-50%,-50%); opacity: 0; pointer-events: none;
+  }
+  .radial-wave.play { animation: radialWaveOut 1.15s cubic-bezier(0.16,0.84,0.44,1) forwards; }
+  @keyframes radialWaveOut {
+    0%   { width: 14px; height: 14px; opacity: 0.9; }
+    65%  { opacity: 0.35; }
+    100% { width: 640px; height: 640px; opacity: 0; }
+  }
+
+  /* Effet B — motif géométrique (étoile à 8 branches) qui se dessine */
+  .radial-star { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 1; width: 420px; height: 420px; overflow: visible; pointer-events: none; }
+  .radial-star-line {
+    stroke: rgba(197,160,40,0.85); stroke-width: 1.2; fill: none;
+    stroke-dasharray: 400; stroke-dashoffset: 400;
+  }
+  .radial-star-line.draw { transition: stroke-dashoffset 0.9s cubic-bezier(0.65,0,0.35,1); stroke-dashoffset: 0; }
 
   /* Fiche de sous-catégorie — capsule reprenant EXACTEMENT le style de tes
      pilules existantes (cat-label : "REPAS", "TRANSPORT & VOYAGE"...) plutôt
@@ -114,11 +143,16 @@
 </div>
 
 <div class="proto-note">
-  Vraie roulette (js/wheel.js) : glisse pour faire tourner, tape la carte du
-  centre → elle s'extrait, grossit avec un léger rebond, les sous-catégories
-  naissent en éventail l'une après l'autre (2 à 5, jamais de cercle complet).
+  Vraie roulette (js/wheel.js) : glisse pour faire tourner. Tape une carte →
+  seule l'icône (arche + illustration détourée, sans cadre) s'extrait et
+  grossit au centre, les sous-catégories naissent tout autour d'elle.
   Fiches en capsules (même style que tes pilules "REPAS", "MAISON"...).
   Istikhara (1 seule dua) → saut direct.
+</div>
+
+<div class="effect-toggle">
+  <div class="effect-tab active" data-effect="a" onclick="setEffectMode('a')">A · Onde dorée</div>
+  <div class="effect-tab" data-effect="b" onclick="setEffectMode('b')">B · Motif géométrique</div>
 </div>
 
 <div class="cat-pager" id="catPager">
@@ -210,23 +244,27 @@
 // ============================================================
 
 let radialCat = null;
+let effectMode = 'a'; // 'a' = onde dorée · 'b' = motif géométrique (étoile)
 
-// État du clone FLIP en cours (carte réellement extraite de la grille)
-let radialClone = null;      // l'élément cloné, animé
-let radialSourceCard = null; // la vraie carte du grid, masquée pendant l'ouverture
-let radialStartRect = null;  // sa position/taille d'origine, pour l'animation retour
+// État du clone FLIP en cours (seule l'ICÔNE est extraite de la grille,
+// pas toute la carte : le .webp a déjà son arche/branches détourées avec
+// fond transparent, donc pas besoin de cadre/pilule autour).
+let radialIconClone = null; // l'<img> clonée, animée
+let radialSourceImg = null; // la vraie <img> du grid
+let radialStartRect = null; // sa position/taille d'origine, pour le retour
 
-// Facteur d'agrandissement de la carte une fois centrée
-const CENTER_SCALE = 1.35;
+function setEffectMode(mode) {
+  effectMode = mode;
+  document.querySelectorAll('.effect-tab').forEach(t => t.classList.toggle('active', t.dataset.effect === mode));
+}
 
-// Ouverture angulaire de l'éventail selon le nombre de sous-catégories.
-// 0° = 12h (haut), sens horaire. On ne fait JAMAIS un cercle complet :
-// le regard reste concentré sur la carte centrale et sur la zone haute.
-//   2 éléments -> ~10h et 2h   (span 120°, autour du haut)
-//   3 éléments -> 9h, 12h, 3h (span 180°, demi-cercle)
-//   4 éléments -> demi-cercle harmonieux (span 180°)
-//   5 éléments -> arc élargi 200° (déborde un peu sous l'horizontale)
-const ARC_SPAN = { 2: 120, 3: 180, 4: 180, 5: 200 };
+// Largeur cible de l'icône une fois centrée : taille FIXE (pas un % de
+// l'écran) pour que l'agrandissement reste toujours le même, quel que
+// soit l'appareil. Ajuste cette seule valeur si besoin.
+const ICON_TARGET_WIDTH = 150;
+function iconTargetWidth() {
+  return ICON_TARGET_WIDTH;
+}
 
 function radialOpen(cardEl) {
   const cat = cardEl.dataset.cat;
@@ -238,88 +276,144 @@ function radialOpen(cardEl) {
     return;
   }
 
-  // Si un précédent clone traînait encore (changement rapide de carte),
-  // on le nettoie sans animation de retour.
   cleanupClone(true);
 
   radialCat = cat;
   const overlay = document.getElementById('radialOverlay');
   const stage   = document.getElementById('radialStage');
-  stage.querySelectorAll('.radial-bubble').forEach(b => b.remove());
+  stage.querySelectorAll('.radial-bubble, .radial-wave, .radial-star').forEach(el => el.remove());
 
-  // --- FLIP : on clone la VRAIE carte (cadre, icône, pilule identiques) ---
-  radialSourceCard = cardEl;
-  radialStartRect  = cardEl.getBoundingClientRect();
+  // --- FLIP : on clone SEULEMENT l'icône (arche + illustration, sans cadre) ---
+  const sourceImg = cardEl.querySelector('.cat-icon');
+  radialSourceImg = sourceImg;
+  radialStartRect = sourceImg.getBoundingClientRect();
 
-  const clone = cardEl.cloneNode(true);
-  clone.classList.add('radial-center-clone');
-  clone.removeAttribute('onclick');
+  const clone = document.createElement('img');
+  clone.src = sourceImg.src;
+  clone.alt = '';
+  clone.className = 'radial-icon-clone';
   clone.style.top    = radialStartRect.top + 'px';
   clone.style.left   = radialStartRect.left + 'px';
   clone.style.width  = radialStartRect.width + 'px';
   clone.style.height = radialStartRect.height + 'px';
   clone.style.transform = 'translate(0,0) scale(1)';
   document.body.appendChild(clone);
-  radialClone = clone;
+  radialIconClone = clone;
 
-  // On masque la carte source (garde la place dans la grille, évite le doublon)
+  // On masque la carte source entière (icône + pilule), garde sa place
   cardEl.style.visibility = 'hidden';
 
   overlay.classList.add('show');
 
-  const newWidth  = radialStartRect.width  * CENTER_SCALE;
-  const newHeight = radialStartRect.height * CENTER_SCALE;
-  const startCenterX = radialStartRect.left + radialStartRect.width  / 2;
-  const startCenterY = radialStartRect.top  + radialStartRect.height / 2;
+  const targetW = iconTargetWidth();
+  const scale = targetW / radialStartRect.width;
+  const startCenterX  = radialStartRect.left + radialStartRect.width  / 2;
+  const startCenterY  = radialStartRect.top  + radialStartRect.height / 2;
   const targetCenterX = window.innerWidth  / 2;
   const targetCenterY = window.innerHeight / 2;
   const deltaX = targetCenterX - startCenterX;
   const deltaY = targetCenterY - startCenterY;
 
-  // Rayon de l'éventail : resserré pour que les fiches semblent sortir de
-  // la carte centrale (effet "pétales"), plutôt que flotter loin d'elle.
-  const RADIUS = Math.max(newWidth, newHeight) / 2 + 52;
-
-  // Double rAF pour garantir que l'état de départ est bien peint avant
-  // de déclencher la transition (sinon le navigateur saute l'anim).
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      clone.style.transform = 'translate(' + deltaX + 'px,' + deltaY + 'px) scale(' + CENTER_SCALE + ')';
-      clone.classList.add('expanded');
+      clone.style.transform = 'translate(' + deltaX + 'px,' + deltaY + 'px) scale(' + scale + ')';
     });
   });
 
-  const n = Math.min(items.length, 5); // 5 max en éventail direct
-  const span = ARC_SPAN[n] || 200;
-  const step = n > 1 ? span / (n - 1) : 0;
+  // Les sous-catégories se répartissent TOUT AUTOUR de l'icône (cercle complet,
+  // "viennent de partout"), pas en éventail limité au haut de l'écran.
+  const n = Math.min(items.length, 8);
+  const RADIUS = targetW * 0.62 + 96;
 
-  items.slice(0, n).forEach((item, i) => {
-    const thetaDeg = -span / 2 + step * i; // 0° = haut, négatif = gauche
-    const theta = thetaDeg * (Math.PI / 180);
-    const tx = Math.round(Math.sin(theta) * RADIUS) + 'px';
-    const ty = Math.round(-Math.cos(theta) * RADIUS) + 'px';
-
-    const b = document.createElement('div');
-    b.className = 'radial-bubble' + (item.sunnah ? ' is-sunnah' : '');
-    b.style.setProperty('--tx', tx);
-    b.style.setProperty('--ty', ty);
-    // Position de départ = 40% du chemin vers la position finale (pas le
-    // centre exact) : donne l'impression que la fiche émerge de la carte
-    // plutôt que d'apparaître comme surgie de nulle part.
-    b.style.setProperty('--tx-start', Math.round(Math.sin(theta) * RADIUS * 0.4) + 'px');
-    b.style.setProperty('--ty-start', Math.round(-Math.cos(theta) * RADIUS * 0.4) + 'px');
-    b.innerHTML = '<div class="radial-bubble-title">' + item.titre + '</div>';
-    b.onclick = (e) => {
-      e.stopPropagation();
-      b.classList.add('pop');
-      setTimeout(() => protoOpenDuaDirect(cat, item.id), 140);
+  const positions = items.slice(0, n).map((item, i) => {
+    const thetaDeg = (360 / n) * i - 90; // -90° = on démarre en haut, puis sens horaire
+    const theta = thetaDeg * Math.PI / 180;
+    return {
+      item,
+      tx: Math.round(Math.cos(theta) * RADIUS),
+      ty: Math.round(Math.sin(theta) * RADIUS)
     };
-    stage.appendChild(b);
-    // Décalage plus marqué (70-80ms) et démarrage une fois le rebond de la
-    // carte centrale bien engagé -> effet de "naissance" successive, pas
-    // toutes en même temps.
-    setTimeout(() => b.classList.add('show'), 190 + i * 75);
   });
+
+  if (effectMode === 'a') {
+    playEffectWave(stage, cat, positions, RADIUS);
+  } else {
+    playEffectStar(stage, cat, positions, targetW, RADIUS, n);
+  }
+}
+
+// --- Effet A : une onde dorée part de l'icône, les fiches se matérialisent
+// à son passage plutôt que de "voler" vers leur position. ---
+function playEffectWave(stage, cat, positions, RADIUS) {
+  const wave = document.createElement('div');
+  wave.className = 'radial-wave';
+  stage.appendChild(wave);
+  setTimeout(() => wave.classList.add('play'), 260);
+
+  const WAVE_MAX_RADIUS = 320; // ~ 640px / 2, doit matcher le keyframe CSS
+  const WAVE_DURATION   = 1150;
+
+  positions.forEach(pos => {
+    const b = makeBubble(pos, cat);
+    stage.appendChild(b);
+    const delay = 260 + (RADIUS / WAVE_MAX_RADIUS) * WAVE_DURATION * 0.72;
+    setTimeout(() => b.classList.add('show'), delay);
+  });
+}
+
+// --- Effet B : un motif d'étoile à 8 branches (arabesque) se dessine en
+// traits dorés autour de l'icône, les fiches apparaissent une fois le motif tracé. ---
+function playEffectStar(stage, cat, positions, targetW, RADIUS, n) {
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(svgNS, 'svg');
+  svg.setAttribute('class', 'radial-star');
+  svg.setAttribute('viewBox', '-210 -210 420 420');
+
+  const R1 = targetW * 0.42, R2 = RADIUS;
+  let segIndex = 0;
+  for (let i = 0; i < 8; i++) {
+    const a1 = (i * 45 - 90) * Math.PI / 180;
+    const a2 = (i * 45 - 90 + 22.5) * Math.PI / 180;
+    const a3 = (i * 45 - 90 + 45) * Math.PI / 180;
+    const pts = [
+      [Math.cos(a1) * R1, Math.sin(a1) * R1, Math.cos(a2) * R2, Math.sin(a2) * R2],
+      [Math.cos(a2) * R2, Math.sin(a2) * R2, Math.cos(a3) * R1, Math.sin(a3) * R1]
+    ];
+    pts.forEach(coords => {
+      const line = document.createElementNS(svgNS, 'line');
+      line.setAttribute('x1', coords[0]); line.setAttribute('y1', coords[1]);
+      line.setAttribute('x2', coords[2]); line.setAttribute('y2', coords[3]);
+      line.setAttribute('class', 'radial-star-line');
+      svg.appendChild(line);
+      setTimeout(() => line.classList.add('draw'), 320 + segIndex * 22);
+      segIndex++;
+    });
+  }
+  stage.appendChild(svg);
+
+  positions.forEach((pos, i) => {
+    const b = makeBubble(pos, cat);
+    stage.appendChild(b);
+    setTimeout(() => b.classList.add('show'), 780 + i * 90);
+  });
+}
+
+// Fabrique une fiche de sous-catégorie (même pilule que le reste du site)
+function makeBubble(pos, cat) {
+  const { item, tx, ty } = pos;
+  const b = document.createElement('div');
+  b.className = 'radial-bubble' + (item.sunnah ? ' is-sunnah' : '');
+  b.style.setProperty('--tx', tx + 'px');
+  b.style.setProperty('--ty', ty + 'px');
+  b.style.setProperty('--tx-start', Math.round(tx * 0.4) + 'px');
+  b.style.setProperty('--ty-start', Math.round(ty * 0.4) + 'px');
+  b.innerHTML = '<div class="radial-bubble-title">' + item.titre + '</div>';
+  b.onclick = (e) => {
+    e.stopPropagation();
+    b.classList.add('pop');
+    setTimeout(() => protoOpenDuaDirect(cat, item.id), 140);
+  };
+  return b;
 }
 
 function radialClose(e) {
@@ -333,30 +427,29 @@ function radialClose(e) {
 // instant = true  -> suppression immédiate (changement rapide de carte)
 // instant = false -> rejoue l'animation à l'envers avant de nettoyer
 function cleanupClone(instant) {
-  if (!radialClone) return;
-  const clone = radialClone;
-  const sourceCard = radialSourceCard;
+  if (!radialIconClone) return;
+  const clone = radialIconClone;
+  const sourceImg = radialSourceImg;
+  const sourceCard = sourceImg ? sourceImg.closest('.cat-card') : null;
 
   if (instant) {
     clone.remove();
     if (sourceCard) sourceCard.style.visibility = '';
-    radialClone = null;
-    radialSourceCard = null;
+    radialIconClone = null;
+    radialSourceImg = null;
     radialStartRect = null;
     return;
   }
 
-  // Retour à la position/taille d'origine (la carte "se range" dans la grille)
-  clone.classList.remove('expanded');
   clone.style.transform = 'translate(0,0) scale(1)';
 
   setTimeout(() => {
     clone.remove();
     if (sourceCard) sourceCard.style.visibility = '';
-    radialClone = null;
-    radialSourceCard = null;
+    radialIconClone = null;
+    radialSourceImg = null;
     radialStartRect = null;
-  }, 340);
+  }, 420);
 }
 
 function protoOpenDuaDirect(cat, accId) {
