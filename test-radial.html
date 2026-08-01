@@ -49,30 +49,34 @@
     pointer-events: none; /* on ferme via l'overlay, pas via le clone */
     box-shadow: 0 14px 34px rgba(0,0,0,0.38);
     transition:
-      transform 0.34s cubic-bezier(0.22,1,0.36,1),
+      transform 0.4s cubic-bezier(0.34,1.45,0.64,1),
       box-shadow 0.34s ease;
   }
   .radial-center-clone.expanded {
     box-shadow: 0 0 0 2px rgba(197,160,40,0.55), 0 20px 42px rgba(0,0,0,0.4);
   }
 
-  /* Fiche de sous-catégorie — style "manuscrit" :
-     pas de cadre/bordure fermée, pas d'icône (le texte des sous-catégories
-     est souvent une phrase entière, une icône n'aiderait pas et prendrait
-     la place dont le texte a besoin). À la place : quelques fioritures
-     dorées discrètes aux coins, façon enluminure, et un petit ornement
-     au-dessus du titre pour garder l'identité DeenTag. */
+  /* Fiche de sous-catégorie — capsule reprenant EXACTEMENT le style de tes
+     pilules existantes (cat-label : "REPAS", "TRANSPORT & VOYAGE"...) plutôt
+     qu'un nouveau composant. Même famille visuelle que les icônes -> plus
+     de décalage de qualité entre carte centrale et fiches. Plus petite et
+     plus proche du centre que la version précédente, pour un effet
+     "pétales qui s'ouvrent" plus resserré et premium. */
   .radial-bubble {
     position: absolute; top: 50%; left: 50%;
-    width: 134px; min-height: 78px;
-    border-radius: 8px;
-    background: linear-gradient(160deg, rgba(253,248,236,0.97) 0%, rgba(237,230,208,0.94) 100%);
-    box-shadow: 0 6px 18px rgba(90,65,10,0.20);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 5px; padding: 14px 14px;
+    width: auto; max-width: 108px; min-height: 0;
+    border-radius: 18px;
+    background: rgba(253,248,236,0.94);
+    border: 1px solid rgba(var(--gold-rgb, 201,168,76), 0.5);
+    box-shadow: 0 3px 10px rgba(150,115,30,0.16), inset 0 1px 0 rgba(255,255,255,0.6);
+    display: flex; align-items: center; justify-content: center;
+    padding: 8px 12px;
     cursor: pointer; -webkit-tap-highlight-color: transparent;
-    transform: translate(-50%, -50%) scale(0.3); opacity: 0;
-    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease, box-shadow 0.15s ease;
+    /* Départ = matérialisation, pas une apparition franche : déjà partiellement
+       visible, à mi-chemin de sa position finale, légèrement plus petite. */
+    transform: translate(calc(-50% + var(--tx-start, 0px)), calc(-50% + var(--ty-start, 0px))) scale(0.92);
+    opacity: 0.65;
+    transition: transform 0.38s cubic-bezier(0.34,1.56,0.64,1), opacity 0.34s ease, box-shadow 0.15s ease;
     z-index: 1;
   }
   .radial-bubble.show {
@@ -82,28 +86,15 @@
   .radial-bubble.pop {
     transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.06);
   }
-  .radial-bubble:active { box-shadow: 0 2px 8px rgba(90,65,10,0.28); }
+  .radial-bubble:active { box-shadow: 0 1px 4px rgba(150,115,30,0.22); }
 
-  /* Fioritures d'angle façon enluminure — remplacent le cadre fermé */
-  .radial-bubble-corner {
-    position: absolute; width: 13px; height: 13px;
-    border: 1.3px solid transparent; pointer-events: none;
-  }
-  .radial-bubble-corner.tl { top: 5px;    left: 5px;  border-top-color: var(--gold, #C9A84C); border-left-color: var(--gold, #C9A84C); border-radius: 3px 0 0 0; }
-  .radial-bubble-corner.tr { top: 5px;    right: 5px; border-top-color: var(--gold, #C9A84C); border-right-color: var(--gold, #C9A84C); border-radius: 0 3px 0 0; }
-  .radial-bubble-corner.bl { bottom: 5px; left: 5px;  border-bottom-color: var(--gold, #C9A84C); border-left-color: var(--gold, #C9A84C); border-radius: 0 0 0 3px; }
-  .radial-bubble-corner.br { bottom: 5px; right: 5px; border-bottom-color: var(--gold, #C9A84C); border-right-color: var(--gold, #C9A84C); border-radius: 0 0 3px 0; }
-
-  .radial-bubble-ornament {
-    font-size: 8px; color: var(--gold, #C9A84C); opacity: 0.85; line-height: 1;
-  }
   .radial-bubble-title {
-    font-family: 'Cinzel', serif; font-size: 10px; font-weight: 600;
-    letter-spacing: 0.02em; color: var(--text3, #4a3d1a); text-align: center;
-    line-height: 1.35;
+    font-family: 'Cinzel', serif; font-size: 8.5px; font-weight: 600;
+    letter-spacing: 0.06em; color: var(--text3, #4a3d1a); text-align: center;
+    text-transform: uppercase; line-height: 1.35;
   }
-  /* Repère sunnah : l'ornement devient une petite étoile pleine dorée */
-  .radial-bubble.is-sunnah .radial-bubble-ornament { opacity: 1; }
+  /* Repère sunnah : liseré légèrement plus marqué, cohérent avec le reste de l'app */
+  .radial-bubble.is-sunnah { border-color: rgba(var(--gold-rgb, 201,168,76), 0.85); }
 
   .radial-hint {
     position: absolute; bottom: 6%; left: 0; right: 0;
@@ -124,10 +115,10 @@
 
 <div class="proto-note">
   Vraie roulette (js/wheel.js) : glisse pour faire tourner, tape la carte du
-  centre → elle s'extrait et grossit, les sous-catégories éclosent en éventail
-  autour d'elle (2 à 5, jamais de cercle complet). Fiches sans icône, style
-  manuscrit (fioritures dorées, tout l'espace pour le texte). Istikhara
-  (1 seule dua) → saut direct.
+  centre → elle s'extrait, grossit avec un léger rebond, les sous-catégories
+  naissent en éventail l'une après l'autre (2 à 5, jamais de cercle complet).
+  Fiches en capsules (même style que tes pilules "REPAS", "MAISON"...).
+  Istikhara (1 seule dua) → saut direct.
 </div>
 
 <div class="cat-pager" id="catPager">
@@ -285,10 +276,9 @@ function radialOpen(cardEl) {
   const deltaX = targetCenterX - startCenterX;
   const deltaY = targetCenterY - startCenterY;
 
-  // Rayon de l'éventail : adapté à la taille réelle de la carte agrandie,
-  // avec une marge plus large car les fiches (134px de large) ont besoin
-  // de plus d'espace entre elles qu'une bulle ronde.
-  const RADIUS = Math.max(newWidth, newHeight) / 2 + 100;
+  // Rayon de l'éventail : resserré pour que les fiches semblent sortir de
+  // la carte centrale (effet "pétales"), plutôt que flotter loin d'elle.
+  const RADIUS = Math.max(newWidth, newHeight) / 2 + 52;
 
   // Double rAF pour garantir que l'état de départ est bien peint avant
   // de déclencher la transition (sinon le navigateur saute l'anim).
@@ -313,20 +303,22 @@ function radialOpen(cardEl) {
     b.className = 'radial-bubble' + (item.sunnah ? ' is-sunnah' : '');
     b.style.setProperty('--tx', tx);
     b.style.setProperty('--ty', ty);
-    b.innerHTML =
-      '<span class="radial-bubble-corner tl"></span>' +
-      '<span class="radial-bubble-corner tr"></span>' +
-      '<span class="radial-bubble-corner bl"></span>' +
-      '<span class="radial-bubble-corner br"></span>' +
-      '<div class="radial-bubble-ornament">✦</div>' +
-      '<div class="radial-bubble-title">' + item.titre + '</div>';
+    // Position de départ = 40% du chemin vers la position finale (pas le
+    // centre exact) : donne l'impression que la fiche émerge de la carte
+    // plutôt que d'apparaître comme surgie de nulle part.
+    b.style.setProperty('--tx-start', Math.round(Math.sin(theta) * RADIUS * 0.4) + 'px');
+    b.style.setProperty('--ty-start', Math.round(-Math.cos(theta) * RADIUS * 0.4) + 'px');
+    b.innerHTML = '<div class="radial-bubble-title">' + item.titre + '</div>';
     b.onclick = (e) => {
       e.stopPropagation();
       b.classList.add('pop');
       setTimeout(() => protoOpenDuaDirect(cat, item.id), 140);
     };
     stage.appendChild(b);
-    setTimeout(() => b.classList.add('show'), 130 + i * 45);
+    // Décalage plus marqué (70-80ms) et démarrage une fois le rebond de la
+    // carte centrale bien engagé -> effet de "naissance" successive, pas
+    // toutes en même temps.
+    setTimeout(() => b.classList.add('show'), 190 + i * 75);
   });
 }
 
