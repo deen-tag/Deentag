@@ -214,7 +214,7 @@ window.scrollTo(0, 0);
     <span class="cat-section-line"></span>
   </div>
   <div class="cat-grid">
-  <div class="cat-card" onclick="openSheet('repas')">
+  <div class="cat-card" data-cat="repas" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/repas.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
         <span class="lang-block" data-lang-block="fr">Repas</span>
@@ -227,7 +227,7 @@ window.scrollTo(0, 0);
         <span class="lang-block" data-lang-block="tr">Yemekler</span>
       </div>
   </div>
-  <div class="cat-card" onclick="openSheet('reveil')">
+  <div class="cat-card" data-cat="reveil" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/lit.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
         <span class="lang-block" data-lang-block="fr">Réveil &amp; Couché</span>
@@ -240,7 +240,7 @@ window.scrollTo(0, 0);
         <span class="lang-block" data-lang-block="tr">Uyanış &amp; Uyku</span>
       </div>
   </div>
-  <div class="cat-card" onclick="openSheet('ablution')">
+  <div class="cat-card" data-cat="ablution" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/ablution.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
         <span class="lang-block" data-lang-block="fr">Ablution</span>
@@ -253,7 +253,7 @@ window.scrollTo(0, 0);
         <span class="lang-block" data-lang-block="tr">Abdest</span>
       </div>
   </div>
-  <div class="cat-card" onclick="openSheet('toilettes')">
+  <div class="cat-card" data-cat="toilettes" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/wc.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
         <span class="lang-block" data-lang-block="fr">Toilettes</span>
@@ -266,7 +266,7 @@ window.scrollTo(0, 0);
         <span class="lang-block" data-lang-block="tr">Tuvalet</span>
       </div>
   </div>
-  <div class="cat-card" onclick="openSheet('maison')">
+  <div class="cat-card" data-cat="maison" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/maison.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
         <span class="lang-block" data-lang-block="fr">Maison</span>
@@ -279,7 +279,7 @@ window.scrollTo(0, 0);
         <span class="lang-block" data-lang-block="tr">Ev</span>
       </div>
   </div>
-  <div class="cat-card" onclick="openSheet('transport')">
+  <div class="cat-card" data-cat="transport" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/voiture.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
         <span class="lang-block" data-lang-block="fr">Transport &amp; Voyage</span>
@@ -302,7 +302,7 @@ window.scrollTo(0, 0);
     <span class="cat-section-line"></span>
   </div>
   <div class="cat-grid">
-  <div class="cat-card" onclick="openSheet('mosquee')">
+  <div class="cat-card" data-cat="mosquee" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/mosquee.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Mosquée</span>
@@ -315,7 +315,7 @@ window.scrollTo(0, 0);
       <span class="lang-block" data-lang-block="tr">Cami</span>
     </div>
   </div>
-  <div class="cat-card" onclick="openSheet('azan')">
+  <div class="cat-card" data-cat="azan" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/azan.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Azan</span>
@@ -328,7 +328,7 @@ window.scrollTo(0, 0);
       <span class="lang-block" data-lang-block="tr">Ezan</span>
     </div>
   </div>
-  <div class="cat-card" onclick="openSheet('salah')">
+  <div class="cat-card" data-cat="salah" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/salah.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Salah</span>
@@ -341,7 +341,7 @@ window.scrollTo(0, 0);
       <span class="lang-block" data-lang-block="tr">Namaz</span>
     </div>
   </div>
-  <div class="cat-card" onclick="openSheet('istikhara')">
+  <div class="cat-card" data-cat="istikhara" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/istikhara.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Istikhara</span>
@@ -354,7 +354,7 @@ window.scrollTo(0, 0);
       <span class="lang-block" data-lang-block="tr">İstihare</span>
     </div>
   </div>
-  <div class="cat-card" onclick="openSheet('ramadan')">
+  <div class="cat-card" data-cat="ramadan" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/ramadan.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Ramadan</span>
@@ -367,7 +367,7 @@ window.scrollTo(0, 0);
       <span class="lang-block" data-lang-block="tr">Ramazan</span>
     </div>
   </div>
-  <div class="cat-card" onclick="openSheet('hajjumra')">
+  <div class="cat-card" data-cat="hajjumra" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/hajjumra.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Hajj &amp; Umra</span>
@@ -390,7 +390,7 @@ window.scrollTo(0, 0);
     <span class="cat-section-line"></span>
   </div>
   <div class="cat-grid">
-  <div class="cat-card" onclick="openSheet('tristesse')">
+  <div class="cat-card" data-cat="tristesse" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/tristesse.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Tristesse</span>
@@ -403,7 +403,7 @@ window.scrollTo(0, 0);
       <span class="lang-block" data-lang-block="tr">Üzüntü</span>
     </div>
   </div>
-  <div class="cat-card" onclick="openSheet('maladie')">
+  <div class="cat-card" data-cat="maladie" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/maladie.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Maladie</span>
@@ -416,7 +416,7 @@ window.scrollTo(0, 0);
       <span class="lang-block" data-lang-block="tr">Hastalık</span>
     </div>
   </div>
-  <div class="cat-card" onclick="openSheet('colere')">
+  <div class="cat-card" data-cat="colere" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/colere.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Colère</span>
@@ -429,7 +429,7 @@ window.scrollTo(0, 0);
       <span class="lang-block" data-lang-block="tr">Öfke</span>
     </div>
   </div>
-  <div class="cat-card" onclick="openSheet('ruqya')">
+  <div class="cat-card" data-cat="ruqya" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/ruqya.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Ruqya</span>
@@ -452,7 +452,7 @@ window.scrollTo(0, 0);
     <span class="cat-section-line"></span>
   </div>
   <div class="cat-grid">
-  <div class="cat-card" onclick="openSheet('mariage')">
+  <div class="cat-card" data-cat="mariage" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/mariage.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Mariage</span>
@@ -465,7 +465,7 @@ window.scrollTo(0, 0);
       <span class="lang-block" data-lang-block="tr">Evlilik</span>
     </div>
   </div>
-  <div class="cat-card" onclick="openSheet('enfants')">
+  <div class="cat-card" data-cat="enfants" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/enfants.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Enfants</span>
@@ -478,7 +478,7 @@ window.scrollTo(0, 0);
       <span class="lang-block" data-lang-block="tr">Çocuklar</span>
     </div>
   </div>
-  <div class="cat-card" onclick="openSheet('nouveaune')">
+  <div class="cat-card" data-cat="nouveaune" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/nouveaune.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Nouveau-né</span>
@@ -491,7 +491,7 @@ window.scrollTo(0, 0);
       <span class="lang-block" data-lang-block="tr">Yenidoğan</span>
     </div>
   </div>
-  <div class="cat-card" onclick="openSheet('mort')">
+  <div class="cat-card" data-cat="mort" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/mort.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Mort &amp; Funérailles</span>
@@ -514,7 +514,7 @@ window.scrollTo(0, 0);
     <span class="cat-section-line"></span>
   </div>
   <div class="cat-grid">
-  <div class="cat-card" onclick="openSheet('pluie')">
+  <div class="cat-card" data-cat="pluie" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/pluie.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Pluie</span>
@@ -527,7 +527,7 @@ window.scrollTo(0, 0);
       <span class="lang-block" data-lang-block="tr">Yağmur</span>
     </div>
   </div>
-  <div class="cat-card" onclick="openSheet('rizq')">
+  <div class="cat-card" data-cat="rizq" onclick="openRadial(this)">
     <div class="cat-icon-circle"><img src="images/rizq.webp" class="cat-icon" alt=""></div>
     <div class="cat-label">
       <span class="lang-block" data-lang-block="fr">Rizq</span>
@@ -567,6 +567,21 @@ window.scrollTo(0, 0);
     <svg viewBox="0 0 24 24" width="19" height="19"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
   </a>
   <img src="images/fleurs-droite.webp" class="fleurs-droite" alt="">
+</div>
+
+<!-- OVERLAY DU MENU RADIAL -->
+<div class="radial-overlay" id="radialOverlay" onclick="radialClose(event)">
+  <div class="radial-stage" id="radialStage"></div>
+  <div class="radial-hint">
+    <span class="lang-block" data-lang-block="fr">Tape en dehors pour fermer</span>
+    <span class="lang-block" data-lang-block="en">Tap outside to close</span>
+    <span class="lang-block" data-lang-block="es">Toca fuera para cerrar</span>
+    <span class="lang-block" data-lang-block="de">Tippe daneben zum Schließen</span>
+    <span class="lang-block" data-lang-block="it">Tocca fuori per chiudere</span>
+    <span class="lang-block" data-lang-block="nl">Tik buiten om te sluiten</span>
+    <span class="lang-block" data-lang-block="pt">Toque fora para fechar</span>
+    <span class="lang-block" data-lang-block="tr">Kapatmak için dışarı dokun</span>
+  </div>
 </div>
 
 <!-- OVERLAY -->
@@ -623,7 +638,7 @@ window.scrollTo(0, 0);
   <!-- VUE DUA -->
   <div id="duaView">
     <div class="dua-topbar">
-      <button class="theme-knob-btn" onclick="backToList()" aria-label="Retour">
+      <button class="theme-knob-btn" onclick="closeSheet()" aria-label="Fermer">
         <div class="theme-knob-btn-inner">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </div>
@@ -643,6 +658,7 @@ window.scrollTo(0, 0);
 
 <script src="js/duas.js"></script>
 <script src="js/app.js"></script>
+<script src="js/radial.js"></script>
 <script src="js/nav.js"></script>
 <script src="js/profiles.js"></script>
 <script src="js/prayer-times.js"></script>
