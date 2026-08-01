@@ -37,23 +37,22 @@
     display: flex; align-items: center; justify-content: center;
   }
 
-  /* Carte centrale (clone de la carte tapée), point d'ancrage de l'éventail */
-  .radial-center {
-    width: 108px; height: 108px; border-radius: 20px;
-    background: var(--card-bg, #fdf8ec);
-    box-shadow: 0 0 0 2px rgba(197,160,40,0.55), 0 14px 30px rgba(0,0,0,0.35);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    gap: 4px; padding: 8px;
-    transform: scale(0.7); opacity: 0;
-    transition: transform 0.28s cubic-bezier(0.22,1,0.36,1), opacity 0.22s ease;
-    z-index: 2;
+  /* Clone FLIP de la vraie carte tapée : positionné en fixed, il part
+     exactement de sa position/taille d'origine dans la grille puis anime
+     vers le centre agrandi. C'est la carte réelle (cadre, icône, pilule),
+     pas une reconstruction -> effet "extraite du site". */
+  .radial-center-clone {
+    position: fixed;
+    z-index: 510;
+    margin: 0;
+    pointer-events: none; /* on ferme via l'overlay, pas via le clone */
+    box-shadow: 0 14px 34px rgba(0,0,0,0.38);
+    transition:
+      transform 0.34s cubic-bezier(0.22,1,0.36,1),
+      box-shadow 0.34s ease;
   }
-  .radial-overlay.show .radial-center { transform: scale(1); opacity: 1; }
-  .radial-center img { width: 44px; height: 44px; object-fit: contain; }
-  .radial-center-label {
-    font-family: 'Cinzel', serif; font-size: 8.5px; font-weight: 600;
-    letter-spacing: 0.06em; color: var(--text3, #4a3d1a); text-align: center;
-    text-transform: uppercase; line-height: 1.15;
+  .radial-center-clone.expanded {
+    box-shadow: 0 0 0 2px rgba(197,160,40,0.55), 0 20px 42px rgba(0,0,0,0.4);
   }
 
   /* Bulle de sous-catégorie -> mini carte DeenTag (plus une bulle générique) :
@@ -175,12 +174,7 @@
 
 <!-- OVERLAY DU MENU RADIAL -->
 <div class="radial-overlay" id="radialOverlay" onclick="radialClose(event)">
-  <div class="radial-stage" id="radialStage">
-    <div class="radial-center" id="radialCenter">
-      <img id="radialCenterIcon" src="" alt="">
-      <div class="radial-center-label" id="radialCenterLabel"></div>
-    </div>
-  </div>
+  <div class="radial-stage" id="radialStage"></div>
   <div class="radial-hint">Tape en dehors pour fermer</div>
 </div>
 
@@ -218,7 +212,14 @@
 // ============================================================
 
 let radialCat = null;
-const RADIUS = 122; // distance du centre aux bulles, en px
+
+// État du clone FLIP en cours (carte réellement extraite de la grille)
+let radialClone = null;      // l'élément cloné, animé
+let radialSourceCard = null; // la vraie carte du grid, masquée pendant l'ouverture
+let radialStartRect = null;  // sa position/taille d'origine, pour l'animation retour
+
+// Facteur d'agrandissement de la carte une fois centrée
+const CENTER_SCALE = 1.35;
 
 // Ouverture angulaire de l'éventail selon le nombre de sous-catégories.
 // 0° = 12h (haut), sens horaire. On ne fait JAMAIS un cercle complet :
@@ -239,17 +240,57 @@ function radialOpen(cardEl) {
     return;
   }
 
+  // Si un précédent clone traînait encore (changement rapide de carte),
+  // on le nettoie sans animation de retour.
+  cleanupClone(true);
+
   radialCat = cat;
   const overlay = document.getElementById('radialOverlay');
   const stage   = document.getElementById('radialStage');
-
-  document.getElementById('radialCenterIcon').src = cardEl.dataset.icon;
-  document.getElementById('radialCenterLabel').innerHTML = cardEl.dataset.label;
-
-  // Nettoyer les anciennes bulles
   stage.querySelectorAll('.radial-bubble').forEach(b => b.remove());
 
-  const n = Math.min(items.length, 5); // 5 max en éventail direct, cf. note plus bas
+  // --- FLIP : on clone la VRAIE carte (cadre, icône, pilule identiques) ---
+  radialSourceCard = cardEl;
+  radialStartRect  = cardEl.getBoundingClientRect();
+
+  const clone = cardEl.cloneNode(true);
+  clone.classList.add('radial-center-clone');
+  clone.removeAttribute('onclick');
+  clone.style.top    = radialStartRect.top + 'px';
+  clone.style.left   = radialStartRect.left + 'px';
+  clone.style.width  = radialStartRect.width + 'px';
+  clone.style.height = radialStartRect.height + 'px';
+  clone.style.transform = 'translate(0,0) scale(1)';
+  document.body.appendChild(clone);
+  radialClone = clone;
+
+  // On masque la carte source (garde la place dans la grille, évite le doublon)
+  cardEl.style.visibility = 'hidden';
+
+  overlay.classList.add('show');
+
+  const newWidth  = radialStartRect.width  * CENTER_SCALE;
+  const newHeight = radialStartRect.height * CENTER_SCALE;
+  const startCenterX = radialStartRect.left + radialStartRect.width  / 2;
+  const startCenterY = radialStartRect.top  + radialStartRect.height / 2;
+  const targetCenterX = window.innerWidth  / 2;
+  const targetCenterY = window.innerHeight / 2;
+  const deltaX = targetCenterX - startCenterX;
+  const deltaY = targetCenterY - startCenterY;
+
+  // Rayon de l'éventail : adapté à la taille réelle de la carte agrandie
+  const RADIUS = Math.max(newWidth, newHeight) / 2 + 78;
+
+  // Double rAF pour garantir que l'état de départ est bien peint avant
+  // de déclencher la transition (sinon le navigateur saute l'anim).
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      clone.style.transform = 'translate(' + deltaX + 'px,' + deltaY + 'px) scale(' + CENTER_SCALE + ')';
+      clone.classList.add('expanded');
+    });
+  });
+
+  const n = Math.min(items.length, 5); // 5 max en éventail direct
   const span = ARC_SPAN[n] || 200;
   const step = n > 1 ? span / (n - 1) : 0;
 
@@ -272,16 +313,45 @@ function radialOpen(cardEl) {
       setTimeout(() => protoOpenDuaDirect(cat, item.id), 140);
     };
     stage.appendChild(b);
-    setTimeout(() => b.classList.add('show'), 70 + i * 45);
+    setTimeout(() => b.classList.add('show'), 130 + i * 45);
   });
-
-  overlay.classList.add('show');
 }
 
 function radialClose(e) {
   if (e && e.target.closest('.radial-bubble')) return;
   document.getElementById('radialOverlay').classList.remove('show');
+  cleanupClone(false);
   radialCat = null;
+}
+
+// Nettoie le clone FLIP en cours.
+// instant = true  -> suppression immédiate (changement rapide de carte)
+// instant = false -> rejoue l'animation à l'envers avant de nettoyer
+function cleanupClone(instant) {
+  if (!radialClone) return;
+  const clone = radialClone;
+  const sourceCard = radialSourceCard;
+
+  if (instant) {
+    clone.remove();
+    if (sourceCard) sourceCard.style.visibility = '';
+    radialClone = null;
+    radialSourceCard = null;
+    radialStartRect = null;
+    return;
+  }
+
+  // Retour à la position/taille d'origine (la carte "se range" dans la grille)
+  clone.classList.remove('expanded');
+  clone.style.transform = 'translate(0,0) scale(1)';
+
+  setTimeout(() => {
+    clone.remove();
+    if (sourceCard) sourceCard.style.visibility = '';
+    radialClone = null;
+    radialSourceCard = null;
+    radialStartRect = null;
+  }, 340);
 }
 
 function protoOpenDuaDirect(cat, accId) {
