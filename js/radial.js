@@ -323,6 +323,7 @@ function openDuaFromRadial(cat, accId) {
 
   document.getElementById('bsOverlay').classList.add('active');
   sheet.classList.add('open');
+  savedScrollY = window.scrollY || window.pageYOffset || 0;
   document.body.style.overscrollBehavior          = 'none';
   document.documentElement.style.overscrollBehavior = 'none';
   document.body.style.overflow = 'hidden';
