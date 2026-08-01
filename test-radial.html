@@ -365,10 +365,30 @@ function radialOpen(cardEl) {
   RADIUS_X = Math.max(66, RADIUS_X);
   RADIUS_Y = Math.max(66, RADIUS_Y);
 
+  // Toutes tes icônes partagent le même gabarit : une arche étroite en haut,
+  // qui s'évase en diagonale vers les branches de laurier en bas. Le risque
+  // réel n'est pas "une fiche pile en dessous" (ça, à 4, c'était déjà
+  // parfait -> le bas de l'arche est dégagé bien avant le rayon utilisé) :
+  // c'est quand DEUX fiches tombent en diagonale basse, l'une à côté de
+  // l'autre, exactement là où le laurier est le plus large (cas à 3). Donc
+  // la marge ne s'applique QUE sur les diagonales basses, et vaut zéro pile
+  // en dessous, sur les côtés et en haut -> le cas à 4 reste identique.
+  const BOTTOM_EXTRA = 34; // px de marge en plus, au maximum sur les diagonales basses
+  function orbitPoint(theta) {
+    const s = Math.sin(theta), c = Math.cos(theta);
+    // 0 en haut / sur les côtés / pile en dessous, maximal à 45° de chaque
+    // côté du bas (diagonale basse) -> pic exactement là où 2 fiches
+    // proches du bas se chevauchent avec le laurier.
+    const diagonalLowFactor = s > 0 ? 2 * s * Math.abs(c) : 0;
+    const extra = BOTTOM_EXTRA * diagonalLowFactor;
+    return { tx: c * (RADIUS_X + extra), ty: s * (RADIUS_Y + extra) };
+  }
+
   const positions = items.slice(0, n).map((item, i) => {
     const thetaDeg = (360 / n) * i - 90; // -90° = on démarre en haut, puis sens horaire
     const theta = thetaDeg * Math.PI / 180;
-    return { item, tx: Math.cos(theta) * RADIUS_X, ty: Math.sin(theta) * RADIUS_Y };
+    const p = orbitPoint(theta);
+    return { item, tx: p.tx, ty: p.ty };
   });
 
   // Anti-collision : compare TOUTES les paires de fiches (pas seulement les
@@ -399,13 +419,15 @@ function radialOpen(cardEl) {
   // La poussée anti-collision déplace librement les fiches (angle ET
   // distance), ce qui peut au fil des passes les faire dériver hors de leur
   // orbite -> cassure de la symétrie sur 7-8 fiches. On les re-projette donc
-  // une dernière fois sur l'ellipse : seul l'angle gagné pendant la
-  // résolution de collision est conservé, la distance au centre revient
-  // exactement sur le rayon d'origine.
+  // une dernière fois sur l'orbite d'origine (même silhouette asymétrique
+  // ci-dessus) : seul l'angle gagné pendant la résolution de collision est
+  // conservé, la distance au centre revient exactement sur le rayon prévu
+  // pour cette direction.
   positions.forEach(p => {
     const angle = Math.atan2(p.ty / RADIUS_Y, p.tx / RADIUS_X);
-    p.tx = Math.cos(angle) * RADIUS_X;
-    p.ty = Math.sin(angle) * RADIUS_Y;
+    const corrected = orbitPoint(angle);
+    p.tx = corrected.tx;
+    p.ty = corrected.ty;
   });
 
   positions.forEach(p => { p.tx = Math.round(p.tx); p.ty = Math.round(p.ty); });
