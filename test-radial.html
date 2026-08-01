@@ -42,28 +42,19 @@
      arche/branches dorées détourées avec fond transparent, donc on ne clone
      que l'<img>, sans cadre ni pilule autour -> effet "objet qui prend vie",
      pas "carte à jouer". Positionné en fixed, part exactement de sa
-     position/taille d'origine dans la grille puis anime vers le centre. */
+     position/taille d'origine dans la grille puis anime vers le centre.
+     object-fit:contain evite toute déformation si la boîte source n'est
+     pas parfaitement carrée. */
   .radial-icon-clone {
     position: fixed;
     z-index: 510;
     pointer-events: none;
+    object-fit: contain;
     filter: drop-shadow(0 16px 32px rgba(0,0,0,0.4));
     transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
   }
 
-  /* Toggle de test pour comparer les 2 effets */
-  .effect-toggle {
-    display: flex; gap: 8px; justify-content: center; margin: 0 auto 14px;
-  }
-  .effect-tab {
-    font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 0.06em;
-    padding: 8px 14px; border-radius: 18px; cursor: pointer;
-    border: 1px solid rgba(197,160,40,0.4); background: rgba(255,255,255,0.5);
-    color: #4a3d1a;
-  }
-  .effect-tab.active { background: #c9a84c; color: #2b2408; border-color: #c9a84c; }
-
-  /* Effet A — onde dorée qui part de l'icône */
+  /* Onde dorée qui part de l'icône */
   .radial-wave {
     position: absolute; top: 50%; left: 50%; z-index: 1;
     width: 14px; height: 14px; border-radius: 50%;
@@ -76,14 +67,6 @@
     65%  { opacity: 0.35; }
     100% { width: 640px; height: 640px; opacity: 0; }
   }
-
-  /* Effet B — motif géométrique (étoile à 8 branches) qui se dessine */
-  .radial-star { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 1; width: 420px; height: 420px; overflow: visible; pointer-events: none; }
-  .radial-star-line {
-    stroke: rgba(197,160,40,0.85); stroke-width: 1.2; fill: none;
-    stroke-dasharray: 400; stroke-dashoffset: 400;
-  }
-  .radial-star-line.draw { transition: stroke-dashoffset 0.9s cubic-bezier(0.65,0,0.35,1); stroke-dashoffset: 0; }
 
   /* Fiche de sous-catégorie — capsule reprenant EXACTEMENT le style de tes
      pilules existantes (cat-label : "REPAS", "TRANSPORT & VOYAGE"...) plutôt
@@ -150,10 +133,7 @@
   Istikhara (1 seule dua) → saut direct.
 </div>
 
-<div class="effect-toggle">
-  <div class="effect-tab active" data-effect="a" onclick="setEffectMode('a')">A · Onde dorée</div>
-  <div class="effect-tab" data-effect="b" onclick="setEffectMode('b')">B · Motif géométrique</div>
-</div>
+
 
 <div class="cat-pager" id="catPager">
 <div class="cat-section cat-section--open" data-section="Quotidien">
@@ -244,7 +224,6 @@
 // ============================================================
 
 let radialCat = null;
-let effectMode = 'a'; // 'a' = onde dorée · 'b' = motif géométrique (étoile)
 
 // État du clone FLIP en cours (seule l'ICÔNE est extraite de la grille,
 // pas toute la carte : le .webp a déjà son arche/branches détourées avec
@@ -253,17 +232,33 @@ let radialIconClone = null; // l'<img> clonée, animée
 let radialSourceImg = null; // la vraie <img> du grid
 let radialStartRect = null; // sa position/taille d'origine, pour le retour
 
-function setEffectMode(mode) {
-  effectMode = mode;
-  document.querySelectorAll('.effect-tab').forEach(t => t.classList.toggle('active', t.dataset.effect === mode));
-}
-
 // Largeur cible de l'icône une fois centrée : taille FIXE (pas un % de
 // l'écran) pour que l'agrandissement reste toujours le même, quel que
 // soit l'appareil. Ajuste cette seule valeur si besoin.
 const ICON_TARGET_WIDTH = 150;
-function iconTargetWidth() {
-  return ICON_TARGET_WIDTH;
+
+// La vraie <img> est affichée en object-fit:contain dans une boîte
+// (.cat-icon-circle) qui n'est pas forcément carrée. getBoundingClientRect()
+// sur l'<img> donne la boîte, pas le contenu réellement dessiné -> cloner
+// cette boîte telle quelle déformait l'image (étirement). Cette fonction
+// calcule le rectangle RÉELLEMENT occupé par le dessin (letterboxing inclus).
+function getContainRect(img) {
+  const box = img.getBoundingClientRect();
+  const ratio = (img.naturalWidth && img.naturalHeight) ? img.naturalWidth / img.naturalHeight : 1;
+  const boxRatio = box.width / box.height;
+  let width, height, left, top;
+  if (boxRatio > ratio) {
+    height = box.height;
+    width  = height * ratio;
+    left   = box.left + (box.width - width) / 2;
+    top    = box.top;
+  } else {
+    width  = box.width;
+    height = width / ratio;
+    left   = box.left;
+    top    = box.top + (box.height - height) / 2;
+  }
+  return { left, top, width, height };
 }
 
 function radialOpen(cardEl) {
@@ -281,12 +276,12 @@ function radialOpen(cardEl) {
   radialCat = cat;
   const overlay = document.getElementById('radialOverlay');
   const stage   = document.getElementById('radialStage');
-  stage.querySelectorAll('.radial-bubble, .radial-wave, .radial-star').forEach(el => el.remove());
+  stage.querySelectorAll('.radial-bubble, .radial-wave').forEach(el => el.remove());
 
   // --- FLIP : on clone SEULEMENT l'icône (arche + illustration, sans cadre) ---
   const sourceImg = cardEl.querySelector('.cat-icon');
   radialSourceImg = sourceImg;
-  radialStartRect = sourceImg.getBoundingClientRect();
+  radialStartRect = getContainRect(sourceImg);
 
   const clone = document.createElement('img');
   clone.src = sourceImg.src;
@@ -305,8 +300,7 @@ function radialOpen(cardEl) {
 
   overlay.classList.add('show');
 
-  const targetW = iconTargetWidth();
-  const scale = targetW / radialStartRect.width;
+  const scale = ICON_TARGET_WIDTH / radialStartRect.width;
   const startCenterX  = radialStartRect.left + radialStartRect.width  / 2;
   const startCenterY  = radialStartRect.top  + radialStartRect.height / 2;
   const targetCenterX = window.innerWidth  / 2;
@@ -320,30 +314,35 @@ function radialOpen(cardEl) {
     });
   });
 
-  // Les sous-catégories se répartissent TOUT AUTOUR de l'icône (cercle complet,
-  // "viennent de partout"), pas en éventail limité au haut de l'écran.
+  // Les sous-catégories se répartissent TOUT AUTOUR de l'icône (cercle complet).
+  // Le rayon est clampé à la taille réelle de l'écran pour que les fiches
+  // ne sortent JAMAIS du cadre visible, même sur petit téléphone.
   const n = Math.min(items.length, 8);
-  const RADIUS = targetW * 0.62 + 96;
+  const BUBBLE_HALF_W = 58;  // ~ moitié de max-width (108px) + marge
+  const BUBBLE_HALF_H = 40;
+  const SCREEN_MARGIN = 14;
+
+  const baseRadius = ICON_TARGET_WIDTH * 0.62 + 96;
+  const maxRadiusX  = window.innerWidth  / 2 - BUBBLE_HALF_W - SCREEN_MARGIN;
+  const maxRadiusY  = window.innerHeight / 2 - BUBBLE_HALF_H - SCREEN_MARGIN;
+  const RADIUS_X = Math.max(90, Math.min(baseRadius, maxRadiusX));
+  const RADIUS_Y = Math.max(90, Math.min(baseRadius, maxRadiusY));
 
   const positions = items.slice(0, n).map((item, i) => {
     const thetaDeg = (360 / n) * i - 90; // -90° = on démarre en haut, puis sens horaire
     const theta = thetaDeg * Math.PI / 180;
     return {
       item,
-      tx: Math.round(Math.cos(theta) * RADIUS),
-      ty: Math.round(Math.sin(theta) * RADIUS)
+      tx: Math.round(Math.cos(theta) * RADIUS_X),
+      ty: Math.round(Math.sin(theta) * RADIUS_Y)
     };
   });
 
-  if (effectMode === 'a') {
-    playEffectWave(stage, cat, positions, RADIUS);
-  } else {
-    playEffectStar(stage, cat, positions, targetW, RADIUS, n);
-  }
+  playEffectWave(stage, cat, positions, Math.max(RADIUS_X, RADIUS_Y));
 }
 
-// --- Effet A : une onde dorée part de l'icône, les fiches se matérialisent
-// à son passage plutôt que de "voler" vers leur position. ---
+// Une onde dorée part de l'icône, les fiches se matérialisent à son passage
+// plutôt que de "voler" vers leur position.
 function playEffectWave(stage, cat, positions, RADIUS) {
   const wave = document.createElement('div');
   wave.className = 'radial-wave';
@@ -358,43 +357,6 @@ function playEffectWave(stage, cat, positions, RADIUS) {
     stage.appendChild(b);
     const delay = 260 + (RADIUS / WAVE_MAX_RADIUS) * WAVE_DURATION * 0.72;
     setTimeout(() => b.classList.add('show'), delay);
-  });
-}
-
-// --- Effet B : un motif d'étoile à 8 branches (arabesque) se dessine en
-// traits dorés autour de l'icône, les fiches apparaissent une fois le motif tracé. ---
-function playEffectStar(stage, cat, positions, targetW, RADIUS, n) {
-  const svgNS = 'http://www.w3.org/2000/svg';
-  const svg = document.createElementNS(svgNS, 'svg');
-  svg.setAttribute('class', 'radial-star');
-  svg.setAttribute('viewBox', '-210 -210 420 420');
-
-  const R1 = targetW * 0.42, R2 = RADIUS;
-  let segIndex = 0;
-  for (let i = 0; i < 8; i++) {
-    const a1 = (i * 45 - 90) * Math.PI / 180;
-    const a2 = (i * 45 - 90 + 22.5) * Math.PI / 180;
-    const a3 = (i * 45 - 90 + 45) * Math.PI / 180;
-    const pts = [
-      [Math.cos(a1) * R1, Math.sin(a1) * R1, Math.cos(a2) * R2, Math.sin(a2) * R2],
-      [Math.cos(a2) * R2, Math.sin(a2) * R2, Math.cos(a3) * R1, Math.sin(a3) * R1]
-    ];
-    pts.forEach(coords => {
-      const line = document.createElementNS(svgNS, 'line');
-      line.setAttribute('x1', coords[0]); line.setAttribute('y1', coords[1]);
-      line.setAttribute('x2', coords[2]); line.setAttribute('y2', coords[3]);
-      line.setAttribute('class', 'radial-star-line');
-      svg.appendChild(line);
-      setTimeout(() => line.classList.add('draw'), 320 + segIndex * 22);
-      segIndex++;
-    });
-  }
-  stage.appendChild(svg);
-
-  positions.forEach((pos, i) => {
-    const b = makeBubble(pos, cat);
-    stage.appendChild(b);
-    setTimeout(() => b.classList.add('show'), 780 + i * 90);
   });
 }
 
