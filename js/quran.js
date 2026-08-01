@@ -1299,6 +1299,16 @@ window.addEventListener('DOMContentLoaded', () => {
   renderResumeCard();
   handleNfcParams();
 
+  // Filet de sécurité : la position de lecture doit être sauvegardée même si
+  // l'utilisateur quitte la page autrement qu'en fermant proprement la fiche
+  // sourate (ex: tape sur un autre onglet de la barre de navigation en bas,
+  // change d'onglet navigateur, ferme l'appli). Sans ça, "Reprendre ma
+  // lecture" ne se déclenche jamais dans ces cas, qui sont les plus fréquents.
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') saveLastRead();
+  });
+  window.addEventListener('pagehide', saveLastRead);
+
   // Fermer settings au clic extérieur
   document.addEventListener('touchstart', e => {
     const panel = document.getElementById('surahSettingsPanel');
