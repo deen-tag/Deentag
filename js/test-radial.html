@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Deentag — Test radial menu (éventail)</title>
+<link rel="stylesheet" href="css/adult.css">
+<link rel="stylesheet" href="css/wheel.css">
+<script>
+(function(){
+  document.documentElement.setAttribute('data-theme','day');
+  document.documentElement.setAttribute('data-lang','fr');
+})();
+</script>
+<style>
+  .proto-note {
+    max-width: 520px; margin: 0 auto 14px; padding: 10px 16px;
+    background: rgba(197,160,40,0.12); border: 1px solid rgba(197,160,40,0.35);
+    border-radius: 12px; font-size: 12px; color: #6b5a1e; text-align: center;
+    font-family: system-ui, sans-serif;
+  }
+
+  /* Overlay plein écran assombri, centré, qui accueille le menu radial.
+     Toujours centré sur l'écran (pas sur la position de la carte tapée) :
+     c'est ce qui règle le problème des bords évoqué par Lio. */
+  .radial-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(20,15,5,0.55);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.22s ease;
+  }
+  .radial-overlay.show { opacity: 1; pointer-events: auto; }
+
+  .radial-stage {
+    position: relative;
+    width: 300px; height: 300px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Clone FLIP de l'ICÔNE SEULE (pas de la carte) : le .webp a déjà son
+     arche/branches dorées détourées avec fond transparent, donc on ne clone
+     que l'<img>, sans cadre ni pilule autour -> effet "objet qui prend vie",
+     pas "carte à jouer". Positionné en fixed, part exactement de sa
+     position/taille d'origine dans la grille puis anime vers le centre.
+     object-fit:contain evite toute déformation si la boîte source n'est
+     pas parfaitement carrée. */
+  .radial-icon-clone {
+    position: fixed;
+    z-index: 510;
+    pointer-events: none;
+    object-fit: contain;
+    filter: drop-shadow(0 16px 32px rgba(0,0,0,0.4));
+    transition: transform 0.55s cubic-bezier(0.22,1,0.36,1);
+  }
+
+  /* Onde dorée qui part de l'icône */
+  .radial-wave {
+    position: absolute; top: 50%; left: 50%; z-index: 1;
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 1.5px solid rgba(197,160,40,0.9);
+    transform: translate(-50%,-50%); opacity: 0; pointer-events: none;
+  }
+  .radial-wave.play { animation: radialWaveOut 1.15s cubic-bezier(0.16,0.84,0.44,1) forwards; }
+  @keyframes radialWaveOut {
+    0%   { width: 14px; height: 14px; opacity: 0.9; }
+    65%  { opacity: 0.35; }
+    100% { width: 640px; height: 640px; opacity: 0; }
+  }
+
+  /* Fiche de sous-catégorie — capsule reprenant EXACTEMENT le style de tes
+     pilules existantes (cat-label : "REPAS", "TRANSPORT & VOYAGE"...) plutôt
+     qu'un nouveau composant. Même famille visuelle que les icônes -> plus
+     de décalage de qualité entre carte centrale et fiches. Plus petite et
+     plus proche du centre que la version précédente, pour un effet
+     "pétales qui s'ouvrent" plus resserré et premium. */
+  .radial-bubble {
+    position: absolute; top: 50%; left: 50%;
+    width: auto; max-width: 108px; min-height: 0;
+    border-radius: 18px;
+    background: rgba(253,248,236,0.94);
+    border: 1px solid rgba(var(--gold-rgb, 201,168,76), 0.5);
+    box-shadow: 0 3px 10px rgba(150,115,30,0.16), inset 0 1px 0 rgba(255,255,255,0.6);
+    display: flex; align-items: center; justify-content: center;
+    padding: 8px 12px;
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+    /* Départ = matérialisation, pas une apparition franche : déjà partiellement
+       visible, à mi-chemin de sa position finale, légèrement plus petite. */
+    transform: translate(calc(-50% + var(--tx-start, 0px)), calc(-50% + var(--ty-start, 0px))) scale(0.92);
+    opacity: 0.65;
+    transition: transform 0.38s cubic-bezier(0.34,1.56,0.64,1), opacity 0.34s ease, box-shadow 0.15s ease;
+    z-index: 1;
+  }
+  .radial-bubble.show {
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
+    opacity: 1;
+  }
+  .radial-bubble.pop {
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.06);
+  }
+  .radial-bubble:active { box-shadow: 0 1px 4px rgba(150,115,30,0.22); }
+
+  .radial-bubble-title {
+    font-family: 'Cinzel', serif; font-size: 8.5px; font-weight: 600;
+    letter-spacing: 0.06em; color: var(--text3, #4a3d1a); text-align: center;
+    text-transform: uppercase; line-height: 1.35;
+  }
+  /* Repère sunnah : liseré légèrement plus marqué, cohérent avec le reste de l'app */
+  .radial-bubble.is-sunnah { border-color: rgba(var(--gold-rgb, 201,168,76), 0.85); }
+
+  .radial-hint {
+    position: absolute; bottom: 6%; left: 0; right: 0;
+    text-align: center; font-family: system-ui, sans-serif; font-size: 11px;
+    color: rgba(255,255,255,0.75);
+  }
+</style>
+</head>
+<body class="day" data-page="invocations">
+
+<div class="index-header">
+  <div class="index-brand">DEENTAG</div>
+  <div class="index-ornament">
+    <div class="index-ornament-line"></div><span class="ornament-star">✦</span><div class="index-ornament-line"></div>
+  </div>
+  <div class="section-title">Test — menu radial (éventail)</div>
+</div>
+
+<div class="proto-note">
+  Vraie roulette (js/wheel.js) : glisse pour faire tourner. Tape une carte →
+  seule l'icône (arche + illustration détourée, sans cadre) s'extrait et
+  grossit au centre, les sous-catégories naissent tout autour d'elle.
+  Fiches en capsules (même style que tes pilules "REPAS", "MAISON"...).
+  Istikhara (1 seule dua) → saut direct.
+</div>
+
+
+
+<div class="cat-pager" id="catPager">
+<div class="cat-section cat-section--open" data-section="Quotidien">
+  <div class="cat-section-header">
+    <span class="cat-section-line"></span>
+    <span class="cat-section-title">Quotidien (test)</span>
+    <span class="cat-section-line"></span>
+  </div>
+  <div class="cat-grid" id="protoGrid">
+
+  <div class="cat-card" data-cat="repas" data-icon="images/repas.webp" data-label="Repas" onclick="radialOpen(this)">
+    <div class="cat-icon-circle"><img src="images/repas.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">Repas</div>
+  </div>
+
+  <div class="cat-card" data-cat="reveil" data-icon="images/lit.webp" data-label="Réveil &amp; Couché" onclick="radialOpen(this)">
+    <div class="cat-icon-circle"><img src="images/lit.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">Réveil &amp; Couché</div>
+  </div>
+
+  <div class="cat-card" data-cat="ablution" data-icon="images/ablution.webp" data-label="Ablution" onclick="radialOpen(this)">
+    <div class="cat-icon-circle"><img src="images/ablution.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">Ablution</div>
+  </div>
+
+  <div class="cat-card" data-cat="toilettes" data-icon="images/wc.webp" data-label="Toilettes" onclick="radialOpen(this)">
+    <div class="cat-icon-circle"><img src="images/wc.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">Toilettes</div>
+  </div>
+
+  <div class="cat-card" data-cat="maison" data-icon="images/maison.webp" data-label="Maison" onclick="radialOpen(this)">
+    <div class="cat-icon-circle"><img src="images/maison.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">Maison</div>
+  </div>
+
+  <div class="cat-card" data-cat="transport" data-icon="images/voiture.webp" data-label="Transport &amp; Voyage" onclick="radialOpen(this)">
+    <div class="cat-icon-circle"><img src="images/voiture.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">Transport &amp; Voyage</div>
+  </div>
+
+  <div class="cat-card" data-cat="istikhara" data-icon="images/istikhara.webp" data-label="Istikhara" onclick="radialOpen(this)">
+    <div class="cat-icon-circle"><img src="images/istikhara.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">Istikhara (1 seule dua)</div>
+  </div>
+
+  </div>
+</div>
+</div>
+
+<!-- OVERLAY DU MENU RADIAL -->
+<div class="radial-overlay" id="radialOverlay" onclick="radialClose(event)">
+  <div class="radial-stage" id="radialStage"></div>
+  <div class="radial-hint">Tape en dehors pour fermer</div>
+</div>
+
+<!-- BOTTOM SHEET (réutilisée telle quelle, duaView uniquement) -->
+<div class="bs-overlay" id="bsOverlay" onclick="protoCloseSheet()"></div>
+
+<div class="bottom-sheet" id="bottomSheet">
+  <div class="bs-handle"><div class="bs-handle-bar"></div></div>
+  <div id="listView" style="display:none;"></div>
+  <div id="duaView">
+    <div class="dua-topbar">
+      <button class="theme-knob-btn" onclick="protoCloseSheet()" aria-label="Fermer">
+        <div class="theme-knob-btn-inner">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </div>
+      </button>
+      <img id="duaCatIcon" src="" alt="" class="dua-cat-icon">
+      <button class="theme-knob-btn" onclick="toggleTheme()" aria-label="Changer le thème">
+        <div class="theme-knob-btn-inner">
+          <svg class="tt-sun" width="18" height="18" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="6" fill="#c8922a"/></svg>
+        </div>
+      </button>
+    </div>
+    <div id="duaScroll"></div>
+  </div>
+</div>
+
+<script src="js/duas.js"></script>
+<script src="js/app.js"></script>
+<script src="js/wheel.js"></script>
+
+<script>
+// ============================================================
+// PROTOTYPE — menu radial en éventail. Réutilise getSheetItems()/
+// renderDua() de app.js, aucune donnée dupliquée.
+// ============================================================
+
+let radialCat = null;
+
+// État du clone FLIP en cours (seule l'ICÔNE est extraite de la grille,
+// pas toute la carte : le .webp a déjà son arche/branches détourées avec
+// fond transparent, donc pas besoin de cadre/pilule autour).
+let radialIconClone = null; // l'<img> clonée, animée
+let radialSourceImg = null; // la vraie <img> du grid
+let radialStartRect = null; // sa position/taille d'origine, pour le retour
+
+// Largeur cible de l'icône une fois centrée : taille FIXE (pas un % de
+// l'écran) pour que l'agrandissement reste toujours le même, quel que
+// soit l'appareil. Ajuste cette seule valeur si besoin.
+const ICON_TARGET_WIDTH = 150;
+
+// La vraie <img> est affichée en object-fit:contain dans une boîte
+// (.cat-icon-circle) qui n'est pas forcément carrée. getBoundingClientRect()
+// sur l'<img> donne la boîte, pas le contenu réellement dessiné -> cloner
+// cette boîte telle quelle déformait l'image (étirement). Cette fonction
+// calcule le rectangle RÉELLEMENT occupé par le dessin (letterboxing inclus).
+function getContainRect(img) {
+  const box = img.getBoundingClientRect();
+  const ratio = (img.naturalWidth && img.naturalHeight) ? img.naturalWidth / img.naturalHeight : 1;
+  const boxRatio = box.width / box.height;
+  let width, height, left, top;
+  if (boxRatio > ratio) {
+    height = box.height;
+    width  = height * ratio;
+    left   = box.left + (box.width - width) / 2;
+    top    = box.top;
+  } else {
+    width  = box.width;
+    height = width / ratio;
+    left   = box.left;
+    top    = box.top + (box.height - height) / 2;
+  }
+  return { left, top, width, height };
+}
+
+function radialOpen(cardEl) {
+  const cat = cardEl.dataset.cat;
+  const items = getSheetItems(cat);
+
+  // Cas 1 seule invocation -> saut direct, pas de menu radial
+  if (items.length <= 1) {
+    if (items.length === 1) protoOpenDuaDirect(cat, items[0].id);
+    return;
+  }
+
+  cleanupClone(true);
+
+  radialCat = cat;
+  const overlay = document.getElementById('radialOverlay');
+  const stage   = document.getElementById('radialStage');
+  stage.querySelectorAll('.radial-bubble, .radial-wave').forEach(el => el.remove());
+
+  // --- FLIP : on clone SEULEMENT l'icône (arche + illustration, sans cadre) ---
+  const sourceImg = cardEl.querySelector('.cat-icon');
+  radialSourceImg = sourceImg;
+  radialStartRect = getContainRect(sourceImg);
+
+  const clone = document.createElement('img');
+  clone.src = sourceImg.src;
+  clone.alt = '';
+  clone.className = 'radial-icon-clone';
+  clone.style.top    = radialStartRect.top + 'px';
+  clone.style.left   = radialStartRect.left + 'px';
+  clone.style.width  = radialStartRect.width + 'px';
+  clone.style.height = radialStartRect.height + 'px';
+  clone.style.transform = 'translate(0,0) scale(1)';
+  document.body.appendChild(clone);
+  radialIconClone = clone;
+
+  // On masque la carte source entière (icône + pilule), garde sa place
+  cardEl.style.visibility = 'hidden';
+
+  overlay.classList.add('show');
+
+  const scale = ICON_TARGET_WIDTH / radialStartRect.width;
+  const startCenterX  = radialStartRect.left + radialStartRect.width  / 2;
+  const startCenterY  = radialStartRect.top  + radialStartRect.height / 2;
+  const targetCenterX = window.innerWidth  / 2;
+  const targetCenterY = window.innerHeight / 2;
+  const deltaX = targetCenterX - startCenterX;
+  const deltaY = targetCenterY - startCenterY;
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      clone.style.transform = 'translate(' + deltaX + 'px,' + deltaY + 'px) scale(' + scale + ')';
+    });
+  });
+
+  // Les sous-catégories se répartissent TOUT AUTOUR de l'icône (cercle complet).
+  // Le rayon est clampé à la taille réelle de l'écran pour que les fiches
+  // ne sortent JAMAIS du cadre visible, même sur petit téléphone.
+  const n = Math.min(items.length, 8);
+  const BUBBLE_HALF_W = 58;  // ~ moitié de max-width (108px) + marge
+  const BUBBLE_HALF_H = 40;
+  const SCREEN_MARGIN = 14;
+
+  const baseRadius = ICON_TARGET_WIDTH * 0.62 + 96;
+  const maxRadiusX  = window.innerWidth  / 2 - BUBBLE_HALF_W - SCREEN_MARGIN;
+  const maxRadiusY  = window.innerHeight / 2 - BUBBLE_HALF_H - SCREEN_MARGIN;
+  const RADIUS_X = Math.max(90, Math.min(baseRadius, maxRadiusX));
+  const RADIUS_Y = Math.max(90, Math.min(baseRadius, maxRadiusY));
+
+  const positions = items.slice(0, n).map((item, i) => {
+    const thetaDeg = (360 / n) * i - 90; // -90° = on démarre en haut, puis sens horaire
+    const theta = thetaDeg * Math.PI / 180;
+    return {
+      item,
+      tx: Math.round(Math.cos(theta) * RADIUS_X),
+      ty: Math.round(Math.sin(theta) * RADIUS_Y)
+    };
+  });
+
+  playEffectWave(stage, cat, positions, Math.max(RADIUS_X, RADIUS_Y));
+}
+
+// Une onde dorée part de l'icône, les fiches se matérialisent à son passage
+// plutôt que de "voler" vers leur position.
+function playEffectWave(stage, cat, positions, RADIUS) {
+  const wave = document.createElement('div');
+  wave.className = 'radial-wave';
+  stage.appendChild(wave);
+  setTimeout(() => wave.classList.add('play'), 260);
+
+  const WAVE_MAX_RADIUS = 320; // ~ 640px / 2, doit matcher le keyframe CSS
+  const WAVE_DURATION   = 1150;
+
+  positions.forEach(pos => {
+    const b = makeBubble(pos, cat);
+    stage.appendChild(b);
+    const delay = 260 + (RADIUS / WAVE_MAX_RADIUS) * WAVE_DURATION * 0.72;
+    setTimeout(() => b.classList.add('show'), delay);
+  });
+}
+
+// Fabrique une fiche de sous-catégorie (même pilule que le reste du site)
+function makeBubble(pos, cat) {
+  const { item, tx, ty } = pos;
+  const b = document.createElement('div');
+  b.className = 'radial-bubble' + (item.sunnah ? ' is-sunnah' : '');
+  b.style.setProperty('--tx', tx + 'px');
+  b.style.setProperty('--ty', ty + 'px');
+  b.style.setProperty('--tx-start', Math.round(tx * 0.4) + 'px');
+  b.style.setProperty('--ty-start', Math.round(ty * 0.4) + 'px');
+  b.innerHTML = '<div class="radial-bubble-title">' + item.titre + '</div>';
+  b.onclick = (e) => {
+    e.stopPropagation();
+    b.classList.add('pop');
+    setTimeout(() => protoOpenDuaDirect(cat, item.id), 140);
+  };
+  return b;
+}
+
+function radialClose(e) {
+  if (e && e.target.closest('.radial-bubble')) return;
+  document.getElementById('radialOverlay').classList.remove('show');
+  cleanupClone(false);
+  radialCat = null;
+}
+
+// Nettoie le clone FLIP en cours.
+// instant = true  -> suppression immédiate (changement rapide de carte)
+// instant = false -> rejoue l'animation à l'envers avant de nettoyer
+function cleanupClone(instant) {
+  if (!radialIconClone) return;
+  const clone = radialIconClone;
+  const sourceImg = radialSourceImg;
+  const sourceCard = sourceImg ? sourceImg.closest('.cat-card') : null;
+
+  if (instant) {
+    clone.remove();
+    if (sourceCard) sourceCard.style.visibility = '';
+    radialIconClone = null;
+    radialSourceImg = null;
+    radialStartRect = null;
+    return;
+  }
+
+  clone.style.transform = 'translate(0,0) scale(1)';
+
+  setTimeout(() => {
+    clone.remove();
+    if (sourceCard) sourceCard.style.visibility = '';
+    radialIconClone = null;
+    radialSourceImg = null;
+    radialStartRect = null;
+  }, 420);
+}
+
+function protoOpenDuaDirect(cat, accId) {
+  document.getElementById('radialOverlay').classList.remove('show');
+
+  if (!window.DUAS || !DUAS[cat] || !DUAS[cat][accId]) return;
+  currentCat = cat;
+  currentAccId = accId;
+
+  const sheet = document.getElementById('bottomSheet');
+  const duaView = document.getElementById('duaView');
+
+  renderDua(cat, accId);
+  const catIcon = document.getElementById('duaCatIcon');
+  if (catIcon) catIcon.src = DUAS[cat].meta.icon || '';
+
+  duaView.style.display = 'flex';
+  duaView.style.opacity = '1';
+
+  sheet.style.height = 'calc(var(--app-vh, 100dvh) - 16px)';
+  sheet.style.maxHeight = 'calc(var(--app-vh, 100dvh) - 16px)';
+  sheet.style.borderRadius = '20px 20px 0 0';
+  sheet.style.overflowY = 'hidden';
+
+  document.getElementById('bsOverlay').classList.add('active');
+  sheet.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  if (typeof injectAccordionControls === 'function') injectAccordionControls();
+}
+
+function protoCloseSheet() {
+  const sheet = document.getElementById('bottomSheet');
+  document.getElementById('bsOverlay').classList.remove('active');
+  sheet.classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
+</body>
+</html>
