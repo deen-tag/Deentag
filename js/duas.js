@@ -226,7 +226,7 @@ var DUAS = {
       sheet: { sub_fr: 'Très récompensée', sub_en: 'Highly rewarded', sub_es: 'Muy recompensada', sub_de: 'Sehr belohnt', sub_it: 'Molto ricompensata', sub_nl: 'Sterk beloond', sub_pt: 'Muito recompensada', sub_tr: 'Çok sevaplı' }
     },
     acc4: {
-      titre: { fr: 'Les sunnahs des ablutions', en: 'Sunnahs of ablution', es: 'Sunnahs de la ablución' },
+      titre: { fr: 'Les sunnahs des ablutions', en: 'Sunnahs of ablution', es: 'Sunnahs de la ablución', de: 'Sunnahs der Waschung', it: 'Sunnah dell\'abluzione', nl: 'Soenna\'s van de wassing', pt: 'Sunnahs da ablução', tr: 'Abdest sünnetleri' },
       sunnah: true,
       items: {
         fr: [
@@ -364,7 +364,7 @@ var DUAS = {
       sheet: { sub_fr: 'Version longue', sub_en: 'Extended version', sub_es: 'Versión larga', sub_de: 'Lange Version', sub_it: 'Versione lunga', sub_nl: 'Lange versie', sub_pt: 'Versão longa', sub_tr: 'Uzun versiyon' }
     },
     acc4: {
-      titre: { fr: 'Les sunnahs du coucher', en: 'Sunnahs of bedtime', es: 'Sunnahs para dormir' },
+      titre: { fr: 'Les sunnahs du coucher', en: 'Sunnahs of bedtime', es: 'Sunnahs para dormir', de: 'Sunnahs vor dem Schlafen', it: 'Sunnah prima di dormire', nl: 'Soenna\'s voor het slapen', pt: 'Sunnahs para dormir', tr: 'Yatma sünnetleri' },
       sunnah: true,
       items: {
         fr: [
@@ -482,7 +482,7 @@ var DUAS = {
       sheet: { sub_fr: 'Ghufraanak', sub_en: 'Ghufraanak', sub_es: 'Ghufraanak', sub_de: 'Ghufrânak', sub_it: 'Ghufrānak', sub_nl: 'Ghufraanak', sub_pt: 'Ghufrānak', sub_tr: 'Gufrâneke' }
     },
     acc3: {
-      titre: { fr: 'Les sunnahs des toilettes', en: 'Sunnahs of the toilet', es: 'Sunnahs del baño' },
+      titre: { fr: 'Les sunnahs des toilettes', en: 'Sunnahs of the toilet', es: 'Sunnahs del baño', de: 'Sunnahs der Toilette', it: 'Sunnah del bagno', nl: 'Soenna\'s van het toilet', pt: 'Sunnahs da casa de banho', tr: 'Tuvalet sünnetleri' },
       sunnah: true,
       items: {
         fr: [
@@ -625,7 +625,7 @@ var DUAS = {
       sheet: { sub_fr: 'Contre l\'égarement', sub_en: 'Against going astray', sub_es: 'Contra el extravío', sub_de: 'Gegen das Abirren', sub_it: 'Contro lo smarrimento', sub_nl: 'Tegen het afdwalen', sub_pt: 'Contra o desvio', sub_tr: 'Sapkınlığa karşı' }
     },
     acc5: {
-      titre: { fr: 'Les sunnahs de la maison', en: 'Sunnahs of the home', es: 'Sunnahs del hogar' },
+      titre: { fr: 'Les sunnahs de la maison', en: 'Sunnahs of the home', es: 'Sunnahs del hogar', de: 'Sunnahs des Hauses', it: 'Sunnah della casa', nl: 'Soenna\'s van het huis', pt: 'Sunnahs do lar', tr: 'Ev sünnetleri' },
       sunnah: true,
       items: {
         fr: [
@@ -738,7 +738,7 @@ var DUAS = {
       sheet: { sub_fr: 'Printemps du cœur', sub_en: 'Spring of the heart', sub_es: 'Primavera del corazón', sub_de: 'Frühling des Herzens', sub_it: 'Primavera del cuore', sub_nl: 'Lente van het hart', sub_pt: 'Primavera do coração', sub_tr: 'Kalbin baharı' }
     },
     acc3: {
-      titre: { fr: 'Les sunnahs dans les épreuves', en: 'Sunnahs in hardship', es: 'Sunnahs en las pruebas' },
+      titre: { fr: 'Les sunnahs dans les épreuves', en: 'Sunnahs in hardship', es: 'Sunnahs en las pruebas', de: 'Sunnahs in Prüfungen', it: 'Sunnah nelle prove', nl: 'Soenna\'s in beproevingen', pt: 'Sunnahs nas provações', tr: 'Zorluklarda sünnetler' },
       sunnah: true,
       items: {
         fr: [
@@ -964,7 +964,7 @@ var DUAS = {
       sheet: { sub_fr: 'Variante complète', sub_en: 'Complete variant', sub_es: 'Variante completa', sub_de: 'Vollständige Variante', sub_it: 'Variante completa', sub_nl: 'Volledige variant', sub_pt: 'Variante completa', sub_tr: 'Tam versiyon' }
     },
     acc4: {
-      titre: { fr: 'Les sunnahs du voyage', en: 'Sunnahs of travel', es: 'Sunnahs del viaje' },
+      titre: { fr: 'Les sunnahs du voyage', en: 'Sunnahs of travel', es: 'Sunnahs del viaje', de: 'Sunnahs der Reise', it: 'Sunnah del viaggio', nl: 'Soenna\'s van de reis', pt: 'Sunnahs da viagem', tr: 'Yolculuk sünnetleri' },
       sunnah: true,
       items: {
         fr: [
