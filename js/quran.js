@@ -562,6 +562,16 @@ function openSurah(surahId, startVerse) {
   const surahView = document.getElementById('surahView');
   const navView   = document.getElementById('navView');
 
+  // Si le panneau n'est pas déjà ouvert (ex: appel direct depuis "Reprendre
+  // ma lecture" sur la page d'accueil du Coran), il faut l'ouvrir nous-mêmes.
+  // Sans ça, toute la logique ci-dessous s'exécute mais reste invisible.
+  if (!sheet.classList.contains('open')) {
+    const overlay = document.getElementById('bsOverlay');
+    if (overlay) overlay.classList.add('active');
+    sheet.classList.add('open');
+    document.body.classList.add('sheet-locked');
+  }
+
   listView.style.opacity    = '0';
   listView.style.transition = 'opacity 0.15s ease';
   if (navView) navView.style.opacity = '0';
