@@ -3586,7 +3586,7 @@ body.has-tabbar {
   flex: none; width: 100%;
   /* Pas de cadre de carte : juste l'écusson + le label. */
   background: none !important;
-  border: 3px solid red !important; /* TEMPORAIRE — pour vérifier le déploiement, à retirer ensuite */
+  border: none;
   box-shadow: none;
   position: relative; overflow: hidden;
   -webkit-tap-highlight-color: transparent;
