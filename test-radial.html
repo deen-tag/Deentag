@@ -68,29 +68,50 @@
     100% { width: 640px; height: 640px; opacity: 0; }
   }
 
-  /* Fiche de sous-catégorie — capsule reprenant EXACTEMENT le style de tes
-     pilules existantes (cat-label : "REPAS", "TRANSPORT & VOYAGE"...) plutôt
-     qu'un nouveau composant. Même famille visuelle que les icônes -> plus
-     de décalage de qualité entre carte centrale et fiches. Plus petite et
-     plus proche du centre que la version précédente, pour un effet
-     "pétales qui s'ouvrent" plus resserré et premium. */
+  /* Traits fins dorés reliant chaque fiche à l'illustration centrale :
+     soude visuellement l'ensemble plutôt que des fiches qui "flottent". */
+  .radial-lines { position: absolute; top: 50%; left: 50%; width: 0; height: 0; overflow: visible; z-index: 0; pointer-events: none; }
+  .radial-line {
+    stroke: rgba(197,160,40,0.5); stroke-width: 1;
+    stroke-dasharray: 260; stroke-dashoffset: 260;
+  }
+  .radial-line.draw { transition: stroke-dashoffset 0.85s cubic-bezier(0.65,0,0.35,1); stroke-dashoffset: 0; }
+
+  /* Fiche de sous-catégorie — carte premium (pas une pilule/bouton) : fond
+     parchemin en dégradé, double liseré doré, petits ornements en losange
+     aux coins (même esprit que les écussons de l'app), plus proche du
+     centre pour rester un ensemble cohérent avec l'illustration. */
   .radial-bubble {
-    position: absolute; top: 50%; left: 50%;
-    width: auto; max-width: 108px; min-height: 0;
-    border-radius: 18px;
-    background: rgba(253,248,236,0.94);
-    border: 1px solid rgba(var(--gold-rgb, 201,168,76), 0.5);
-    box-shadow: 0 3px 10px rgba(150,115,30,0.16), inset 0 1px 0 rgba(255,255,255,0.6);
+    position: absolute; top: 50%; left: 50%; z-index: 2;
+    width: auto; max-width: 112px; min-height: 0;
+    border-radius: 12px;
+    background: linear-gradient(160deg, rgba(253,248,236,0.98) 0%, rgba(243,233,208,0.95) 100%);
+    border: 1.5px solid rgba(var(--gold-rgb, 201,168,76), 0.7);
+    box-shadow:
+      0 8px 20px rgba(90,65,10,0.22),
+      inset 0 1px 0 rgba(255,255,255,0.75),
+      inset 0 0 0 1px rgba(var(--gold-rgb, 201,168,76), 0.18);
     display: flex; align-items: center; justify-content: center;
-    padding: 8px 12px;
+    padding: 12px 13px;
     cursor: pointer; -webkit-tap-highlight-color: transparent;
     /* Départ = matérialisation, pas une apparition franche : déjà partiellement
        visible, à mi-chemin de sa position finale, légèrement plus petite. */
-    transform: translate(calc(-50% + var(--tx-start, 0px)), calc(-50% + var(--ty-start, 0px))) scale(0.92);
-    opacity: 0.65;
+    transform: translate(calc(-50% + var(--tx-start, 0px)), calc(-50% + var(--ty-start, 0px))) scale(0.9);
+    opacity: 0.6;
     transition: transform 0.38s cubic-bezier(0.34,1.56,0.64,1), opacity 0.34s ease, box-shadow 0.15s ease;
-    z-index: 1;
   }
+  /* Petits losanges dorés aux coins, comme des clous de tapisserie sur une
+     fiche précieuse -> signature visuelle discrète mais reconnaissable. */
+  .radial-bubble::before,
+  .radial-bubble::after {
+    content: ''; position: absolute; width: 6px; height: 6px;
+    background: linear-gradient(135deg, #f0dc93, #b3852a);
+    transform: rotate(45deg);
+    box-shadow: 0 1px 2px rgba(60,40,5,0.35);
+  }
+  .radial-bubble::before { top: -3px; left: 11px; }
+  .radial-bubble::after  { bottom: -3px; right: 11px; }
+
   .radial-bubble.show {
     transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
     opacity: 1;
@@ -235,7 +256,7 @@ let radialStartRect = null; // sa position/taille d'origine, pour le retour
 // Largeur cible de l'icône une fois centrée : taille FIXE (pas un % de
 // l'écran) pour que l'agrandissement reste toujours le même, quel que
 // soit l'appareil. Ajuste cette seule valeur si besoin.
-const ICON_TARGET_WIDTH = 150;
+const ICON_TARGET_WIDTH = 170;
 
 // La vraie <img> est affichée en object-fit:contain dans une boîte
 // (.cat-icon-circle) qui n'est pas forcément carrée. getBoundingClientRect()
@@ -276,7 +297,7 @@ function radialOpen(cardEl) {
   radialCat = cat;
   const overlay = document.getElementById('radialOverlay');
   const stage   = document.getElementById('radialStage');
-  stage.querySelectorAll('.radial-bubble, .radial-wave').forEach(el => el.remove());
+  stage.querySelectorAll('.radial-bubble, .radial-wave, .radial-lines').forEach(el => el.remove());
 
   // --- FLIP : on clone SEULEMENT l'icône (arche + illustration, sans cadre) ---
   const sourceImg = cardEl.querySelector('.cat-icon');
@@ -314,19 +335,20 @@ function radialOpen(cardEl) {
     });
   });
 
-  // Les sous-catégories se répartissent TOUT AUTOUR de l'icône (cercle complet).
-  // Le rayon est clampé à la taille réelle de l'écran pour que les fiches
-  // ne sortent JAMAIS du cadre visible, même sur petit téléphone.
+  // Les sous-catégories se répartissent TOUT AUTOUR de l'icône (cercle complet),
+  // resserrées près du centre (~30% plus proches qu'avant) pour rester un
+  // ensemble visuel cohérent avec l'illustration plutôt que des fiches qui
+  // flottent loin d'elle. Le rayon reste clampé à l'écran par sécurité.
   const n = Math.min(items.length, 8);
-  const BUBBLE_HALF_W = 58;  // ~ moitié de max-width (108px) + marge
-  const BUBBLE_HALF_H = 40;
+  const BUBBLE_HALF_W = 62;  // ~ moitié de max-width (112px) + marge
+  const BUBBLE_HALF_H = 42;
   const SCREEN_MARGIN = 14;
 
-  const baseRadius = ICON_TARGET_WIDTH * 0.62 + 96;
+  const baseRadius = ICON_TARGET_WIDTH * 0.55 + 45;
   const maxRadiusX  = window.innerWidth  / 2 - BUBBLE_HALF_W - SCREEN_MARGIN;
   const maxRadiusY  = window.innerHeight / 2 - BUBBLE_HALF_H - SCREEN_MARGIN;
-  const RADIUS_X = Math.max(90, Math.min(baseRadius, maxRadiusX));
-  const RADIUS_Y = Math.max(90, Math.min(baseRadius, maxRadiusY));
+  const RADIUS_X = Math.max(80, Math.min(baseRadius, maxRadiusX));
+  const RADIUS_Y = Math.max(80, Math.min(baseRadius, maxRadiusY));
 
   const positions = items.slice(0, n).map((item, i) => {
     const thetaDeg = (360 / n) * i - 90; // -90° = on démarre en haut, puis sens horaire
@@ -342,20 +364,34 @@ function radialOpen(cardEl) {
 }
 
 // Une onde dorée part de l'icône, les fiches se matérialisent à son passage
-// plutôt que de "voler" vers leur position.
+// plutôt que de "voler" vers leur position. Un fin trait doré relie chaque
+// fiche à l'illustration centrale pour souder visuellement l'ensemble.
 function playEffectWave(stage, cat, positions, RADIUS) {
   const wave = document.createElement('div');
   wave.className = 'radial-wave';
   stage.appendChild(wave);
   setTimeout(() => wave.classList.add('play'), 260);
 
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const linesSvg = document.createElementNS(svgNS, 'svg');
+  linesSvg.setAttribute('class', 'radial-lines');
+  stage.appendChild(linesSvg);
+
   const WAVE_MAX_RADIUS = 320; // ~ 640px / 2, doit matcher le keyframe CSS
   const WAVE_DURATION   = 1150;
 
   positions.forEach(pos => {
+    const delay = 260 + (RADIUS / WAVE_MAX_RADIUS) * WAVE_DURATION * 0.72;
+
+    const line = document.createElementNS(svgNS, 'line');
+    line.setAttribute('x1', 0); line.setAttribute('y1', 0);
+    line.setAttribute('x2', pos.tx); line.setAttribute('y2', pos.ty);
+    line.setAttribute('class', 'radial-line');
+    linesSvg.appendChild(line);
+    setTimeout(() => line.classList.add('draw'), Math.max(200, delay - 320));
+
     const b = makeBubble(pos, cat);
     stage.appendChild(b);
-    const delay = 260 + (RADIUS / WAVE_MAX_RADIUS) * WAVE_DURATION * 0.72;
     setTimeout(() => b.classList.add('show'), delay);
   });
 }
