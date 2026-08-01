@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Deentag — Test radial menu</title>
+<title>Deentag — Test radial menu (éventail)</title>
 <link rel="stylesheet" href="css/adult.css">
 <script>
 (function(){
@@ -19,7 +19,9 @@
     font-family: system-ui, sans-serif;
   }
 
-  /* Overlay plein écran assombri, centré, qui accueille le menu radial */
+  /* Overlay plein écran assombri, centré, qui accueille le menu radial.
+     Toujours centré sur l'écran (pas sur la position de la carte tapée) :
+     c'est ce qui règle le problème des bords évoqué par Lio. */
   .radial-overlay {
     position: fixed; inset: 0; z-index: 500;
     background: rgba(20,15,5,0.55);
@@ -31,11 +33,11 @@
 
   .radial-stage {
     position: relative;
-    width: 280px; height: 280px;
+    width: 300px; height: 300px;
     display: flex; align-items: center; justify-content: center;
   }
 
-  /* Carte centrale (clone de la carte tapée), point d'ancrage du bloom */
+  /* Carte centrale (clone de la carte tapée), point d'ancrage de l'éventail */
   .radial-center {
     width: 108px; height: 108px; border-radius: 20px;
     background: var(--card-bg, #fdf8ec);
@@ -54,18 +56,17 @@
     text-transform: uppercase; line-height: 1.15;
   }
 
-  /* Bulle de sous-catégorie, positionnée en absolu via --tx/--ty (calculés en JS) */
+  /* Bulle de sous-catégorie -> mini carte DeenTag (plus une bulle générique) :
+     icône + titre, fond/typo/liseré doré identiques aux cartes catégories.
+     Position calculée en JS via --tx/--ty (éventail, pas cercle complet). */
   .radial-bubble {
     position: absolute; top: 50%; left: 50%;
-    width: 76px; height: 76px; border-radius: 50%;
+    width: 86px; height: 92px; border-radius: 18px;
     background: var(--card-bg, #fdf8ec);
-    box-shadow: 0 1px 2px rgba(90,65,10,0.1), 0 6px 14px rgba(90,65,10,0.18);
-    border: 1px solid rgba(197,160,40,0.4);
-    display: flex; align-items: center; justify-content: center;
-    padding: 6px;
-    font-family: 'Cinzel', serif; font-size: 8px; font-weight: 600;
-    color: var(--text3, #4a3d1a); text-align: center; line-height: 1.15;
-    letter-spacing: 0.03em;
+    box-shadow: 0 1px 2px rgba(90,65,10,0.10), 0 8px 18px rgba(90,65,10,0.20);
+    border: 1.5px solid rgba(var(--gold-rgb, 201,168,76), 0.55);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 5px; padding: 8px 6px;
     cursor: pointer; -webkit-tap-highlight-color: transparent;
     transform: translate(-50%, -50%) scale(0.3); opacity: 0;
     transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease, box-shadow 0.15s ease;
@@ -78,7 +79,28 @@
   .radial-bubble.pop {
     transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.18);
   }
-  .radial-bubble:active { box-shadow: 0 0 0 2px rgba(197,160,40,0.6); }
+  .radial-bubble:active {
+    box-shadow: 0 0 0 2px rgba(var(--gold-rgb, 201,168,76), 0.6);
+  }
+
+  .radial-bubble-icon {
+    width: 30px; height: 30px; object-fit: contain;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.15));
+  }
+  .radial-bubble-title {
+    font-family: 'Cinzel', serif; font-size: 8.5px; font-weight: 600;
+    letter-spacing: 0.03em; color: var(--text3, #4a3d1a); text-align: center;
+    line-height: 1.18;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  /* Petit repère doré pour les invocations sunnah, cohérent avec le reste de l'app */
+  .radial-bubble.is-sunnah { border-color: rgba(var(--gold-rgb, 201,168,76), 0.85); }
+  .radial-bubble.is-sunnah::after {
+    content: '✦';
+    position: absolute; top: 4px; right: 6px;
+    font-size: 7px; color: var(--gold, #C9A84C); opacity: 0.85;
+  }
 
   .radial-hint {
     position: absolute; bottom: 6%; left: 0; right: 0;
@@ -94,13 +116,13 @@
   <div class="index-ornament">
     <div class="index-ornament-line"></div><span class="ornament-star">✦</span><div class="index-ornament-line"></div>
   </div>
-  <div class="section-title">Test — menu radial</div>
+  <div class="section-title">Test — menu radial (éventail)</div>
 </div>
 
 <div class="proto-note">
-  Tape une carte : elle se centre, les sous-catégories éclosent en bulles
-  autour (positions fixes, jusqu'à 5). Tape une bulle → ouverture directe
-  de l'invocation. Istikhara (1 seule dua) → une seule bulle.
+  Tape une carte : elle se centre, les sous-catégories éclosent en éventail
+  au-dessus/autour d'elle (2 à 5 éléments, jamais de cercle complet). Tape une
+  bulle → ouverture directe de l'invocation. Istikhara (1 seule dua) → saut direct.
 </div>
 
 <div class="cat-pager">
@@ -191,12 +213,21 @@
 
 <script>
 // ============================================================
-// PROTOTYPE — menu radial. Réutilise getSheetItems()/renderDua()
-// de app.js, aucune donnée dupliquée.
+// PROTOTYPE — menu radial en éventail. Réutilise getSheetItems()/
+// renderDua() de app.js, aucune donnée dupliquée.
 // ============================================================
 
 let radialCat = null;
-const RADIUS = 118; // distance du centre aux bulles, en px
+const RADIUS = 122; // distance du centre aux bulles, en px
+
+// Ouverture angulaire de l'éventail selon le nombre de sous-catégories.
+// 0° = 12h (haut), sens horaire. On ne fait JAMAIS un cercle complet :
+// le regard reste concentré sur la carte centrale et sur la zone haute.
+//   2 éléments -> ~10h et 2h   (span 120°, autour du haut)
+//   3 éléments -> 9h, 12h, 3h (span 180°, demi-cercle)
+//   4 éléments -> demi-cercle harmonieux (span 180°)
+//   5 éléments -> arc élargi 200° (déborde un peu sous l'horizontale)
+const ARC_SPAN = { 2: 120, 3: 180, 4: 180, 5: 200 };
 
 function radialOpen(cardEl) {
   const cat = cardEl.dataset.cat;
@@ -211,7 +242,6 @@ function radialOpen(cardEl) {
   radialCat = cat;
   const overlay = document.getElementById('radialOverlay');
   const stage   = document.getElementById('radialStage');
-  const center  = document.getElementById('radialCenter');
 
   document.getElementById('radialCenterIcon').src = cardEl.dataset.icon;
   document.getElementById('radialCenterLabel').innerHTML = cardEl.dataset.label;
@@ -219,17 +249,23 @@ function radialOpen(cardEl) {
   // Nettoyer les anciennes bulles
   stage.querySelectorAll('.radial-bubble').forEach(b => b.remove());
 
-  const n = items.length; // entre 2 et 5 ici
-  items.forEach((item, i) => {
-    const angle = (-90 + (360 / n) * i) * (Math.PI / 180); // depart en haut, sens horaire
-    const tx = Math.round(Math.cos(angle) * RADIUS) + 'px';
-    const ty = Math.round(Math.sin(angle) * RADIUS) + 'px';
+  const n = Math.min(items.length, 5); // 5 max en éventail direct, cf. note plus bas
+  const span = ARC_SPAN[n] || 200;
+  const step = n > 1 ? span / (n - 1) : 0;
+
+  items.slice(0, n).forEach((item, i) => {
+    const thetaDeg = -span / 2 + step * i; // 0° = haut, négatif = gauche
+    const theta = thetaDeg * (Math.PI / 180);
+    const tx = Math.round(Math.sin(theta) * RADIUS) + 'px';
+    const ty = Math.round(-Math.cos(theta) * RADIUS) + 'px';
 
     const b = document.createElement('div');
-    b.className = 'radial-bubble';
+    b.className = 'radial-bubble' + (item.sunnah ? ' is-sunnah' : '');
     b.style.setProperty('--tx', tx);
     b.style.setProperty('--ty', ty);
-    b.textContent = item.titre;
+    b.innerHTML =
+      '<img class="radial-bubble-icon" src="' + cardEl.dataset.icon + '" alt="">' +
+      '<div class="radial-bubble-title">' + item.titre + '</div>';
     b.onclick = (e) => {
       e.stopPropagation();
       b.classList.add('pop');
