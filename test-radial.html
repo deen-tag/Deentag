@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Deentag — Test radial menu</title>
+<link rel="stylesheet" href="css/adult.css">
+<script>
+(function(){
+  document.documentElement.setAttribute('data-theme','day');
+  document.documentElement.setAttribute('data-lang','fr');
+})();
+</script>
+<style>
+  .proto-note {
+    max-width: 520px; margin: 0 auto 14px; padding: 10px 16px;
+    background: rgba(197,160,40,0.12); border: 1px solid rgba(197,160,40,0.35);
+    border-radius: 12px; font-size: 12px; color: #6b5a1e; text-align: center;
+    font-family: system-ui, sans-serif;
+  }
+
+  /* Overlay plein écran assombri, centré, qui accueille le menu radial */
+  .radial-overlay {
+    position: fixed; inset: 0; z-index: 500;
+    background: rgba(20,15,5,0.55);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.22s ease;
+  }
+  .radial-overlay.show { opacity: 1; pointer-events: auto; }
+
+  .radial-stage {
+    position: relative;
+    width: 280px; height: 280px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Carte centrale (clone de la carte tapée), point d'ancrage du bloom */
+  .radial-center {
+    width: 108px; height: 108px; border-radius: 20px;
+    background: var(--card-bg, #fdf8ec);
+    box-shadow: 0 0 0 2px rgba(197,160,40,0.55), 0 14px 30px rgba(0,0,0,0.35);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 4px; padding: 8px;
+    transform: scale(0.7); opacity: 0;
+    transition: transform 0.28s cubic-bezier(0.22,1,0.36,1), opacity 0.22s ease;
+    z-index: 2;
+  }
+  .radial-overlay.show .radial-center { transform: scale(1); opacity: 1; }
+  .radial-center img { width: 44px; height: 44px; object-fit: contain; }
+  .radial-center-label {
+    font-family: 'Cinzel', serif; font-size: 8.5px; font-weight: 600;
+    letter-spacing: 0.06em; color: var(--text3, #4a3d1a); text-align: center;
+    text-transform: uppercase; line-height: 1.15;
+  }
+
+  /* Bulle de sous-catégorie, positionnée en absolu via --tx/--ty (calculés en JS) */
+  .radial-bubble {
+    position: absolute; top: 50%; left: 50%;
+    width: 76px; height: 76px; border-radius: 50%;
+    background: var(--card-bg, #fdf8ec);
+    box-shadow: 0 1px 2px rgba(90,65,10,0.1), 0 6px 14px rgba(90,65,10,0.18);
+    border: 1px solid rgba(197,160,40,0.4);
+    display: flex; align-items: center; justify-content: center;
+    padding: 6px;
+    font-family: 'Cinzel', serif; font-size: 8px; font-weight: 600;
+    color: var(--text3, #4a3d1a); text-align: center; line-height: 1.15;
+    letter-spacing: 0.03em;
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+    transform: translate(-50%, -50%) scale(0.3); opacity: 0;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.25s ease, box-shadow 0.15s ease;
+    z-index: 1;
+  }
+  .radial-bubble.show {
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1);
+    opacity: 1;
+  }
+  .radial-bubble.pop {
+    transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(1.18);
+  }
+  .radial-bubble:active { box-shadow: 0 0 0 2px rgba(197,160,40,0.6); }
+
+  .radial-hint {
+    position: absolute; bottom: 6%; left: 0; right: 0;
+    text-align: center; font-family: system-ui, sans-serif; font-size: 11px;
+    color: rgba(255,255,255,0.75);
+  }
+</style>
+</head>
+<body class="day" data-page="invocations">
+
+<div class="index-header">
+  <div class="index-brand">DEENTAG</div>
+  <div class="index-ornament">
+    <div class="index-ornament-line"></div><span class="ornament-star">✦</span><div class="index-ornament-line"></div>
+  </div>
+  <div class="section-title">Test — menu radial</div>
+</div>
+
+<div class="proto-note">
+  Tape une carte : elle se centre, les sous-catégories éclosent en bulles
+  autour (positions fixes, jusqu'à 5). Tape une bulle → ouverture directe
+  de l'invocation. Istikhara (1 seule dua) → une seule bulle.
+</div>
+
+<div class="cat-pager">
+<div class="cat-section cat-section--open" data-section="Quotidien">
+  <div class="cat-section-header">
+    <span class="cat-section-line"></span>
+    <span class="cat-section-title">Quotidien (test)</span>
+    <span class="cat-section-line"></span>
+  </div>
+  <div class="cat-grid" id="protoGrid">
+
+  <div class="cat-card" data-cat="repas" data-icon="images/repas.webp" data-label="Repas" onclick="radialOpen(this)">
+    <div class="cat-icon-circle"><img src="images/repas.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">Repas</div>
+  </div>
+
+  <div class="cat-card" data-cat="reveil" data-icon="images/lit.webp" data-label="Réveil &amp; Couché" onclick="radialOpen(this)">
+    <div class="cat-icon-circle"><img src="images/lit.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">Réveil &amp; Couché</div>
+  </div>
+
+  <div class="cat-card" data-cat="ablution" data-icon="images/ablution.webp" data-label="Ablution" onclick="radialOpen(this)">
+    <div class="cat-icon-circle"><img src="images/ablution.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">Ablution</div>
+  </div>
+
+  <div class="cat-card" data-cat="toilettes" data-icon="images/wc.webp" data-label="Toilettes" onclick="radialOpen(this)">
+    <div class="cat-icon-circle"><img src="images/wc.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">Toilettes</div>
+  </div>
+
+  <div class="cat-card" data-cat="maison" data-icon="images/maison.webp" data-label="Maison" onclick="radialOpen(this)">
+    <div class="cat-icon-circle"><img src="images/maison.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">Maison</div>
+  </div>
+
+  <div class="cat-card" data-cat="transport" data-icon="images/voiture.webp" data-label="Transport &amp; Voyage" onclick="radialOpen(this)">
+    <div class="cat-icon-circle"><img src="images/voiture.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">Transport &amp; Voyage</div>
+  </div>
+
+  <div class="cat-card" data-cat="istikhara" data-icon="images/istikhara.webp" data-label="Istikhara" onclick="radialOpen(this)">
+    <div class="cat-icon-circle"><img src="images/istikhara.webp" class="cat-icon" alt=""></div>
+    <div class="cat-label">Istikhara (1 seule dua)</div>
+  </div>
+
+  </div>
+</div>
+</div>
+
+<!-- OVERLAY DU MENU RADIAL -->
+<div class="radial-overlay" id="radialOverlay" onclick="radialClose(event)">
+  <div class="radial-stage" id="radialStage">
+    <div class="radial-center" id="radialCenter">
+      <img id="radialCenterIcon" src="" alt="">
+      <div class="radial-center-label" id="radialCenterLabel"></div>
+    </div>
+  </div>
+  <div class="radial-hint">Tape en dehors pour fermer</div>
+</div>
+
+<!-- BOTTOM SHEET (réutilisée telle quelle, duaView uniquement) -->
+<div class="bs-overlay" id="bsOverlay" onclick="protoCloseSheet()"></div>
+
+<div class="bottom-sheet" id="bottomSheet">
+  <div class="bs-handle"><div class="bs-handle-bar"></div></div>
+  <div id="listView" style="display:none;"></div>
+  <div id="duaView">
+    <div class="dua-topbar">
+      <button class="theme-knob-btn" onclick="protoCloseSheet()" aria-label="Fermer">
+        <div class="theme-knob-btn-inner">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </div>
+      </button>
+      <img id="duaCatIcon" src="" alt="" class="dua-cat-icon">
+      <button class="theme-knob-btn" onclick="toggleTheme()" aria-label="Changer le thème">
+        <div class="theme-knob-btn-inner">
+          <svg class="tt-sun" width="18" height="18" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="6" fill="#c8922a"/></svg>
+        </div>
+      </button>
+    </div>
+    <div id="duaScroll"></div>
+  </div>
+</div>
+
+<script src="js/duas.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+// ============================================================
+// PROTOTYPE — menu radial. Réutilise getSheetItems()/renderDua()
+// de app.js, aucune donnée dupliquée.
+// ============================================================
+
+let radialCat = null;
+const RADIUS = 118; // distance du centre aux bulles, en px
+
+function radialOpen(cardEl) {
+  const cat = cardEl.dataset.cat;
+  const items = getSheetItems(cat);
+
+  // Cas 1 seule invocation -> saut direct, pas de menu radial
+  if (items.length <= 1) {
+    if (items.length === 1) protoOpenDuaDirect(cat, items[0].id);
+    return;
+  }
+
+  radialCat = cat;
+  const overlay = document.getElementById('radialOverlay');
+  const stage   = document.getElementById('radialStage');
+  const center  = document.getElementById('radialCenter');
+
+  document.getElementById('radialCenterIcon').src = cardEl.dataset.icon;
+  document.getElementById('radialCenterLabel').innerHTML = cardEl.dataset.label;
+
+  // Nettoyer les anciennes bulles
+  stage.querySelectorAll('.radial-bubble').forEach(b => b.remove());
+
+  const n = items.length; // entre 2 et 5 ici
+  items.forEach((item, i) => {
+    const angle = (-90 + (360 / n) * i) * (Math.PI / 180); // depart en haut, sens horaire
+    const tx = Math.round(Math.cos(angle) * RADIUS) + 'px';
+    const ty = Math.round(Math.sin(angle) * RADIUS) + 'px';
+
+    const b = document.createElement('div');
+    b.className = 'radial-bubble';
+    b.style.setProperty('--tx', tx);
+    b.style.setProperty('--ty', ty);
+    b.textContent = item.titre;
+    b.onclick = (e) => {
+      e.stopPropagation();
+      b.classList.add('pop');
+      setTimeout(() => protoOpenDuaDirect(cat, item.id), 140);
+    };
+    stage.appendChild(b);
+    setTimeout(() => b.classList.add('show'), 70 + i * 45);
+  });
+
+  overlay.classList.add('show');
+}
+
+function radialClose(e) {
+  if (e && e.target.closest('.radial-bubble')) return;
+  document.getElementById('radialOverlay').classList.remove('show');
+  radialCat = null;
+}
+
+function protoOpenDuaDirect(cat, accId) {
+  document.getElementById('radialOverlay').classList.remove('show');
+
+  if (!window.DUAS || !DUAS[cat] || !DUAS[cat][accId]) return;
+  currentCat = cat;
+  currentAccId = accId;
+
+  const sheet = document.getElementById('bottomSheet');
+  const duaView = document.getElementById('duaView');
+
+  renderDua(cat, accId);
+  const catIcon = document.getElementById('duaCatIcon');
+  if (catIcon) catIcon.src = DUAS[cat].meta.icon || '';
+
+  duaView.style.display = 'flex';
+  duaView.style.opacity = '1';
+
+  sheet.style.height = 'calc(var(--app-vh, 100dvh) - 16px)';
+  sheet.style.maxHeight = 'calc(var(--app-vh, 100dvh) - 16px)';
+  sheet.style.borderRadius = '20px 20px 0 0';
+  sheet.style.overflowY = 'hidden';
+
+  document.getElementById('bsOverlay').classList.add('active');
+  sheet.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  if (typeof injectAccordionControls === 'function') injectAccordionControls();
+}
+
+function protoCloseSheet() {
+  const sheet = document.getElementById('bottomSheet');
+  document.getElementById('bsOverlay').classList.remove('active');
+  sheet.classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
+</body>
+</html>
