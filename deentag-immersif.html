@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=1.0, user-scalable=no">
+<title>Deentag — Prototype immersif</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cinzel+Decorative:wght@700&family=Spectral:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#050E12; --bg2:#0D1F26;
+    --gold:#DDB05C; --gold-light:#F2CE85; --gold-dark:#A97D34;
+    --text:#EDF2EE; --text2:#A9C4BE; --text3:#7C948E;
+    --ring:rgba(221,176,92,0.28);
+    --swatch-bois:#B98A52; --swatch-vert:#7FD9A8; --swatch-or:#F2CE85; --swatch-pack: conic-gradient(from 0deg,#B98A52,#7FD9A8,#F2CE85,#B98A52);
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{height:100%; margin:0; overscroll-behavior:none;}
+  body{
+    font-family:'Spectral', serif; background:var(--bg); color:var(--text);
+    height:100dvh; width:100vw; overflow:hidden; position:fixed; inset:0;
+  }
+
+  /* ---------- STAGE ---------- */
+  #stage{
+    position:absolute; inset:0; perspective:1400px; overflow:hidden;
+    background:
+      radial-gradient(120% 90% at 50% 8%, rgba(221,176,92,0.10) 0%, rgba(221,176,92,0) 55%),
+      radial-gradient(140% 100% at 50% 100%, #0D1F26 0%, #050E12 60%);
+  }
+
+  /* faint drifting dust */
+  .mote{ position:absolute; border-radius:50%; background:var(--gold-light); opacity:0.18; pointer-events:none; filter:blur(0.5px); }
+  @keyframes drift{ 0%{ transform:translateY(0) translateX(0);} 50%{ transform:translateY(-18px) translateX(6px);} 100%{ transform:translateY(0) translateX(0);} }
+
+  /* giant faint watermark title = "the room you are in" */
+  #watermark{
+    position:absolute; left:50%; top:40%; transform:translate(-50%,-50%);
+    font-family:'Cinzel Decorative', serif; font-weight:700; color:var(--gold);
+    font-size:clamp(38px, 15vw, 92px); letter-spacing:0.04em; text-align:center;
+    opacity:0.055; white-space:nowrap; pointer-events:none;
+    transition:opacity .5s ease;
+  }
+  #watermark.swap{ opacity:0; }
+
+  #subtitle{
+    position:absolute; left:50%; top:8%; transform:translateX(-50%);
+    font-family:'Cinzel', serif; font-size:11px; letter-spacing:0.22em; text-transform:uppercase;
+    color:var(--text3); opacity:0.8; text-align:center; width:88%;
+    transition:opacity .35s ease;
+  }
+
+  /* ---------- SCENE (current room content) ---------- */
+  #scene{ position:absolute; inset:0; transform-style:preserve-3d; }
+  .slot{
+    position:absolute; width:min(28vw,104px); transform:translate(-50%,-50%) scale(1);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    cursor:pointer; user-select:none; touch-action:manipulation;
+    transition:opacity .5s ease, transform .5s ease, filter .5s ease;
+    animation:bob 5.5s ease-in-out infinite;
+  }
+  .slot:nth-child(4n+1){ animation-duration:5.2s; animation-delay:.1s; }
+  .slot:nth-child(4n+2){ animation-duration:6.1s; animation-delay:.5s; }
+  .slot:nth-child(4n+3){ animation-duration:5.7s; animation-delay:.2s; }
+  .slot:nth-child(4n+4){ animation-duration:6.4s; animation-delay:.4s; }
+  @keyframes bob{ 0%,100%{ margin-top:0px;} 50%{ margin-top:-9px;} }
+
+  .orb{
+    width:100%; aspect-ratio:1/1; border-radius:50%;
+    background:radial-gradient(circle at 32% 28%, rgba(242,206,133,0.16), rgba(13,31,38,0.55) 70%);
+    border:1px solid var(--ring); box-shadow:0 0 0 1px rgba(0,0,0,0.2), 0 10px 26px rgba(0,0,0,0.45), inset 0 0 18px rgba(221,176,92,0.06);
+    display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;
+  }
+  .orb img{ width:56%; height:56%; object-fit:contain; filter:drop-shadow(0 2px 6px rgba(0,0,0,0.4)); }
+  .orb .sw{ position:absolute; inset:0; border-radius:50%; opacity:.55; }
+
+  .slot-label{
+    font-family:'Cinzel', serif; font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--gold-light); text-align:center; text-shadow:0 1px 4px rgba(0,0,0,0.6); line-height:1.3;
+  }
+
+  .slot.hide-out{ opacity:0; transform:translate(-50%,-50%) scale(0.55); filter:blur(2px); pointer-events:none; animation:none; }
+  .slot.hide-in{  opacity:0; transform:translate(-50%,-50%) scale(0.6) translateY(24px); filter:blur(3px); animation:none; }
+  .slot.settle{   opacity:1; transform:translate(-50%,-50%) scale(1) translateY(0); filter:blur(0); }
+
+  /* ---------- ANCHOR (current room marker, bottom) ---------- */
+  #anchorWrap{
+    position:absolute; left:50%; bottom:6.5%; transform:translate(-50%,0);
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    transition:opacity .45s ease, transform .45s ease;
+  }
+  #anchorWrap.dim{ opacity:0.32; transform:translate(-50%,0) scale(0.86); }
+  #anchorOrb{
+    width:min(20vw,80px); aspect-ratio:1/1; border-radius:50%; cursor:pointer;
+    background:radial-gradient(circle at 32% 28%, rgba(242,206,133,0.2), rgba(13,31,38,0.6) 72%);
+    border:1px solid rgba(221,176,92,0.4); box-shadow:0 0 0 1px rgba(0,0,0,0.25), 0 12px 30px rgba(0,0,0,0.5), 0 0 26px rgba(221,176,92,0.10);
+    display:flex; align-items:center; justify-content:center; position:relative; touch-action:manipulation;
+  }
+  #anchorOrb img{ width:58%; height:58%; object-fit:contain; }
+  #anchorOrb.is-logo img{ width:82%; height:82%; }
+  #anchorLabel{
+    font-family:'Cinzel', serif; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold);
+  }
+  #anchorLabel.brand{ font-family:'Cinzel Decorative', serif; font-size:15px; letter-spacing:0.28em; color:var(--gold-light); }
+
+  /* ghost travelling icon */
+  #ghostLayer{ position:absolute; inset:0; pointer-events:none; z-index:30; }
+  .ghost{
+    position:absolute; border-radius:50%;
+    background:radial-gradient(circle at 32% 28%, rgba(242,206,133,0.2), rgba(13,31,38,0.6) 72%);
+    border:1px solid rgba(221,176,92,0.45); box-shadow:0 12px 30px rgba(0,0,0,0.5), 0 0 26px rgba(221,176,92,0.12);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .ghost img{ width:58%; height:58%; object-fit:contain; }
+
+  /* ---------- LEAF PLAQUE ---------- */
+  #plaque{
+    position:absolute; left:50%; top:50%; transform:translate(-50%,-56%) scale(0.92);
+    width:min(84vw,360px); text-align:center; opacity:0; transition:opacity .55s ease, transform .55s ease;
+    pointer-events:none;
+  }
+  #plaque.show{ opacity:1; transform:translate(-50%,-56%) scale(1); pointer-events:auto; }
+  #plaque .p-eyebrow{ font-family:'Cinzel', serif; font-size:10.5px; letter-spacing:0.24em; text-transform:uppercase; color:var(--text3); margin-bottom:10px; }
+  #plaque .p-title{ font-family:'Cinzel Decorative', serif; font-size:23px; color:var(--gold-light); margin-bottom:14px; }
+  #plaque .p-blessing{ font-style:italic; font-size:16px; line-height:1.55; color:var(--text2); margin-bottom:22px; }
+  #plaque .p-link{
+    display:inline-block; font-family:'Cinzel', serif; font-size:11px; letter-spacing:0.16em; text-transform:uppercase;
+    color:var(--bg); background:linear-gradient(160deg,var(--gold-light),var(--gold-dark)); padding:12px 22px; border-radius:30px;
+    text-decoration:none; box-shadow:0 8px 20px rgba(221,176,92,0.25);
+  }
+
+  /* ---------- CHROME: back + depth dots + hint ---------- */
+  #backBtn{
+    position:absolute; top:max(18px,env(safe-area-inset-top)); left:16px; z-index:40;
+    width:40px; height:40px; border-radius:50%; border:1px solid rgba(221,176,92,0.3);
+    background:rgba(5,14,18,0.5); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center;
+    opacity:0; pointer-events:none; transition:opacity .35s ease;
+  }
+  #backBtn.show{ opacity:1; pointer-events:auto; }
+  #backBtn svg{ width:16px; height:16px; }
+
+  #depthDots{ position:absolute; top:max(28px,env(safe-area-inset-top)); left:50%; transform:translateX(-50%); z-index:40; display:flex; gap:6px; }
+  #depthDots span{ width:5px; height:5px; border-radius:50%; background:rgba(221,176,92,0.25); transition:background .3s ease, transform .3s ease; }
+  #depthDots span.active{ background:var(--gold-light); transform:scale(1.4); }
+
+  #hint{
+    position:absolute; bottom:2.2%; left:50%; transform:translateX(-50%); z-index:35;
+    font-family:'Cinzel', serif; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--text3);
+    opacity:0; transition:opacity 1s ease; text-align:center; white-space:nowrap;
+  }
+  #hint.show{ opacity:0.75; }
+
+  #splash{
+    position:absolute; inset:0; z-index:100; background:var(--bg); display:flex; align-items:center; justify-content:center;
+    transition:opacity .6s ease;
+  }
+  #splash img{ width:74px; opacity:0.9; animation:pulseSplash 1.6s ease-in-out infinite; }
+  @keyframes pulseSplash{ 0%,100%{opacity:.55;} 50%{opacity:1;} }
+  #splash.hide{ opacity:0; pointer-events:none; }
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div id="watermark"></div>
+  <div id="subtitle"></div>
+  <div id="scene"></div>
+  <div id="anchorWrap">
+    <div id="anchorOrb"><img id="anchorImg" src="" alt=""></div>
+    <div id="anchorLabel"></div>
+  </div>
+  <div id="plaque">
+    <div class="p-eyebrow" id="pEyebrow"></div>
+    <div class="p-title" id="pTitle"></div>
+    <div class="p-blessing" id="pBlessing"></div>
+    <a class="p-link" id="pLink" href="#" target="_blank" rel="noopener">Ouvrir sur Deentag</a>
+  </div>
+  <div id="ghostLayer"></div>
+  <button id="backBtn" aria-label="Revenir en arrière">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#DDB05C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <div id="depthDots"></div>
+  <div id="hint">Touchez une catégorie pour avancer · Glissez pour revenir</div>
+</div>
+
+<div id="splash"><img src="images/logo-night.webp" alt="Deentag"></div>
+
+<script>
+/* ============================================================
+   DEENTAG — PROTOTYPE DE NAVIGATION IMMERSIVE
+   Chaque écran = une salle. Chaque clic avance la caméra.
+   Jamais de page, jamais d'URL, jamais de rechargement.
+   ============================================================ */
+
+const ROOMS = {
+  home: {
+    id:'home', isRoot:true, isLogo:true, title:'DEENTAG', icon:'images/logo-night.webp',
+    parent:null, children:['invocations','coran','boutique','kids']
+  },
+
+  invocations: { id:'invocations', title:'Invocations', subtitle:'Rappels pour chaque moment du jour', icon:'images/icone-invocations.webp', parent:'home', children:['quotidien','protection','deplacements','etapes'] },
+  coran:       { id:'coran', title:'Coran', subtitle:'Le Noble Coran, à votre rythme', icon:'images/icone-coran.webp', parent:'home', children:['juz','prophete','theme','celebres'] },
+  boutique:    { id:'boutique', title:'Boutique', subtitle:'L\'objet connecté Deentag', icon:'images/icone-boutique-nfc.webp', parent:'home', children:['bois','vert','blancor','pack'] },
+  kids:        { id:'kids', title:'Kids', subtitle:'Un univers pensé pour les enfants', icon:'images/icone-enfants-coran.webp', parent:'home', children:['histoires','korankids','duakids','profil'] },
+
+  quotidien:    { id:'quotidien', title:'Quotidien', subtitle:'Les gestes de tous les jours', icon:'images/matinsoir.webp', parent:'invocations', children:['reveil','repas','ablution','maison'] },
+  protection:   { id:'protection', title:'Protection', subtitle:'Se prémunir et se réconforter', icon:'images/ruqya.webp', parent:'invocations', children:['maladie','colere','tristesse','ruqya'] },
+  deplacements: { id:'deplacements', title:'Déplacements', subtitle:'En sortant, en chemin', icon:'images/voiture.webp', parent:'invocations', children:['transport','mosquee','toilettes'] },
+  etapes:       { id:'etapes', title:'Étapes de vie', subtitle:'Les grands moments', icon:'images/mariage.webp', parent:'invocations', children:['mariage','enfants','ramadan','rizq'] },
+
+  reveil:    { id:'reveil', title:'Réveil & Couché', icon:'images/lit.webp', parent:'quotidien', leaf:true,
+    content:{ eyebrow:'Au lever et au coucher', blessing:"Que tes nuits soient protégées et tes réveils remplis de baraka", link:'invocations.html?page=reveil' } },
+  repas:     { id:'repas', title:'Repas', icon:'images/repas.webp', parent:'quotidien', leaf:true,
+    content:{ eyebrow:'Avant et après manger', blessing:"Que ton repas soit béni", link:'invocations.html?page=repas' } },
+  ablution:  { id:'ablution', title:'Ablutions', icon:'images/ablution.webp', parent:'quotidien', leaf:true,
+    content:{ eyebrow:'Avant la prière', blessing:"Que tes ablutions soient acceptées, tes péchés effacés et les portes du Paradis ouvertes pour toi", link:'invocations.html?page=ablution' } },
+  maison:    { id:'maison', title:'Maison', icon:'images/maison.webp', parent:'quotidien', leaf:true,
+    content:{ eyebrow:'En entrant et en sortant', blessing:"Que tes entrées et sorties soient bénies", link:'invocations.html?page=maison' } },
+
+  maladie:   { id:'maladie', title:'Maladie', icon:'images/maladie.webp', parent:'protection', leaf:true,
+    content:{ eyebrow:'Pour la guérison', blessing:"Qu'Allah t'accorde une guérison rapide et complète", link:'invocations.html?page=maladie' } },
+  colere:    { id:'colere', title:'Colère', icon:'images/colere.webp', parent:'protection', leaf:true,
+    content:{ eyebrow:'Pour apaiser le cœur', blessing:"Qu'Allah apaise ton cœur et t'accorde la patience", link:'invocations.html?page=colere' } },
+  tristesse: { id:'tristesse', title:'Tristesse & Épreuves', icon:'images/tristesse.webp', parent:'protection', leaf:true,
+    content:{ eyebrow:'Face au chagrin', blessing:"Que Allah dissipe ta tristesse et remplisse ton cœur de sérénité", link:'invocations.html?page=tristesse' } },
+  ruqya:     { id:'ruqya', title:'Protection', icon:'images/ruqya.webp', parent:'protection', leaf:true,
+    content:{ eyebrow:'Contre le mauvais œil', blessing:"Qu'Allah te protège de tout mal et de tout regard envieux", link:'invocations.html?page=ruqya' } },
+
+  transport: { id:'transport', title:'Transport & Voyage', icon:'images/voiture.webp', parent:'deplacements', leaf:true,
+    content:{ eyebrow:'Sur la route, comme en voyage', blessing:"Que tes trajets et voyages soient protégés et bénis", link:'invocations.html?page=transport' } },
+  mosquee:   { id:'mosquee', title:'Mosquée', icon:'images/mosquee.webp', parent:'deplacements', leaf:true,
+    content:{ eyebrow:'En entrant dans la mosquée', blessing:"Que Allah accepte ta prière et illumine ton cœur", link:'invocations.html?page=mosquee' } },
+  toilettes: { id:'toilettes', title:'Toilettes', icon:'images/wc.webp', parent:'deplacements', leaf:true,
+    content:{ eyebrow:'En entrant et en sortant', blessing:"Que tes entrées et sorties soient toujours protégées", link:'invocations.html?page=toilettes' } },
+
+  mariage:   { id:'mariage', title:'Mariage', icon:'images/mariage.webp', parent:'etapes', leaf:true,
+    content:{ eyebrow:'Bénir une union', blessing:"Qu'Allah bénisse votre union et vous accorde l'amour et la miséricorde", link:'invocations.html?page=mariage' } },
+  enfants:   { id:'enfants', title:'Enfants', icon:'images/enfants.webp', parent:'etapes', leaf:true,
+    content:{ eyebrow:'Protéger ses enfants', blessing:"Que Allah protège tes enfants de tout mal, visible ou invisible", link:'invocations.html?page=enfants' } },
+  ramadan:   { id:'ramadan', title:'Ramadan', icon:'images/ramadan.webp', parent:'etapes', leaf:true,
+    content:{ eyebrow:'Le mois du jeûne', blessing:"Qu'Allah accepte ton jeûne, ta prière et tes bonnes actions", link:'invocations.html?page=ramadan' } },
+  rizq:      { id:'rizq', title:'Subsistance', icon:'images/rizq.webp', parent:'etapes', leaf:true,
+    content:{ eyebrow:'Pour la subsistance', blessing:"Qu'Allah t'accorde une subsistance bénie et abondante", link:'invocations.html?page=rizq' } },
+
+  juz:       { id:'juz', title:'Par Jouz', icon:'images/quran-juz.webp', parent:'coran', leaf:true,
+    content:{ eyebrow:'30 parties du Coran', blessing:"Une lecture guidée, jouz après jouz", link:'quran.html' } },
+  prophete:  { id:'prophete', title:'Par Prophète', icon:'images/quran-prophet.webp', parent:'coran', leaf:true,
+    content:{ eyebrow:'12 prophètes cités dans le Coran', blessing:"Suivre le fil des récits prophétiques", link:'quran.html' } },
+  theme:     { id:'theme', title:'Par Thème', icon:'images/quran-theme.webp', parent:'coran', leaf:true,
+    content:{ eyebrow:'Matin · Soir · Vendredi · Protection', blessing:"Retrouver un verset pour chaque instant", link:'quran.html' } },
+  celebres:  { id:'celebres', title:'Sourates Célèbres', icon:'images/quran-famous.webp', parent:'coran', leaf:true,
+    content:{ eyebrow:'Une sélection à connaître', blessing:"Les sourates les plus lues et récitées", link:'quran.html' } },
+
+  bois:      { id:'bois', title:'Bois naturel', icon:'images/icone-boutique-nfc.webp', swatch:'bois', parent:'boutique', leaf:true,
+    content:{ eyebrow:'Coloris au choix', blessing:"1 objet Deentag, puce NFC intégrée, app gratuite à vie", link:'shop.html' } },
+  vert:      { id:'vert', title:'Vert profond', icon:'images/icone-boutique-nfc.webp', swatch:'vert', parent:'boutique', leaf:true,
+    content:{ eyebrow:'Coloris au choix', blessing:"1 objet Deentag, puce NFC intégrée, app gratuite à vie", link:'shop.html' } },
+  blancor:   { id:'blancor', title:'Blanc & doré', icon:'images/icone-boutique-nfc.webp', swatch:'or', parent:'boutique', leaf:true,
+    content:{ eyebrow:'Coloris au choix', blessing:"1 objet Deentag, puce NFC intégrée, app gratuite à vie", link:'shop.html' } },
+  pack:      { id:'pack', title:'Pack — les 3 coloris', icon:'images/icone-boutique-nfc.webp', swatch:'pack', parent:'boutique', leaf:true,
+    content:{ eyebrow:'Bois + Vert + Blanc & doré', blessing:"Économisez sur le pack complet", link:'shop.html' } },
+
+  histoires: { id:'histoires', title:'Histoires', icon:'images/kids_logo.webp', parent:'kids', leaf:true,
+    content:{ eyebrow:'Espace enfants', blessing:"Un univers pensé pour les petits", link:'kids.html' } },
+  korankids: { id:'korankids', title:'Coran Enfants', icon:'images/icone-enfants-coran.webp', parent:'kids', leaf:true,
+    content:{ eyebrow:'Apprentissage adapté', blessing:"Découvrir le Coran en douceur", link:'kids.html' } },
+  duakids:   { id:'duakids', title:'Invocations Enfants', icon:'images/icone-invocations.webp', parent:'kids', leaf:true,
+    content:{ eyebrow:'Les duas essentielles', blessing:"Des invocations simples à retenir", link:'kids.html' } },
+  profil:    { id:'profil', title:'Mon Profil', icon:'images/kids_logo.webp', parent:'kids', leaf:true,
+    content:{ eyebrow:'Personnalisation', blessing:"Un espace propre à chaque enfant", link:'kids.html' } },
+};
+
+const SLOTS = [
+  {left:24, top:17},
+  {left:71, top:25},
+  {left:20, top:47},
+  {left:75, top:53},
+];
+
+let path = ['home'];
+let animating = false;
+
+const $ = s => document.querySelector(s);
+const stage = $('#stage'), scene = $('#scene'), ghostLayer = $('#ghostLayer');
+const anchorWrap = $('#anchorWrap'), anchorOrb = $('#anchorOrb'), anchorImg = $('#anchorImg'), anchorLabel = $('#anchorLabel');
+const watermark = $('#watermark'), subtitleEl = $('#subtitle');
+const plaque = $('#plaque'), pEyebrow = $('#pEyebrow'), pTitle = $('#pTitle'), pBlessing = $('#pBlessing'), pLink = $('#pLink');
+const backBtn = $('#backBtn'), depthDots = $('#depthDots');
+
+function currentRoom(){ return ROOMS[path[path.length-1]]; }
+
+function stageRect(){ return stage.getBoundingClientRect(); }
+
+function anchorTargetRect(){
+  const r = stageRect();
+  const size = Math.min(r.width*0.20, 80);
+  const cx = r.left + r.width*0.5;
+  const cy = r.top + r.height*0.935;
+  return {left:cx-size/2, top:cy-size/2, width:size, height:size};
+}
+function slotTargetRect(idx){
+  const r = stageRect();
+  const s = SLOTS[idx];
+  const size = Math.min(r.width*0.28, 104);
+  const cx = r.left + r.width*(s.left/100);
+  const cy = r.top + r.height*(s.top/100);
+  return {left:cx-size/2, top:cy-size/2, width:size, height:size};
+}
+
+function buildDepthDots(){
+  depthDots.innerHTML = '';
+  const depth = path.length;
+  for(let i=0;i<depth;i++){
+    const d = document.createElement('span');
+    if(i===depth-1) d.classList.add('active');
+    depthDots.appendChild(d);
+  }
+}
+
+function renderPlaqueFor(room){
+  pEyebrow.textContent = room.content.eyebrow || '';
+  pTitle.textContent = room.title;
+  pBlessing.textContent = room.content.blessing;
+  pLink.href = room.content.link || '#';
+}
+
+function buildChildrenSlots(room, animateIn){
+  scene.innerHTML = '';
+  const kids = (room.children||[]).slice(0,4);
+  kids.forEach((cid, i)=>{
+    const child = ROOMS[cid];
+    const s = SLOTS[i];
+    const el = document.createElement('div');
+    el.className = 'slot' + (animateIn ? ' hide-in' : '');
+    el.style.left = s.left+'%';
+    el.style.top = s.top+'%';
+    el.dataset.id = cid;
+    el.innerHTML = `<div class="orb">${child.swatch? `<div class="sw" style="background:${swatchColor(child.swatch)}"></div>`:''}<img src="${child.icon}" alt=""></div><div class="slot-label">${child.title}</div>`;
+    el.addEventListener('click', ()=> onSelect(cid));
+    scene.appendChild(el);
+    if(animateIn){
+      requestAnimationFrame(()=> requestAnimationFrame(()=>{
+        setTimeout(()=> el.classList.add('settle'), 90*i);
+      }));
+    }
+  });
+}
+
+function swatchColor(key){
+  if(key==='bois') return 'var(--swatch-bois)';
+  if(key==='vert') return 'var(--swatch-vert)';
+  if(key==='or') return 'var(--swatch-or)';
+  if(key==='pack') return 'var(--swatch-pack)';
+  return 'transparent';
+}
+
+function setAnchor(room){
+  anchorImg.src = room.icon;
+  anchorOrb.classList.toggle('is-logo', !!room.isLogo);
+  if(room.isRoot){
+    anchorLabel.textContent = room.title;
+    anchorLabel.classList.add('brand');
+  } else {
+    anchorLabel.textContent = room.title;
+    anchorLabel.classList.remove('brand');
+  }
+}
+
+function setAtmosphere(room){
+  watermark.classList.add('swap');
+  subtitleEl.style.opacity = 0;
+  setTimeout(()=>{
+    watermark.textContent = room.title;
+    watermark.classList.remove('swap');
+    subtitleEl.textContent = room.subtitle || '';
+    subtitleEl.style.opacity = room.subtitle ? 0.8 : 0;
+  }, 260);
+}
+
+function renderRoomImmediate(room){
+  setAnchor(room);
+  anchorWrap.classList.remove('dim');
+  setAtmosphere(room);
+  backBtn.classList.toggle('show', !room.isRoot);
+  buildDepthDots();
+  if(room.leaf){
+    scene.innerHTML='';
+    renderPlaqueFor(room);
+    plaque.classList.add('show');
+  } else {
+    plaque.classList.remove('show');
+    buildChildrenSlots(room, false);
+  }
+}
+
+function makeGhost(iconSrc, rect){
+  const g = document.createElement('div');
+  g.className = 'ghost';
+  g.style.left = rect.left+'px';
+  g.style.top = rect.top+'px';
+  g.style.width = rect.width+'px';
+  g.style.height = rect.height+'px';
+  g.innerHTML = `<img src="${iconSrc}" alt="">`;
+  ghostLayer.appendChild(g);
+  return g;
+}
+
+function animateGhost(g, fromRect, toRect, done){
+  const anim = g.animate([
+    { left:fromRect.left+'px', top:fromRect.top+'px', width:fromRect.width+'px', height:fromRect.height+'px' },
+    { left:toRect.left+'px',   top:toRect.top+'px',   width:toRect.width+'px',   height:toRect.height+'px'   }
+  ], { duration:820, easing:'cubic-bezier(.65,0,.35,1)', fill:'forwards' });
+  anim.onfinish = done;
+}
+
+function pushCameraPulse(forward){
+  scene.animate([
+    { transform:'translateZ(0) scale(1)' },
+    { transform: forward? 'translateZ(40px) scale(1.05)' : 'translateZ(-30px) scale(0.96)', offset:0.5 },
+    { transform:'translateZ(0) scale(1)' }
+  ], { duration:820, easing:'ease-in-out' });
+}
+
+function onSelect(childId){
+  if(animating) return;
+  const child = ROOMS[childId];
+  const el = scene.querySelector(`.slot[data-id="${childId}"]`);
+  if(!el) return;
+  animating = true;
+
+  const fromRect = el.getBoundingClientRect();
+  const toRect = anchorTargetRect();
+  el.style.opacity = '0';
+  const g = makeGhost(child.icon, fromRect);
+
+  // dim/leave-behind siblings + old anchor
+  scene.querySelectorAll('.slot').forEach(s=>{ if(s!==el) s.classList.add('hide-out'); });
+  anchorWrap.classList.add('dim');
+  pushCameraPulse(true);
+  hintOff();
+
+  animateGhost(g, fromRect, toRect, ()=>{
+    ghostLayer.removeChild(g);
+    path.push(childId);
+    renderRoomImmediate(child);
+    animating = false;
+  });
+}
+
+function goBack(){
+  if(animating || path.length<=1) return;
+  const leavingId = path[path.length-1];
+  const leaving = ROOMS[leavingId];
+  const parent = ROOMS[leaving.parent];
+  const idx = Math.max(0, parent.children.indexOf(leavingId));
+
+  animating = true;
+  const fromRect = anchorTargetRect();
+  const toRect = slotTargetRect(idx);
+  const g = makeGhost(leaving.icon, fromRect);
+  anchorWrap.style.opacity = '0';
+  scene.innerHTML = '';
+  plaque.classList.remove('show');
+  pushCameraPulse(false);
+
+  animateGhost(g, fromRect, toRect, ()=>{
+    ghostLayer.removeChild(g);
+    anchorWrap.style.opacity = '1';
+    path.pop();
+    renderRoomImmediate(parent);
+    animating = false;
+  });
+}
+
+/* ---------- swipe (down or right) to go back ---------- */
+let touchStart = null;
+stage.addEventListener('touchstart', e=>{
+  touchStart = { x:e.touches[0].clientX, y:e.touches[0].clientY, t:Date.now() };
+}, {passive:true});
+stage.addEventListener('touchend', e=>{
+  if(!touchStart) return;
+  const dx = e.changedTouches[0].clientX - touchStart.x;
+  const dy = e.changedTouches[0].clientY - touchStart.y;
+  const dt = Date.now()-touchStart.t;
+  touchStart = null;
+  if(dt>700) return;
+  if(dy>70 && Math.abs(dy)>Math.abs(dx)) goBack();
+  else if(dx>70 && Math.abs(dx)>Math.abs(dy)) goBack();
+}, {passive:true});
+
+backBtn.addEventListener('click', goBack);
+anchorOrb.addEventListener('click', ()=>{ if(!currentRoom().isRoot) goBack(); });
+
+/* ambient dust */
+(function motes(){
+  const layer = document.createElement('div');
+  layer.style.position='absolute'; layer.style.inset='0'; layer.style.pointerEvents='none';
+  stage.appendChild(layer);
+  for(let i=0;i<14;i++){
+    const m = document.createElement('div');
+    m.className='mote';
+    const size = 1.5+Math.random()*2.5;
+    m.style.width = size+'px'; m.style.height = size+'px';
+    m.style.left = (Math.random()*100)+'%';
+    m.style.top = (10+Math.random()*80)+'%';
+    m.style.animation = `drift ${6+Math.random()*6}s ease-in-out infinite`;
+    m.style.animationDelay = (Math.random()*4)+'s';
+    layer.appendChild(m);
+  }
+})();
+
+function hintOff(){ $('#hint').classList.remove('show'); }
+
+/* ---------- init ---------- */
+renderRoomImmediate(ROOMS.home);
+setTimeout(()=> $('#hint').classList.add('show'), 900);
+setTimeout(hintOff, 6000);
+
+window.addEventListener('load', ()=>{
+  setTimeout(()=> $('#splash').classList.add('hide'), 450);
+});
+setTimeout(()=> $('#splash').classList.add('hide'), 1800);
+</script>
+</body>
+</html>
