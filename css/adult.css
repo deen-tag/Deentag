@@ -3548,7 +3548,7 @@ body.has-tabbar {
 .qnav-card {
   display: flex; flex-direction: column; align-items: center;
   justify-content: flex-start; gap: 4px; padding: 10px 8px 8px;
-  border-radius: 14px; cursor: pointer; height: 158px;
+  border-radius: 14px; cursor: pointer; height: 222px;
   flex: none; width: 100%;
   /* Pas de cadre de carte : juste l'écusson + le label. */
   background: none !important;
@@ -3584,7 +3584,7 @@ body.night .qnav-card:active {
 body.night .qnav-watermark { display: none; }
 
 .qnav-icon {
-  width: 100%; height: 76px; flex: 0 0 76px;
+  width: 100%; height: 140px; flex: 0 0 140px;
   display: flex; align-items: center; justify-content: center;
   position: relative; z-index: 1;
   color: var(--gold-dark);
@@ -3596,7 +3596,7 @@ body.night .qnav-icon { color: var(--gold); }
 
 .qnav-icon .qnav-img {
   position: absolute; z-index: 2;
-  width: 100%; height: 100%; max-height: 72px;
+  width: 100%; height: 140px;
   top: 50%; left: 50%; transform: translate(-50%, -50%);
   object-fit: contain;
   display: block;
