@@ -33,16 +33,21 @@
     transition:height .2s ease;}
   .orbit-ring{position:absolute;left:50%;top:50%;width:0;height:0;}
   .item{position:absolute;left:0;top:0;width:0;height:0;}
-  .item .cat-card{position:absolute;left:-50px;top:-68px;width:100px;height:136px;
-    display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;
-    transition:transform .25s ease;}
-  .icon-circle{width:64px;height:64px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#3a3222,#221d13);
-    border:1px solid var(--card-border);display:flex;align-items:center;justify-content:center;font-size:28px;
-    overflow:hidden;
-    transition:border-radius .25s ease, clip-path .25s ease;}
-  .icon-circle img{width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none;}
+  /* .item .cat-card, .cat-icon-circle, .cat-icon, .cat-label : definies par
+     les vrais fichiers CSS du site (voir <link> dans <head>), pour un rendu
+     identique pixel pour pixel a invocations.html. Seules les variables de
+     couleur (--gold, --card-bg...) sont redefinies ci-dessous car le site
+     les attend sur body.day/body.night, absents ici. */
+  .stage-wrap{
+    --gold: #1C6A63; --gold-rgb: 28,106,99; --gold-light:#4FA79D;
+    --text3: #4C6961;
+    --card-bg: linear-gradient(160deg, #F7F3E8 0%, #EDE8D8 100%);
+    --card-border: rgba(199,160,74,0.20);
+  }
 
-  /* ===== Formes disponibles (icônes de chaque carte) ===== */
+  /* ===== Formes disponibles (icones de chaque carte) -- experimental, ne
+     reflete PAS la prod actuelle (qui n'applique aucun clip-path). Utile
+     seulement si tu veux tester un futur habillage different. ===== */
   .shape-circle{border-radius:50%;clip-path:none;}
   .shape-squircle{border-radius:30%;clip-path:none;}
   .shape-rounded-square{border-radius:16px;clip-path:none;}
@@ -55,10 +60,6 @@
   .shape-blob{clip-path:none;border-radius:63% 37% 54% 46% / 55% 45% 55% 45%;}
   .shape-drop{clip-path:none;border-radius:50% 50% 50% 4%;}
 
-  .cat-label{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--text2);
-    background:rgba(0,0,0,.25);padding:3px 6px;border-radius:8px;white-space:nowrap;}
-  .item.is-front .cat-label{color:var(--gold);}
-  .item.is-front .icon-circle{filter:drop-shadow(0 0 10px rgba(var(--gold-rgb),.4));border-color:var(--gold);}
   .orbit-divider{position:absolute;left:0;top:0;width:70px;margin-left:-35px;height:1px;
     background:linear-gradient(90deg,transparent,rgba(var(--gold-rgb),.55),transparent);pointer-events:none;}
   .start-marker{position:absolute;left:0;top:0;width:120px;margin-left:-60px;height:1px;
@@ -124,6 +125,9 @@
   .mode-panel{display:none;}
   .mode-panel.visible{display:block;}
 </style>
+<!-- Vrai CSS du site (source de vérité pour .cat-card / .cat-icon-circle / .cat-label / .item .cat-card) -->
+<link rel="stylesheet" href="css/adult.css">
+<link rel="stylesheet" href="css/wheel.css">
 </head>
 <body>
 
@@ -434,7 +438,7 @@
       var card = document.createElement('div');
       card.className = 'cat-card';
       var cat = CATEGORIES[i % CATEGORIES.length];
-      card.innerHTML = '<div class="icon-circle shape-' + state.shape + '"><img src="' + cat.icon + '" alt="" draggable="false"></div>' +
+      card.innerHTML = '<div class="cat-icon-circle"><img class="cat-icon shape-' + state.shape + '" src="' + cat.icon + '" alt="" draggable="false"></div>' +
                         '<div class="cat-label">' + cat.label + '</div>';
       item.appendChild(card);
       ring.appendChild(item);
@@ -500,7 +504,7 @@
       item.style.zIndex = String(Math.round((depth + 1) * 100));
       var opMin = state.opMin / 100;
       var iconOp = opMin + (1 - opMin) * ((depth + 1) / 2);
-      var iconEl = item.querySelector('.icon-circle');
+      var iconEl = item.querySelector('.cat-icon');
       if (iconEl) iconEl.style.opacity = String(iconOp);
       item.classList.toggle('is-front', i === frontIdx);
     });
@@ -576,7 +580,7 @@
       item.style.zIndex = String(Math.round((1 - frac) * 1000));
       var opMin = state.opMin / 100;
       var iconOp = 1 - (1 - opMin) * frac;
-      var iconEl = item.querySelector('.icon-circle');
+      var iconEl = item.querySelector('.cat-icon');
       if (iconEl) iconEl.style.opacity = String(iconOp);
       item.classList.toggle('is-front', i === frontIdx);
     });
@@ -756,7 +760,7 @@
             '// carte au point zéro : scale *= ' + (state.frontBoost/100).toFixed(2) + ';\n' +
             'var iconOp = ' + (state.opMin/100).toFixed(2) + ' + ' + (1-state.opMin/100).toFixed(2) + ' * profondeur;\n' +
             '// sensibilité du glisser : ' + (state.dragSens/100).toFixed(2) + '\n' +
-            '// forme de l\'icône : class="icon-circle shape-' + state.shape + '" (voir shape-* dans le CSS)\n' +
+            '// forme de l\'icône : class="cat-icon shape-' + state.shape + '" (voir shape-* dans le CSS)\n' +
             '// carte de départ (point zéro) : #' + state.startIndex + (state.lockStart ? ' — BLOQUÉ (aucun mouvement possible)' : ' — libre');
     document.getElementById('code').textContent = code;
   }
@@ -872,8 +876,8 @@
   var shapeSwatches = [];
   function setShape(id){
     state.shape = id;
-    document.querySelectorAll('.item .icon-circle').forEach(function(el){
-      el.className = 'icon-circle shape-' + id;
+    document.querySelectorAll('.item .cat-icon').forEach(function(el){
+      el.className = 'cat-icon shape-' + id;
     });
     shapeSwatches.forEach(function(s){
       s.el.classList.toggle('active', s.id === id);
