@@ -21,6 +21,7 @@
 
   var wheels = []; // état de chaque arc
   var allSections = []; // TOUTES les .cat-section (roulettes + statiques comme "Circonstances")
+  var hintIdleTimer = null; // debounce du wiggleHint : attend la fin du scroll
 
   // Réglages par nombre de cartes (issus de l'outil reglage-roulette.html).
   // Une catégorie à 4 cartes n'a pas besoin du même arc / zoom / sensibilité
@@ -380,6 +381,35 @@
 
   function onScroll() {
     if (!ticking) { ticking = true; requestAnimationFrame(updateScales); }
+    // Debounce du wiggleHint : si un nouvel event scroll arrive avant la
+    // fin du délai, on annule et on redémarre — l'animation n'est
+    // vérifiée/déclenchée que lorsque le scroll est vraiment stabilisé.
+    if (!reduceMotion && wheels.length) {
+      if (hintIdleTimer) clearTimeout(hintIdleTimer);
+      hintIdleTimer = setTimeout(checkHintCandidates, 250);
+    }
+  }
+
+  // Parmi les arcs déjà repérés par l'IntersectionObserver ("candidats"),
+  // ne joue le wiggleHint que pour ceux réellement proches du centre de
+  // l'écran au moment où le scroll s'arrête — même repère (anchorY/maxDist)
+  // que l'effet zoom/opacité, pour rester cohérent avec le reste du scroll.
+  function checkHintCandidates() {
+    var vh = window.innerHeight;
+    var anchorY = vh * 0.42;
+    var maxDist = vh * 0.6;
+    wheels.forEach(function (w) {
+      if (!w.hintCandidate || w.hinted) return;
+      var r = w.stage.getBoundingClientRect();
+      var center = r.top + r.height / 2;
+      var dist = Math.abs(center - anchorY);
+      var t = Math.max(0, 1 - dist / maxDist);
+      if (t > 0.75) {
+        w.hinted = true;
+        showSwipeHint(w);
+        wiggleHint(w);
+      }
+    });
   }
 
   // Surligne le chip cliqué immédiatement, sans attendre que le scroll (qui
@@ -566,16 +596,15 @@
         // premier au chargement) : un utilisateur qui scrolle jusqu'à
         // "Circonstances" sans jamais avoir vu "Quotidien" doit quand même
         // comprendre que l'arc se glisse.
+        // L'observer marque seulement le candidat : le déclenchement réel
+        // attend que le scroll soit stabilisé (cf. checkHintCandidates),
+        // pour ne pas jouer l'animation pendant que l'arc défile encore.
         if (!reduceMotion) {
           var hintObserver = new IntersectionObserver(function (entries) {
             entries.forEach(function (entry) {
               if (!entry.isIntersecting) return;
               var w = entry.target._wheelRef;
-              if (w && !w.hinted) {
-                w.hinted = true;
-                showSwipeHint(w);
-                wiggleHint(w);
-              }
+              if (w) w.hintCandidate = true;
               hintObserver.unobserve(entry.target);
             });
           }, { threshold: 0.5 });
@@ -592,6 +621,13 @@
         // encore stabilisée, ce qui pouvait donner un chip actif incorrect
         // au chargement.
         window.addEventListener('load', updateScales);
+        if (!reduceMotion) {
+          window.addEventListener('load', checkHintCandidates);
+          // Cas où la page charge déjà positionnée sur un arc centré, sans
+          // qu'aucun scroll ne se produise ensuite : on vérifie une fois
+          // après le petit délai d'apparition initial.
+          setTimeout(checkHintCandidates, 600);
+        }
       }
     }
 
