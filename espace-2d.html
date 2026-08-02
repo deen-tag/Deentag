@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#050B12">
+<title>Deentag — Navigation céleste</title>
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;1,300;1,400&family=Cinzel:wght@400;500;600&family=Cinzel+Decorative:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#050B12;
+  --void2:#0A1626;
+  --gold:#DDB05C;
+  --gold-light:#F2CE85;
+  --gold-dim:#8B6914;
+  --ink:#EDF2EE;
+  --muted:#8CA6A0;
+  --w-invocations:#DDB05C;
+  --w-coran:#79D6A6;
+  --w-enfants:#8FC7E8;
+  --w-boutique:#E3A468;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;height:100%;background:var(--void);color:var(--ink);font-family:'Spectral',serif;overflow:hidden;}
+body{position:relative;-webkit-font-smoothing:antialiased;}
+
+/* ---------- fond ---------- */
+.sky{position:fixed;inset:0;overflow:hidden;}
+.sky::before,.sky::after{content:"";position:absolute;border-radius:50%;filter:blur(90px);opacity:.28;}
+.sky::before{width:60vw;height:60vw;background:radial-gradient(circle,#3A2E5C,transparent 70%);top:-15vw;left:-10vw;animation:drift1 46s ease-in-out infinite alternate;}
+.sky::after{width:50vw;height:50vw;background:radial-gradient(circle,#1C4A48,transparent 70%);bottom:-10vw;right:-10vw;animation:drift2 54s ease-in-out infinite alternate;}
+@keyframes drift1{to{transform:translate(6vw,4vw) scale(1.1);}}
+@keyframes drift2{to{transform:translate(-5vw,-6vw) scale(1.08);}}
+#stars{position:fixed;inset:0;}
+.star{position:absolute;background:#fff;border-radius:50%;opacity:.7;animation:twinkle linear infinite;}
+@keyframes twinkle{0%,100%{opacity:.15;}50%{opacity:.9;}}
+
+/* ---------- structure générale ---------- */
+.stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;}
+.chrome{position:fixed;inset:0;pointer-events:none;z-index:40;}
+.brandmark{position:absolute;top:22px;left:24px;font-family:'Cinzel',serif;letter-spacing:.28em;font-size:11px;color:var(--muted);pointer-events:auto;text-decoration:none;opacity:.85;}
+.brandmark b{color:var(--gold-light);font-weight:600;}
+.exit-link{position:absolute;top:22px;right:24px;font-family:'Cinzel',serif;font-size:10.5px;letter-spacing:.18em;color:var(--muted);text-decoration:none;pointer-events:auto;border:1px solid rgba(221,176,92,.28);padding:8px 14px;border-radius:999px;transition:.25s;}
+.exit-link:hover{color:var(--gold-light);border-color:var(--gold-light);}
+.mode-link{position:absolute;bottom:22px;right:24px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.16em;color:var(--muted);text-decoration:none;pointer-events:auto;opacity:.8;}
+.mode-link:hover{color:var(--gold-light);}
+.hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-family:'Spectral',serif;font-style:italic;font-size:12.5px;color:var(--muted);pointer-events:none;letter-spacing:.02em;opacity:0;transition:opacity .6s ease .3s;}
+.hint.show{opacity:.75;}
+
+/* ---------- écran d'ouverture ---------- */
+#opening{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;flex-direction:column;background:var(--void);transition:opacity 1s ease;}
+#opening.hide{opacity:0;pointer-events:none;}
+.open-mark{width:96px;height:96px;border-radius:50%;border:1px solid rgba(221,176,92,.5);display:flex;align-items:center;justify-content:center;position:relative;animation:breathe 3.6s ease-in-out infinite;}
+.open-mark::before{content:"";position:absolute;inset:-16px;border-radius:50%;border:1px solid rgba(221,176,92,.18);}
+.open-mark span{font-family:'Cinzel Decorative',serif;font-size:20px;color:var(--gold-light);}
+@keyframes breathe{0%,100%{box-shadow:0 0 0 rgba(221,176,92,0);}50%{box-shadow:0 0 34px rgba(221,176,92,.35);}}
+.open-title{font-family:'Cinzel Decorative',serif;letter-spacing:.16em;font-size:15px;color:var(--muted);margin-top:26px;text-align:center;line-height:1.9;}
+.open-cta{margin-top:36px;font-family:'Cinzel',serif;letter-spacing:.22em;font-size:11px;color:var(--gold-light);background:transparent;border:1px solid rgba(221,176,92,.5);padding:14px 30px;border-radius:999px;cursor:pointer;transition:.3s;}
+.open-cta:hover{background:rgba(221,176,92,.12);box-shadow:0 0 24px rgba(221,176,92,.25);}
+
+/* warp burst */
+.warp{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:0;}
+.warp.go{animation:warpburst .9s ease-out forwards;}
+.warp span{position:absolute;top:50%;left:50%;width:2px;height:2px;background:var(--gold-light);border-radius:2px;transform-origin:0 0;}
+@keyframes warpburst{0%{opacity:1;}100%{opacity:0;}}
+
+/* ---------- astrolabe / système ---------- */
+.system{position:relative;width:min(92vw,760px);height:min(92vw,760px);opacity:0;transform:scale(.9);transition:opacity 1.1s ease, transform 1.1s ease;}
+.system.in{opacity:1;transform:scale(1);}
+.system.zoom-out{opacity:0;transform:scale(.85);}
+svg.rings{position:absolute;inset:0;width:100%;height:100%;overflow:visible;}
+.sun{position:absolute;top:50%;left:50%;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,var(--gold-light),var(--gold) 55%,var(--gold-dim) 100%);
+  display:flex;align-items:center;justify-content:center;flex-direction:column;
+  box-shadow:0 0 50px rgba(221,176,92,.45), 0 0 120px rgba(221,176,92,.18);
+  animation:sunpulse 6s ease-in-out infinite;cursor:default;}
+@keyframes sunpulse{0%,100%{box-shadow:0 0 50px rgba(221,176,92,.4),0 0 110px rgba(221,176,92,.15);}50%{box-shadow:0 0 66px rgba(221,176,92,.6),0 0 150px rgba(221,176,92,.25);}}
+.sun em{font-style:normal;font-family:'Cinzel Decorative',serif;font-size:13px;letter-spacing:.14em;color:#1C1305;}
+.sun small{font-family:'Cinzel',serif;font-size:7px;letter-spacing:.3em;color:#3a2c08;margin-top:3px;}
+
+.orbit{position:absolute;top:50%;left:50%;border:1px solid rgba(221,176,92,.16);border-radius:50%;transform:translate(-50%,-50%);animation:spin linear infinite;}
+@keyframes spin{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
+.planet-wrap{position:absolute;top:50%;left:100%;transform:translate(-50%,-50%);}
+.planet{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:8px;animation:counterspin linear infinite;}
+@keyframes counterspin{from{transform:rotate(0deg);}to{transform:rotate(-360deg);}}
+.planet .orb{width:34px;height:34px;border-radius:50%;box-shadow:0 0 0 1px rgba(255,255,255,.06) inset;transition:transform .3s ease, box-shadow .3s ease;}
+.planet:hover .orb, .planet:focus-visible .orb{transform:scale(1.22);}
+.planet .lbl{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:.15em;color:var(--muted);white-space:nowrap;transition:color .3s;}
+.planet:hover .lbl,.planet:focus-visible .lbl{color:var(--ink);}
+
+/* couleurs + halos par monde */
+.planet[data-world="invocations"] .orb{background:radial-gradient(circle at 35% 30%,#FCE7B0,var(--w-invocations));box-shadow:0 0 22px rgba(221,176,92,.55);}
+.planet[data-world="coran"] .orb{background:radial-gradient(circle at 35% 30%,#D7FBE6,var(--w-coran));box-shadow:0 0 22px rgba(121,214,166,.5);}
+.planet[data-world="enfants"] .orb{background:radial-gradient(circle at 35% 30%,#E4F3FC,var(--w-enfants));box-shadow:0 0 22px rgba(143,199,232,.5);}
+.planet[data-world="boutique"] .orb{background:radial-gradient(circle at 35% 30%,#FBE3C9,var(--w-boutique));box-shadow:0 0 22px rgba(227,164,104,.5);}
+
+/* ---------- vue monde (planète + lunes) ---------- */
+#worldview{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .8s ease;z-index:30;}
+#worldview.in{opacity:1;pointer-events:auto;}
+.wv-planet{position:relative;width:min(60vw,320px);height:min(60vw,320px);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:20px;animation:sunpulse 7s ease-in-out infinite;}
+.wv-planet h2{font-family:'Cinzel Decorative',serif;font-size:clamp(18px,3vw,26px);letter-spacing:.06em;margin:0 0 8px;color:#1C1305;}
+.wv-planet p{font-family:'Spectral',serif;font-style:italic;font-size:13px;color:#3a2c08;margin:0;max-width:70%;}
+.wv-orbit{position:absolute;top:50%;left:50%;border:1px solid rgba(237,242,238,.14);border-radius:50%;transform:translate(-50%,-50%);animation:spin linear infinite;}
+.moon{all:unset;position:absolute;top:50%;left:100%;transform:translate(-50%,-50%);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;animation:counterspin linear infinite;}
+.moon .dot{width:14px;height:14px;border-radius:50%;background:var(--ink);box-shadow:0 0 10px rgba(237,242,238,.4);transition:transform .25s;}
+.moon:hover .dot,.moon:focus-visible .dot{transform:scale(1.5);}
+.moon .mlbl{font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:.1em;color:var(--muted);white-space:nowrap;max-width:120px;}
+.moon:hover .mlbl,.moon:focus-visible .mlbl{color:var(--ink);}
+
+.wv-panel{position:absolute;bottom:96px;left:50%;transform:translateX(-50%);text-align:center;width:min(90vw,420px);}
+.wv-panel .eyebrow{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.28em;color:var(--muted);margin-bottom:10px;}
+.wv-cta{display:inline-block;margin-top:6px;font-family:'Cinzel',serif;letter-spacing:.16em;font-size:11px;color:var(--void);background:var(--gold-light);padding:13px 28px;border-radius:999px;text-decoration:none;transition:.25s;}
+.wv-cta:hover{filter:brightness(1.08);box-shadow:0 0 26px rgba(221,176,92,.4);}
+.back-btn{position:absolute;top:22px;left:24px;font-family:'Cinzel',serif;font-size:10.5px;letter-spacing:.16em;color:var(--muted);background:transparent;border:1px solid rgba(221,176,92,.28);padding:8px 16px;border-radius:999px;cursor:pointer;z-index:41;transition:.25s;}
+.back-btn:hover{color:var(--gold-light);border-color:var(--gold-light);}
+
+@media (max-width:560px){
+  .brandmark,.exit-link{font-size:9.5px;padding:7px 11px;}
+  .wv-panel{bottom:70px;}
+}
+@media (prefers-reduced-motion: reduce){
+  .orbit,.planet,.wv-orbit,.moon,.sun,.wv-planet,.open-mark{animation:none !important;}
+  .star{animation:none !important;opacity:.5;}
+}
+</style>
+</head>
+<body>
+
+<div class="sky"></div>
+<div id="stars"></div>
+
+<!-- OUVERTURE -->
+<div id="opening">
+  <div class="open-mark"><span>D</span></div>
+  <div class="open-title">DEENTAG<br><span style="font-family:'Spectral',serif;font-style:italic;letter-spacing:0;font-size:12.5px;">un univers, quatre mondes</span></div>
+  <button class="open-cta" id="enterBtn">Entrer dans l'univers</button>
+</div>
+
+<div class="warp" id="warp"></div>
+
+<!-- SYSTEME -->
+<div class="stage">
+  <div class="system" id="system">
+    <svg class="rings" viewBox="0 0 760 760" id="ringsSvg"></svg>
+    <div class="sun"><em>Deentag</em><small>ACCUEIL</small></div>
+    <!-- orbites générées en JS -->
+  </div>
+</div>
+
+<!-- VUE MONDE -->
+<div id="worldview">
+  <button class="back-btn" id="backBtn">← Retour au système</button>
+  <div class="wv-planet" id="wvPlanet">
+    <h2 id="wvTitle"></h2>
+    <p id="wvTagline"></p>
+  </div>
+  <svg class="rings" viewBox="0 0 760 760" id="wvRingsSvg" style="position:absolute;inset:0;width:100%;height:100%;"></svg>
+  <div class="wv-panel">
+    <div class="eyebrow" id="wvEyebrow">CHOISISSEZ UNE RÉGION</div>
+    <a class="wv-cta" id="wvCta" href="#">Explorer ce monde →</a>
+  </div>
+</div>
+
+<div class="chrome">
+  <a class="brandmark" href="index.html"><b>DEENTAG</b> · céleste</a>
+  <a class="exit-link" href="index.html">Retour au site</a>
+  <a class="mode-link" href="espace-3d.html">Essayer la version 3D →</a>
+  <div class="hint" id="hint">Touchez une planète pour voyager vers son monde</div>
+</div>
+
+<script>
+/* ---------------- Données des mondes ---------------- */
+const WORLDS = [
+  { id:'invocations', name:'Invocations', tagline:'Une parole pour chaque instant du jour', href:'invocations.html', radius:150, speed:150,
+    moons:[
+      {name:'Quotidien', d:'Réveil, repas, ablutions, maison'},
+      {name:'Adorations', d:'Prière, mosquée, ramadan, pèlerinage'},
+      {name:'Épreuves', d:'Tristesse, maladie, colère, protection'},
+      {name:'Vie perso', d:'Mariage, naissance, voyage'},
+      {name:'Circonstances', d:'Pluie, deuil, subsistance, sommeil'},
+    ]},
+  { id:'coran', name:'Le Coran', tagline:'Le Livre, à portée de lecture', href:'quran.html', radius:230, speed:210,
+    moons:[
+      {name:'Reprendre ma lecture', d:'Continuez où vous en étiez'},
+      {name:'Coran complet', d:'Les 114 sourates'},
+      {name:'Par Jouz', d:'Les 30 parties'},
+      {name:'Sourates célèbres', d:'Une sélection'},
+      {name:'Par Prophète', d:'12 prophètes'},
+      {name:'Par Thème', d:'Matin, soir, protection, guérison'},
+    ]},
+  { id:'enfants', name:'Deentag Kids', tagline:"L'islam raconté aux petits", href:'kids.html', radius:300, speed:270,
+    moons:[
+      {name:'Réveil & Dodo', d:''},
+      {name:'Ablutions', d:''},
+      {name:'Repas', d:''},
+      {name:'Maison', d:''},
+      {name:'Transport', d:''},
+      {name:'Toilettes', d:''},
+    ]},
+  { id:'boutique', name:'Boutique', tagline:'Le rappel spirituel connecté', href:'shop.html', radius:365, speed:330,
+    moons:[
+      {name:"Découvrir l'objet", d:'Le boîtier Deentag'},
+      {name:'Coloris', d:'Bois, vert profond, blanc & doré'},
+      {name:'Le pack complet', d:'Les 3 coloris'},
+      {name:'Comment ça marche', d:'NFC, sans app'},
+    ]},
+];
+
+/* ---------------- Étoiles ---------------- */
+(function stars(){
+  const box = document.getElementById('stars');
+  const n = window.innerWidth < 600 ? 70 : 130;
+  for(let i=0;i<n;i++){
+    const s = document.createElement('div');
+    s.className='star';
+    const size = Math.random()*1.6+0.6;
+    s.style.width=s.style.height=size+'px';
+    s.style.left=Math.random()*100+'%';
+    s.style.top=Math.random()*100+'%';
+    s.style.animationDuration=(Math.random()*3.5+2.5)+'s';
+    s.style.animationDelay=(Math.random()*4)+'s';
+    box.appendChild(s);
+  }
+})();
+
+/* ---------------- Anneaux astrolabe (SVG) ---------------- */
+function buildRings(svg, radii, opts={}){
+  const NS='http://www.w3.org/2000/svg';
+  const cx=380, cy=380;
+  svg.innerHTML='';
+  radii.forEach((r,idx)=>{
+    const c = document.createElementNS(NS,'circle');
+    c.setAttribute('cx',cx); c.setAttribute('cy',cy); c.setAttribute('r',r);
+    c.setAttribute('fill','none');
+    c.setAttribute('stroke', opts.stroke || 'rgba(221,176,92,0.16)');
+    c.setAttribute('stroke-width', idx===radii.length-1 ? 1 : 0.6);
+    svg.appendChild(c);
+    // ticks
+    const ticks = idx===radii.length-1 ? 72 : 36;
+    for(let i=0;i<ticks;i++){
+      const a = (i/ticks) * Math.PI*2;
+      const len = (i%6===0) ? 9 : 4;
+      const x1 = cx + Math.cos(a)*r, y1 = cy + Math.sin(a)*r;
+      const x2 = cx + Math.cos(a)*(r-len), y2 = cy + Math.sin(a)*(r-len);
+      const l = document.createElementNS(NS,'line');
+      l.setAttribute('x1',x1); l.setAttribute('y1',y1);
+      l.setAttribute('x2',x2); l.setAttribute('y2',y2);
+      l.setAttribute('stroke', opts.stroke || 'rgba(221,176,92,0.18)');
+      l.setAttribute('stroke-width', 0.6);
+      svg.appendChild(l);
+    }
+  });
+}
+buildRings(document.getElementById('ringsSvg'), [150,230,300,365].map(r=>r*(380/380)));
+// on redimensionne proportionnellement via viewBox 760 -> centre 380, rayons alignés aux orbites (voir CSS ci-dessous)
+
+/* ---------------- Construction du système ---------------- */
+const system = document.getElementById('system');
+function systemScale(){ return Math.max(0.3, Math.min(1, system.clientWidth/760)); }
+
+WORLDS.forEach(w=>{
+  const orbit = document.createElement('div');
+  orbit.className='orbit';
+  orbit.dataset.baseRadius = w.radius;
+  orbit.style.animationDuration = w.speed+'s';
+  const wrap = document.createElement('div');
+  wrap.className='planet-wrap';
+  const btn = document.createElement('button');
+  btn.className='planet';
+  btn.dataset.world = w.id;
+  btn.style.animationDuration = w.speed+'s';
+  btn.innerHTML = `<span class="orb"></span><span class="lbl">${w.name}</span>`;
+  btn.addEventListener('click',()=>enterWorld(w.id));
+  wrap.appendChild(btn);
+  orbit.appendChild(wrap);
+  system.appendChild(orbit);
+});
+
+function applySystemScale(){
+  const s = systemScale();
+  system.querySelectorAll('.orbit').forEach(o=>{
+    const r = parseFloat(o.dataset.baseRadius)*s;
+    o.style.width = o.style.height = (r*2)+'px';
+  });
+}
+applySystemScale();
+window.addEventListener('resize', applySystemScale);
+
+/* ---------------- Ouverture ---------------- */
+const opening = document.getElementById('opening');
+const warp = document.getElementById('warp');
+const hint = document.getElementById('hint');
+
+function buildWarpLines(){
+  warp.innerHTML='';
+  const n=40;
+  for(let i=0;i<n;i++){
+    const l=document.createElement('span');
+    const a = Math.random()*360;
+    const len = 200+Math.random()*500;
+    l.style.transform = `rotate(${a}deg)`;
+    l.style.height = len+'px';
+    l.style.opacity = (0.15+Math.random()*0.5).toFixed(2);
+    warp.appendChild(l);
+  }
+}
+
+document.getElementById('enterBtn').addEventListener('click',()=>{
+  buildWarpLines();
+  warp.classList.add('go');
+  opening.classList.add('hide');
+  setTimeout(()=>{
+    system.classList.add('in');
+    hint.classList.add('show');
+  }, 250);
+  setTimeout(()=>{ warp.classList.remove('go'); }, 950);
+});
+
+/* ---------------- Vue "monde" ---------------- */
+const worldview = document.getElementById('worldview');
+const backBtn = document.getElementById('backBtn');
+const wvTitle = document.getElementById('wvTitle');
+const wvTagline = document.getElementById('wvTagline');
+const wvPlanet = document.getElementById('wvPlanet');
+const wvCta = document.getElementById('wvCta');
+const wvRingsSvg = document.getElementById('wvRingsSvg');
+
+const WORLD_COLORS = {
+  invocations:['#FCE7B0','#DDB05C'],
+  coran:['#D7FBE6','#79D6A6'],
+  enfants:['#E4F3FC','#8FC7E8'],
+  boutique:['#FBE3C9','#E3A468'],
+};
+
+function enterWorld(id){
+  const w = WORLDS.find(x=>x.id===id);
+  if(!w) return;
+  buildWarpLines();
+  warp.classList.add('go');
+  setTimeout(()=>{
+    system.classList.add('zoom-out');
+    const [c1,c2] = WORLD_COLORS[id];
+    wvPlanet.style.background = `radial-gradient(circle at 35% 30%, ${c1}, ${c2} 65%)`;
+    wvPlanet.style.boxShadow = `0 0 60px ${c2}88, 0 0 140px ${c2}33`;
+    wvTitle.textContent = w.name;
+    wvTagline.textContent = w.tagline;
+    wvCta.href = w.href;
+    wvCta.textContent = 'Explorer ' + w.name + ' →';
+
+    // lunes
+    document.querySelectorAll('.wv-orbit').forEach(el=>el.remove());
+    buildRings(wvRingsSvg, [190], {stroke:'rgba(237,242,238,0.12)'});
+    const stage = worldview;
+    const wvScale = Math.max(0.32, Math.min(1, Math.min(window.innerWidth, window.innerHeight)/780));
+    const baseR = 150*wvScale;
+    const step = (w.moons.length>4 ? 26 : 34)*wvScale;
+    w.moons.forEach((m,i)=>{
+      const r = baseR + i*step;
+      const orbit = document.createElement('div');
+      orbit.className='wv-orbit';
+      orbit.style.width = orbit.style.height = (r*2)+'px';
+      orbit.style.animationDuration = (60+i*22)+'s';
+      orbit.style.animationDirection = i%2? 'reverse':'normal';
+      const btn = document.createElement('button');
+      btn.className='moon';
+      btn.style.animationDuration = orbit.style.animationDuration;
+      btn.style.animationDirection = orbit.style.animationDirection;
+      btn.innerHTML = `<span class="dot"></span><span class="mlbl">${m.name}</span>`;
+      btn.title = m.d || m.name;
+      btn.addEventListener('click',()=>{ window.location.href = w.href; });
+      orbit.appendChild(btn);
+      stage.appendChild(orbit);
+    });
+
+    worldview.classList.add('in');
+  }, 500);
+  setTimeout(()=>{ warp.classList.remove('go'); }, 1150);
+}
+
+backBtn.addEventListener('click', ()=>{
+  buildWarpLines();
+  warp.classList.add('go');
+  setTimeout(()=>{
+    worldview.classList.remove('in');
+    system.classList.remove('zoom-out');
+    document.querySelectorAll('.wv-orbit').forEach(el=>el.remove());
+  }, 400);
+  setTimeout(()=>{ warp.classList.remove('go'); }, 950);
+});
+</script>
+</body>
+</html>
