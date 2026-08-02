@@ -1816,9 +1816,6 @@ body.kids .cat-icon-circle {
   border-color: var(--kids-color);
 }
 
-/* --- Sous-cartes --- */
-body.kids .sub-card { border-left: 3px solid var(--kids-color); }
-
 /* --- Topbar & header --- */
 body.kids .top-bar,
 body.kids .inv-topbar {
@@ -1860,7 +1857,6 @@ body.kids .share-btn { border-color: var(--kids-color); color: var(--kids-color)
 body.kids .acc-back-lbl { color: var(--kids-color); }
 body.kids .accordion::after,
 body.kids .accordion.open::after,
-body.kids .sub-card::after,
 body.kids .cat-card::after {
   border-top-color: var(--kids-color);
   border-right-color: var(--kids-color);
@@ -2055,7 +2051,7 @@ body.day .accordion.open {
               box-shadow 0.2s ease,
               border-color 0.2s ease;
 }
-.cat-card, .sub-card, .circle-btn, .dua-action-icon {
+.cat-card, .circle-btn, .dua-action-icon {
   transition: transform 0.18s cubic-bezier(0.2, 0.9, 0.4, 1.1),
               opacity 0.2s ease,
               background 0.2s ease,
@@ -2678,35 +2674,6 @@ body.night .bs-header-cat-sub { color:var(--gold); }
   padding:10px 24px 12px;
 }
 .bs-ornament-line { flex:1; height:1px; background:rgba(var(--gold-rgb),0.3); }
-.bs-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; padding:0 16px 28px; }
-.bs-grid .sub-card:last-child:nth-child(odd) { grid-column:1 / -1; max-width:calc(50% - 5px); margin:0 auto; width:100%; }
-
-/* ===== SUB-CARDS (bottom sheet) ===== */
-.sub-card {
-  display:flex; flex-direction:column; align-items:center;
-  justify-content:center; gap:6px; padding:16px 12px;
-  border-radius:var(--radius-md, 14px); cursor:pointer;
-  background:var(--card-bg); border:1px solid var(--card-border);
-  box-shadow:0 2px 8px var(--shadow);
-  opacity:0; transform:translateY(10px);
-  -webkit-tap-highlight-color:transparent;
-  position:relative; overflow:hidden;
-}
-.sub-card::after {
-  content:''; position:absolute; top:0; right:0;
-  width:16px; height:16px;
-  border-top:1px solid var(--gold); border-right:1px solid var(--gold);
-  border-radius:0 12px 0 0; opacity:0.4; pointer-events:none;
-}
-.sub-card-title { font-family:'Cinzel',serif; font-size:10px; font-weight:500; letter-spacing:0.08em; color:var(--text); text-align:center; line-height:1.4; }
-.sub-card-sub { font-family:'Spectral',serif; font-style:italic; font-size:11px; color:var(--gold); text-align:center; }
-.sub-card.show { opacity:1; transform:translateY(0); transition:opacity 0.3s ease, transform 0.3s cubic-bezier(0.2,0.9,0.4,1.1); }
-.sub-card:active { transform:scale(0.96); box-shadow:0 1px 4px var(--shadow); }
-body.night .sub-card { background:var(--card-bg); border-color:var(--gold); }
-.sub-card.sunnah-card { border-color:rgba(var(--gold-rgb),0.5); }
-.sub-card-num { font-family:'Cinzel',serif; font-size:9px; letter-spacing:0.2em; color:var(--gold); opacity:0.6; }
-body.night .sub-card-title { color:var(--gold-light); }
-.sub-card.sunnah-card .sub-card-title { color:var(--gold); }
 
 /* ===== VUE DUA ===== */
 #duaView {
