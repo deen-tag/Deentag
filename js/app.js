@@ -138,8 +138,6 @@ function setLang(lang) {
   // Re-rendre uniquement la vue active dans la langue choisie
   if (currentCat && currentAccId) {
     renderDua(currentCat, currentAccId);
-  } else if (currentCat) {
-    renderSheetItems(currentCat);
   }
 }
 
@@ -488,26 +486,6 @@ function getSheetItems(cat) {
     });
 }
 
-function renderSheetItems(cat) {
-  const items = getSheetItems(cat);
-  const list  = document.getElementById('bsList');
-  if (!list) return;
-  list.innerHTML  = '';
-  list.className  = 'bs-grid';
-
-  items.forEach((item, i) => {
-    const el      = document.createElement('div');
-    el.className  = 'sub-card' + (item.sunnah ? ' sunnah-card' : '');
-    el.innerHTML  =
-      '<div class="sub-card-title">' + item.titre + '</div>' +
-      '<div class="sub-card-sub">'   + item.sub   + '</div>';
-    el.addEventListener('click', () => openDua(cat, item.id));
-    list.appendChild(el);
-    setTimeout(() => el.classList.add('show'), 20 + i * 50);
-  });
-}
-
-
 // ============================================================
 // RENDU — DUA COMPLÈTE
 // ============================================================
@@ -668,47 +646,6 @@ function injectAccordionControls() {
 // NAVIGATION — BOTTOM SHEET
 // ============================================================
 
-function openSheet(cat) {
-  if (!window.DUAS || !DUAS[cat]) return;
-  currentCat   = cat;
-  currentAccId = null;
-  if (typeof stopAudio === 'function') stopAudio();
-  document.querySelectorAll('.settings-panel').forEach(p => p.remove());
-
-  const listView = document.getElementById('listView');
-  const duaView  = document.getElementById('duaView');
-  const sheet    = document.getElementById('bottomSheet');
-  if (listView) listView.style.display = 'block';
-  if (duaView)  duaView.style.display  = 'none';
-  if (sheet) {
-    sheet.style.height      = '';
-    sheet.style.maxHeight   = '88vh';
-    sheet.style.borderRadius = '24px 24px 0 0';
-    sheet.style.overflowY   = 'auto';
-  }
-
-  const lang    = getLang();
-  const meta    = DUAS[cat].meta;
-  const bsIcon  = document.getElementById('bsIcon');
-  const bsTitle = document.getElementById('bsTitle');
-  const bsCatSub = document.getElementById('bsCatSub');
-  if (bsIcon)  bsIcon.src       = meta.icon || '';
-  if (bsTitle) bsTitle.textContent = meta.titre[lang] || meta.titre[LANGS[0]];
-  if (bsCatSub) bsCatSub.textContent = (meta.sousTitre && (meta.sousTitre[lang] || meta.sousTitre[LANGS[0]])) || '';
-
-  renderSheetItems(cat);
-  if (typeof applyLangBlocks === 'function') applyLangBlocks(lang);
-
-  document.getElementById('bsOverlay').classList.add('active');
-  sheet.classList.add('open');
-  savedScrollY = window.scrollY || window.pageYOffset || 0;
-  document.body.style.overscrollBehavior          = 'none';
-  document.documentElement.style.overscrollBehavior = 'none';
-  document.body.style.overflow  = 'hidden';
-  document.body.style.position  = 'fixed';
-  document.body.style.width     = '100%';
-}
-
 function closeSheet(fromSwipe) {
   if (typeof stopAudio === 'function') stopAudio();
   document.querySelectorAll('.settings-panel').forEach(p => p.remove());
@@ -764,150 +701,6 @@ function closeSheet(fromSwipe) {
   }, 160);
 }
 
-function openDua(cat, accId) {
-  if (!window.DUAS || !DUAS[cat] || !DUAS[cat][accId]) return;
-  if (sheetTransitioning) return;
-  sheetTransitioning = true;
-  currentAccId = accId;
-  if (typeof stopAudio === 'function') stopAudio();
-
-  const sheet    = document.getElementById('bottomSheet');
-  const listView = document.getElementById('listView');
-  const duaView  = document.getElementById('duaView');
-
-  listView.style.transition = 'opacity 0.15s ease';
-  listView.style.opacity    = '0';
-
-  setTimeout(() => {
-    listView.style.display = 'none';
-    listView.style.opacity = '';
-    listView.style.transition = '';
-
-    renderDua(cat, accId);
-    duaView.style.display    = 'flex';
-    duaView.style.opacity    = '0';
-    duaView.style.transition = '';
-
-    if (sheet) {
-      sheet.style.transition    = 'none';
-      sheet.style.transform     = 'translateY(100%)';
-      sheet.style.height        = 'calc(var(--app-vh, 100dvh) - 16px)';
-      sheet.style.maxHeight     = 'calc(var(--app-vh, 100dvh) - 16px)';
-      sheet.style.borderRadius  = '20px 20px 0 0';
-      sheet.style.overflowY     = 'hidden';
-      sheet.style.top           = '16px';
-      sheet.style.position      = 'fixed';
-      sheet.style.willChange    = 'transform';
-      requestAnimationFrame(() => {
-        sheet.style.transition = 'transform 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        sheet.style.transform  = 'translateY(0)';
-      });
-    }
-
-    const lang      = getLang();
-    const catIcon = document.getElementById('duaCatIcon');
-    if (catIcon) catIcon.src = DUAS[cat].meta.icon || '';
-
-    setTimeout(() => {
-      duaView.style.transition = 'opacity 0.2s ease';
-      duaView.style.opacity    = '1';
-      if (typeof injectAccordionControls === 'function') injectAccordionControls();
-      setTimeout(() => {
-        duaView.style.transition = '';
-        sheetTransitioning = false;
-      }, 200);
-    }, 200);
-  }, 150);
-}
-
-function backToList(fromSwipe) {
-  if (sheetTransitioning) return;
-  sheetTransitioning = true;
-  if (typeof stopAudio === 'function') stopAudio();
-  document.querySelectorAll('.settings-panel').forEach(p => p.remove());
-  const listView = document.getElementById('listView');
-  const duaView  = document.getElementById('duaView');
-  const sheet    = document.getElementById('bottomSheet');
-
-  if (fromSwipe) {
-    duaView.style.opacity  = '0';
-    sheet.style.transition = 'transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94), height 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-    sheet.style.transform  = 'translateY(100%)';
-    setTimeout(() => {
-      currentAccId = null;
-      renderSheetItems(currentCat);
-      listView.style.display    = 'block';
-      listView.style.opacity    = '0';
-      duaView.style.display     = 'none';
-      duaView.style.opacity     = '';
-      sheet.style.height        = '';
-      sheet.style.maxHeight     = '88vh';
-      sheet.style.borderRadius  = '24px 24px 0 0';
-      sheet.style.overflowY     = 'auto';
-      sheet.style.top           = '';
-      sheet.style.position      = '';
-      sheet.style.transform     = 'translateY(100%)';
-      sheet.style.transition    = 'none';
-      if (typeof applyLangBlocks === 'function') applyLangBlocks(getLang());
-      requestAnimationFrame(() => {
-        sheet.style.transition    = 'transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        sheet.style.transform     = 'translateY(0)';
-        listView.style.transition = 'opacity 0.2s ease';
-        listView.style.opacity    = '1';
-        setTimeout(() => {
-          sheet.style.transition    = '';
-          listView.style.transition = '';
-          sheetTransitioning = false;
-        }, 360);
-      });
-    }, 260);
-    return;
-  }
-
-  duaView.style.transition = 'opacity 0.15s ease';
-  duaView.style.opacity    = '0';
-
-  setTimeout(() => {
-    currentAccId = null;
-    duaView.style.display     = 'none';
-    duaView.style.opacity     = '';
-    duaView.style.transition  = '';
-
-    renderSheetItems(currentCat);
-    listView.style.display    = 'block';
-    listView.style.opacity    = '0';
-    listView.style.transition = '';
-
-    if (sheet) {
-      sheet.style.transition   = 'none';
-      sheet.style.transform    = 'translateY(100%)';
-      sheet.style.height       = '';
-      sheet.style.maxHeight    = '88vh';
-      sheet.style.borderRadius = '24px 24px 0 0';
-      sheet.style.overflowY    = 'auto';
-      sheet.style.top          = '';
-      sheet.style.position     = '';
-      sheet.style.willChange   = 'transform';
-      requestAnimationFrame(() => {
-        sheet.style.transition = 'transform 0.38s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        sheet.style.transform  = 'translateY(0)';
-      });
-    }
-
-    if (typeof applyLangBlocks === 'function') applyLangBlocks(getLang());
-
-    setTimeout(() => {
-      listView.style.transition = 'opacity 0.2s ease';
-      listView.style.opacity    = '1';
-      setTimeout(() => {
-        listView.style.transition = '';
-        sheetTransitioning = false;
-      }, 200);
-    }, 200);
-  }, 150);
-}
-
-
 // ============================================================
 // NFC — PARAMÈTRES URL
 // ============================================================
@@ -918,8 +711,14 @@ function handleNfcParams() {
   const acc    = params.get('acc');
   if (page && window.DUAS && DUAS[page]) {
     setTimeout(() => {
-      openSheet(page);
-      if (acc && DUAS[page][acc]) setTimeout(() => openDua(page, acc), 120);
+      if (acc && DUAS[page][acc]) {
+        // Invocation précise -> ouverture directe du sheet complet.
+        if (typeof openDuaFromRadial === 'function') openDuaFromRadial(page, acc);
+      } else {
+        // Juste la catégorie -> on rejoue l'animation éventail depuis sa carte.
+        const cardEl = document.querySelector('.cat-card[data-cat="' + page + '"]');
+        if (cardEl && typeof openRadial === 'function') openRadial(cardEl);
+      }
     }, 180);
   }
 }
@@ -1253,8 +1052,7 @@ function openDuaFromSearch(cat, accId) {
   const input = document.getElementById('invSearchInput');
   if (box) box.classList.remove('open');
   if (input) input.blur();
-  if (typeof openSheet === 'function') openSheet(cat);
-  setTimeout(() => { if (typeof openDua === 'function') openDua(cat, accId); }, 320);
+  if (typeof openDuaFromRadial === 'function') openDuaFromRadial(cat, accId);
 }
 
 document.addEventListener('click', (e) => {
