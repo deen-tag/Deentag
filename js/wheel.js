@@ -26,7 +26,7 @@
   // Une catégorie à 4 cartes n'a pas besoin du même arc / zoom / sensibilité
   // qu'une catégorie à 6+ cartes : "default" couvre tout le reste (5, 6, 8...).
   var WHEEL_PROFILES = {
-    4: { rxBase: 30, rxStep: 27, ryRatio: 0.59, pop: 0, scaleMin: 1.00, scaleAmp: 0.42, frontBoost: 1.16, dragSens: 0.35 },
+    4: { rxBase: 100, rxStep: 4, ryRatio: 0.62, pop: 54, scaleMin: 1.00, scaleAmp: 0.26, frontBoost: 1.23, dragSens: 0.35 },
     default: { rxBase: 30, rxStep: 19, ryRatio: 0.75, pop: 0, scaleMin: 0.96, scaleAmp: 0.21, frontBoost: 1.40, dragSens: 0.37 }
   };
   function profileFor(n) {
