@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>Deentag — Le Jardin</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="day">
+
+  <!-- CIEL / FOND -->
+  <div class="sky">
+    <div class="stars" id="stars"></div>
+    <div class="sun-moon" id="sunMoon"></div>
+    <img class="horizon-mosque" src="images/mosquee.webp" alt="">
+  </div>
+
+  <!-- REPÈRE FIXE : bascule jour/nuit + carte -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Changer l'ambiance jour/nuit">
+    <span class="toggle-icon">☀</span>
+  </button>
+  <button class="map-toggle" id="mapToggle" aria-label="Voir la carte du jardin">⟡</button>
+
+  <!-- INDICATEUR DE PROGRESSION -->
+  <div class="path-dots" id="pathDots">
+    <span class="dot active" data-index="0"></span>
+    <span class="dot" data-index="1"></span>
+    <span class="dot" data-index="2"></span>
+    <span class="dot" data-index="3"></span>
+    <span class="dot" data-index="4"></span>
+  </div>
+
+  <!-- LE CHEMIN -->
+  <main class="path" id="path">
+
+    <!-- STATION 0 : ACCUEIL -->
+    <section class="station intro" data-station="intro">
+      <div class="intro-content">
+        <img src="images/logo.webp" class="intro-logo" alt="Deentag">
+        <h1>Bienvenue dans le jardin</h1>
+        <p>Glisse vers la droite pour avancer sur le chemin.</p>
+        <div class="swipe-hint">⟶</div>
+      </div>
+    </section>
+
+    <!-- STATION 1 : LA FONTAINE -->
+    <section class="station" data-station="fontaine">
+      <div class="ground"></div>
+      <button class="focal-object fontaine-obj" data-title="La Fontaine" data-desc="Le lieu des ablutions. Un rituel de purification avant chaque prière, avec les gestes expliqués pas à pas." data-link="masjid.html" data-cta="Voir les ablutions">
+        <img src="images/ablution.webp" alt="La Fontaine">
+        <span class="water-ripple"></span>
+      </button>
+      <span class="station-label">La Fontaine</span>
+    </section>
+
+    <!-- STATION 2 : L'ARBRE -->
+    <section class="station" data-station="arbre">
+      <div class="ground"></div>
+      <button class="focal-object arbre-obj" data-title="L'Arbre" data-desc="Le Coran, dont les branches portent chaque sourate. Touche une branche pour commencer une lecture." data-link="quran.html" data-cta="Ouvrir le Coran">
+        <img src="images/quran-full.webp" alt="L'Arbre">
+        <span class="leaf leaf1"></span>
+        <span class="leaf leaf2"></span>
+        <span class="leaf leaf3"></span>
+      </button>
+      <span class="station-label">L'Arbre</span>
+    </section>
+
+    <!-- STATION 3 : LE BANC -->
+    <section class="station" data-station="banc">
+      <div class="ground"></div>
+      <img src="images/fleurs-gauche.webp" class="deco deco-left" alt="">
+      <button class="focal-object banc-obj" data-title="Le Banc" data-desc="Un moment posé pour les invocations du quotidien : au réveil, avant de manger, en voyage, dans la difficulté." data-link="invocations.html" data-cta="S'asseoir un instant">
+        <img src="images/icone-invocations-nav.webp" alt="Le Banc">
+      </button>
+      <img src="images/fleurs-droite.webp" class="deco deco-right" alt="">
+      <span class="station-label">Le Banc</span>
+    </section>
+
+    <!-- STATION 4 : LE COIN DES ENFANTS -->
+    <section class="station kids-station" data-station="enfants">
+      <div class="ground kids-ground"></div>
+      <button class="focal-object enfants-obj" data-title="Le Coin des Enfants" data-desc="Un espace pensé pour les plus jeunes : histoires, apprentissage du Coran et gestes du quotidien racontés simplement." data-link="quran-kids.html" data-cta="Entrer avec les enfants">
+        <img src="images/kids_logo.webp" alt="Le Coin des Enfants">
+      </button>
+      <span class="station-label">Le Coin des Enfants</span>
+    </section>
+
+    <!-- STATION 5 : LE PAVILLON -->
+    <section class="station" data-station="pavillon">
+      <div class="ground"></div>
+      <button class="focal-object pavillon-obj" data-title="Le Pavillon" data-desc="La boutique Deentag : objets connectés et créations pensées pour accompagner la pratique quotidienne." data-link="shop.html" data-cta="Entrer dans le pavillon">
+        <img src="images/shop-presentation.webp" alt="Le Pavillon">
+      </button>
+      <span class="station-label">Le Pavillon</span>
+    </section>
+
+  </main>
+
+  <!-- BOTTOM SHEET -->
+  <div class="sheet-overlay" id="sheetOverlay">
+    <div class="sheet" id="sheet">
+      <div class="sheet-handle"></div>
+      <h2 id="sheetTitle"></h2>
+      <p id="sheetDesc"></p>
+      <a class="sheet-cta" id="sheetCta" href="#">Continuer</a>
+    </div>
+  </div>
+
+  <!-- VUE CARTE (zoom arrière) -->
+  <div class="map-overlay" id="mapOverlay">
+    <div class="map-card" data-index="0">🌿 Entrée</div>
+    <div class="map-card" data-index="1">💧 La Fontaine</div>
+    <div class="map-card" data-index="2">🌳 L'Arbre</div>
+    <div class="map-card" data-index="3">🪑 Le Banc</div>
+    <div class="map-card" data-index="4">🧒 Coin des Enfants</div>
+    <div class="map-card" data-index="5">🏮 Le Pavillon</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
