@@ -364,6 +364,28 @@ body.night .cat-card:active {
 }
 /* Icones carrees (invocations) : reduites pour matcher le poids visuel des badges elances de l'accueil */
 .cat-grid .cat-icon-circle .cat-icon { max-height:138px; }
+
+/* ===== ANIMATION CASCADE — icônes accueil (effet "pièce qui tourne") =====
+   Technique à 2 faces superposées (front/back) + backface-visibility :
+   évite tout artefact de "pli" ou de disparition au milieu du tour.
+   perspective posée sur .cat-card = parent DIRECT de .cat-icon-circle
+   (l'élément qui reçoit réellement l'animation rotateY). */
+.home-nav-grid .cat-card { perspective: 900px; }
+.home-nav-grid .cat-icon-circle { transform-style: preserve-3d; }
+.home-nav-grid .cat-icon-circle .cat-icon {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.home-nav-grid .cat-icon-circle .cat-icon--back {
+  transform: translate(-50%, 0) rotateY(180deg);
+}
+.home-nav-grid .cat-icon-circle.flip-anim {
+  animation: catCoinFlip 0.9s cubic-bezier(0.25,0.8,0.35,1) both;
+}
+@keyframes catCoinFlip {
+  0%   { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
 .cat-label {
   font-family:'Cinzel',serif; font-size:9px; font-weight:600;
   letter-spacing:0.10em; color:var(--text3); text-align:center;
@@ -3635,6 +3657,20 @@ body.night .qnav-icon { color: var(--gold); }
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
+}
+
+/* ===== ANIMATION CASCADE — icônes page Coran (même technique que l'accueil) ===== */
+.qnav-card { perspective: 900px; }
+.qnav-icon { transform-style: preserve-3d; }
+.qnav-icon .qnav-img {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.qnav-icon .qnav-img--back {
+  transform: translate(-50%, -50%) rotateY(180deg);
+}
+.qnav-icon.flip-anim {
+  animation: catCoinFlip 0.9s cubic-bezier(0.25,0.8,0.35,1) both;
 }
 
 .qnav-label {
