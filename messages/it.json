@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "title": "Deentag — Invocazioni islamiche, Corano e oggetto connesso",
+    "description": "Deentag — Invocazioni islamiche, Corano e promemoria quotidiani. App gratuita e illimitata, senza abbonamento.",
+    "ogTitle": "Deentag — Invocazioni, Corano e promemoria quotidiani",
+    "ogDescription": "Trova le tue invocazioni, il Corano, lo spazio bambini e il negozio Deentag, con gli orari di preghiera a colpo d'occhio."
+  },
+  "home": {
+    "pageTitle": "Home",
+    "enableLocation": "Attiva la mia posizione",
+    "greetingDefault": "As-salamu alaykum · Crea il tuo profilo"
+  },
+  "nav": {
+    "invocations": "Invocazioni",
+    "coran": "Corano",
+    "enfants": "Bambini",
+    "boutique": "Negozio"
+  },
+  "pages": {
+    "invocations": {
+      "title": "Deentag — Invocazioni islamiche, Corano e oggetto connesso",
+      "description": "Deentag — Leggi e impara le invocazioni islamiche in arabo, fonetica e traduzione. App gratuita e illimitata."
+    },
+    "quran": {
+      "title": "Deentag — Corano",
+      "description": "Deentag — Corano completo in arabo, fonetica e traduzione. 8 lingue."
+    },
+    "shop": {
+      "title": "Deentag — Oggetto NFC decorativo | Negozio",
+      "description": "Deentag — Oggetto decorativo NFC con invocazioni islamiche integrate. Stampa 3D di alta qualità, chip NFC senza batteria, app gratuita a vita in 8 lingue."
+    },
+    "kids": {
+      "title": "Deentag Kids — App per bambini",
+      "description": "Deentag Kids — App ludica per insegnare ai bambini le invocazioni islamiche."
+    },
+    "quranKids": {
+      "title": "Deentag Kids — Corano",
+      "description": "Deentag Kids — Il Corano per bambini."
+    }
+  }
+}

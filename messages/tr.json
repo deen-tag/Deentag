@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "title": "Deentag — İslami Dualar, Kur'an ve bağlantılı ürün",
+    "description": "Deentag — İslami dualar, Kur'an ve günlük hatırlatıcılar. Ücretsiz ve sınırsız uygulama, abonelik yok.",
+    "ogTitle": "Deentag — Dualar, Kur'an ve günlük hatırlatıcılar",
+    "ogDescription": "Dualarınızı, Kur'an'ı, çocuk alanını ve Deentag mağazasını, namaz vakitlerini tek bakışta bulun."
+  },
+  "home": {
+    "pageTitle": "Ana Sayfa",
+    "enableLocation": "Konumumu etkinleştir",
+    "greetingDefault": "Esselamü aleyküm · Profilini oluştur"
+  },
+  "nav": {
+    "invocations": "Dualar",
+    "coran": "Kur'an",
+    "enfants": "Çocuklar",
+    "boutique": "Mağaza"
+  },
+  "pages": {
+    "invocations": {
+      "title": "Deentag — İslami Dualar, Kur'an ve bağlantılı ürün",
+      "description": "Deentag — İslami duaları Arapça, fonetik ve çeviri ile okuyun ve öğrenin. Ücretsiz ve sınırsız uygulama."
+    },
+    "quran": {
+      "title": "Deentag — Kur'an",
+      "description": "Deentag — Arapça, fonetik ve çeviri ile tam Kur'an. 8 dil."
+    },
+    "shop": {
+      "title": "Deentag — Dekoratif NFC ürünü | Mağaza",
+      "description": "Deentag — İslami dualar entegre dekoratif NFC ürünü. Yüksek kaliteli 3D baskı, pilsiz NFC çipi, 8 dilde ömür boyu ücretsiz uygulama."
+    },
+    "kids": {
+      "title": "Deentag Kids — Çocuklar için uygulama",
+      "description": "Deentag Kids — Çocuklara İslami duaları öğretmek için eğlenceli uygulama."
+    },
+    "quranKids": {
+      "title": "Deentag Kids — Kur'an",
+      "description": "Deentag Kids — Çocuklar için Kur'an."
+    }
+  }
+}

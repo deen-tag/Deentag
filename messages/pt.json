@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "title": "Deentag — Súplicas islâmicas, Alcorão e objeto conectado",
+    "description": "Deentag — Súplicas islâmicas, Alcorão e lembretes diários. Aplicativo gratuito e ilimitado, sem assinatura.",
+    "ogTitle": "Deentag — Súplicas, Alcorão e lembretes diários",
+    "ogDescription": "Encontre suas súplicas, o Alcorão, o espaço infantil e a loja Deentag, com os horários de oração em um relance."
+  },
+  "home": {
+    "pageTitle": "Início",
+    "enableLocation": "Ativar minha localização",
+    "greetingDefault": "As-salamu alaykum · Crie seu perfil"
+  },
+  "nav": {
+    "invocations": "Súplicas",
+    "coran": "Alcorão",
+    "enfants": "Crianças",
+    "boutique": "Loja"
+  },
+  "pages": {
+    "invocations": {
+      "title": "Deentag — Súplicas islâmicas, Alcorão e objeto conectado",
+      "description": "Deentag — Leia e aprenda as súplicas islâmicas em árabe, fonética e tradução. Aplicativo gratuito e ilimitado."
+    },
+    "quran": {
+      "title": "Deentag — Alcorão",
+      "description": "Deentag — Alcorão completo em árabe, fonética e tradução. 8 idiomas."
+    },
+    "shop": {
+      "title": "Deentag — Objeto NFC decorativo | Loja",
+      "description": "Deentag — Objeto decorativo NFC com súplicas islâmicas integradas. Impressão 3D de alta qualidade, chip NFC sem bateria, app gratuito vitalício em 8 idiomas."
+    },
+    "kids": {
+      "title": "Deentag Kids — App para crianças",
+      "description": "Deentag Kids — Aplicativo lúdico para ensinar súplicas islâmicas às crianças."
+    },
+    "quranKids": {
+      "title": "Deentag Kids — Alcorão",
+      "description": "Deentag Kids — O Alcorão para crianças."
+    }
+  }
+}

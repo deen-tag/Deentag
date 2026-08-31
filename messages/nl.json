@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "title": "Deentag — Islamitische smeekbeden, Koran en verbonden object",
+    "description": "Deentag — Islamitische smeekbeden, Koran en dagelijkse herinneringen. Gratis en onbeperkte app, zonder abonnement.",
+    "ogTitle": "Deentag — Smeekbeden, Koran en dagelijkse herinneringen",
+    "ogDescription": "Vind je smeekbeden, de Koran, de kinderruimte en de Deentag-winkel, met gebedstijden in één oogopslag."
+  },
+  "home": {
+    "pageTitle": "Home",
+    "enableLocation": "Mijn locatie inschakelen",
+    "greetingDefault": "As-salamu alaykum · Maak je profiel aan"
+  },
+  "nav": {
+    "invocations": "Smeekbeden",
+    "coran": "Koran",
+    "enfants": "Kinderen",
+    "boutique": "Winkel"
+  },
+  "pages": {
+    "invocations": {
+      "title": "Deentag — Islamitische smeekbeden, Koran en verbonden object",
+      "description": "Deentag — Lees en leer islamitische smeekbeden in het Arabisch, fonetiek en vertaling. Gratis en onbeperkte app."
+    },
+    "quran": {
+      "title": "Deentag — Koran",
+      "description": "Deentag — Volledige Koran in het Arabisch, fonetiek en vertaling. 8 talen."
+    },
+    "shop": {
+      "title": "Deentag — Decoratief NFC-object | Winkel",
+      "description": "Deentag — Decoratief NFC-object met ingebouwde islamitische smeekbeden. Hoogwaardige 3D-print, batterijloze NFC-chip, gratis levenslange app in 8 talen."
+    },
+    "kids": {
+      "title": "Deentag Kids — App voor kinderen",
+      "description": "Deentag Kids — Speelse app om kinderen islamitische smeekbeden te leren."
+    },
+    "quranKids": {
+      "title": "Deentag Kids — Koran",
+      "description": "Deentag Kids — De Koran voor kinderen."
+    }
+  }
+}
