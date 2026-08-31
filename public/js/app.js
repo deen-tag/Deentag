@@ -9,64 +9,16 @@
 
 const LANGS = ['fr', 'en', 'es', 'de', 'it', 'nl', 'pt', 'tr'];
 
-const i18n = {
-  fr: {
-    "listen":"Écouter","tracks":"l'audio",
-    "size-title":"Taille du texte",
-    "size-fr":"Traduction","size-ph":"Phonétique","size-ar":"Arabe",
-    "size-small":"Petit","size-medium":"Moyen","size-large":"Grand",
-    "audio-mode":"Lecture audio","audio-auto":"Auto","audio-manual":"Manuel",
-  },
-  en: {
-    "listen":"Listen","tracks":"to audio",
-    "size-title":"Text size",
-    "size-fr":"Translation","size-ph":"Phonetic","size-ar":"Arabic",
-    "size-small":"Small","size-medium":"Medium","size-large":"Large",
-    "audio-mode":"Audio playback","audio-auto":"Auto","audio-manual":"Manual",
-  },
-  es: {
-    "listen":"Escuchar","tracks":"el audio",
-    "size-title":"Tamaño del texto",
-    "size-fr":"Traducción","size-ph":"Fonética","size-ar":"Árabe",
-    "size-small":"Peq.","size-medium":"Med.","size-large":"Gran.",
-    "audio-mode":"Reproducción","audio-auto":"Auto","audio-manual":"Manual",
-  },
-  de: {
-    "listen":"Anhören","tracks":"Audio",
-    "size-title":"Textgröße",
-    "size-fr":"Übersetzung","size-ph":"Phonetik","size-ar":"Arabisch",
-    "size-small":"Klein","size-medium":"Mittel","size-large":"Groß",
-    "audio-mode":"Audiowiedergabe","audio-auto":"Auto","audio-manual":"Manuell",
-  },
-  it: {
-    "listen":"Ascolta","tracks":"l'audio",
-    "size-title":"Dimensione testo",
-    "size-fr":"Traduzione","size-ph":"Fonetica","size-ar":"Arabo",
-    "size-small":"Piccolo","size-medium":"Medio","size-large":"Grande",
-    "audio-mode":"Riproduzione","audio-auto":"Auto","audio-manual":"Manuale",
-  },
-  nl: {
-    "listen":"Luisteren","tracks":"audio",
-    "size-title":"Tekstgrootte",
-    "size-fr":"Vertaling","size-ph":"Fonetiek","size-ar":"Arabisch",
-    "size-small":"Klein","size-medium":"Middel","size-large":"Groot",
-    "audio-mode":"Audioweergave","audio-auto":"Auto","audio-manual":"Handmatig",
-  },
-  pt: {
-    "listen":"Ouvir","tracks":"o áudio",
-    "size-title":"Tamanho do texto",
-    "size-fr":"Tradução","size-ph":"Fonética","size-ar":"Árabe",
-    "size-small":"Peq.","size-medium":"Med.","size-large":"Grande",
-    "audio-mode":"Reprodução","audio-auto":"Auto","audio-manual":"Manual",
-  },
-  tr: {
-    "listen":"Dinle","tracks":"sesi",
-    "size-title":"Yazı boyutu",
-    "size-fr":"Çeviri","size-ph":"Fonetik","size-ar":"Arapça",
-    "size-small":"Küçük","size-medium":"Orta","size-large":"Büyük",
-    "audio-mode":"Ses oynatma","audio-auto":"Otomatik","audio-manual":"Manuel",
-  },
-};
+// Avant : dictionnaire des 8 langues codé en dur ici, en double avec
+// messages/*.json (clé "runtime"). Maintenant : messages/*.json est la
+// seule source ; window.DT_MESSAGES est injecté par app/[locale]/layout.js
+// (voir lib/get-runtime-messages.js) et lu ici.
+// Filet de sécurité : si le script tourne avant l'injection (ne devrait pas
+// arriver, le script d'injection est dans <head>), i18n[lang] reste un objet
+// vide plutôt que undefined — chaque usage plus bas a déjà son propre texte
+// de secours (ex: i18n[lang]['listen'] || 'Écouter'), comme avant.
+const i18n = window.DT_MESSAGES || {};
+LANGS.forEach(function (l) { if (!i18n[l]) i18n[l] = {}; });
 
 
 // ============================================================
