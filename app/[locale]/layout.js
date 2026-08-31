@@ -84,6 +84,7 @@ export default function LocaleLayout({ children, params }) {
         <link rel="stylesheet" href="/css/adult.css" />
         <link rel="stylesheet" href="/css/wheel.css" />
         <link rel="stylesheet" href="/css/kids.css" />
+        <link rel="stylesheet" href="/css/shop.css" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
