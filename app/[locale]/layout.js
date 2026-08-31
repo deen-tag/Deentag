@@ -103,23 +103,27 @@ export default function LocaleLayout({ children, params }) {
         {/* Redéclenche l'init des scripts hérités à chaque navigation SPA (voir DT_registerInit ci-dessus) */}
         <RouteInit />
         {children}
-        {/* Fait disparaître le splash de lancement sur TOUTES les pages (accueil, invocations, quran, shop, kids...) */}
+        {/* Fait disparaître le splash de lancement sur TOUTES les pages (accueil, invocations, quran, shop, kids...).
+            Utilise DT_registerInit : sans ça, ce script — comme les scripts hérités —
+            ne se relancerait qu'une fois au tout premier chargement, et le #appSplash
+            fraîchement monté (ex: en arrivant sur Invocations en SPA) resterait bloqué
+            à l'écran indéfiniment (position:fixed, z-index:9999). */}
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              (function(){
+              window.DT_registerInit(function(){
+                var el = document.getElementById('appSplash');
+                if (!el) return;
                 var t0 = performance.now();
                 var MIN_VISIBLE = 350;
                 var MAX_VISIBLE = 2500;
                 var hidden = false;
                 function hideSplash(){
                   if (hidden) return;
+                  hidden = true;
                   var elapsed = performance.now() - t0;
                   var wait = Math.max(0, MIN_VISIBLE - elapsed);
                   setTimeout(function(){
-                    hidden = true;
-                    var el = document.getElementById('appSplash');
-                    if (!el) return;
                     el.classList.add('hide');
                     setTimeout(function(){ el.style.display = 'none'; }, 400);
                   }, wait);
@@ -127,10 +131,10 @@ export default function LocaleLayout({ children, params }) {
                 if (document.readyState === 'complete') {
                   hideSplash();
                 } else {
-                  window.addEventListener('load', hideSplash);
+                  window.addEventListener('load', hideSplash, { once: true });
                 }
                 setTimeout(hideSplash, MAX_VISIBLE);
-              })();
+              });
             `,
           }}
         />

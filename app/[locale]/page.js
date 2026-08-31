@@ -22,32 +22,6 @@ export default async function HomePage({ params }) {
         <div className="app-splash-logo"></div>
         <div className="app-splash-brand">DEENTAG</div>
       </div>
-      <script
-        dangerouslySetInnerHTML={{
-          __html: `
-            (function(){
-              var t0 = performance.now();
-              var MIN_VISIBLE = 350;
-              var MAX_VISIBLE = 2500;
-              var hidden = false;
-              function hideSplash(){
-                if (hidden) return;
-                var elapsed = performance.now() - t0;
-                var wait = Math.max(0, MIN_VISIBLE - elapsed);
-                setTimeout(function(){
-                  hidden = true;
-                  var el = document.getElementById('appSplash');
-                  if (!el) return;
-                  el.classList.add('hide');
-                  setTimeout(function(){ el.style.display = 'none'; }, 400);
-                }, wait);
-              }
-              window.addEventListener('load', hideSplash);
-              setTimeout(hideSplash, MAX_VISIBLE);
-            })();
-          `,
-        }}
-      />
 
       {/* TOPBAR */}
       <div className="app-topbar">
