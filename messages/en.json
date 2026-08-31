@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "title": "Deentag — Islamic Duas, Quran and Connected Object",
+    "description": "Deentag — Islamic prayers, Quran and daily reminders. Free, unlimited app, no subscription.",
+    "ogTitle": "Deentag — Duas, Quran and daily reminders",
+    "ogDescription": "Access your duas, the Quran, the kids space and the Deentag shop, with prayer times at a glance."
+  },
+  "home": {
+    "pageTitle": "Home",
+    "enableLocation": "Enable my location",
+    "greetingDefault": "As-salamu alaykum · Create your profile"
+  },
+  "nav": {
+    "invocations": "Prayers",
+    "coran": "Quran",
+    "enfants": "Kids",
+    "boutique": "Shop"
+  },
+  "pages": {
+    "invocations": {
+      "title": "Deentag — Islamic Duas, Quran and Connected Object",
+      "description": "Deentag — Read and learn Islamic duas in Arabic, phonetics and translation. Free, unlimited app."
+    },
+    "quran": {
+      "title": "Deentag — Quran",
+      "description": "Deentag — Complete Quran in Arabic, phonetics and translation. 8 languages."
+    },
+    "shop": {
+      "title": "Deentag — Decorative NFC Object | Shop",
+      "description": "Deentag — Decorative NFC object with built-in Islamic duas. High quality 3D print, battery-free NFC chip, free lifetime app in 8 languages."
+    },
+    "kids": {
+      "title": "Deentag Kids — App for Children",
+      "description": "Deentag Kids — Fun app to teach children Islamic duas."
+    },
+    "quranKids": {
+      "title": "Deentag Kids — Quran",
+      "description": "Deentag Kids — The Quran for children."
+    }
+  }
+}

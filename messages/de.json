@@ -1,0 +1,41 @@
+{
+  "meta": {
+    "title": "Deentag — Islamische Bittgebete, Koran und vernetztes Objekt",
+    "description": "Deentag — Islamische Bittgebete, Koran und tägliche Erinnerungen. Kostenlose, unbegrenzte App ohne Abonnement.",
+    "ogTitle": "Deentag — Bittgebete, Koran und tägliche Erinnerungen",
+    "ogDescription": "Finde deine Bittgebete, den Koran, den Kinderbereich und den Deentag-Shop, mit Gebetszeiten auf einen Blick."
+  },
+  "home": {
+    "pageTitle": "Startseite",
+    "enableLocation": "Standort aktivieren",
+    "greetingDefault": "As-salamu alaikum · Erstelle dein Profil"
+  },
+  "nav": {
+    "invocations": "Bittgebete",
+    "coran": "Koran",
+    "enfants": "Kinder",
+    "boutique": "Shop"
+  },
+  "pages": {
+    "invocations": {
+      "title": "Deentag — Islamische Bittgebete, Koran und vernetztes Objekt",
+      "description": "Deentag — Lies und lerne islamische Bittgebete auf Arabisch, mit Lautschrift und Übersetzung. Kostenlose, unbegrenzte App."
+    },
+    "quran": {
+      "title": "Deentag — Koran",
+      "description": "Deentag — Vollständiger Koran auf Arabisch, mit Lautschrift und Übersetzung. 8 Sprachen."
+    },
+    "shop": {
+      "title": "Deentag — Dekoratives NFC-Objekt | Shop",
+      "description": "Deentag — Dekoratives NFC-Objekt mit integrierten islamischen Bittgebeten. Hochwertiger 3D-Druck, batterieloser NFC-Chip, lebenslang kostenlose App in 8 Sprachen."
+    },
+    "kids": {
+      "title": "Deentag Kids — App für Kinder",
+      "description": "Deentag Kids — Spielerische App, um Kindern islamische Bittgebete beizubringen."
+    },
+    "quranKids": {
+      "title": "Deentag Kids — Koran",
+      "description": "Deentag Kids — Der Koran für Kinder."
+    }
+  }
+}
