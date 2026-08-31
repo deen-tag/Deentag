@@ -44,7 +44,7 @@
 
     if (arabeEl) arabeEl.textContent = item.arabe || '';
     if (tradEl)  tradEl.textContent  = (item.traduction && (item.traduction[lang] || item.traduction.fr)) || '';
-    if (linkEl)  linkEl.href = 'invocations.html?page=' + slot.cat + '&acc=' + slot.acc;
+    if (linkEl)  linkEl.href = '/' + lang + '/invocations?page=' + slot.cat + '&acc=' + slot.acc;
   }
 
   // Suit la même convention que DT_refreshNavLang / DT_refreshPrayerLang :

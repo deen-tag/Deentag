@@ -413,7 +413,7 @@ function toggleAudio(duaKey, audioFile) {
 
   stopAudio();
 
-  const player = new Audio('Audio/' + audioFile);
+  const player = new Audio('/Audio/' + audioFile);
   audioPlayer  = player;
   audioBtn     = btn;
 

@@ -831,7 +831,7 @@
 
     // Objectif en cours
     if (focus) {
-      html += '<div class="dt-focus-section" onclick="window.location.href=\'quran.html?sourate='+focus.id+'\'">';
+      html += '<div class="dt-focus-section" onclick="window.location.href=\'/'+getLang()+'/quran?sourate='+focus.id+'\'">';
       html += '<div class="dt-focus-top"><div class="dt-section-title" style="margin-bottom:0;">'+t('currentFocus')+'</div><div class="dt-focus-cta">'+t('continueLabel')+' <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="9 6 15 12 9 18"/></svg></div></div>';
       html += '<div class="dt-focus-name">'+focus.name+'</div>';
       html += '<div class="dt-focus-bar-track"><div class="dt-focus-bar-fill" style="width:'+focus.pct+'%;"></div></div>';

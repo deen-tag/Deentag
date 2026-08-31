@@ -10,7 +10,7 @@ var DUAS = {
   // ===========================
   repas: {
     meta: {
-      icon: 'images/repas.webp',
+      icon: '/images/repas.webp',
       sousTitre: { fr: 'Avant et après manger', en: 'Before and after eating', es: 'Antes y después de comer', de: 'Vor und nach dem Essen', it: 'Prima e dopo aver mangiato', nl: 'Voor en na het eten', pt: 'Antes e depois de comer', tr: 'Yemekten önce ve sonra' },
       titre:       { fr: 'Repas',   en: 'Meals',  es: 'Comidas' , de: 'Mahlzeiten', it: 'Pasti', nl: 'Maaltijden', pt: 'Refeições', tr: 'Yemekler'},
       closingDua:  { fr: 'Que ton repas soit béni', en: 'May your meal be blessed', es: 'Que tu comida sea bendecida' , de: 'Möge deine Mahlzeit gesegnet sein', it: 'Che il tuo pasto sia benedetto', nl: 'Moge je maaltijd gezegend zijn', pt: 'Que a sua refeição seja abençoada', tr: 'Yemeğin bereketli olsun'}
@@ -165,7 +165,7 @@ var DUAS = {
   // ===========================
   ablution: {
     meta: {
-      icon: 'images/ablution.webp',
+      icon: '/images/ablution.webp',
       sousTitre: { fr: 'Avant la prière', en: 'Before prayer', es: 'Antes de la oración', de: 'Vor dem Gebet', it: 'Prima della preghiera', nl: 'Voor het gebed', pt: 'Antes da oração', tr: 'Namazdan önce' },
       titre: { fr: 'Ablutions', en: 'Ablution', es: 'Ablución' , de: 'Ablution', it: 'Abluzione', nl: 'Reiniging', pt: 'Ablução', tr: 'Abdest'},
       closingDua: { fr: 'Que tes ablutions soient acceptées, tes péchés effacés et les portes du Paradis ouvertes pour toi', en: 'May your ablution be accepted, your sins erased and the gates of Paradise opened for you', es: 'Que tu ablución sea aceptada, tus pecados borrados y las puertas del Paraíso abiertas para ti' , de: 'Möge deine Ablution angenommen, deine Sünden ausgelöscht und die Tore des Paradieses für dich geöffnet werden', it: 'Che la tua abluzione sia accettata, i tuoi peccati cancellati e le porte del Paradiso aperte per te', nl: 'Moge je reiniging aanvaard worden, je zonden uitgewist en de poorten van het Paradijs voor je geopend worden', pt: 'Que a tua ablução seja aceite, os teus pecados apagados e as portas do Paraíso abertas para ti', tr: 'Abdestinin kabul edilmesi, günahlarının silinmesi ve cennet kapılarının sana açılması dileniyor'}
@@ -295,7 +295,7 @@ var DUAS = {
   // ===========================
   reveil: {
     meta: {
-      icon: 'images/lit.webp',
+      icon: '/images/lit.webp',
       sousTitre: { fr: 'Au lever et au coucher', en: 'Upon waking and sleeping', es: 'Al despertar y al dormir', de: 'Beim Aufwachen und Schlafen', it: 'Al risveglio e al sonno', nl: 'Bij het wakker worden en slapen', pt: 'Ao acordar e dormir', tr: 'Uyanırken ve uyurken' },
       titre: { fr: 'Réveil & Couché', en: 'Wake & Sleep', es: 'Despertar & Dormir' , de: 'Aufwachen & Schlafen', it: 'Sveglio & Sonno', nl: 'Wakker & Slapen', pt: 'Acordar & Dormir', tr: 'Uyanış & Uyku'},
       closingDua: { fr: 'Que tes nuits soient protégées et tes réveils remplis de baraka', en: 'May your nights be protected and your mornings filled with baraka', es: 'Que tus noches sean protegidas y tus mañanas llenas de baraka' , de: 'Mögen deine Nächte beschützt und deine Morgen voller Baraka sein', it: 'Che le tue notti siano protette e i tuoi risvegli pieni di baraka', nl: 'Mogen je nachten beschermd zijn en je ochtenden gevuld met baraka', pt: 'Que as tuas noites sejam protegidas e os teus despertares cheios de baraka', tr: 'Gecelerinin korunaklı, sabahlarının bereketli olması dileğiyle'}
@@ -442,7 +442,7 @@ var DUAS = {
   // ===========================
   toilettes: {
     meta: {
-      icon: 'images/wc.webp',
+      icon: '/images/wc.webp',
       sousTitre: { fr: 'En entrant et en sortant', en: 'Entering and leaving', es: 'Al entrar y salir', de: 'Beim Betreten und Verlassen', it: 'Entrando e uscendo', nl: 'Bij binnenkomst en vertrek', pt: 'Ao entrar e sair', tr: 'Girerken ve çıkarken' },
       titre: { fr: 'Toilettes', en: 'Restroom', es: 'Baño' , de: 'Toilette', it: 'Bagno', nl: 'Toilet', pt: 'Casa de Banho', tr: 'Tuvalet'},
       closingDua: { fr: 'Que tes entrées et sorties soient toujours protégées, et qu\'Allah accepte tes invocations', en: 'May your entries and exits be always protected, and may Allah accept your supplications', es: 'Que tus entradas y salidas sean siempre protegidas, y que Allah acepte tus súplicas' , de: 'Mögen deine Ein- und Ausgänge stets beschützt sein und möge Allah deine Bittgebete annehmen', it: 'Che le tue entrate e uscite siano sempre protette e che Allah accetti le tue invocazioni', nl: 'Mogen je ingangen en uitgangen altijd beschermd zijn en moge Allah je smeekgebeden aanvaarden', pt: 'Que as tuas entradas e saídas sejam sempre protegidas e que Allah aceite as tuas invocações', tr: 'Girişlerin ve çıkışların her zaman korunaklı olsun, Allah dualarını kabul etsin'}
@@ -535,7 +535,7 @@ var DUAS = {
   // ===========================
   maison: {
     meta: {
-      icon: 'images/maison.webp',
+      icon: '/images/maison.webp',
       sousTitre: { fr: 'En entrant et en sortant', en: 'Entering and leaving', es: 'Al entrar y salir', de: 'Beim Betreten und Verlassen', it: 'Entrando e uscendo', nl: 'Bij binnenkomst en vertrek', pt: 'Ao entrar e sair', tr: 'Girerken ve çıkarken' },
       titre: { fr: 'Maison', en: 'Home', es: 'Casa' , de: 'Zuhause', it: 'Casa', nl: 'Thuis', pt: 'Casa', tr: 'Ev'},
       closingDua: { fr: 'Que tes entrées et sorties soient bénies', en: 'May your entrances and exits be blessed', es: 'Que tus entradas y salidas sean bendecidas' , de: 'Mögen deine Eintritte und Ausgänge gesegnet sein', it: 'Che le tue entrate e uscite siano benedette', nl: 'Mogen je ingangen en uitgangen gezegend zijn', pt: 'Que as tuas entradas e saídas sejam abençoadas', tr: 'Girişlerin ve çıkışların bereketli olsun'}
@@ -686,7 +686,7 @@ var DUAS = {
   // ===========================
   tristesse: {
     meta: {
-      icon: 'images/tristesse.webp',
+      icon: '/images/tristesse.webp',
       titre: { fr: 'Tristesse & Épreuves', en: 'Sadness', es: 'Tristeza' , de: 'Traurigkeit', it: 'Tristezza', nl: 'Verdriet', pt: 'Tristeza', tr: 'Üzüntü'},
       closingDua: { fr: 'Que Allah dissipe ta tristesse et remplisse ton cœur de sérénité', en: 'May Allah dispel your sadness and fill your heart with serenity', es: 'Que Allah disipe tu tristeza y llene tu corazón de serenidad' , de: 'Möge Allah deine Traurigkeit vertreiben und dein Herz mit Gelassenheit erfüllen', it: 'Che Allah dissipi la tua tristezza e riempia il tuo cuore di serenità', nl: 'Moge Allah jouw verdriet wegnemen en jouw hart vullen met sereniteit', pt: 'Que Allah dissipe a tua tristeza e encha o teu coração de serenidade', tr: 'Allah üzüntünü gidersin ve kalbini huzurla doldursun'}
     },
@@ -791,7 +791,7 @@ var DUAS = {
   // ===========================
   enfants: {
     meta: {
-      icon: 'images/enfants.webp',
+      icon: '/images/enfants.webp',
       titre: { fr: 'Enfants', en: 'Children', es: 'Niños' , de: 'Kinder', it: 'Bambini', nl: 'Kinderen', pt: 'Crianças', tr: 'Çocuklar'},
       closingDua: { fr: 'Que Allah protège tes enfants de tout mal, visible ou invisible, et les garde dans Sa miséricorde', en: 'May Allah protect your children from all evil, visible or invisible, and keep them in His mercy', es: 'Que Allah proteja a tus hijos de todo mal, visible o invisible, y los guarde en Su misericordia' , de: 'Möge Allah deine Kinder vor allem Bösen schützen und sie in Seiner Barmherzigkeit bewahren', it: 'Che Allah protegga i tuoi figli da ogni male e li tenga nella Sua misericordia', nl: 'Moge Allah jouw kinderen beschermen tegen alle kwaad en hen bewaren in Zijn genade', pt: 'Que Allah proteja os teus filhos de todo o mal e os guarde na Sua misericórdia', tr: 'Allah çocuklarını tüm kötülüklerden korusun ve onları rahmetinde muhafaza etsin'}
     },
@@ -907,7 +907,7 @@ var DUAS = {
   // ===========================
   transport: {
     meta: {
-      icon: 'images/voiture.webp',
+      icon: '/images/voiture.webp',
       sousTitre: { fr: 'Sur la route, comme en voyage', en: 'On the road, as in travel', es: 'En la carretera, como de viaje', de: 'Unterwegs, wie auf Reisen', it: 'In viaggio, come negli spostamenti', nl: 'Onderweg, zoals op reis', pt: 'Na estrada, como em viagem', tr: 'Yolda, seyahatte olduğu gibi' },
       titre: { fr: 'Transport & Voyage', en: 'Transport & Travel', es: 'Transporte y Viaje', de: 'Transport & Reise', it: 'Trasporto e Viaggio', nl: 'Transport & Reizen', pt: 'Transporte e Viagem', tr: 'Ulaşım & Seyahat'},
       closingDua: { fr: 'Que tes trajets et voyages soient protégés et bénis', en: 'May your journeys and travels be protected and blessed', es: 'Que tus trayectos y viajes sean protegidos y bendecidos' , de: 'Mögen deine Fahrten und Reisen beschützt und gesegnet sein', it: 'Che i tuoi spostamenti e viaggi siano protetti e benedetti', nl: 'Mogen je ritten en reizen beschermd en gezegend zijn', pt: 'Que os teus trajetos e viagens sejam protegidos e abençoados', tr: 'Yolculuklarının korunaklı ve bereketli olması dileğiyle'}
@@ -1025,7 +1025,7 @@ var DUAS = {
   // ===========================
   mosquee: {
     meta: {
-      icon: 'images/mosquee.webp',
+      icon: '/images/mosquee.webp',
       titre: { fr: 'Mosquée', en: 'Mosque', es: 'Mezquita', de: 'Moschee', it: 'Moschea', nl: 'Moskee', pt: 'Mesquita', tr: 'Cami' },
       closingDua: { fr: 'Que Allah accepte ta prière et illumine ton cœur', en: 'May Allah accept your prayer and illuminate your heart', es: 'Que Allah acepte tu oración e ilumine tu corazón', de: 'Möge Allah dein Gebet annehmen und dein Herz erleuchten', it: 'Che Allah accetti la tua preghiera e illumini il tuo cuore', nl: 'Moge Allah je gebed aanvaarden en je hart verlichten', pt: 'Que Allah aceite a tua oração e ilumine o teu coração', tr: 'Allah namazını kabul etsin ve kalbini aydınlatsın' }
     },
@@ -1054,7 +1054,7 @@ var DUAS = {
   // ===========================
   maladie: {
     meta: {
-      icon: 'images/maladie.webp',
+      icon: '/images/maladie.webp',
       titre: { fr: 'Maladie', en: 'Illness', es: 'Enfermedad', de: 'Krankheit', it: 'Malattia', nl: 'Ziekte', pt: 'Doença', tr: 'Hastalık' },
       closingDua: { fr: 'Que Allah t\'accorde une guérison rapide et complète', en: 'May Allah grant you a swift and complete recovery', es: 'Que Allah te conceda una recuperación rápida y completa', de: 'Möge Allah dir eine schnelle und vollständige Genesung schenken', it: 'Che Allah ti conceda una guarigione rapida e completa', nl: 'Moge Allah je een snelle en volledige genezing schenken', pt: 'Que Allah te conceda uma recuperação rápida e completa', tr: 'Allah sana çabuk ve tam bir şifa versin' }
     },
@@ -1086,7 +1086,7 @@ var DUAS = {
   // ===========================
   colere: {
     meta: {
-      icon: 'images/colere.webp',
+      icon: '/images/colere.webp',
       titre: { fr: 'Colère', en: 'Anger', es: 'Ira', de: 'Zorn', it: 'Rabbia', nl: 'Woede', pt: 'Raiva', tr: 'Öfke' },
       closingDua: { fr: 'Qu\'Allah apaise ton cœur et t\'accorde la patience', en: 'May Allah calm your heart and grant you patience', es: 'Que Allah calme tu corazón y te conceda paciencia', de: 'Möge Allah dein Herz beruhigen und dir Geduld schenken', it: 'Che Allah calmi il tuo cuore e ti conceda pazienza', nl: 'Moge Allah je hart kalmeren en je geduld schenken', pt: 'Que Allah acalme o teu coração e te conceda paciência', tr: 'Allah kalbini sakinleştirsin ve sana sabır versin' }
     },
@@ -1106,7 +1106,7 @@ var DUAS = {
   // ===========================
   rizq: {
     meta: {
-      icon: 'images/rizq.webp',
+      icon: '/images/rizq.webp',
       titre: { fr: 'Subsistance', en: 'Rizq', es: 'Rizq', de: 'Rizq', it: 'Rizq', nl: 'Rizq', pt: 'Rizq', tr: 'Rızık' },
       closingDua: { fr: 'Qu\'Allah t\'accorde une subsistance bénie et abondante', en: 'May Allah grant you blessed and abundant provision', es: 'Que Allah te conceda una sustancia bendecida y abundante', de: 'Möge Allah dir eine gesegnete und reichliche Versorgung schenken', it: 'Che Allah ti conceda una provvigione benedetta e abbondante', nl: 'Moge Allah je een gezegende en overvloedige voorziening schenken', pt: 'Que Allah te conceda uma provisão abençoada e abundante', tr: 'Allah sana bereketli ve bol rızık versin' }
     },
@@ -1126,7 +1126,7 @@ var DUAS = {
   // ===========================
   ruqya: {
     meta: {
-      icon: 'images/ruqya.webp',
+      icon: '/images/ruqya.webp',
       titre: { fr: 'Protection', en: 'Ruqya', es: 'Ruqya', de: 'Ruqya', it: 'Ruqya', nl: 'Ruqya', pt: 'Ruqya', tr: 'Rukye' },
       closingDua: { fr: 'Qu\'Allah te protège de tout mal et de tout regard envieux', en: 'May Allah protect you from all evil and every envious eye', es: 'Que Allah te proteja de todo mal y de toda mirada envidiosa', de: 'Möge Allah dich vor allem Bösen und jedem neidischen Blick schützen', it: 'Che Allah ti protegga da ogni male e da ogni sguardo invidioso', nl: 'Moge Allah je beschermen tegen al het kwaad en elk jaloers oog', pt: 'Que Allah te proteja de todo o mal e de todo olhar invejoso', tr: 'Allah seni her kötülükten ve her kıskanç gözden korusun' }
     },
@@ -1146,7 +1146,7 @@ var DUAS = {
   // ===========================
   mariage: {
     meta: {
-      icon: 'images/mariage.webp',
+      icon: '/images/mariage.webp',
       titre: { fr: 'Mariage', en: 'Marriage', es: 'Matrimonio', de: 'Heirat', it: 'Matrimonio', nl: 'Huwelijk', pt: 'Casamento', tr: 'Evlilik' },
       closingDua: { fr: 'Qu\'Allah bénisse votre union et vous accorde l\'amour et la miséricorde', en: 'May Allah bless your union and grant you love and mercy', es: 'Que Allah bendiga su unión y les conceda amor y misericordia', de: 'Möge Allah eure Verbindung segnen und euch Liebe und Barmherzigkeit schenken', it: 'Che Allah benedica la vostra unione e vi conceda amore e misericordia', nl: 'Moge Allah jullie verbintenis zegenen en jullie liefde en genade schenken', pt: 'Que Allah abençoe a vossa união e vos conceda amor e misericórdia', tr: 'Allah birlikteliğinizi mübarek kılsın ve size sevgi ve merhamet versin' }
     },
@@ -1166,7 +1166,7 @@ var DUAS = {
   // ===========================
   ramadan: {
     meta: {
-      icon: 'images/ramadan.webp',
+      icon: '/images/ramadan.webp',
       titre: { fr: 'Ramadan', en: 'Ramadan', es: 'Ramadán', de: 'Ramadan', it: 'Ramadan', nl: 'Ramadan', pt: 'Ramadão', tr: 'Ramazan' },
       closingDua: { fr: 'Qu\'Allah accepte ton jeûne, ta prière et tes bonnes actions', en: 'May Allah accept your fast, your prayer and your good deeds', es: 'Que Allah acepte tu ayuno, tu oración y tus buenas obras', de: 'Möge Allah dein Fasten, dein Gebet und deine guten Taten annehmen', it: 'Che Allah accetti il tuo digiuno, la tua preghiera e le tue buone azioni', nl: 'Moge Allah je vasten, je gebed en je goede daden aanvaarden', pt: 'Que Allah aceite o teu jejum, a tua oração e as tuas boas ações', tr: 'Allah orucunu, namazını ve iyi amellerini kabul etsin' }
     },
@@ -1195,7 +1195,7 @@ var DUAS = {
 // ===========================
 azan: {
   meta: {
-    icon: 'images/azan.webp',
+    icon: '/images/azan.webp',
     titre: { fr: 'Appel à la prière', en: 'Azan', es: 'Azan', de: 'Azan', it: 'Azan', nl: 'Azan', pt: 'Azan', tr: 'Ezan' }
   },
   acc1: {
@@ -1223,7 +1223,7 @@ azan: {
 // ===========================
 salah: {
   meta: {
-    icon: 'images/salah.webp',
+    icon: '/images/salah.webp',
     titre: { fr: 'Prière', en: 'Prayer', es: 'Oración', de: 'Gebet', it: 'Preghiera', nl: 'Gebed', pt: 'Oração', tr: 'Namaz' }
   },
   acc1: {
@@ -1251,7 +1251,7 @@ salah: {
 // ===========================
 istikhara: {
   meta: {
-    icon: 'images/istikhara.webp',
+    icon: '/images/istikhara.webp',
     titre: { fr: 'Istikhara', en: 'Istikhara', es: 'Istikhara', de: 'Istikhara', it: 'Istikhara', nl: 'Istikhara', pt: 'Istikhara', tr: 'İstihare' }
   },
   acc1: {
@@ -1270,7 +1270,7 @@ istikhara: {
 // ===========================
 mort: {
   meta: {
-    icon: 'images/mort.webp',
+    icon: '/images/mort.webp',
     titre: { fr: 'Mort & Funérailles', en: 'Death & Funeral', es: 'Muerte & Funeral', de: 'Tod & Beerdigung', it: 'Morte & Funerale', nl: 'Dood & Begrafenis', pt: 'Morte & Funeral', tr: 'Ölüm & Cenaze' }
   },
   acc1: {
@@ -1298,7 +1298,7 @@ mort: {
 // ===========================
 hajjumra: {
   meta: {
-    icon: 'images/hajjumra.webp',
+    icon: '/images/hajjumra.webp',
     titre: { fr: 'Pèlerinage', en: 'Hajj & Umrah', es: 'Hajj & Umrah', de: 'Hadsch & Umrah', it: 'Hajj & Umrah', nl: 'Hajj & Umrah', pt: 'Hajj & Umrah', tr: 'Hac & Umre' }
   },
   acc1: {
@@ -1326,7 +1326,7 @@ hajjumra: {
 // ===========================
 nouveaune: {
   meta: {
-    icon: 'images/nouveaune.webp',
+    icon: '/images/nouveaune.webp',
     titre: { fr: 'Nouveau-né', en: 'Newborn', es: 'Recién nacido', de: 'Neugeborenes', it: 'Neonato', nl: 'Baby', pt: 'Recém-nascido', tr: 'Yenidoğan' }
   },
   acc1: {
@@ -1345,7 +1345,7 @@ nouveaune: {
 // ===========================
 pluie: {
   meta: {
-    icon: 'images/pluie.webp',
+    icon: '/images/pluie.webp',
     titre: { fr: 'Pluie', en: 'Rain', es: 'Lluvia', de: 'Regen', it: 'Pioggia', nl: 'Regen', pt: 'Chuva', tr: 'Yağmur' }
   },
   acc1: {

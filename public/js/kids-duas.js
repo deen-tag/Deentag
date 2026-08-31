@@ -10,7 +10,7 @@ var KIDS_DUAS = {
   repas: {
     meta: {
       emoji: '🍽️',
-      image: 'images/kids_repas.webp',
+      image: '/images/kids_repas.webp',
       couleur: '#FF6B6B',
       couleurLight: '#FFE5E5',
       titre: { fr:'Les Repas', en:'Meals', es:'Las Comidas', de:'Die Mahlzeiten', it:'I Pasti', nl:'De Maaltijden', pt:'As Refeições', tr:'Yemekler' },
@@ -38,7 +38,7 @@ var KIDS_DUAS = {
   dodo: {
     meta: {
       emoji: '😴',
-      image: 'images/kids_dodo.webp',
+      image: '/images/kids_dodo.webp',
       couleur: '#6C63FF',
       couleurLight: '#EEECFF',
       titre: { fr:'Le Dodo', en:'Bedtime', es:'A Dormir', de:'Schlafenszeit', it:'La Nanna', nl:'Slaaptijd', pt:'A Dormir', tr:'Uyku Zamanı' },
@@ -66,7 +66,7 @@ var KIDS_DUAS = {
   ablution: {
     meta: {
       emoji: '🚿',
-      image: 'images/kids_ablution.webp',
+      image: '/images/kids_ablution.webp',
       couleur: '#00B4D8',
       couleurLight: '#E0F7FA',
       titre: { fr:'L\'Ablution', en:'Ablution', es:'La Ablución', de:'Die Waschung', it:'L\'Abluzione', nl:'De Wassing', pt:'A Ablução', tr:'Abdest' },
@@ -94,7 +94,7 @@ var KIDS_DUAS = {
   toilettes: {
     meta: {
       emoji: '🚽',
-      image: 'images/kids_toilettes.webp',
+      image: '/images/kids_toilettes.webp',
       couleur: '#52B788',
       couleurLight: '#E8F5E9',
       titre: { fr:'Les Toilettes', en:'The Toilet', es:'El Baño', de:'Die Toilette', it:'Il Bagno', nl:'Het Toilet', pt:'A Casa de Banho', tr:'Tuvalet' },
@@ -122,7 +122,7 @@ var KIDS_DUAS = {
   maison: {
     meta: {
       emoji: '🏠',
-      image: 'images/kids_maison.webp',
+      image: '/images/kids_maison.webp',
       couleur: '#F4A261',
       couleurLight: '#FFF3E0',
       titre: { fr:'La Maison', en:'The House', es:'La Casa', de:'Das Haus', it:'La Casa', nl:'Het Huis', pt:'A Casa', tr:'Ev' },
@@ -150,7 +150,7 @@ var KIDS_DUAS = {
   transport: {
     meta: {
       emoji: '🚗',
-      image: 'images/kids_transport.webp',
+      image: '/images/kids_transport.webp',
       couleur: '#E76F51',
       couleurLight: '#FBE9E7',
       titre: { fr:'Le Transport', en:'Transport', es:'El Transporte', de:'Der Transport', it:'Il Trasporto', nl:'Vervoer', pt:'O Transporte', tr:'Ulaşım' },

@@ -25,10 +25,10 @@
   });
 
   var IMGS = {
-    duas:     'images/nav-invocations.webp',
-    coran:    'images/nav-coran.webp',
-    enfants:  'images/nav-enfants.webp',
-    boutique: 'images/nav-boutique.webp',
+    duas:     '/images/nav-invocations.webp',
+    coran:    '/images/nav-coran.webp',
+    enfants:  '/images/nav-enfants.webp',
+    boutique: '/images/nav-boutique.webp',
     adulte:   'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj4KICA8IS0tIEZvbmQgcm9uZCBkb3V4IC0tPgogIDxjaXJjbGUgY3g9IjEwMCIgY3k9IjEwMCIgcj0iOTAiIGZpbGw9IiNGRkYzREMiLz4KICA8IS0tIFRvaXQgLS0+CiAgPHBvbHlnb24gcG9pbnRzPSIxMDAsMzUgMTU1LDg1IDQ1LDg1IiBmaWxsPSIjRThCODRCIiBzdHJva2U9IiNCODg1MkUiIHN0cm9rZS13aWR0aD0iNCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgogIDwhLS0gQ2hlbWluw6llIC0tPgogIDxyZWN0IHg9IjEyMCIgeT0iNTAiIHdpZHRoPSIxNiIgaGVpZ2h0PSIyOCIgcng9IjMiIGZpbGw9IiNDOUE4NEMiIHN0cm9rZT0iI0I4ODUyRSIgc3Ryb2tlLXdpZHRoPSIzIi8+CiAgPCEtLSBNdXJzIC0tPgogIDxyZWN0IHg9IjUyIiB5PSI4MyIgd2lkdGg9Ijk2IiBoZWlnaHQ9IjcyIiByeD0iOCIgZmlsbD0iI0ZGRkJGMCIgc3Ryb2tlPSIjRThCODRCIiBzdHJva2Utd2lkdGg9IjQiLz4KICA8IS0tIFBvcnRlIC0tPgogIDxyZWN0IHg9Ijg0IiB5PSIxMTgiIHdpZHRoPSIzMiIgaGVpZ2h0PSIzNyIgcng9IjEwIiBmaWxsPSIjRThCODRCIiBzdHJva2U9IiNCODg1MkUiIHN0cm9rZS13aWR0aD0iMyIvPgogIDwhLS0gUG9pZ27DqWUgLS0+CiAgPGNpcmNsZSBjeD0iMTEwIiBjeT0iMTM4IiByPSI0IiBmaWxsPSIjQjg4NTJFIi8+CiAgPCEtLSBGZW7DqnRyZSBnYXVjaGUgLS0+CiAgPHJlY3QgeD0iNjAiIHk9Ijk2IiB3aWR0aD0iMjQiIGhlaWdodD0iMjIiIHJ4PSI1IiBmaWxsPSIjQUVFNEZGIiBzdHJva2U9IiNFOEI4NEIiIHN0cm9rZS13aWR0aD0iMyIvPgogIDxsaW5lIHgxPSI3MiIgeTE9Ijk2IiB4Mj0iNzIiIHkyPSIxMTgiIHN0cm9rZT0iI0U4Qjg0QiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGxpbmUgeDE9IjYwIiB5MT0iMTA3IiB4Mj0iODQiIHkyPSIxMDciIHN0cm9rZT0iI0U4Qjg0QiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPCEtLSBGZW7DqnRyZSBkcm9pdGUgLS0+CiAgPHJlY3QgeD0iMTE2IiB5PSI5NiIgd2lkdGg9IjI0IiBoZWlnaHQ9IjIyIiByeD0iNSIgZmlsbD0iI0FFRTRGRiIgc3Ryb2tlPSIjRThCODRCIiBzdHJva2Utd2lkdGg9IjMiLz4KICA8bGluZSB4MT0iMTI4IiB5MT0iOTYiIHgyPSIxMjgiIHkyPSIxMTgiIHN0cm9rZT0iI0U4Qjg0QiIgc3Ryb2tlLXdpZHRoPSIyIi8+CiAgPGxpbmUgeDE9IjExNiIgeTE9IjEwNyIgeDI9IjE0MCIgeTI9IjEwNyIgc3Ryb2tlPSIjRThCODRCIiBzdHJva2Utd2lkdGg9IjIiLz4KICA8IS0tIMOJdG9pbGUgZMOpY28gLS0+CiAgPHRleHQgeD0iOTYiIHk9IjMwIiBmb250LXNpemU9IjE4IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj7inKY8L3RleHQ+Cjwvc3ZnPgo='
   };
 
@@ -51,6 +51,13 @@
          exitTitle:'Yetişkin alanına geçilsin mi?', exitSub:'Deentag Kids\'te yakında görüşürüz! 👋', exitCancel:'İptal', exitContinue:'Devam et' }
   };
   function navGetLang() { return localStorage.getItem('deentag_lang') || 'fr'; }
+  // Locale de routage : dérivée de l'URL courante (/fr/..., /en/...), pas du
+  // localStorage — c'est elle qui doit correspondre aux routes Next.js.
+  var NAV_LOCALES = ['fr','en','es','de','it','nl','pt','tr'];
+  function navGetLocale() {
+    var seg = (window.location.pathname.split('/')[1] || '').toLowerCase();
+    return NAV_LOCALES.indexOf(seg) !== -1 ? seg : 'fr';
+  }
   function navLabels()  { return NAV_I18N[navGetLang()] || NAV_I18N.fr; }
   var LABELS = navLabels();
 
@@ -92,7 +99,7 @@
     }
     modal.innerHTML =
       '<div class="kids-exit-box" onclick="event.stopPropagation()">' +
-        '<img src="images/kids_logo.webp" alt="Deentag Kids" class="kids-exit-logo">' +
+        '<img src="/images/kids_logo.webp" alt="Deentag Kids" class="kids-exit-logo">' +
         '<div class="kids-exit-emoji">👋</div>' +
         '<div class="kids-exit-title">' + t.exitTitle + '</div>' +
         '<div class="kids-exit-sub">' + t.exitSub + '</div>' +
@@ -105,34 +112,38 @@
   }
   window.navConfirmExitKids = navConfirmExitKids;
 
-  var ADULT_TABS = [
-    { id: 'enfants',  href: 'kids.html'  },
-    { id: 'duas',     href: 'invocations.html' },
-    { id: 'coran',    href: 'quran.html' },
-    { id: 'boutique', href: 'shop.html'  }
-  ];
-
-  var KIDS_IMGS = {
-    adulte: 'images/icone-adulte-nav.webp',
-    duas:   'images/icone-invocations-nav.webp',
-    coran:  'images/icone-coran-nav.webp'
-  };
-
-  function kidsTabs(adulteHref) {
+  function adultTabs(locale) {
     return [
-      { id: 'adulte', href: adulteHref         },
-      { id: 'duas',   href: 'kids.html'       },
-      { id: 'coran',  href: 'quran-kids.html' }
+      { id: 'enfants',  href: '/' + locale + '/kids'        },
+      { id: 'duas',     href: '/' + locale + '/invocations' },
+      { id: 'coran',    href: '/' + locale + '/quran'       },
+      { id: 'boutique', href: '/' + locale + '/shop'        }
     ];
   }
 
-  var PAGES = {
-    'invocations':{ mode: 'adult', active: 'duas',     tabs: ADULT_TABS },
-    'quran':      { mode: 'adult', active: 'coran',    tabs: ADULT_TABS },
-    'shop':       { mode: 'adult', active: 'boutique', tabs: ADULT_TABS },
-    'kids':       { mode: 'kids',  active: 'duas',     tabs: kidsTabs('index.html') },
-    'quran-kids': { mode: 'kids',  active: 'coran',    tabs: kidsTabs('quran.html') }
+  var KIDS_IMGS = {
+    adulte: '/images/icone-adulte-nav.webp',
+    duas:   '/images/icone-invocations-nav.webp',
+    coran:  '/images/icone-coran-nav.webp'
   };
+
+  function kidsTabs(locale, adulteHref) {
+    return [
+      { id: 'adulte', href: adulteHref                        },
+      { id: 'duas',   href: '/' + locale + '/kids'             },
+      { id: 'coran',  href: '/' + locale + '/quran-kids'       }
+    ];
+  }
+
+  function buildPages(locale) {
+    return {
+      'invocations':{ mode: 'adult', active: 'duas',     tabs: adultTabs(locale) },
+      'quran':      { mode: 'adult', active: 'coran',    tabs: adultTabs(locale) },
+      'shop':       { mode: 'adult', active: 'boutique', tabs: adultTabs(locale) },
+      'kids':       { mode: 'kids',  active: 'duas',     tabs: kidsTabs(locale, '/' + locale) },
+      'quran-kids': { mode: 'kids',  active: 'coran',    tabs: kidsTabs(locale, '/' + locale + '/quran') }
+    };
+  }
 
   var _builtCfg = null, _builtTabbar = null;
 
@@ -243,7 +254,7 @@
 
   function init() {
     var page = document.body.getAttribute('data-page');
-    var cfg = page && PAGES[page];
+    var cfg = page && buildPages(navGetLocale())[page];
     if (!cfg) return;
     var tabbar = buildNav(cfg);
     document.body.appendChild(tabbar);
