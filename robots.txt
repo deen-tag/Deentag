@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://deentag.vercel.app/sitemap.xml
