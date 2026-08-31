@@ -737,11 +737,11 @@ function renderSurahContent(surah, data, lang, startVerse) {
         <div class="verse-arabic">${ayah.text}</div>
         <span class="verse-phonetic${phonHidden}" id="ph-${surah.id}-${vNum}">${phoneticText}</span>
         <span class="verse-translation${trHidden}" id="tr-${surah.id}-${vNum}">${translText}</span>
-        <button class="verse-memorize-btn" id="mem-${surah.id}-${vNum}" onclick="event.stopPropagation();toggleVerseMemorized(${surah.id},${vNum})" title="Mémoriser ce verset">
+        <button class="verse-memorize-btn" id="mem-${surah.id}-${vNum}" onclick="event.stopPropagation();toggleVerseMemorized(${surah.id},${vNum})" title="${window.DT ? window.DT.t('toMemorizeVerseTitle') : 'Mémoriser ce verset'}">
           <span class="verse-mem-ring">
             <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/></svg>
           </span>
-          <span class="verse-mem-label">Mémoriser</span>
+          <span class="verse-mem-label">${window.DT ? window.DT.t('toMemorize') : 'Mémoriser'}</span>
         </button>
       </div>
     `;
@@ -755,7 +755,7 @@ function renderSurahContent(surah, data, lang, startVerse) {
         <span class="surah-mem-ring">
           <svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="7"/></svg>
         </span>
-        <span id="surah-mem-label">${isMemSurah ? (window.DT ? window.DT.t('memorized') : 'Mémorisé') : 'Mémoriser la sourate'}</span>
+        <span id="surah-mem-label">${window.DT ? (isMemSurah ? window.DT.t('memorized') : window.DT.t('toMemorizeSurah')) : (isMemSurah ? 'Mémorisé' : 'Mémoriser la sourate')}</span>
       </button>
     </div>
   `;
@@ -1863,7 +1863,7 @@ function toggleVerseMemorized(surahId, verseNum) {
   if (btn) {
     btn.classList.toggle('memorized', isNow);
     const label = btn.querySelector('.verse-mem-label');
-    if (label) label.textContent = isNow ? (window.DT.t('memorized')) : 'Mémoriser';
+    if (label) label.textContent = isNow ? window.DT.t('memorized') : window.DT.t('toMemorize');
     if (isNow) sparkleBurst(btn, 4);
   }
 }
@@ -1874,7 +1874,7 @@ function toggleSurahMemorized(surahId) {
   const btn   = document.getElementById('surah-mem-btn');
   const label = document.getElementById('surah-mem-label');
   if (btn)   btn.classList.toggle('memorized', isNow);
-  if (label) label.textContent = isNow ? window.DT.t('memorized') : 'Mémoriser la sourate';
+  if (label) label.textContent = isNow ? window.DT.t('memorized') : window.DT.t('toMemorizeSurah');
   if (isNow) sparkleBurst(btn, 6);
 
   // Cocher/décocher tous les versets de la sourate
@@ -1901,7 +1901,7 @@ function updateAllVerseMemBtns(surahId) {
     const isM   = window.DT.isMemorized('verse', surahId + '_' + vNum);
     btn.classList.toggle('memorized', isM);
     const label = btn.querySelector('.verse-mem-label');
-    if (label) label.textContent = isM ? window.DT.t('memorized') : 'Mémoriser';
+    if (label) label.textContent = isM ? window.DT.t('memorized') : window.DT.t('toMemorize');
   });
   // Sourate
   const surahBtn = document.getElementById('surah-mem-btn');
