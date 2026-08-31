@@ -37,5 +37,19 @@
       "title": "Deentag Kids — Corán",
       "description": "Deentag Kids — El Corán para niños."
     }
+  },
+  "runtime": {
+    "listen": "Escuchar",
+    "tracks": "el audio",
+    "size-title": "Tamaño del texto",
+    "size-fr": "Traducción",
+    "size-ph": "Fonética",
+    "size-ar": "Árabe",
+    "size-small": "Peq.",
+    "size-medium": "Med.",
+    "size-large": "Gran.",
+    "audio-mode": "Reproducción",
+    "audio-auto": "Auto",
+    "audio-manual": "Manual"
   }
 }

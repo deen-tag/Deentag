@@ -37,5 +37,19 @@
       "title": "Deentag Kids — Koran",
       "description": "Deentag Kids — De Koran voor kinderen."
     }
+  },
+  "runtime": {
+    "listen": "Luisteren",
+    "tracks": "audio",
+    "size-title": "Tekstgrootte",
+    "size-fr": "Vertaling",
+    "size-ph": "Fonetiek",
+    "size-ar": "Arabisch",
+    "size-small": "Klein",
+    "size-medium": "Middel",
+    "size-large": "Groot",
+    "audio-mode": "Audioweergave",
+    "audio-auto": "Auto",
+    "audio-manual": "Handmatig"
   }
 }

@@ -37,5 +37,19 @@
       "title": "Deentag Kids — Alcorão",
       "description": "Deentag Kids — O Alcorão para crianças."
     }
+  },
+  "runtime": {
+    "listen": "Ouvir",
+    "tracks": "o áudio",
+    "size-title": "Tamanho do texto",
+    "size-fr": "Tradução",
+    "size-ph": "Fonética",
+    "size-ar": "Árabe",
+    "size-small": "Peq.",
+    "size-medium": "Med.",
+    "size-large": "Grande",
+    "audio-mode": "Reprodução",
+    "audio-auto": "Auto",
+    "audio-manual": "Manual"
   }
 }

@@ -37,5 +37,19 @@
       "title": "Deentag Kids — Kur'an",
       "description": "Deentag Kids — Çocuklar için Kur'an."
     }
+  },
+  "runtime": {
+    "listen": "Dinle",
+    "tracks": "sesi",
+    "size-title": "Yazı boyutu",
+    "size-fr": "Çeviri",
+    "size-ph": "Fonetik",
+    "size-ar": "Arapça",
+    "size-small": "Küçük",
+    "size-medium": "Orta",
+    "size-large": "Büyük",
+    "audio-mode": "Ses oynatma",
+    "audio-auto": "Otomatik",
+    "audio-manual": "Manuel"
   }
 }
