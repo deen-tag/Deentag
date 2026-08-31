@@ -44,20 +44,14 @@
 
     if (arabeEl) arabeEl.textContent = item.arabe || '';
     if (tradEl)  tradEl.textContent  = (item.traduction && (item.traduction[lang] || item.traduction.fr)) || '';
-    if (linkEl)  linkEl.href = '/' + lang + '/invocations?page=' + slot.cat + '&acc=' + slot.acc;
+    if (linkEl)  linkEl.href = 'invocations.html?page=' + slot.cat + '&acc=' + slot.acc;
   }
 
   // Suit la même convention que DT_refreshNavLang / DT_refreshPrayerLang :
   // app.js appelle ce hook après chaque changement de langue.
   window.DT_refreshHomeWidgetLang = renderHomeWidget;
 
-  (function (__fn) {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', __fn);
-  } else {
-    __fn();
-  }
-})(renderHomeWidget);
+  window.DT_registerInit(renderHomeWidget);
 
   // ── Badge profil (topbar) ──
   function renderAccountCard() {
@@ -183,14 +177,8 @@
 
   window.DT_refreshGreetingLang = renderGreeting;
 
-  (function (__fn) {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', __fn);
-  } else {
-    __fn();
-  }
-})(function () {
-    // profiles.js s'initialise sur le même DOMContentLoaded : on laisse
+  window.DT_registerInit(function () {
+    // profiles.js s'initialise via le même mécanisme : on laisse
     // un court délai pour être sûr que window.DT soit prêt.
     setTimeout(renderAccountCard, 50);
     setTimeout(renderGreeting, 50);

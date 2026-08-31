@@ -506,6 +506,12 @@
   }
 
   function init() {
+    // wheels/allSections sont des tableaux partagés au niveau du module :
+    // sans ce reset, revenir plusieurs fois sur la page Invocations en SPA
+    // empilerait les anciennes roues au lieu de les remplacer.
+    wheels = [];
+    allSections = [];
+
     var pager = document.getElementById('catPager');
     if (pager) {
       pager.classList.add('cat-pager--wheel');
@@ -542,6 +548,13 @@
             hintObserver.observe(w.stage);
           });
         }
+        // onScroll/updateScales sont des fonctions stables (définies une
+        // seule fois au chargement du script) : on retire l'éventuel
+        // listener d'une page précédente avant d'en ajouter un nouveau,
+        // pour éviter d'empiler des doublons à chaque navigation SPA.
+        window.removeEventListener('scroll', onScroll);
+        window.removeEventListener('resize', onScroll);
+        window.removeEventListener('load', updateScales);
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', onScroll);
         updateScales();
@@ -549,13 +562,7 @@
         // le tout premier calcul peut être basé sur une mise en page pas
         // encore stabilisée, ce qui pouvait donner un chip actif incorrect
         // au chargement.
-        (function (__fn) {
-  if (document.readyState === 'complete') {
-    __fn();
-  } else {
-    window.addEventListener('load', __fn);
-  }
-})(updateScales);
+        window.addEventListener('load', updateScales);
       }
     }
 
@@ -567,15 +574,5 @@
     // initStandaloneWheel(document.getElementById('quranNavGrid'), 'qnav-card');
   }
 
-  if (document.readyState === 'loading') {
-    (function (__fn) {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', __fn);
-  } else {
-    __fn();
-  }
-})(init);
-  } else {
-    init();
-  }
+  window.DT_registerInit(init);
 })();

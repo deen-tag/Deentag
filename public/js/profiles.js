@@ -831,7 +831,7 @@
 
     // Objectif en cours
     if (focus) {
-      html += '<div class="dt-focus-section" onclick="window.location.href=\'/'+(document.documentElement.getAttribute('lang')||'fr')+'/quran?sourate='+focus.id+'\'">';
+      html += '<div class="dt-focus-section" onclick="window.location.href=\'quran.html?sourate='+focus.id+'\'">';
       html += '<div class="dt-focus-top"><div class="dt-section-title" style="margin-bottom:0;">'+t('currentFocus')+'</div><div class="dt-focus-cta">'+t('continueLabel')+' <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="9 6 15 12 9 18"/></svg></div></div>';
       html += '<div class="dt-focus-name">'+focus.name+'</div>';
       html += '<div class="dt-focus-bar-track"><div class="dt-focus-bar-fill" style="width:'+focus.pct+'%;"></div></div>';
@@ -1266,10 +1266,19 @@
       if (document.querySelector('.app-tabbar')) { clearInterval(iv); injectProfileTab(); }
       else if (n > 30) clearInterval(iv);
     }, 100);
+
+    // Bouton profil de l'accueil (avatar + prénom dans l'en-tête) : avait
+    // onclick="window.DT.openProfileModal()" dans l'ancien HTML statique,
+    // perdu lors de la conversion en JSX. removeEventListener avant
+    // d'ajouter : évite les clics en double en navigation SPA répétée.
+    var greetingBtn = document.getElementById('homeGreetingBtn');
+    if (greetingBtn) {
+      greetingBtn.removeEventListener('click', openProfileModal);
+      greetingBtn.addEventListener('click', openProfileModal);
+    }
   }
 
-  if (document.readyState==='loading') { document.addEventListener('DOMContentLoaded',init); }
-  else { init(); }
+  window.DT_registerInit(init);
 
 })();
 

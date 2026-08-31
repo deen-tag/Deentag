@@ -736,13 +736,7 @@ function kidsCloseSettings() {
 // INITIALISATION
 // ============================================================
 
-(function (__fn) {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', __fn);
-  } else {
-    __fn();
-  }
-})(() => {
+window.DT_registerInit(() => {
   const savedLang = localStorage.getItem('deentag_lang') || 'fr';
   kidsApplyLang(savedLang);
 

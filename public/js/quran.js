@@ -524,13 +524,7 @@ function renderSurahList(surahIds, filter) {
 }
 
 // Recherche
-(function (__fn) {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', __fn);
-  } else {
-    __fn();
-  }
-})(() => {
+window.DT_registerInit(() => {
   const search = document.getElementById('bsSearch');
   if (search) {
     search.addEventListener('input', () => {
@@ -1182,13 +1176,7 @@ function closeSettings() {
 // SWIPE BOTTOM SHEET
 // ============================================================
 
-(function (__fn) {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', __fn);
-  } else {
-    __fn();
-  }
-})(() => {
+window.DT_registerInit(() => {
   const sheet = document.getElementById('bottomSheet');
   if (!sheet) return;
 
@@ -1293,13 +1281,7 @@ function handleNfcParams() {
 // INITIALISATION
 // ============================================================
 
-(function (__fn) {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', __fn);
-  } else {
-    __fn();
-  }
-})(() => {
+window.DT_registerInit(() => {
   const savedTheme = localStorage.getItem('deentag_theme') || 'day';
   document.body.classList.remove('day', 'night');
   document.body.classList.add(savedTheme);

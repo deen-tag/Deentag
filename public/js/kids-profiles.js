@@ -711,16 +711,6 @@
     }, 100);
   }
 
-  if (document.readyState === 'loading') {
-    (function (__fn) {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', __fn);
-  } else {
-    __fn();
-  }
-})(init);
-  } else {
-    init();
-  }
+  window.DT_registerInit(init);
 
 })();
