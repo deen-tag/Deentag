@@ -521,6 +521,24 @@
   function init() {
     if (!document.getElementById('prayerGauge')) return;
     buildTrackSkeleton();
+
+    // Les boutons avaient un attribut onclick="..." dans l'ancien HTML
+    // statique ; ça ne se convertit pas automatiquement en JSX, donc le
+    // clic ne faisait plus rien après la migration. On rebranche ici,
+    // comme le reste du fichier gère déjà toute l'interactivité du DOM.
+    // (removeEventListener avant d'ajouter : évite d'empiler des clics en
+    // double si on revient plusieurs fois sur l'accueil en navigation SPA.)
+    var locateBtn = document.getElementById('prayerLocateBtn');
+    if (locateBtn) {
+      locateBtn.removeEventListener('click', requestLocation);
+      locateBtn.addEventListener('click', requestLocation);
+    }
+    var calBtn = document.getElementById('pgCalBtn');
+    if (calBtn) {
+      calBtn.removeEventListener('click', openCalendar);
+      calBtn.addEventListener('click', openCalendar);
+    }
+
     var saved = loadJSON(LOC_KEY);
     if (saved && saved.lat != null) {
       // Localisation déjà connue (visite précédente) : on charge directement, pas de popup.

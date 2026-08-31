@@ -1266,6 +1266,16 @@
       if (document.querySelector('.app-tabbar')) { clearInterval(iv); injectProfileTab(); }
       else if (n > 30) clearInterval(iv);
     }, 100);
+
+    // Bouton profil de l'accueil (avatar + prénom dans l'en-tête) : avait
+    // onclick="window.DT.openProfileModal()" dans l'ancien HTML statique,
+    // perdu lors de la conversion en JSX. removeEventListener avant
+    // d'ajouter : évite les clics en double en navigation SPA répétée.
+    var greetingBtn = document.getElementById('homeGreetingBtn');
+    if (greetingBtn) {
+      greetingBtn.removeEventListener('click', openProfileModal);
+      greetingBtn.addEventListener('click', openProfileModal);
+    }
   }
 
   window.DT_registerInit(init);

@@ -124,6 +124,39 @@ window.DT_registerInit(() => {
   checkUrlParams();
 });
 
+// ── SPLASH DE LANCEMENT (Kids) ──
+// Repris de l'ancien kids.html : ce script y était en <script> inline,
+// perdu lors de l'extraction du HTML vers content/kids/*.html (les
+// fragments HTML ne conservent pas les <script>). Sans lui, #kidsSplash
+// reste affiché indéfiniment, quelle que soit la page.
+window.DT_registerInit(() => {
+  const el = document.getElementById('kidsSplash');
+  if (!el) return;
+
+  const t0 = performance.now();
+  const MIN_VISIBLE = 350;
+  const MAX_VISIBLE = 2500;
+  let hidden = false;
+
+  function hideSplash() {
+    if (hidden) return;
+    hidden = true;
+    const elapsed = performance.now() - t0;
+    const wait = Math.max(0, MIN_VISIBLE - elapsed);
+    setTimeout(() => {
+      el.classList.add('hide');
+      setTimeout(() => { el.style.display = 'none'; }, 400);
+    }, wait);
+  }
+
+  if (document.readyState === 'complete') {
+    hideSplash();
+  } else {
+    window.addEventListener('load', hideSplash, { once: true });
+  }
+  setTimeout(hideSplash, MAX_VISIBLE);
+});
+
 window.addEventListener('deentag:profileChanged', () => {
   listenedDuas = {};
   currentCat   = null;
