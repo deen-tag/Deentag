@@ -1,0 +1,128 @@
+/* ============================================================
+   DEENTAG — SHOP.CSS
+   Récupéré depuis le <style> inline de l'ancien shop.html
+   (perdu lors de l'extraction HTML -> content/shop/*.html).
+   S'appuie sur les tokens définis dans adult.css (--gold, --text, ...)
+   ============================================================ */
+
+/* ── CARROUSEL ── */
+.sh-gallery{padding:12px 0 0}
+.sh-carousel{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:0 14px 10px;scrollbar-width:none}
+.sh-carousel::-webkit-scrollbar{display:none}
+.sh-carousel-item{flex:0 0 82vw;max-width:320px;scroll-snap-align:start;border-radius:18px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;-webkit-tap-highlight-color:transparent;position:relative}
+.sh-carousel-item img{width:100%;height:100%;object-fit:cover;display:block}
+.sh-hero-overlay{position:absolute;left:0;right:0;bottom:0;padding:28px 18px 18px;background:linear-gradient(to top,rgba(10,10,8,0.72),rgba(10,10,8,0.32) 55%,transparent);pointer-events:none}
+.sh-hero-tagline{font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.04em;color:#fff;line-height:1.4;margin-bottom:8px;text-shadow:0 1px 6px rgba(0,0,0,0.4)}
+.sh-hero-scan{display:inline-flex;align-items:center;gap:6px;font-family:'Spectral',serif;font-style:italic;font-size:12.5px;color:#F0DDA0;background:rgba(0,0,0,0.28);border:1px solid rgba(240,221,160,0.35);border-radius:20px;padding:5px 12px}
+.sh-carousel-dots{display:flex;justify-content:center;gap:6px;padding:4px 0 10px}
+.sh-dot{width:5px;height:5px;border-radius:50%;background:rgba(201,168,76,0.25);transition:background 0.2s,width 0.2s;cursor:pointer}
+.sh-dot.active{background:var(--gold);width:18px;border-radius:3px}
+
+/* ── HEADER ── */
+.sh-header{padding:28px 20px 0}
+.sh-title{font-family:'Cinzel',serif;font-size:19px;letter-spacing:0.1em;color:var(--text);font-weight:600;line-height:1.25;margin-bottom:8px}
+.sh-subtitle{font-family:'Spectral',serif;font-style:italic;font-size:14px;color:var(--text3);line-height:1.6;margin-bottom:20px}
+
+/* ── BADGES ── */
+.sh-badges{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:28px}
+.sh-badge{font-family:'Cinzel',serif;font-size:7px;letter-spacing:0.2em;padding:5px 11px;border-radius:20px;border:1px solid rgba(201,168,76,0.2);color:var(--text3);text-transform:uppercase;background:transparent}
+.sh-badge.gold{color:var(--gold);border-color:rgba(201,168,76,0.4)}
+
+/* ── SEPARATEUR ── */
+.sh-sep{display:flex;align-items:center;gap:12px;padding:0 20px;margin:32px 0 20px}
+.sh-sep-line{flex:1;height:1px;background:var(--card-border);opacity:0.5}
+.sh-sep-label{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.4em;color:var(--text3);text-transform:uppercase;white-space:nowrap}
+
+/* ── OFFRES ── */
+.sh-offers{padding:0 20px;display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.sh-offer-card{border-radius:14px;padding:15px 16px;cursor:pointer;position:relative;background:var(--card-bg);border:1.5px solid transparent;transition:border-color 0.2s;-webkit-tap-highlight-color:transparent}
+.sh-offer-card.selected{border-color:var(--gold);background:rgba(201,168,76,0.04)}
+.sh-offer-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.sh-offer-radio{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--card-border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:border-color 0.2s}
+.sh-offer-card.selected .sh-offer-radio{border-color:var(--gold)}
+.sh-offer-radio-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);opacity:0;transform:scale(0.4);transition:opacity 0.2s,transform 0.2s}
+.sh-offer-card.selected .sh-offer-radio-dot{opacity:1;transform:scale(1)}
+.sh-offer-name{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.12em;color:var(--text);font-weight:600;flex:1;padding:0 12px}
+.sh-offer-price{font-family:'Cinzel',serif;font-size:15px;color:var(--text);font-weight:700}
+.sh-offer-card.selected .sh-offer-price{color:var(--gold)}
+.sh-offer-desc{font-family:'Spectral',serif;font-style:italic;font-size:12.5px;color:var(--text3);padding-left:30px;line-height:1.5}
+.sh-offer-badge{position:absolute;top:-9px;right:12px;background:linear-gradient(135deg,var(--gold),#CEB060);color:var(--bg);font-family:'Cinzel',serif;font-size:7px;letter-spacing:0.13em;padding:3px 10px;border-radius:10px;text-transform:uppercase;font-weight:700}
+
+/* ── COLORIS ── */
+.sh-coloris-wrap{padding:0 20px 28px}
+.sh-coloris-label{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.3em;color:var(--text3);text-transform:uppercase;margin-bottom:12px}
+.sh-coloris-btns{display:flex;gap:8px}
+.sh-coloris-btn{flex:1;border-radius:12px;padding:12px 5px;background:var(--card-bg);border:1.5px solid transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;transition:border-color 0.2s;-webkit-tap-highlight-color:transparent}
+.sh-coloris-btn.active{border-color:var(--gold)}
+.sh-coloris-swatch{width:24px;height:24px;border-radius:50%}
+.sh-coloris-name{font-family:'Spectral',serif;font-size:11.5px;color:var(--text2)}
+
+/* ── STICKY CTA ── */
+.sh-sticky{position:fixed;bottom:0;left:0;right:0;z-index:900;padding:8px 14px calc(env(safe-area-inset-bottom) + 10px);background:var(--bg);pointer-events:none}
+.sh-sticky-inner{pointer-events:all;display:flex;align-items:center;gap:10px;background:var(--bg);border-top:1px solid rgba(201,168,76,0.15);padding:9px 14px}
+.sh-sticky-info{flex:1}
+.sh-sticky-price{font-family:'Cinzel',serif;font-size:20px;color:var(--text);font-weight:700;line-height:1.1}
+.sh-sticky-label{font-family:'Spectral',serif;font-style:italic;font-size:11px;color:var(--text3);margin-top:2px}
+.sh-sticky-btn{background:linear-gradient(135deg,var(--gold),#CEB060);color:#0e1a0f;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;font-weight:700;border:none;border-radius:10px;padding:11px 20px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity 0.2s,transform 0.15s;box-shadow:0 2px 10px rgba(201,168,76,0.2)}
+.sh-sticky-btn:active{opacity:0.88;transform:scale(0.97)}
+
+/* ── STEPS ── */
+.sh-steps{padding:0 20px 32px;display:flex;flex-direction:column;gap:24px}
+.sh-step{display:flex;gap:16px;align-items:flex-start}
+.sh-step-num{width:32px;height:32px;border-radius:50%;background:rgba(201,168,76,0.1);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:13px;color:var(--gold);font-weight:600;flex-shrink:0;margin-top:2px}
+.sh-step-title{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.18em;color:var(--text2);text-transform:uppercase;margin-bottom:5px}
+.sh-step-desc{font-family:'Spectral',serif;font-size:14px;color:var(--text3);line-height:1.65}
+
+/* ── MOCKUPS ── */
+.sh-mockup-wrap{padding:0 10px 36px;display:flex;gap:10px;justify-content:center;align-items:flex-end}
+.sh-mockup{position:relative;flex:1;max-width:120px}
+.sh-mockup-frame{position:relative;border-radius:24px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.25);background:#111;aspect-ratio:9/19}
+.sh-mockup-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.sh-mockup-frame::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:32%;height:12px;background:#111;border-radius:0 0 8px 8px;z-index:2}
+.sh-mockup-caption{text-align:center;margin-top:10px;font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.2em;color:var(--text3);text-transform:uppercase}
+.sh-mockup.main-mock{max-width:155px;transform:translateY(-18px)}
+.sh-mockup.main-mock .sh-mockup-frame{box-shadow:0 24px 60px rgba(0,0,0,0.3),0 0 40px rgba(201,168,76,0.07)}
+
+/* ── CHECKLIST ── */
+.sh-checklist{padding:0 20px 32px;display:flex;flex-direction:column;gap:14px}
+.sh-check-item{display:flex;align-items:flex-start;gap:12px}
+.sh-check-icon{font-size:12px;line-height:1.6;flex-shrink:0;color:var(--gold);opacity:0.7}
+.sh-check-text{font-family:'Spectral',serif;font-size:14px;color:var(--text3);line-height:1.55}
+.sh-check-text strong{font-weight:600;color:var(--text2)}
+
+/* ── ACCORDEONS ── */
+.sh-accordions{padding:0 20px 32px;display:flex;flex-direction:column;gap:0}
+.sh-accord{border-bottom:1px solid var(--card-border);overflow:hidden;background:transparent}
+.sh-accord:first-child{border-top:1px solid var(--card-border)}
+.sh-accord-header{display:flex;align-items:center;justify-content:space-between;padding:16px 0;cursor:pointer;-webkit-tap-highlight-color:transparent;gap:10px}
+.sh-accord-title{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.18em;color:var(--text2);text-transform:uppercase;flex:1}
+.sh-accord-icon{font-size:12px;color:var(--text3);transition:transform 0.3s;flex-shrink:0}
+.sh-accord.open .sh-accord-icon{transform:rotate(180deg)}
+.sh-accord-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease}
+.sh-accord.open .sh-accord-body{max-height:800px}
+.sh-accord-content{padding:0 0 18px;font-family:'Spectral',serif;font-size:13.5px;color:var(--text3);line-height:1.75}
+.sh-accord-content ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:6px}
+.sh-accord-content li{display:flex;gap:10px;align-items:flex-start}
+.sh-accord-content li::before{content:'–';color:var(--gold);opacity:0.6;flex-shrink:0}
+.sh-accord-stat{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.sh-accord-stat-item{background:rgba(201,168,76,0.06);border-radius:8px;padding:6px 12px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.12em;color:var(--text3);text-align:center}
+
+/* ── DIMENSIONS ── */
+.sh-dims{padding:0 20px 32px;display:flex;gap:12px}
+.sh-dim-item{flex:1;text-align:center;padding:16px 8px}
+.sh-dim-icon{font-size:20px;margin-bottom:4px}
+.sh-dim-val{font-family:'Cinzel',serif;font-size:26px;color:var(--text);font-weight:700;line-height:1;margin-bottom:5px}
+.sh-dim-unit{font-family:'Spectral',serif;font-size:11.5px;color:var(--text3)}
+
+/* ── ACCORD HINT ── */
+.sh-accord-hint{font-family:'Spectral',serif;font-size:11.5px;color:var(--text3);margin-top:3px;font-style:italic}
+
+/* ── TRUST ── */
+.sh-trust{padding:28px 20px;text-align:center;border-top:1px solid var(--card-border);border-bottom:1px solid var(--card-border);margin:0 0 8px}
+.sh-trust-stars{font-size:16px;letter-spacing:2px;margin-bottom:8px}
+.sh-trust-quote{font-family:'Spectral',serif;font-style:italic;font-size:14px;color:var(--text2);margin-bottom:20px}
+.sh-trust-items{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sh-trust-item{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.12em;color:var(--text3);line-height:1.8;text-transform:uppercase}
+.sh-trust-item br{display:block;margin-bottom:4px}
+
+.sh-scroll-pad{height:74px}
