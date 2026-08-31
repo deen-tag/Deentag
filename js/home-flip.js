@@ -35,7 +35,7 @@
     observer.observe(grid);
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
+  window.DT_registerInit(function () {
     // Accueil : 4 cartes, la grille entière tient facilement à l'écran
     // -> seuil strict à 100% (déclenchement seulement quand tout est visible).
     initFlipCascade('homeNavGrid', '.cat-icon-circle', 110, 1.0);

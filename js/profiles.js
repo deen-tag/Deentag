@@ -1268,8 +1268,7 @@
     }, 100);
   }
 
-  if (document.readyState==='loading') { document.addEventListener('DOMContentLoaded',init); }
-  else { init(); }
+  window.DT_registerInit(init);
 
 })();
 

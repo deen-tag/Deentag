@@ -51,7 +51,7 @@
   // app.js appelle ce hook après chaque changement de langue.
   window.DT_refreshHomeWidgetLang = renderHomeWidget;
 
-  document.addEventListener('DOMContentLoaded', renderHomeWidget);
+  window.DT_registerInit(renderHomeWidget);
 
   // ── Badge profil (topbar) ──
   function renderAccountCard() {
@@ -177,8 +177,8 @@
 
   window.DT_refreshGreetingLang = renderGreeting;
 
-  document.addEventListener('DOMContentLoaded', function () {
-    // profiles.js s'initialise sur le même DOMContentLoaded : on laisse
+  window.DT_registerInit(function () {
+    // profiles.js s'initialise via le même mécanisme : on laisse
     // un court délai pour être sûr que window.DT soit prêt.
     setTimeout(renderAccountCard, 50);
     setTimeout(renderGreeting, 50);

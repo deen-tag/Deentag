@@ -728,13 +728,7 @@ function handleNfcParams() {
 // SWIPE BOTTOM SHEET
 // ============================================================
 
-(function (__fn) {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', __fn);
-  } else {
-    __fn();
-  }
-})(() => {
+window.DT_registerInit(() => {
   const sheet = document.getElementById('bottomSheet');
   if (!sheet) return;
 
@@ -811,13 +805,7 @@ function handleNfcParams() {
 // INITIALISATION
 // ============================================================
 
-(function (__fn) {
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', __fn);
-  } else {
-    __fn();
-  }
-})(() => {
+window.DT_registerInit(() => {
   // Mode auto basé sur l'heure (6h–20h = jour, 20h–6h = nuit)
   // Si l'utilisateur a overridé manuellement on respecte son choix
   let savedTheme;
