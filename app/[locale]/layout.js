@@ -1,5 +1,6 @@
 import { LOCALES, DEFAULT_LOCALE, SITE_URL } from '../../lib/i18n-config';
 import { getMessages } from '../../lib/get-messages';
+import { getRuntimeMessages } from '../../lib/get-runtime-messages';
 import LangThemeInit from '../../components/LangThemeInit';
 import RouteInit from '../../components/RouteInit';
 
@@ -37,12 +38,29 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function LocaleLayout({ children, params }) {
+export default async function LocaleLayout({ children, params }) {
   const { locale } = params;
+  const runtimeMessages = await getRuntimeMessages();
 
   return (
     <html lang={locale}>
       <head>
+        {/*
+          DT_MESSAGES — traductions des petits textes d'interface (bouton
+          "Écouter", tailles de texte...) utilisées par les scripts hérités
+          (app.js). Avant, ces textes étaient dupliqués en dur dans app.js ;
+          ils viennent maintenant uniquement de messages/*.json (clé
+          "runtime"), assemblés par lib/get-runtime-messages.js. Un seul
+          endroit à modifier pour corriger un texte, plus deux.
+          Objet complet (8 langues) car il ne dépend pas de la locale de la
+          page courante et n'a donc pas besoin d'être réinjecté à chaque
+          navigation SPA (contrairement à DT_registerInit).
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.DT_MESSAGES = ${JSON.stringify(runtimeMessages)};`,
+          }}
+        />
         {/*
           DT_registerInit — remplace tous les anciens
           `document.addEventListener('DOMContentLoaded', fn)` des scripts hérités.
