@@ -1,6 +1,17 @@
 // ===== DEENTAG — QURAN.JS =====
 // Fichier JS propre au Coran — ne touche pas à app.js ni duas.js
 // ============================================================
+//
+// Tout le fichier est enveloppé dans une IIFE (comme nav.js) pour que ses
+// const/let/function ne soient plus déclarés dans l'espace global. Avant,
+// une ré-exécution du script (navigation SPA Next.js) provoquait une
+// SyntaxError "already declared" qui bloquait silencieusement tout le
+// fichier — donc les boutons de catégories du Coran (ouverture du bottom
+// sheet) sans passer par un rechargement complet de la page.
+// Les fonctions référencées depuis les onclick="" du HTML (content/quran/*.html)
+// et depuis le HTML généré dynamiquement dans ce fichier sont explicitement
+// exposées sur window en bas du fichier.
+(function () {
 
 const LANGS = ['fr', 'en', 'es', 'de', 'it', 'nl', 'pt', 'tr'];
 
@@ -1911,3 +1922,33 @@ function updateAllVerseMemBtns(surahId) {
   }
 }
 
+
+// ============================================================
+// EXPOSITION GLOBALE — fonctions référencées par onclick="" dans le HTML
+// (content/quran/*.html) et dans les templates générés par ce fichier,
+// + SURAHS dont quran-kids.js a besoin en global (page quran-kids, qui
+// charge quran.js et quran-kids.js ensemble).
+// ============================================================
+window.SURAHS                = SURAHS;
+window.applySizeLevel        = applySizeLevel;
+window.backToList            = backToList;
+window.closeSettings         = closeSettings;
+window.closeSheet            = closeSheet;
+window.cycleSpeed            = cycleSpeed;
+window.nextVerse             = nextVerse;
+window.openNavSheet          = openNavSheet;
+window.openSettings          = openSettings;
+window.prevVerse             = prevVerse;
+window.resetColor            = resetColor;
+window.resumeLastRead        = resumeLastRead;
+window.selectColor           = selectColor;
+window.toggleAudio           = toggleAudio;
+window.toggleColorPicker     = toggleColorPicker;
+window.togglePhonetic        = togglePhonetic;
+window.toggleTheme           = toggleTheme;
+window.toggleTranslation     = toggleTranslation;
+window.playFromVerse         = playFromVerse;
+window.toggleSurahMemorized  = toggleSurahMemorized;
+window.openJuzSheet          = openJuzSheet;
+
+})();
