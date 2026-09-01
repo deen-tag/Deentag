@@ -2865,21 +2865,6 @@ body.page-quran::before {
   background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(var(--gold-rgb),0.07) 0%, transparent 70%);
 }
 
-.quran-header {
-  text-align:center; padding:13px 20px 6px; position:relative; z-index:1;
-}
-
-.quran-brand {
-  font-family:'Cinzel Decorative', serif; font-size:18px; letter-spacing:0.18em;
-  color:var(--gold); font-weight:700; line-height:1.2;
-}
-
-.quran-ornament {
-  display:flex; align-items:center; gap:10px; padding:6px 24px 4px;
-}
-
-.quran-ornament-line { flex:1; height:1px; background:rgba(var(--gold-rgb),0.4); }
-
 .page-quran .ornament-star { color:var(--gold); font-size:10px; }
 
 .quran-arabic-title {
