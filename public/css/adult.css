@@ -2865,7 +2865,6 @@ body.page-quran::before {
   background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(var(--gold-rgb),0.07) 0%, transparent 70%);
 }
 
-.page-quran .ornament-star { color:var(--gold); font-size:10px; }
 
 .quran-arabic-title {
   font-family: 'Amiri', serif;
