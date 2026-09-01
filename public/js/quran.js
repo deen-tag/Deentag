@@ -1923,6 +1923,116 @@ function updateAllVerseMemBtns(surahId) {
 }
 
 
+// ===== POUSSIÈRE DE LUMIÈRE (mode nuit) =====
+// Copié depuis app.js : cette page ne charge pas app.js, donc l'effet
+// d'étoiles (zone #nightStars fournie par Topbar.js) restait vide en
+// mode nuit sur le Coran. Enregistré via DT_registerInit pour survivre
+// à une navigation SPA, comme le reste des inits de ce fichier.
+function generateStars() {
+  const container = document.getElementById('nightStars');
+  if (!container) return;
+  if (container.querySelector('canvas')) return; // déjà initialisé
+
+  const canvas = document.createElement('canvas');
+  canvas.style.position = 'absolute';
+  canvas.style.inset = '0';
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
+  canvas.style.pointerEvents = 'none';
+  container.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let animFrame = null;
+  let isVisible = false;
+
+  function resize() {
+    canvas.width = container.offsetWidth || window.innerWidth;
+    canvas.height = container.offsetHeight || 58;
+  }
+
+  class DustParticle {
+    constructor(init) {
+      this.reset(init);
+    }
+    reset(init) {
+      this.x = Math.random() * canvas.width;
+      this.y = init ? Math.random() * canvas.height : (Math.random() < 0.5 ? -3 : canvas.height + 3);
+      this.size = Math.random() * 1.2 + 0.3;
+      this.speedX = (Math.random() - 0.5) * 0.22;
+      this.speedY = (Math.random() - 0.5) * 0.16;
+      this.opacity = 0;
+      this.maxOpacity = Math.random() * 0.35 + 0.08;
+      this.life = 0;
+      this.maxLife = Math.random() * 500 + 300;
+      this.twinklePhase = Math.random() * Math.PI * 2;
+      this.twinkleSpeed = Math.random() * 0.035 + 0.008;
+      this.currentOpacity = 0;
+    }
+    update() {
+      this.life++;
+      this.x += this.speedX;
+      this.y += this.speedY;
+      this.twinklePhase += this.twinkleSpeed;
+      const ratio = this.life / this.maxLife;
+      let base;
+      if (ratio < 0.15) base = (ratio / 0.15) * this.maxOpacity;
+      else if (ratio > 0.75) base = ((1 - ratio) / 0.25) * this.maxOpacity;
+      else base = this.maxOpacity;
+      this.currentOpacity = base * (Math.sin(this.twinklePhase) * 0.3 + 0.7);
+      if (this.life >= this.maxLife) this.reset(false);
+    }
+    draw() {
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, this.currentOpacity);
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = '#F8E8A0';
+      ctx.shadowColor = '#C9A84C';
+      ctx.shadowBlur = 4;
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  function initParticles() {
+    resize();
+    particles = [];
+    for (let i = 0; i < 70; i++) particles.push(new DustParticle(true));
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    animFrame = requestAnimationFrame(animate);
+  }
+
+  function startDust() {
+    if (isVisible) return;
+    isVisible = true;
+    initParticles();
+    animate();
+  }
+
+  function stopDust() {
+    if (!isVisible) return;
+    isVisible = false;
+    if (animFrame) { cancelAnimationFrame(animFrame); animFrame = null; }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  const body = document.body;
+  if (body.classList.contains('night')) startDust();
+
+  const observer = new MutationObserver(() => {
+    body.classList.contains('night') ? startDust() : stopDust();
+  });
+  observer.observe(body, { attributes: true, attributeFilter: ['class'] });
+
+  window.addEventListener('resize', () => { if (isVisible) initParticles(); });
+}
+window.DT_registerInit(generateStars);
+
 // ============================================================
 // EXPOSITION GLOBALE — fonctions référencées par onclick="" dans le HTML
 // (content/quran/*.html) et dans les templates générés par ce fichier,
