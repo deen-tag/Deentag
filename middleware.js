@@ -27,14 +27,23 @@ export function middleware(request) {
   );
   if (pathnameHasLocale) return;
 
-  // Ignore les fichiers statiques et API
+  // Ignore les fichiers statiques et routes spéciales Next.js (robots.txt,
+  // sitemap.xml...). Avant, on ignorait toute URL contenant un point — ça
+  // laissait passer /index.html sans le rediriger vers /fr/..., et
+  // "index.html" se retrouvait affiché comme si c'était la langue. Maintenant
+  // seuls les vrais chemins d'assets connus sont exemptés ; tout le reste
+  // (y compris /index.html) est redirigé normalement, et retombera sur un
+  // vrai 404 s'il ne correspond à aucune page.
   if (
-    pathname.startsWith('/css') ||
-    pathname.startsWith('/js') ||
-    pathname.startsWith('/images') ||
-    pathname.startsWith('/Audio') ||
-    pathname.startsWith('/api') ||
-    pathname.includes('.')
+    pathname.startsWith('/css/') ||
+    pathname.startsWith('/js/') ||
+    pathname.startsWith('/images/') ||
+    pathname.startsWith('/Audio/') ||
+    pathname.startsWith('/api/') ||
+    pathname === '/favicon.png' ||
+    pathname === '/favicon.ico' ||
+    pathname === '/robots.txt' ||
+    pathname === '/sitemap.xml'
   ) {
     return;
   }
