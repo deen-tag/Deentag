@@ -131,7 +131,7 @@ body {
 }
 body::before {
   content:''; position:fixed; top:0; left:0; right:0; height:280px; z-index:0; pointer-events:none;
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(var(--gold-rgb),0.07) 0%, transparent 70%);
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(var(--gold-rgb),0.10) 0%, transparent 70%);
 }
 
 /* ===== SCROLLBAR ===== */
@@ -646,10 +646,10 @@ body.night .theme-knob-btn-inner svg { color: #8B6914; }
 /* Styles spécifiques à l'app principale (index.html) */
 /* Les styles partagés sont dans common.css */
 
-body::before {
-  height:320px; z-index:201;
-  background:radial-gradient(ellipse at 50% 0%, rgba(var(--gold-rgb),0.13) 0%, transparent 70%);
-}
+/* (Ancienne règle body::before dupliquée et non scopée, supprimée —
+   elle écrasait par erreur le halo doré sur Accueil et Invocations
+   avec des valeurs différentes de celles utilisées partout ailleurs.
+   Une seule définition fait foi désormais : ligne ~132.) */
 
 /* ===== TOPBAR PARTAGÉE ===== */
 .inv-topbar {
@@ -2860,10 +2860,9 @@ body.day .soon-close { color:var(--gold-dark); border-color:var(--gold-dark); }
    Sélecteurs préfixés .page-quran quand ils diffèrent de la
    page d'accueil — ajouter class="page-quran" sur le <body>
    ============================================================ */
-body.page-quran::before {
-  height:280px; z-index:0;
-  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(var(--gold-rgb),0.07) 0%, transparent 70%);
-}
+/* (Ancienne règle body.page-quran::before, supprimée — désormais
+   redondante puisque la seule règle body::before restante (ligne
+   ~132) s'applique déjà identiquement à toutes les pages.) */
 
 
 .quran-arabic-title {
