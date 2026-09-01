@@ -295,7 +295,7 @@ body.night .logo-night { display:block; }
 .cat-card {
   display:flex; flex-direction:column; align-items:center;
   justify-content:flex-end; gap:0px; padding:0px 0px 6px;
-  border-radius:14px; cursor:pointer; height:188px;
+  border-radius:14px; cursor:pointer; height:178px;
   background: var(--card-bg);
   border: none;
   box-shadow: 0 1px 2px rgba(90,65,10,0.05), 0 6px 14px rgba(90,65,10,0.06);
@@ -354,16 +354,16 @@ body.night .cat-card:active {
   flex-shrink:1;
   position:relative;
 }
-.cat-icon { width:100%; height:100%; max-height:148px; object-fit:contain; }
+.cat-icon { width:100%; height:100%; max-height:135px; object-fit:contain; }
 .cat-icon-circle .cat-icon {
   position:absolute; z-index:2;
-  width:100%; height:100%; max-height:148px;
+  width:100%; height:100%; max-height:135px;
   top:auto; bottom:0; left:50%; transform:translate(-50%, 0);
   object-fit:contain;
   filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
 }
 /* Icones carrees (invocations) : reduites pour matcher le poids visuel des badges elances de l'accueil */
-.cat-grid .cat-icon-circle .cat-icon { max-height:138px; }
+.cat-grid .cat-icon-circle .cat-icon { max-height:135px; }
 
 /* ===== ANIMATION CASCADE — icônes accueil (effet "pièce qui tourne") =====
    Technique à 2 faces superposées (front/back) + backface-visibility :
@@ -2108,7 +2108,7 @@ body.night .dua-close-btn:active {
   padding:8px 20px 2px;
 }
 .index-brand {
-  font-family:'Cinzel Decorative',serif; font-size:22px; letter-spacing:0.18em;
+  font-family:'Cinzel Decorative',serif; font-size:18px; letter-spacing:0.18em;
   color:var(--gold); font-weight:700; line-height:1.2;
 }
 .index-ornament {
@@ -2870,7 +2870,7 @@ body.page-quran::before {
 }
 
 .quran-brand {
-  font-family:'Cinzel Decorative', serif; font-size:22px; letter-spacing:0.18em;
+  font-family:'Cinzel Decorative', serif; font-size:18px; letter-spacing:0.18em;
   color:var(--gold); font-weight:700; line-height:1.2;
 }
 
@@ -3604,7 +3604,7 @@ body.has-tabbar {
 .qnav-card {
   display: flex; flex-direction: column; align-items: center;
   justify-content: flex-start; gap: 4px; padding: 10px 8px 8px;
-  border-radius: 14px; cursor: pointer; height: 230px;
+  border-radius: 14px; cursor: pointer; height: 217px;
   flex: none; width: 100%;
   /* Pas de cadre de carte : juste l'écusson + le label. */
   background: none !important;
@@ -3640,7 +3640,7 @@ body.night .qnav-card:active {
 body.night .qnav-watermark { display: none; }
 
 .qnav-icon {
-  width: 100%; height: 148px; flex: 0 0 148px;
+  width: 100%; height: 135px; flex: 0 0 135px;
   display: flex; align-items: center; justify-content: center;
   position: relative; z-index: 1;
   color: var(--gold-dark);
@@ -3652,7 +3652,7 @@ body.night .qnav-icon { color: var(--gold); }
 
 .qnav-icon .qnav-img {
   position: absolute; z-index: 2;
-  width: 100%; height: 100%; max-height: 148px;
+  width: 100%; height: 100%; max-height: 135px;
   top: 50%; left: 50%; transform: translate(-50%, -50%);
   object-fit: contain;
   display: block;
@@ -3675,8 +3675,8 @@ body.night .qnav-icon { color: var(--gold); }
 
 .qnav-label {
   font-family: 'Cinzel', serif;
-  font-size: 10px; font-weight: 600;
-  letter-spacing: 0.15em; color: var(--gold-dark);
+  font-size: 9px; font-weight: 600;
+  letter-spacing: 0.10em; color: var(--gold-dark);
   text-transform: uppercase;
   position: relative; z-index: 1;
   line-height: 1.4;
