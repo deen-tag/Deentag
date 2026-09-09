@@ -58,6 +58,15 @@ body.night .dt-hero-fade{background:linear-gradient(to top, var(--bg) 0%, rgba(5
 .dt-step-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.14em;color:var(--text2);text-transform:uppercase;margin-bottom:6px}
 .dt-step-desc{font-family:'Spectral',serif;font-size:13.5px;color:var(--text3);line-height:1.6}
 
+/* ── COMPATIBILITE NFC (compact, sous les 3 étapes) ── */
+.dt-compat{display:flex;gap:10px;align-items:flex-start;margin-top:14px;padding:13px 14px;background:rgba(var(--gold-rgb),0.06);border:1px solid rgba(var(--gold-rgb),0.18);border-radius:12px}
+.dt-compat-icon{color:var(--gold);font-size:12px;flex-shrink:0;margin-top:2px}
+.dt-compat-title{display:block;font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.08em;color:var(--text2);text-transform:uppercase;margin-bottom:3px}
+.dt-compat-text{display:block;font-family:'Spectral',serif;font-size:12.5px;color:var(--text3);line-height:1.55}
+
+/* ── IDEE CADEAU (bloc court) ── */
+.dt-gift-wrap{padding:0 20px;margin:36px 0 0}
+
 /* ============================================================
    4. DECOUVERTE DU SITE (mockups)
    ============================================================ */
