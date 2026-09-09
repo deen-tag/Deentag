@@ -22,13 +22,16 @@
    ============================================================ */
 .dt-hero{position:relative;margin:0 0 0;padding:0}
 .dt-hero-img-wrap{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:#111}
+.dt-hero-img-tall{aspect-ratio:3/4;min-height:56vh;max-height:640px}
 .dt-hero-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
-.dt-hero-fade{position:absolute;left:0;right:0;bottom:0;height:55%;background:linear-gradient(to top, var(--bg) 0%, rgba(237,232,213,0.55) 45%, transparent 100%);pointer-events:none}
-body.night .dt-hero-fade{background:linear-gradient(to top, var(--bg) 0%, rgba(5,14,18,0.6) 45%, transparent 100%)}
+.dt-hero-fade{position:absolute;left:0;right:0;bottom:0;height:46%;background:linear-gradient(to top, var(--bg) 0%, rgba(237,232,213,0.6) 40%, transparent 100%);pointer-events:none}
+body.night .dt-hero-fade{background:linear-gradient(to top, var(--bg) 0%, rgba(5,14,18,0.65) 40%, transparent 100%)}
 
-.dt-hero-body{padding:6px 20px 0;text-align:center;margin-top:-38px;position:relative;z-index:2}
-.dt-hero-eyebrow{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.34em;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
-.dt-hero-title{font-family:'Cinzel',serif;font-size:23px;line-height:1.35;letter-spacing:0.01em;color:var(--text);font-weight:600;margin-bottom:14px}
+.dt-hero-body{padding:2px 20px 0;text-align:center;margin-top:-22px;position:relative;z-index:2}
+.dt-hero-eyebrow{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.42em;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
+.dt-hero-title{font-family:'Cinzel',serif;font-size:24px;line-height:1.32;letter-spacing:0.01em;color:var(--text);font-weight:600;margin-bottom:18px}
+.dt-hero-beat{display:flex;flex-direction:column;gap:6px;max-width:300px;margin:0 auto 20px}
+.dt-hero-beat span{font-family:'Spectral',serif;font-style:italic;font-size:13.5px;color:var(--text3);line-height:1.5}
 .dt-hero-text{font-family:'Spectral',serif;font-size:14.5px;color:var(--text3);line-height:1.7;max-width:340px;margin:0 auto 18px}
 
 .dt-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-bottom:22px}
@@ -51,12 +54,20 @@ body.night .dt-hero-fade{background:linear-gradient(to top, var(--bg) 0%, rgba(5
    3. COMMENT CA MARCHE
    ============================================================ */
 .dt-steps-wrap{padding:0 20px}
-.dt-steps-wrap .dt-h2{text-align:center;margin-bottom:30px}
-.dt-steps{display:flex;flex-direction:column;gap:22px}
-.dt-step{display:flex;gap:16px;align-items:flex-start;background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:16px}
-.dt-step-num{width:34px;height:34px;border-radius:50%;background:rgba(var(--gold-rgb),0.12);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:13px;color:var(--gold);font-weight:700;flex-shrink:0}
+.dt-steps-wrap .dt-h2{text-align:center;margin-bottom:6px}
+
+/* ── FLUX VERTICAL "COMMENT CA MARCHE" ── */
+.dt-flow{display:flex;flex-direction:column;align-items:stretch}
+.dt-flow-step{display:flex;gap:14px;align-items:flex-start}
+.dt-flow-num{width:30px;height:30px;border-radius:50%;background:rgba(var(--gold-rgb),0.12);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:11.5px;color:var(--gold);font-weight:700;flex-shrink:0}
+.dt-flow-body{padding-top:3px}
 .dt-step-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.14em;color:var(--text2);text-transform:uppercase;margin-bottom:6px}
 .dt-step-desc{font-family:'Spectral',serif;font-size:13.5px;color:var(--text3);line-height:1.6}
+.dt-flow-connector{display:flex;justify-content:flex-start;padding-left:14px;color:var(--gold);opacity:0.45;font-size:13px;line-height:1;margin:2px 0}
+.dt-flow-photo{position:relative;margin:6px 0 6px 44px;border-radius:16px;overflow:hidden;max-width:230px;aspect-ratio:4/5;box-shadow:0 10px 26px rgba(0,0,0,0.14)}
+.dt-flow-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.dt-flow-badge{position:absolute;left:10px;bottom:10px;display:flex;align-items:center;gap:6px;background:rgba(247,243,231,0.92);color:var(--gold);border-radius:20px;padding:6px 11px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;box-shadow:0 3px 10px rgba(0,0,0,0.15)}
+body.night .dt-flow-badge{background:rgba(10,18,22,0.9)}
 
 /* ── COMPATIBILITE NFC (compact, sous les 3 étapes) ── */
 .dt-compat{display:flex;gap:10px;align-items:flex-start;margin-top:14px;padding:13px 14px;background:rgba(var(--gold-rgb),0.06);border:1px solid rgba(var(--gold-rgb),0.18);border-radius:12px}
@@ -147,20 +158,22 @@ body.night .dt-hero-fade{background:linear-gradient(to top, var(--bg) 0%, rgba(5
 .dt-accord-content{padding:0 0 18px;font-family:'Spectral',serif;font-size:13.5px;color:var(--text3);line-height:1.7}
 
 /* ============================================================
-   10. OFFRE / ACHAT
+   10. OFFRE / ACHAT — vraie fiche produit
    ============================================================ */
 .dt-buy-wrap{padding:0 20px}
-.dt-buy-wrap .dt-h2{text-align:center}
-.dt-buy-wrap .dt-lead{text-align:center;max-width:320px;margin:10px auto 26px}
-.dt-buy-card{background:var(--card-bg);border:1.5px solid rgba(var(--gold-rgb),0.35);border-radius:20px;padding:22px 20px;box-shadow:0 10px 30px rgba(0,0,0,0.08)}
-.dt-buy-top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px}
-.dt-buy-name{font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.12em;color:var(--text);font-weight:700}
-.dt-buy-price{font-family:'Cinzel',serif;font-size:22px;color:var(--gold);font-weight:700}
-.dt-buy-note{font-family:'Spectral',serif;font-style:italic;font-size:12px;color:var(--text3);margin-bottom:14px}
-.dt-buy-includes{font-family:'Spectral',serif;font-size:12.5px;color:var(--text2);line-height:1.6;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--card-border)}
-.dt-buy-checklist{display:flex;flex-direction:column;gap:9px;margin-bottom:20px}
-.dt-buy-check{display:flex;align-items:center;gap:9px;font-family:'Spectral',serif;font-size:13px;color:var(--text2)}
+.dt-buy-wrap .dt-h2{text-align:center;margin-bottom:22px}
+.dt-buy-card{background:var(--card-bg);border:1.5px solid rgba(var(--gold-rgb),0.35);border-radius:22px;padding:26px 22px 24px;box-shadow:0 14px 36px rgba(0,0,0,0.1)}
+.dt-buy-head{text-align:center;padding-bottom:20px;margin-bottom:18px;border-bottom:1px solid var(--card-border)}
+.dt-buy-name{font-family:'Cinzel',serif;font-size:15px;letter-spacing:0.28em;color:var(--text);font-weight:700;margin-bottom:6px}
+.dt-buy-tagline{font-family:'Spectral',serif;font-style:italic;font-size:12.5px;color:var(--text3);margin-bottom:14px}
+.dt-buy-price{font-family:'Cinzel',serif;font-size:30px;color:var(--gold);font-weight:700;line-height:1;margin-bottom:6px}
+.dt-buy-note{font-family:'Spectral',serif;font-style:italic;font-size:11.5px;color:var(--text3)}
+.dt-buy-section-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.24em;color:var(--text3);text-transform:uppercase;margin-bottom:12px}
+.dt-buy-includes-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.dt-buy-check{display:flex;align-items:center;gap:9px;font-family:'Spectral',serif;font-size:13.5px;color:var(--text2);font-weight:500}
 .dt-buy-check-icon{color:var(--gold);font-size:12px;flex-shrink:0}
+.dt-buy-techline{text-align:center;font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.12em;color:var(--text3);text-transform:uppercase;padding:14px 0;margin-bottom:16px;border-top:1px solid var(--card-border)}
+.dt-buy-cta{width:100%;margin:0;display:block}
 
 /* ============================================================
    11. CTA FINAL
