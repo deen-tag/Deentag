@@ -26,6 +26,7 @@ export default async function ShopPage({ params }) {
       <Script src="/js/duas.js" strategy="afterInteractive" />
       <Script src="/js/app.js" strategy="afterInteractive" />
       <Script src="/js/nav.js" strategy="afterInteractive" />
+      <Script src="/js/shop.js" strategy="afterInteractive" />
     </>
   );
 }
