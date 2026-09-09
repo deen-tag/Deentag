@@ -156,7 +156,8 @@ body.night .dt-hero-fade{background:linear-gradient(to top, var(--bg) 0%, rgba(5
 .dt-buy-top{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:4px}
 .dt-buy-name{font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.12em;color:var(--text);font-weight:700}
 .dt-buy-price{font-family:'Cinzel',serif;font-size:22px;color:var(--gold);font-weight:700}
-.dt-buy-note{font-family:'Spectral',serif;font-style:italic;font-size:12px;color:var(--text3);margin-bottom:18px}
+.dt-buy-note{font-family:'Spectral',serif;font-style:italic;font-size:12px;color:var(--text3);margin-bottom:14px}
+.dt-buy-includes{font-family:'Spectral',serif;font-size:12.5px;color:var(--text2);line-height:1.6;padding-bottom:16px;margin-bottom:16px;border-bottom:1px solid var(--card-border)}
 .dt-buy-checklist{display:flex;flex-direction:column;gap:9px;margin-bottom:20px}
 .dt-buy-check{display:flex;align-items:center;gap:9px;font-family:'Spectral',serif;font-size:13px;color:var(--text2)}
 .dt-buy-check-icon{color:var(--gold);font-size:12px;flex-shrink:0}
