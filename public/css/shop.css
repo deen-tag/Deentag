@@ -22,16 +22,15 @@
    ============================================================ */
 .dt-hero{position:relative;margin:0 0 0;padding:0}
 .dt-hero-img-wrap{position:relative;width:100%;aspect-ratio:4/5;overflow:hidden;background:#111}
-.dt-hero-img-tall{aspect-ratio:3/4;min-height:56vh;max-height:640px}
+.dt-hero-img-tall{aspect-ratio:1/1;min-height:62vh;max-height:680px}
 .dt-hero-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
-.dt-hero-fade{position:absolute;left:0;right:0;bottom:0;height:46%;background:linear-gradient(to top, var(--bg) 0%, rgba(237,232,213,0.6) 40%, transparent 100%);pointer-events:none}
-body.night .dt-hero-fade{background:linear-gradient(to top, var(--bg) 0%, rgba(5,14,18,0.65) 40%, transparent 100%)}
+.dt-hero-fade{position:absolute;left:0;right:0;bottom:0;height:38%;background:linear-gradient(to top, var(--bg) 0%, rgba(237,232,213,0.65) 35%, transparent 100%);pointer-events:none}
+body.night .dt-hero-fade{background:linear-gradient(to top, var(--bg) 0%, rgba(5,14,18,0.7) 35%, transparent 100%)}
 
-.dt-hero-body{padding:2px 20px 0;text-align:center;margin-top:-22px;position:relative;z-index:2}
-.dt-hero-eyebrow{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.42em;color:var(--gold);text-transform:uppercase;margin-bottom:12px}
-.dt-hero-title{font-family:'Cinzel',serif;font-size:24px;line-height:1.32;letter-spacing:0.01em;color:var(--text);font-weight:600;margin-bottom:18px}
-.dt-hero-beat{display:flex;flex-direction:column;gap:6px;max-width:300px;margin:0 auto 20px}
-.dt-hero-beat span{font-family:'Spectral',serif;font-style:italic;font-size:13.5px;color:var(--text3);line-height:1.5}
+.dt-hero-body{padding:0 20px 0;text-align:center;margin-top:-14px;position:relative;z-index:2}
+.dt-hero-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.dt-hero-title{font-family:'Cinzel',serif;font-size:22px;line-height:1.25;letter-spacing:0.01em;color:var(--text);font-weight:600;margin-bottom:10px}
+.dt-hero-beat-line{font-family:'Spectral',serif;font-style:italic;font-size:13px;color:var(--text3);line-height:1.55;max-width:280px;margin:0 auto 16px}
 .dt-hero-text{font-family:'Spectral',serif;font-size:14.5px;color:var(--text3);line-height:1.7;max-width:340px;margin:0 auto 18px}
 
 .dt-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-bottom:22px}
@@ -64,8 +63,10 @@ body.night .dt-hero-fade{background:linear-gradient(to top, var(--bg) 0%, rgba(5
 .dt-step-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.14em;color:var(--text2);text-transform:uppercase;margin-bottom:6px}
 .dt-step-desc{font-family:'Spectral',serif;font-size:13.5px;color:var(--text3);line-height:1.6}
 .dt-flow-connector{display:flex;justify-content:flex-start;padding-left:14px;color:var(--gold);opacity:0.45;font-size:13px;line-height:1;margin:2px 0}
-.dt-flow-photo{position:relative;margin:6px 0 6px 44px;border-radius:16px;overflow:hidden;max-width:230px;aspect-ratio:4/5;box-shadow:0 10px 26px rgba(0,0,0,0.14)}
+.dt-flow-photo{position:relative;margin:10px 0 4px 44px;border-radius:16px;overflow:hidden;max-width:210px;aspect-ratio:4/5;box-shadow:0 10px 26px rgba(0,0,0,0.14)}
 .dt-flow-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.dt-flow-mockup{position:relative;margin:10px 0 4px 44px;border-radius:16px;overflow:hidden;max-width:150px;aspect-ratio:9/17;box-shadow:0 12px 30px rgba(0,0,0,0.2);background:#111}
+.dt-flow-mockup img{width:100%;height:100%;object-fit:cover;display:block}
 .dt-flow-badge{position:absolute;left:10px;bottom:10px;display:flex;align-items:center;gap:6px;background:rgba(247,243,231,0.92);color:var(--gold);border-radius:20px;padding:6px 11px;font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.06em;text-transform:uppercase;font-weight:700;box-shadow:0 3px 10px rgba(0,0,0,0.15)}
 body.night .dt-flow-badge{background:rgba(10,18,22,0.9)}
 
@@ -190,14 +191,14 @@ body.night .dt-flow-badge{background:rgba(10,18,22,0.9)}
 /* ============================================================
    STICKY CTA
    ============================================================ */
-.dt-sticky{position:fixed;bottom:0;left:0;right:0;z-index:900;padding:8px 14px calc(env(safe-area-inset-bottom) + 10px);background:var(--bg);pointer-events:none}
-.dt-sticky-inner{pointer-events:all;display:flex;align-items:center;gap:10px;background:var(--bg);border-top:1px solid rgba(var(--gold-rgb),0.15);padding:9px 14px}
+.dt-sticky{position:fixed;bottom:0;left:0;right:0;z-index:900;padding:0 14px calc(env(safe-area-inset-bottom) + 8px);background:var(--bg);pointer-events:none}
+.dt-sticky-inner{pointer-events:all;display:flex;align-items:center;gap:10px;background:var(--bg);border-top:1px solid rgba(var(--gold-rgb),0.15);padding:8px 14px}
 .dt-sticky-info{flex:1}
-.dt-sticky-price{font-family:'Cinzel',serif;font-size:19px;color:var(--text);font-weight:700;line-height:1.1}
-.dt-sticky-label{font-family:'Spectral',serif;font-style:italic;font-size:10.5px;color:var(--text3);margin-top:2px}
-.dt-sticky-btn{background:linear-gradient(135deg,var(--gold),#CEB060);color:var(--bg);font-family:'Cinzel',serif;font-size:8.5px;letter-spacing:0.08em;text-transform:uppercase;font-weight:700;border:none;border-radius:12px;padding:11px 14px;cursor:pointer;-webkit-tap-highlight-color:transparent;box-shadow:0 2px 10px rgba(var(--gold-rgb),0.2);transition:transform 0.15s,opacity 0.2s;max-width:118px;line-height:1.35;text-align:center}
+.dt-sticky-price{font-family:'Cinzel',serif;font-size:15px;color:var(--text);font-weight:700;line-height:1}
+.dt-sticky-label{font-family:'Spectral',serif;font-style:italic;font-size:9px;color:var(--text3);margin-top:1px}
+.dt-sticky-btn{background:linear-gradient(135deg,var(--gold),#CEB060);color:var(--bg);font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.04em;text-transform:uppercase;font-weight:700;border:none;border-radius:10px;padding:8px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;box-shadow:0 2px 10px rgba(var(--gold-rgb),0.2);transition:transform 0.15s,opacity 0.2s;max-width:108px;line-height:1.2;text-align:center}
 .dt-sticky-btn:active{transform:scale(0.97);opacity:0.9}
-.dt-scroll-pad{height:78px}
+.dt-scroll-pad{height:60px}
 
 /* ============================================================
    FOOTER (repris du style existant)
