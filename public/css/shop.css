@@ -57,6 +57,7 @@
 
 .dt-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-bottom:26px}
 .dt-chip{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.16em;padding:6px 12px;border-radius:20px;border:1px solid var(--card-border);color:var(--text3);text-transform:uppercase;background:var(--card-bg)}
+.dt-hero-price{font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.08em;color:var(--gold);font-weight:700;margin-bottom:22px}
 
 /* ============================================================
    3. DEENTAG, C'EST QUOI ?
@@ -85,7 +86,7 @@
 .dt-nfc-wrap{padding:0 20px}
 
 /* ============================================================
-   6. VOTRE UNIVERS DEENTAG
+   6. VOTRE ESPACE DEENTAG
    ============================================================ */
 .dt-content-wrap{padding:0 20px}
 .dt-content-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:30px}
@@ -133,7 +134,12 @@
 .dt-why-desc{font-family:'Spectral',serif;font-size:13px;color:var(--text3);line-height:1.55}
 
 /* ============================================================
-   10. PRIX / OFFRE — fiche produit avec bascule H / F
+   10. UN ACCÈS SIMPLE, SANS ABONNEMENT
+   ============================================================ */
+.dt-noabo-wrap{padding:40px 26px;text-align:center;background:rgba(var(--gold-rgb),0.06);margin:36px 0 0;border-top:1px solid rgba(var(--gold-rgb),0.18);border-bottom:1px solid rgba(var(--gold-rgb),0.18)}
+
+/* ============================================================
+   11. PRIX / OFFRE — fiche produit avec bascule H / F
    ============================================================ */
 .dt-buy-wrap{padding:0 20px}
 .dt-buy-wrap .dt-h2{margin-bottom:22px}
@@ -154,12 +160,12 @@
 .dt-buy-cta{width:100%;margin:0;display:block}
 
 /* ============================================================
-   11. CADEAU
+   12. CADEAU
    ============================================================ */
 .dt-gift-wrap{padding:0 20px;margin:36px 0 0;text-align:center}
 
 /* ============================================================
-   12. FAQ (accordeon accessible)
+   13. FAQ (accordeon accessible)
    ============================================================ */
 .dt-faq-wrap{padding:0 20px}
 .dt-accordions{display:flex;flex-direction:column;gap:0;margin-top:18px}
@@ -178,7 +184,7 @@
 }
 
 /* ============================================================
-   13. CTA FINAL
+   14. CTA FINAL
    ============================================================ */
 .dt-final{position:relative;margin-top:40px;overflow:hidden}
 .dt-final-img{aspect-ratio:3/4;position:relative}
