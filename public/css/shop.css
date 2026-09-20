@@ -7,9 +7,17 @@
 
 .shop-page{padding-bottom:0}
 
+/* ── ACCESSIBILITÉ : focus clavier visible partout ── */
+.shop-page a:focus-visible,
+.shop-page button:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:4px}
+
 /* ── REVEAL AU SCROLL (voir shop.js) ── */
 .dt-reveal{opacity:0;transform:translateY(26px);transition:opacity 0.8s ease, transform 0.8s ease}
 .dt-reveal.is-visible{opacity:1;transform:translateY(0)}
+@media (prefers-reduced-motion: reduce){
+  .dt-reveal{opacity:1;transform:none;transition:none}
+  .dt-intro-scroll span{animation:none;opacity:0.7}
+}
 
 /* ── EYEBROW / TITRES GENERIQUES ── */
 .dt-eyebrow{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.32em;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
@@ -23,6 +31,7 @@
 
 .dt-cta{display:block;width:calc(100% - 40px);margin:0 20px 8px;text-align:center;background:linear-gradient(135deg,var(--gold),#CEB060);color:var(--bg);font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;font-weight:700;border:none;border-radius:14px;padding:16px 20px;cursor:pointer;text-decoration:none;-webkit-tap-highlight-color:transparent;box-shadow:0 6px 20px rgba(var(--gold-rgb),0.25);transition:transform 0.15s,opacity 0.2s}
 .dt-cta:active{transform:scale(0.98);opacity:0.92}
+.dt-cta-sub{text-align:center;font-family:'Spectral',serif;font-style:italic;font-size:11.5px;color:var(--text3);margin-bottom:6px}
 
 /* ============================================================
    1. INTRODUCTION — écran d'ouverture cinématique
@@ -43,41 +52,42 @@
 .dt-hero{position:relative;margin:0 0 0;padding:52px 0 0}
 .dt-hero-body{padding:0 20px 0;text-align:center;position:relative;z-index:2}
 .dt-hero-eyebrow{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.4em;color:var(--gold);text-transform:uppercase;margin-bottom:10px}
-.dt-hero-title{font-family:'Cinzel',serif;font-size:25px;line-height:1.3;letter-spacing:0.01em;color:var(--text);font-weight:600;margin-bottom:12px}
-.dt-hero-beat-line{font-family:'Spectral',serif;font-style:italic;font-size:14px;color:var(--text3);line-height:1.6;max-width:300px;margin:0 auto 20px}
+.dt-hero-title{font-family:'Cinzel',serif;font-size:24px;line-height:1.3;letter-spacing:0.01em;color:var(--text);font-weight:600;margin-bottom:12px}
+.dt-hero-beat-line{font-family:'Spectral',serif;font-size:14px;color:var(--text3);line-height:1.6;max-width:310px;margin:0 auto 20px}
 
 .dt-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-bottom:26px}
 .dt-chip{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.16em;padding:6px 12px;border-radius:20px;border:1px solid var(--card-border);color:var(--text3);text-transform:uppercase;background:var(--card-bg)}
 
 /* ============================================================
-   3. LE GESTE
+   3. DEENTAG, C'EST QUOI ?
    ============================================================ */
-.dt-gesture-wrap{padding:0 20px}
-.dt-gesture-wrap .dt-h2{text-align:center}
-.dt-gesture-wrap .dt-lead{text-align:center;max-width:320px;margin-left:auto;margin-right:auto}
-.dt-gesture-visual{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:32px}
+.dt-intro-explain{padding:0 20px}
+
+/* ============================================================
+   4. COMMENT ÇA MARCHE
+   ============================================================ */
+.dt-steps-wrap{padding:0 20px}
+.dt-steps-list{list-style:none;margin:28px 0 0;padding:0;display:flex;flex-direction:column;gap:22px}
+.dt-step-item{display:flex;gap:14px;align-items:flex-start}
+.dt-step-num{font-family:'Cinzel',serif;font-size:11.5px;font-weight:700;color:var(--gold);width:30px;height:30px;border-radius:50%;background:rgba(var(--gold-rgb),0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.dt-step-title{font-family:'Cinzel',serif;font-size:10.5px;letter-spacing:0.1em;color:var(--text2);text-transform:uppercase;margin-bottom:6px;font-weight:600}
+.dt-step-desc{font-family:'Spectral',serif;font-size:13.5px;color:var(--text3);line-height:1.6}
+
+.dt-gesture-visual{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:34px}
 .dt-gesture-icon{width:52px;height:52px;border-radius:50%;background:rgba(var(--gold-rgb),0.1);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0}
 .dt-gesture-arrow{color:var(--gold);opacity:0.5;flex-shrink:0}
-.dt-gesture-mockup{position:relative;border-radius:18px;overflow:hidden;width:140px;aspect-ratio:9/17;box-shadow:0 14px 34px rgba(0,0,0,0.22);background:#111;flex-shrink:0}
+.dt-gesture-mockup{position:relative;border-radius:18px;overflow:hidden;width:130px;aspect-ratio:9/17;box-shadow:0 14px 34px rgba(0,0,0,0.22);background:#111;flex-shrink:0}
 .dt-gesture-mockup img{width:100%;height:100%;object-fit:cover;display:block}
 
-.dt-compat{display:flex;gap:10px;align-items:flex-start;margin-top:24px;padding:13px 14px;background:rgba(var(--gold-rgb),0.06);border:1px solid rgba(var(--gold-rgb),0.18);border-radius:12px}
-.dt-compat-icon{color:var(--gold);font-size:12px;flex-shrink:0;margin-top:2px}
-.dt-compat-title{display:block;font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.08em;color:var(--text2);text-transform:uppercase;margin-bottom:3px}
-.dt-compat-text{display:block;font-family:'Spectral',serif;font-size:12.5px;color:var(--text3);line-height:1.55}
-
 /* ============================================================
-   4. LE RAPPEL — écho, texte seul
+   5. LE NFC EXPLIQUÉ SIMPLEMENT
    ============================================================ */
-.dt-echo-wrap{padding:64px 30px;text-align:center}
-.dt-echo-quote{font-family:'Cinzel',serif;font-size:20px;line-height:1.55;color:var(--text)}
-.dt-echo-sub{font-family:'Spectral',serif;font-style:italic;font-size:14px;line-height:1.8;color:var(--text3);margin-top:20px}
+.dt-nfc-wrap{padding:0 20px}
 
 /* ============================================================
-   5. L'UNIVERS
+   6. VOTRE UNIVERS DEENTAG
    ============================================================ */
 .dt-content-wrap{padding:0 20px}
-.dt-content-wrap .dt-h2{text-align:center;margin-bottom:22px}
 .dt-content-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:30px}
 .dt-content-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:16px 14px;min-height:118px;display:flex;flex-direction:column;justify-content:flex-end}
 .dt-content-icon{font-size:19px;margin-bottom:10px;opacity:0.85}
@@ -89,31 +99,41 @@
 .dt-lang-chip{font-family:'Spectral',serif;font-size:12.5px;color:var(--text2);background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:7px 14px}
 
 /* ============================================================
-   6. LA MONTRE (galerie photo)
+   7. UNE VRAIE MONTRE (galerie photo)
    ============================================================ */
 .dt-watch-wrap{padding:0 0}
 .dt-watch-wrap .dt-h2,.dt-watch-wrap .dt-lead{padding:0 20px}
-.dt-watch-wrap .dt-h2{text-align:center}
-.dt-watch-wrap .dt-lead{text-align:center;max-width:340px;margin:10px auto 24px}
-.dt-home-carousel{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:0 20px 6px;scrollbar-width:none}
+.dt-home-carousel{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:22px 20px 6px;scrollbar-width:none}
 .dt-home-carousel::-webkit-scrollbar{display:none}
 .dt-home-item{flex:0 0 74vw;max-width:280px;scroll-snap-align:start;border-radius:18px;overflow:hidden;aspect-ratio:4/5;position:relative}
 .dt-home-item img{width:100%;height:100%;object-fit:cover;display:block}
 
 /* ============================================================
-   7. HOMME / FEMME — présentation éditoriale
+   8. DEUX MODÈLES — présentation éditoriale
    ============================================================ */
 .dt-editorial-wrap{padding:0 20px}
-.dt-editorial-grid{display:flex;flex-direction:column;gap:22px}
+.dt-editorial-grid{display:flex;flex-direction:column;gap:22px;margin-top:22px}
 .dt-editorial-item{text-align:center}
 .dt-editorial-photo{border-radius:20px;overflow:hidden;aspect-ratio:1/1;box-shadow:0 14px 34px rgba(0,0,0,0.16);margin-bottom:16px}
 .dt-editorial-photo img{width:100%;height:100%;object-fit:cover;display:block}
 .dt-editorial-name{font-family:'Cinzel',serif;font-size:14px;letter-spacing:0.22em;color:var(--text);font-weight:700}
 .dt-editorial-tagline{font-family:'Spectral',serif;font-style:italic;font-size:13px;color:var(--text3);margin-top:4px}
+.dt-editorial-text{font-family:'Spectral',serif;font-size:13px;color:var(--text3);line-height:1.6;margin-top:8px;max-width:260px;margin-left:auto;margin-right:auto}
 .dt-editorial-link{display:inline-block;margin-top:12px;font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(var(--gold-rgb),0.4);padding-bottom:2px}
 
 /* ============================================================
-   8. CHOIX / OFFRE — fiche produit avec bascule H / F
+   9. POURQUOI DEENTAG
+   ============================================================ */
+.dt-why-wrap{padding:0 20px}
+.dt-why-grid{display:flex;flex-direction:column;gap:0}
+.dt-why-item{display:flex;gap:14px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--card-border)}
+.dt-why-item:first-child{border-top:1px solid var(--card-border)}
+.dt-why-icon{font-size:16px;color:var(--gold);flex-shrink:0;width:22px;text-align:center;margin-top:2px}
+.dt-why-title{font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.14em;color:var(--text2);text-transform:uppercase;margin-bottom:4px}
+.dt-why-desc{font-family:'Spectral',serif;font-size:13px;color:var(--text3);line-height:1.55}
+
+/* ============================================================
+   10. PRIX / OFFRE — fiche produit avec bascule H / F
    ============================================================ */
 .dt-buy-wrap{padding:0 20px}
 .dt-buy-wrap .dt-h2{margin-bottom:22px}
@@ -128,15 +148,37 @@
 .dt-buy-tagline{font-family:'Spectral',serif;font-style:italic;font-size:12.5px;color:var(--text3);margin-bottom:14px}
 .dt-buy-price{font-family:'Cinzel',serif;font-size:30px;color:var(--gold);font-weight:700;line-height:1}
 .dt-buy-section-label{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.24em;color:var(--text3);text-transform:uppercase;margin-bottom:12px}
-.dt-buy-includes-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.dt-buy-includes-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
 .dt-buy-check{display:flex;align-items:center;gap:9px;font-family:'Spectral',serif;font-size:13.5px;color:var(--text2);font-weight:500}
 .dt-buy-check-icon{color:var(--gold);font-size:12px;flex-shrink:0}
-.dt-buy-techline{text-align:center;font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.12em;color:var(--text3);text-transform:uppercase;padding:14px 0;margin-bottom:16px;border-top:1px solid var(--card-border)}
 .dt-buy-cta{width:100%;margin:0;display:block}
-.dt-gift-line{font-family:'Spectral',serif;font-style:italic;font-size:12.5px;color:var(--text3);text-align:center;line-height:1.6;max-width:320px;margin:22px auto 0}
 
 /* ============================================================
-   9. CTA FINAL
+   11. CADEAU
+   ============================================================ */
+.dt-gift-wrap{padding:0 20px;margin:36px 0 0;text-align:center}
+
+/* ============================================================
+   12. FAQ (accordeon accessible)
+   ============================================================ */
+.dt-faq-wrap{padding:0 20px}
+.dt-accordions{display:flex;flex-direction:column;gap:0;margin-top:18px}
+.dt-accord{border-bottom:1px solid var(--card-border)}
+.dt-accord:first-child{border-top:1px solid var(--card-border)}
+.dt-accord-heading{margin:0}
+.dt-accord-header{display:flex;align-items:center;justify-content:space-between;width:100%;padding:16px 0;cursor:pointer;-webkit-tap-highlight-color:transparent;gap:10px;background:none;border:none;font:inherit;text-align:left;color:inherit}
+.dt-accord-title{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.02em;color:var(--text2);flex:1;line-height:1.4;text-transform:none}
+.dt-accord-icon{font-size:12px;color:var(--gold);transition:transform 0.3s;flex-shrink:0}
+.dt-accord.open .dt-accord-icon{transform:rotate(180deg)}
+.dt-accord-body{max-height:0;overflow:hidden;transition:max-height 0.35s ease}
+.dt-accord.open .dt-accord-body{max-height:400px}
+.dt-accord-content{padding:0 0 18px;font-family:'Spectral',serif;font-size:13.5px;color:var(--text3);line-height:1.7}
+@media (prefers-reduced-motion: reduce){
+  .dt-accord-body{transition:none}
+}
+
+/* ============================================================
+   13. CTA FINAL
    ============================================================ */
 .dt-final{position:relative;margin-top:40px;overflow:hidden}
 .dt-final-img{aspect-ratio:3/4;position:relative}
@@ -146,6 +188,7 @@
 .dt-final-title{font-family:'Cinzel',serif;font-size:19px;line-height:1.4;color:#F7F2E4;margin-bottom:12px}
 .dt-final-text{font-family:'Spectral',serif;font-style:italic;font-size:13.5px;color:rgba(247,242,228,0.82);line-height:1.7;margin-bottom:20px}
 .dt-final .dt-cta{width:100%;margin:0}
+.dt-final-sub{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.1em;color:rgba(247,242,228,0.7);text-transform:uppercase;margin-top:14px}
 
 /* ============================================================
    STICKY CTA
@@ -155,7 +198,7 @@
 .dt-sticky-info{flex:1}
 .dt-sticky-price{font-family:'Cinzel',serif;font-size:15px;color:var(--text);font-weight:700;line-height:1}
 .dt-sticky-label{font-family:'Spectral',serif;font-style:italic;font-size:9px;color:var(--text3);margin-top:1px}
-.dt-sticky-btn{background:linear-gradient(135deg,var(--gold),#CEB060);color:var(--bg);font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.04em;text-transform:uppercase;font-weight:700;border:none;border-radius:10px;padding:8px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;box-shadow:0 2px 10px rgba(var(--gold-rgb),0.2);transition:transform 0.15s,opacity 0.2s;max-width:108px;line-height:1.2;text-align:center}
+.dt-sticky-btn{background:linear-gradient(135deg,var(--gold),#CEB060);color:var(--bg);font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.04em;text-transform:uppercase;font-weight:700;border:none;border-radius:10px;padding:8px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent;box-shadow:0 2px 10px rgba(var(--gold-rgb),0.2);transition:transform 0.15s,opacity 0.2s;max-width:120px;line-height:1.2;text-align:center}
 .dt-sticky-btn:active{transform:scale(0.97);opacity:0.9}
 .dt-scroll-pad{height:60px}
 
@@ -173,7 +216,7 @@
 .back-pill-arrow{font-size:12px}
 
 @media (min-width:480px){
-  .dt-hero-title{font-size:28px}
+  .dt-hero-title{font-size:27px}
   .dt-editorial-grid{flex-direction:row}
   .dt-editorial-item{flex:1}
 }
