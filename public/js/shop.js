@@ -2,36 +2,54 @@
    DEENTAG — shop.js
    Logique de la page produit DEENTAG (montre NFC) :
    - bascule entre les modèles H / F dans la fiche d'achat
-   - animation de révélation au scroll (.dt-reveal)
-   - scroll vers l'offre
+   - accordéon FAQ accessible (aria-expanded)
+   - défilement doux vers l'offre (#dtBuy)
+   - animation de révélation au scroll (.dt-reveal),
+     désactivée si prefers-reduced-motion
 
-   dtSelectModel et dtScrollToBuy sont attachés via onclick, donc
-   pas besoin de DT_registerInit pour elles (comme avant).
-   L'observer de scroll, lui, doit être ré-initialisé à chaque
-   navigation SPA vers cette page : on le passe par
+   dtSelectModel et dtToggleAccord sont attachés via onclick,
+   donc pas besoin de DT_registerInit pour elles.
+   Le scroll doux et l'observer, eux, doivent être ré-initialisés
+   à chaque navigation SPA vers cette page : on les passe par
    window.DT_registerInit.
    ============================================================ */
 
 function dtSelectModel(model) {
   document.querySelectorAll('.dt-buy-tab').forEach(function (el) {
-    el.classList.toggle('active', el.getAttribute('data-model') === model);
+    var isActive = el.getAttribute('data-model') === model;
+    el.classList.toggle('active', isActive);
+    el.setAttribute('aria-pressed', isActive ? 'true' : 'false');
   });
   document.querySelectorAll('.dt-buy-model').forEach(function (el) {
     el.classList.toggle('active', el.getAttribute('data-model') === model);
   });
 }
 
-function dtScrollToBuy() {
-  var el = document.getElementById('dtBuy');
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+function dtToggleAccord(button) {
+  var accord = button.closest('.dt-accord');
+  if (!accord) return;
+  var isOpen = accord.classList.toggle('open');
+  button.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 }
 
 if (typeof window !== 'undefined' && window.DT_registerInit) {
   window.DT_registerInit(function () {
+    /* Défilement doux vers #dtBuy pour tous les liens de la page */
+    document.querySelectorAll('a[href="#dtBuy"]').forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        var target = document.getElementById('dtBuy');
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    /* Reveal au scroll */
     var items = document.querySelectorAll('.dt-reveal');
     if (!items.length) return;
 
-    if (!('IntersectionObserver' in window)) {
+    var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion || !('IntersectionObserver' in window)) {
       items.forEach(function (el) { el.classList.add('is-visible'); });
       return;
     }
