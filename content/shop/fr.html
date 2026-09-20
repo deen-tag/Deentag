@@ -1,82 +1,139 @@
-  <!-- 1. INTRODUCTION -->
+  <!-- JSON-LD produit (données confirmées uniquement) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "DEENTAG",
+    "description": "Montre avec puce NFC intégrée donnant accès à un univers spirituel : Coran complet, récitations, invocations, mode enfants, en 8 langues.",
+    "brand": { "@type": "Brand", "name": "DEENTAG" },
+    "image": [
+      "https://deentag.vercel.app/images/deentag-watch-box.webp",
+      "https://deentag.vercel.app/images/deentag-watch-homme-poignet.webp",
+      "https://deentag.vercel.app/images/deentag-watch-femme-poignet.webp"
+    ],
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "EUR",
+      "price": "19.99",
+      "availability": "https://schema.org/PreOrder"
+    }
+  }
+  </script>
+
+  <!-- 1. INTRO CINÉMATIQUE -->
   <section class="dt-intro">
-    <div class="dt-intro-img"><img src="/images/deentag-watch-box.webp" alt="Montres DEENTAG dans leurs coffrets" loading="eager" /></div>
+    <div class="dt-intro-img"><img src="/images/deentag-watch-box.webp" alt="Montres DEENTAG H et F dans leurs coffrets" loading="eager" /></div>
     <div class="dt-intro-overlay"></div>
     <div class="dt-intro-body">
       <p class="dt-intro-quote dt-reveal">Certaines choses méritent<br>qu'on se rappelle d'elles.</p>
     </div>
-    <div class="dt-intro-scroll"><span></span></div>
+    <div class="dt-intro-scroll" aria-hidden="true"><span></span></div>
   </section>
 
   <!-- 2. HERO -->
   <section class="dt-hero">
     <div class="dt-hero-body">
       <div class="dt-hero-eyebrow dt-reveal">DEENTAG</div>
-      <h1 class="dt-hero-title dt-reveal">Votre foi.<br>À votre poignet.</h1>
-      <p class="dt-hero-beat-line dt-reveal">Une montre connectée qui ne se contente pas de donner l'heure. Elle vous rappelle l'essentiel.</p>
+      <h1 class="dt-hero-title dt-reveal">Une montre.<br>Un simple geste.<br>Tout votre univers.</h1>
+      <p class="dt-hero-beat-line dt-reveal">Approchez votre téléphone de votre DEENTAG et accédez instantanément à votre univers spirituel : Coran, récitations, invocations et bien plus.</p>
       <div class="dt-chips dt-reveal">
         <span class="dt-chip">Puce NFC intégrée</span>
         <span class="dt-chip">Accès direct au site</span>
         <span class="dt-chip">Sans abonnement</span>
       </div>
     </div>
-    <button class="dt-cta" onclick="dtScrollToBuy()">Découvrir DEENTAG — 19,99 €</button>
+    <a class="dt-cta" href="#dtBuy">Découvrir DEENTAG — 19,99 €</a>
+    <p class="dt-cta-sub dt-reveal">Homme ou Femme · Une vraie montre pensée pour être portée au quotidien</p>
   </section>
 
-  <!-- 3. LE GESTE -->
-  <section class="dt-gesture-wrap">
+  <!-- 3. DEENTAG, C'EST QUOI ? -->
+  <section class="dt-intro-explain">
+    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">DEENTAG, c'est quoi</span><span class="dt-sep-line"></span></div>
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">DEENTAG, c'est quoi ?</h2>
+    <p class="dt-lead dt-reveal" style="text-align:center;max-width:340px;margin-left:auto;margin-right:auto">DEENTAG est une vraie montre pensée pour être portée tous les jours.</p>
+    <p class="dt-lead dt-reveal" style="text-align:center;max-width:340px;margin-left:auto;margin-right:auto">À l'intérieur, une puce NFC permet d'ouvrir votre univers DEENTAG depuis votre téléphone, simplement en l'approchant de la montre.</p>
+    <p class="dt-lead dt-reveal" style="text-align:center;max-width:340px;margin-left:auto;margin-right:auto">Pas besoin de chercher une application.<br>Pas besoin de parcourir plusieurs menus.<br><strong>Un geste suffit.</strong></p>
+  </section>
+
+  <!-- 4. COMMENT ÇA MARCHE -->
+  <section class="dt-steps-wrap">
     <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">Le fonctionnement</span><span class="dt-sep-line"></span></div>
-    <h2 class="dt-h2 dt-reveal">Un geste suffit.</h2>
-    <p class="dt-lead dt-reveal">Approchez votre téléphone de votre DEENTAG.</p>
-    <div class="dt-gesture-visual dt-reveal">
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">Comment ça marche ?</h2>
+    <p class="dt-lead dt-reveal" style="text-align:center;max-width:300px;margin:10px auto 0">Trois secondes. Un geste. Et votre univers s'ouvre.</p>
+
+    <ol class="dt-steps-list">
+      <li class="dt-step-item dt-reveal">
+        <span class="dt-step-num" aria-hidden="true">01</span>
+        <div class="dt-step-body">
+          <h3 class="dt-step-title">Portez-la</h3>
+          <p class="dt-step-desc">Portez votre DEENTAG comme une montre classique, au quotidien.</p>
+        </div>
+      </li>
+      <li class="dt-step-item dt-reveal">
+        <span class="dt-step-num" aria-hidden="true">02</span>
+        <div class="dt-step-body">
+          <h3 class="dt-step-title">Approchez votre téléphone</h3>
+          <p class="dt-step-desc">Approchez votre téléphone de la zone NFC de la montre.</p>
+        </div>
+      </li>
+      <li class="dt-step-item dt-reveal">
+        <span class="dt-step-num" aria-hidden="true">03</span>
+        <div class="dt-step-body">
+          <h3 class="dt-step-title">Entrez dans DEENTAG</h3>
+          <p class="dt-step-desc">Votre téléphone détecte le NFC et vous permet d'accéder à votre univers DEENTAG.</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="dt-gesture-visual dt-reveal" aria-hidden="true">
       <div class="dt-gesture-icon">
         <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><path d="M12 4.5v1.4M12 18.1v1.4M4.5 12h1.4M18.1 12h1.4"/></svg>
       </div>
       <div class="dt-gesture-arrow">
         <svg viewBox="0 0 24 24" width="20" height="10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 5h18M14 1l6 4-6 4"/></svg>
       </div>
-      <div class="dt-gesture-mockup"><img src="/images/app-jour.webp" alt="Votre univers DEENTAG s'ouvre sur votre téléphone" loading="lazy" /></div>
+      <div class="dt-gesture-mockup"><img src="/images/app-jour.webp" alt="" loading="lazy" /></div>
     </div>
-    <p class="dt-lead dt-reveal" style="text-align:center;margin-top:20px">Votre univers s'ouvre aussitôt : Coran, récitations, invocations — sans application à ouvrir.</p>
-    <div class="dt-compat dt-reveal">
-      <span class="dt-compat-icon">✓</span>
-      <div><span class="dt-compat-title">Votre téléphone est compatible ?</span><span class="dt-compat-text">La plupart des smartphones récents (iPhone, Samsung, Xiaomi, Google Pixel…) intègrent le NFC.</span></div>
-    </div>
+    <p class="dt-lead dt-reveal" style="text-align:center;margin-top:18px">Aucune manipulation compliquée. Le principe est aussi simple qu'un geste.</p>
   </section>
 
-  <!-- 4. LE RAPPEL -->
-  <section class="dt-echo-wrap">
-    <p class="dt-echo-quote dt-reveal">Un rappel qui vous accompagne.<br>Sans jamais peser.</p>
-    <p class="dt-echo-sub dt-reveal">Elle ne vibre pas. Elle ne vous interrompt pas.<br>Elle ne vous demande rien.<br>Elle est simplement là.</p>
+  <!-- 5. LE NFC EXPLIQUÉ SIMPLEMENT -->
+  <section class="dt-nfc-wrap">
+    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">Le NFC</span><span class="dt-sep-line"></span></div>
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">Le NFC, c'est quoi ?</h2>
+    <p class="dt-lead dt-reveal" style="text-align:center;max-width:340px;margin-left:auto;margin-right:auto">Le NFC est une technologie de communication à très courte distance, déjà présente sur de nombreux smartphones.</p>
+    <p class="dt-lead dt-reveal" style="text-align:center;max-width:340px;margin-left:auto;margin-right:auto">Avec DEENTAG, cette technologie est intégrée directement dans la montre.</p>
+    <p class="dt-lead dt-reveal" style="text-align:center;max-width:340px;margin-left:auto;margin-right:auto">Vous approchez votre téléphone de la montre.<br>Le téléphone détecte le NFC.<br>Votre accès à DEENTAG s'ouvre.</p>
   </section>
 
-  <!-- 5. L'UNIVERS -->
+  <!-- 6. VOTRE UNIVERS DEENTAG -->
   <section class="dt-content-wrap">
-    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">L'univers Deentag</span><span class="dt-sep-line"></span></div>
-    <h2 class="dt-h2 dt-reveal">Tout votre univers spirituel.<br>Sans rien installer.</h2>
+    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">Votre univers</span><span class="dt-sep-line"></span></div>
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">Plus qu'une montre.</h2>
+    <p class="dt-lead dt-reveal" style="text-align:center;max-width:320px;margin:10px auto 0">Votre accès direct à un univers spirituel pensé pour le quotidien.</p>
     <div class="dt-content-grid dt-reveal" style="margin-top:22px">
       <div class="dt-content-card">
-        <div class="dt-content-icon">📖</div>
-        <div class="dt-content-title">Le Coran complet</div>
-        <div class="dt-content-desc">30 Juz, 114 sourates.</div>
+        <div class="dt-content-icon" aria-hidden="true">📖</div>
+        <div class="dt-content-title">Coran complet</div>
+        <div class="dt-content-desc">Les 30 Juz et les 114 sourates accessibles depuis votre téléphone.</div>
       </div>
       <div class="dt-content-card">
-        <div class="dt-content-icon">🎧</div>
-        <div class="dt-content-title">Récitations audio</div>
-        <div class="dt-content-desc">Écoutez les récitations de lecteurs renommés.</div>
+        <div class="dt-content-icon" aria-hidden="true">🎧</div>
+        <div class="dt-content-title">Récitations</div>
+        <div class="dt-content-desc">Écoutez les récitations disponibles dans votre univers DEENTAG.</div>
       </div>
       <div class="dt-content-card">
-        <div class="dt-content-icon">🤲</div>
+        <div class="dt-content-icon" aria-hidden="true">🤲</div>
         <div class="dt-content-title">Invocations</div>
-        <div class="dt-content-desc">Retrouvez vos invocations préférées facilement.</div>
+        <div class="dt-content-desc">Retrouvez vos invocations directement depuis votre téléphone.</div>
       </div>
       <div class="dt-content-card">
-        <div class="dt-content-icon">✨</div>
+        <div class="dt-content-icon" aria-hidden="true">✨</div>
         <div class="dt-content-title">Mode enfants</div>
-        <div class="dt-content-desc">Badges, collection et apprentissage ludique.</div>
+        <div class="dt-content-desc">Un espace pensé pour accompagner les plus jeunes dans leur découverte.</div>
       </div>
     </div>
-    <div class="dt-langs-label dt-reveal">Disponible en 8 langues</div>
+    <div class="dt-langs-label dt-reveal">8 langues</div>
     <div class="dt-langs dt-reveal">
       <span class="dt-lang-chip">Français</span>
       <span class="dt-lang-chip">English</span>
@@ -89,45 +146,73 @@
     </div>
   </section>
 
-  <!-- 6. LA MONTRE -->
+  <!-- 7. UNE VRAIE MONTRE -->
   <section class="dt-watch-wrap">
     <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">La montre</span><span class="dt-sep-line"></span></div>
     <h2 class="dt-h2 dt-reveal">Une vraie montre.<br>Pensée pour être portée partout.</h2>
-    <p class="dt-lead dt-reveal">Au travail. En famille. En voyage. Chez soi. Boîtier en acier, cadran écru, index verts — DEENTAG ne ressemble pas à un objet religieux. C'est une montre, avant tout.</p>
+    <p class="dt-lead dt-reveal">Au travail. En famille. En voyage. Chez soi. DEENTAG s'intègre simplement à votre quotidien.</p>
+    <p class="dt-lead dt-reveal">Boîtier en acier, cadran écru, index verts : la montre conserve une esthétique sobre et contemporaine. Elle ne cherche pas à ressembler à un objet technologique. C'est une montre, avant tout.</p>
     <div class="dt-home-carousel dt-reveal">
       <div class="dt-home-item"><img src="/images/deentag-watch-box.webp" alt="Montres DEENTAG dans leur coffret" loading="lazy" /></div>
-      <div class="dt-home-item"><img src="/images/deentag-watch-homme-poignet.webp" alt="DEENTAG H au poignet" loading="lazy" /></div>
-      <div class="dt-home-item"><img src="/images/deentag-watch-femme-poignet.webp" alt="DEENTAG F au poignet" loading="lazy" /></div>
+      <div class="dt-home-item"><img src="/images/deentag-watch-homme-poignet.webp" alt="Montre DEENTAG H au poignet" loading="lazy" /></div>
+      <div class="dt-home-item"><img src="/images/deentag-watch-femme-poignet.webp" alt="Montre DEENTAG F au poignet" loading="lazy" /></div>
     </div>
   </section>
 
-  <!-- 7. HOMME / FEMME -->
+  <!-- 8. DEUX MODÈLES -->
   <section class="dt-editorial-wrap">
-    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">Deux façons de la porter</span><span class="dt-sep-line"></span></div>
+    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">Deux modèles</span><span class="dt-sep-line"></span></div>
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">Deux modèles.<br>Une même expérience DEENTAG.</h2>
     <div class="dt-editorial-grid">
       <div class="dt-editorial-item dt-reveal">
         <div class="dt-editorial-photo"><img src="/images/deentag-watch-homme-poignet.webp" alt="DEENTAG H" loading="lazy" /></div>
         <div class="dt-editorial-name">DEENTAG H</div>
         <div class="dt-editorial-tagline">Présence.</div>
-        <a class="dt-editorial-link" href="#dtBuy" onclick="dtSelectModel('h')">Entrer dans l'univers →</a>
+        <p class="dt-editorial-text">Une montre sobre pensée pour accompagner votre quotidien.</p>
+        <a class="dt-editorial-link" href="#dtBuy" onclick="dtSelectModel('h')">Découvrir le modèle →</a>
       </div>
       <div class="dt-editorial-item dt-reveal">
         <div class="dt-editorial-photo"><img src="/images/deentag-watch-femme-poignet.webp" alt="DEENTAG F" loading="lazy" /></div>
         <div class="dt-editorial-name">DEENTAG F</div>
         <div class="dt-editorial-tagline">Élégance.</div>
-        <a class="dt-editorial-link" href="#dtBuy" onclick="dtSelectModel('f')">Entrer dans l'univers →</a>
+        <p class="dt-editorial-text">Une montre élégante pensée pour accompagner votre quotidien.</p>
+        <a class="dt-editorial-link" href="#dtBuy" onclick="dtSelectModel('f')">Découvrir le modèle →</a>
       </div>
     </div>
   </section>
 
-  <!-- 8. CHOIX / OFFRE -->
-  <section class="dt-buy-wrap" id="dtBuy">
-    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">Choisissez votre Deentag</span><span class="dt-sep-line"></span></div>
-    <h2 class="dt-h2 dt-reveal" style="text-align:center">Faites entrer Deentag dans votre quotidien.</h2>
+  <!-- 9. POURQUOI DEENTAG -->
+  <section class="dt-why-wrap">
+    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">Pourquoi Deentag</span><span class="dt-sep-line"></span></div>
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">Pourquoi DEENTAG ?</h2>
+    <div class="dt-why-grid dt-reveal" style="margin-top:22px">
+      <div class="dt-why-item">
+        <div class="dt-why-icon" aria-hidden="true">◈</div>
+        <div><div class="dt-why-title">Simple</div><div class="dt-why-desc">Un geste suffit pour accéder à votre univers.</div></div>
+      </div>
+      <div class="dt-why-item">
+        <div class="dt-why-icon" aria-hidden="true">◈</div>
+        <div><div class="dt-why-title">Discret</div><div class="dt-why-desc">Une vraie montre, sans apparence de gadget technologique.</div></div>
+      </div>
+      <div class="dt-why-item">
+        <div class="dt-why-icon" aria-hidden="true">◈</div>
+        <div><div class="dt-why-title">Utile</div><div class="dt-why-desc">Coran, récitations, invocations et contenus pour toute la famille.</div></div>
+      </div>
+      <div class="dt-why-item">
+        <div class="dt-why-icon" aria-hidden="true">◈</div>
+        <div><div class="dt-why-title">Accessible</div><div class="dt-why-desc">19,99 € et sans abonnement.</div></div>
+      </div>
+    </div>
+  </section>
 
-    <div class="dt-buy-tabs dt-reveal">
-      <button class="dt-buy-tab active" data-model="h" onclick="dtSelectModel('h')">DEENTAG H</button>
-      <button class="dt-buy-tab" data-model="f" onclick="dtSelectModel('f')">DEENTAG F</button>
+  <!-- 10. PRIX / OFFRE -->
+  <section class="dt-buy-wrap" id="dtBuy">
+    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">Votre Deentag</span><span class="dt-sep-line"></span></div>
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">Soyez parmi les premiers à découvrir DEENTAG.</h2>
+
+    <div class="dt-buy-tabs dt-reveal" role="group" aria-label="Choisir le modèle">
+      <button type="button" class="dt-buy-tab active" data-model="h" aria-pressed="true" onclick="dtSelectModel('h')">DEENTAG H</button>
+      <button type="button" class="dt-buy-tab" data-model="f" aria-pressed="false" onclick="dtSelectModel('f')">DEENTAG F</button>
     </div>
 
     <div class="dt-buy-card dt-reveal">
@@ -137,15 +222,18 @@
           <div class="dt-buy-tagline">Présence. Un rappel de foi au quotidien.</div>
           <div class="dt-buy-price">19,99 €</div>
         </div>
-        <div class="dt-buy-section-label">Votre DEENTAG comprend</div>
+        <div class="dt-buy-section-label">Ce qui est inclus</div>
         <div class="dt-buy-includes-grid">
-          <div class="dt-buy-check"><span class="dt-buy-check-icon">✓</span> Coran complet</div>
-          <div class="dt-buy-check"><span class="dt-buy-check-icon">✓</span> Récitations audio</div>
-          <div class="dt-buy-check"><span class="dt-buy-check-icon">✓</span> Invocations</div>
-          <div class="dt-buy-check"><span class="dt-buy-check-icon">✓</span> Mode enfants</div>
-          <div class="dt-buy-check"><span class="dt-buy-check-icon">✓</span> 8 langues</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Montre DEENTAG</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Puce NFC intégrée</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Accès à l'univers DEENTAG</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Coran complet</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Récitations</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Invocations</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Mode enfants</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> 8 langues</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Sans abonnement</div>
         </div>
-        <div class="dt-buy-techline">Puce NFC intégrée · Sans abonnement</div>
         <a class="dt-cta dt-buy-cta" href="mailto:deentag.pro@gmail.com?subject=%C3%8Atre%20pr%C3%A9venu%20du%20lancement%20de%20DEENTAG%20H&amp;body=Bonjour%2C%0A%0AJe%20souhaite%20%C3%AAtre%20pr%C3%A9venu%28e%29%20du%20lancement%20de%20DEENTAG%20H.%0A%0AMerci%20%21">Être prévenu du lancement</a>
       </div>
 
@@ -155,23 +243,103 @@
           <div class="dt-buy-tagline">Élégance. Un rappel de foi au quotidien.</div>
           <div class="dt-buy-price">19,99 €</div>
         </div>
-        <div class="dt-buy-section-label">Votre DEENTAG comprend</div>
+        <div class="dt-buy-section-label">Ce qui est inclus</div>
         <div class="dt-buy-includes-grid">
-          <div class="dt-buy-check"><span class="dt-buy-check-icon">✓</span> Coran complet</div>
-          <div class="dt-buy-check"><span class="dt-buy-check-icon">✓</span> Récitations audio</div>
-          <div class="dt-buy-check"><span class="dt-buy-check-icon">✓</span> Invocations</div>
-          <div class="dt-buy-check"><span class="dt-buy-check-icon">✓</span> Mode enfants</div>
-          <div class="dt-buy-check"><span class="dt-buy-check-icon">✓</span> 8 langues</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Montre DEENTAG</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Puce NFC intégrée</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Accès à l'univers DEENTAG</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Coran complet</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Récitations</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Invocations</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Mode enfants</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> 8 langues</div>
+          <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Sans abonnement</div>
         </div>
-        <div class="dt-buy-techline">Puce NFC intégrée · Sans abonnement</div>
         <a class="dt-cta dt-buy-cta" href="mailto:deentag.pro@gmail.com?subject=%C3%8Atre%20pr%C3%A9venu%20du%20lancement%20de%20DEENTAG%20F&amp;body=Bonjour%2C%0A%0AJe%20souhaite%20%C3%AAtre%20pr%C3%A9venu%28e%29%20du%20lancement%20de%20DEENTAG%20F.%0A%0AMerci%20%21">Être prévenu du lancement</a>
       </div>
     </div>
-
-    <p class="dt-gift-line dt-reveal">Une idée cadeau qui a du sens — pour le Ramadan, l'Aïd, une naissance ou simplement pour faire plaisir à un proche.</p>
   </section>
 
-  <!-- 9. CTA FINAL -->
+  <!-- 11. CADEAU -->
+  <section class="dt-gift-wrap">
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">Un cadeau qui a du sens.</h2>
+    <p class="dt-lead dt-reveal" style="text-align:center;max-width:320px;margin:10px auto 0">Pour le Ramadan. Pour l'Aïd. Pour une naissance. Pour un proche. Ou simplement pour faire plaisir.</p>
+    <p class="dt-lead dt-reveal" style="text-align:center;max-width:320px;margin:10px auto 0">DEENTAG est un objet que l'on porte, mais surtout un accès à un univers que l'on peut retrouver au quotidien.</p>
+    <a class="dt-cta dt-reveal" href="#dtBuy" style="margin-top:18px">Offrir DEENTAG</a>
+  </section>
+
+  <!-- 12. FAQ -->
+  <section class="dt-faq-wrap">
+    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">Questions</span><span class="dt-sep-line"></span></div>
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">Vous vous posez une question ?</h2>
+    <div class="dt-accordions dt-reveal">
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-nfc" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">Qu'est-ce que le NFC ?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-nfc"><div class="dt-accord-content">Le NFC est une technologie de communication à très courte distance. Elle permet à un smartphone compatible de détecter une puce NFC lorsque le téléphone est approché de celle-ci.</div></div>
+      </div>
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-usage" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">Comment utiliser ma DEENTAG ?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-usage"><div class="dt-accord-content">Portez votre montre normalement. Lorsque vous souhaitez accéder à votre univers DEENTAG, approchez simplement votre téléphone de la zone NFC de la montre.</div></div>
+      </div>
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-app" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">Dois-je installer une application ?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-app"><div class="dt-accord-content">L'univers DEENTAG est accessible directement depuis le téléphone, sans avoir à ouvrir une application dédiée.</div></div>
+      </div>
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-content" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">Que trouve-t-on dans DEENTAG ?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-content"><div class="dt-accord-content">Coran complet, récitations, invocations, mode enfants et contenus disponibles en 8 langues.</div></div>
+      </div>
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-abo" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">Y a-t-il un abonnement ?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-abo"><div class="dt-accord-content">Non. DEENTAG est présenté sans abonnement.</div></div>
+      </div>
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-smartwatch" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">Est-ce une smartwatch ?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-smartwatch"><div class="dt-accord-content">DEENTAG est avant tout une vraie montre avec une puce NFC intégrée. Son objectif n'est pas de remplacer une smartwatch classique, mais de vous donner un accès simple à l'univers DEENTAG.</div></div>
+      </div>
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-compat" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">Quels téléphones sont compatibles ?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-compat"><div class="dt-accord-content">De nombreux smartphones récents sont compatibles NFC, notamment de nombreux modèles iPhone, Samsung, Xiaomi et Google Pixel. La compatibilité peut dépendre du modèle et de ses réglages.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. CTA FINAL -->
   <section class="dt-final">
     <div class="dt-final-img">
       <img src="/images/deentag-watch-box.webp" alt="Montres DEENTAG" loading="lazy" />
@@ -179,11 +347,13 @@
     </div>
     <div class="dt-final-body">
       <div class="dt-final-title">Votre foi mérite une place dans votre quotidien.</div>
-      <div class="dt-final-text">Portez-la. Approchez votre téléphone. Et retrouvez instantanément votre univers spirituel.</div>
-      <a class="dt-cta" href="#dtBuy">Découvrir Deentag</a>
+      <div class="dt-final-text">Portez votre DEENTAG. Approchez votre téléphone. Et retrouvez votre univers spirituel, simplement.</div>
+      <a class="dt-cta" href="#dtBuy">Découvrir DEENTAG</a>
+      <p class="dt-final-sub">19,99 € · Homme ou Femme · Sans abonnement</p>
     </div>
   </section>
 
+  <!-- 14. FOOTER -->
   <footer class="shop-footer">
     <div class="shop-footer-ornament">
       <span class="shop-footer-line"></span>
@@ -191,18 +361,18 @@
       <span class="shop-footer-line"></span>
     </div>
     <p class="shop-footer-text">Un rappel discret, pensé pour accompagner votre quotidien.</p>
-    <a href="/fr" class="back-pill"><span class="back-pill-arrow">←</span> Retour à l'accueil</a>
+    <a href="/fr" class="back-pill"><span class="back-pill-arrow" aria-hidden="true">←</span> Retour à l'accueil</a>
   </footer>
 
   <div class="dt-scroll-pad"></div>
 
-  <!-- STICKY CTA -->
+  <!-- 15. STICKY CTA -->
   <div class="dt-sticky">
     <div class="dt-sticky-inner">
       <div class="dt-sticky-info">
         <div class="dt-sticky-price">19,99 €</div>
-        <div class="dt-sticky-label">Deux modèles, Homme et Femme</div>
+        <div class="dt-sticky-label">DEENTAG · Homme ou Femme</div>
       </div>
-      <a class="dt-sticky-btn" style="text-decoration:none;display:flex;align-items:center;justify-content:center" href="#dtBuy">Découvrir</a>
+      <a class="dt-sticky-btn" style="text-decoration:none;display:flex;align-items:center;justify-content:center" href="#dtBuy">Découvrir DEENTAG</a>
     </div>
   </div>
