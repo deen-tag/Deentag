@@ -32,7 +32,6 @@
 .dt-intro-img img{width:100%;height:100%;object-fit:cover;display:block;opacity:0.55;filter:saturate(0.75)}
 .dt-intro-overlay{position:absolute;inset:0;background:radial-gradient(ellipse 70% 55% at 50% 40%, rgba(0,0,0,0.35) 0%, rgba(3,3,3,0.88) 100%)}
 .dt-intro-body{position:relative;z-index:2;text-align:center;padding:0 34px}
-.dt-intro-time{font-family:'Cinzel',serif;font-size:13px;letter-spacing:0.5em;color:#DDB05C;margin-bottom:18px}
 .dt-intro-quote{font-family:'Spectral',serif;font-style:italic;font-size:19px;line-height:1.6;color:#F7F2E4}
 .dt-intro-scroll{position:relative;z-index:2;margin-top:34px}
 .dt-intro-scroll span{display:block;width:1px;height:34px;background:linear-gradient(to bottom, rgba(221,176,92,0.9), transparent);animation:dtScrollPulse 1.8s ease-in-out infinite}
@@ -51,29 +50,7 @@
 .dt-chip{font-family:'Cinzel',serif;font-size:7.5px;letter-spacing:0.16em;padding:6px 12px;border-radius:20px;border:1px solid var(--card-border);color:var(--text3);text-transform:uppercase;background:var(--card-bg)}
 
 /* ============================================================
-   3. LA JOURNÉE — chronologie, lumière qui change
-   ============================================================ */
-.dt-journey-wrap{padding-bottom:6px}
-.dt-journey-item{padding:56px 26px;text-align:center;transition:background 0.6s}
-.dt-journey-time{font-family:'Cinzel',serif;font-size:34px;letter-spacing:0.08em;font-weight:600}
-.dt-journey-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.34em;text-transform:uppercase;margin-top:8px;opacity:0.75}
-.dt-journey-text,.dt-journey-quote{font-family:'Spectral',serif;font-style:italic;font-size:15px;line-height:1.7;margin-top:18px}
-.dt-journey-photo{margin:26px auto 0;width:150px;height:150px;border-radius:50%;overflow:hidden;box-shadow:0 14px 34px rgba(0,0,0,0.22)}
-.dt-journey-photo img{width:100%;height:100%;object-fit:cover;display:block}
-
-.dt-journey-item.is-morning{background:linear-gradient(180deg,#F7F3E7,#EDE8D5);color:#1E1A10}
-.dt-journey-item.is-morning .dt-journey-time{color:#1C6A63}
-.dt-journey-item.is-midday{background:#EDE8D5;color:#1E1A10}
-.dt-journey-item.is-midday .dt-journey-time{color:#8B6914}
-.dt-journey-item.is-evening{background:linear-gradient(180deg,#16333B,#0D2027);color:#EDF2EE}
-.dt-journey-item.is-evening .dt-journey-time{color:#DDB05C}
-.dt-journey-item.is-evening .dt-journey-text{color:rgba(237,242,238,0.78)}
-.dt-journey-item.is-night{background:#050E12;color:#EDF2EE}
-.dt-journey-item.is-night .dt-journey-time{color:#DDB05C}
-.dt-journey-item.is-night .dt-journey-quote{color:rgba(237,242,238,0.82)}
-
-/* ============================================================
-   4. LE GESTE
+   3. LE GESTE
    ============================================================ */
 .dt-gesture-wrap{padding:0 20px}
 .dt-gesture-wrap .dt-h2{text-align:center}
@@ -90,14 +67,14 @@
 .dt-compat-text{display:block;font-family:'Spectral',serif;font-size:12.5px;color:var(--text3);line-height:1.55}
 
 /* ============================================================
-   5. LE RAPPEL — écho, texte seul
+   4. LE RAPPEL — écho, texte seul
    ============================================================ */
 .dt-echo-wrap{padding:64px 30px;text-align:center}
 .dt-echo-quote{font-family:'Cinzel',serif;font-size:20px;line-height:1.55;color:var(--text)}
 .dt-echo-sub{font-family:'Spectral',serif;font-style:italic;font-size:14px;line-height:1.8;color:var(--text3);margin-top:20px}
 
 /* ============================================================
-   6. L'UNIVERS
+   5. L'UNIVERS
    ============================================================ */
 .dt-content-wrap{padding:0 20px}
 .dt-content-wrap .dt-h2{text-align:center;margin-bottom:22px}
@@ -112,7 +89,7 @@
 .dt-lang-chip{font-family:'Spectral',serif;font-size:12.5px;color:var(--text2);background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:7px 14px}
 
 /* ============================================================
-   7. LA MONTRE (galerie photo)
+   6. LA MONTRE (galerie photo)
    ============================================================ */
 .dt-watch-wrap{padding:0 0}
 .dt-watch-wrap .dt-h2,.dt-watch-wrap .dt-lead{padding:0 20px}
@@ -124,7 +101,7 @@
 .dt-home-item img{width:100%;height:100%;object-fit:cover;display:block}
 
 /* ============================================================
-   8. HOMME / FEMME — présentation éditoriale
+   7. HOMME / FEMME — présentation éditoriale
    ============================================================ */
 .dt-editorial-wrap{padding:0 20px}
 .dt-editorial-grid{display:flex;flex-direction:column;gap:22px}
@@ -136,7 +113,7 @@
 .dt-editorial-link{display:inline-block;margin-top:12px;font-family:'Cinzel',serif;font-size:9.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);text-decoration:none;border-bottom:1px solid rgba(var(--gold-rgb),0.4);padding-bottom:2px}
 
 /* ============================================================
-   9. CHOIX / OFFRE — fiche produit avec bascule H / F
+   8. CHOIX / OFFRE — fiche produit avec bascule H / F
    ============================================================ */
 .dt-buy-wrap{padding:0 20px}
 .dt-buy-wrap .dt-h2{margin-bottom:22px}
@@ -159,7 +136,7 @@
 .dt-gift-line{font-family:'Spectral',serif;font-style:italic;font-size:12.5px;color:var(--text3);text-align:center;line-height:1.6;max-width:320px;margin:22px auto 0}
 
 /* ============================================================
-   10. CTA FINAL
+   9. CTA FINAL
    ============================================================ */
 .dt-final{position:relative;margin-top:40px;overflow:hidden}
 .dt-final-img{aspect-ratio:3/4;position:relative}
