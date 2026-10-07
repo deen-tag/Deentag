@@ -225,3 +225,54 @@
   .dt-editorial-grid{flex-direction:row}
   .dt-editorial-item{flex:1}
 }
+
+/* ============================================================
+   AJOUTS AIDA — micro-texte hero, galerie d'écrans, scénarios,
+   fiche "en bref", formulaire de réservation, réassurance
+   ============================================================ */
+.dt-hero-micro{font-family:'Spectral',serif;font-style:italic;font-size:11.5px;color:rgba(247,242,228,0.78);margin-top:10px}
+.dt-cta-inline{margin-top:26px}
+
+/* Galerie d'écrans (scroll horizontal) */
+.dt-screens{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:22px 20px 6px;margin:0 -20px;scrollbar-width:none}
+.dt-screens::-webkit-scrollbar{display:none}
+.dt-screen{flex:0 0 46%;max-width:190px;margin:0;scroll-snap-align:center;text-align:center}
+.dt-screen img{width:100%;aspect-ratio:9/17;object-fit:cover;display:block;border-radius:18px;box-shadow:0 14px 34px rgba(0,0,0,0.22);background:#111}
+.dt-screen figcaption{font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text3);margin-top:10px}
+
+/* Scénarios de vie */
+.dt-scenarios{list-style:none;margin:26px 20px 0;padding:0;display:flex;flex-direction:column}
+.dt-scenario{display:flex;flex-direction:column;gap:3px;padding:14px 0;border-bottom:1px solid var(--card-border)}
+.dt-scenario:first-child{border-top:1px solid var(--card-border)}
+.dt-scenario-when{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold)}
+.dt-scenario-what{font-family:'Spectral',serif;font-size:14px;color:var(--text2);line-height:1.5}
+
+/* Fiche "En bref" */
+.dt-spec-wrap{padding:0 20px}
+.dt-spec-wrap .dt-sep{padding:0;margin-top:34px}
+.dt-spec{margin:0;display:flex;flex-direction:column}
+.dt-spec-row{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--card-border)}
+.dt-spec-row:first-child{border-top:1px solid var(--card-border)}
+.dt-spec-row dt{flex:0 0 96px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text3);padding-top:3px}
+.dt-spec-row dd{margin:0;flex:1;font-family:'Spectral',serif;font-size:13.5px;color:var(--text2);line-height:1.5}
+
+/* Preuve sociale (activée quand tu décommentes la section) */
+.dt-proof-wrap{padding:0 20px}
+.dt-proof-list{display:flex;flex-direction:column;gap:12px;margin-top:20px}
+.dt-proof{margin:0;background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:18px 18px 14px}
+.dt-proof p{font-family:'Spectral',serif;font-style:italic;font-size:14px;line-height:1.65;color:var(--text2);margin:0 0 8px}
+.dt-proof cite{font-family:'Cinzel',serif;font-style:normal;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text3)}
+
+/* Formulaire de réservation */
+.dt-form{margin-top:6px}
+.dt-form-label{display:block;font-family:'Cinzel',serif;font-size:8px;letter-spacing:0.24em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+.dt-input{width:100%;box-sizing:border-box;font-family:'Spectral',serif;font-size:16px;color:var(--text);background:rgba(var(--gold-rgb),0.05);border:1px solid rgba(var(--gold-rgb),0.35);border-radius:12px;padding:14px 14px;margin-bottom:14px;outline:none;-webkit-appearance:none;appearance:none}
+.dt-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(var(--gold-rgb),0.18)}
+.dt-input.is-error{border-color:#C0524A}
+.dt-hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0;pointer-events:none}
+.dt-buy-cta[disabled]{opacity:0.6;cursor:default}
+.dt-form-msg{min-height:18px;margin:12px 0 0;text-align:center;font-family:'Spectral',serif;font-size:13px;line-height:1.5;color:var(--text3)}
+.dt-form-msg.is-ok{color:var(--gold);font-weight:600}
+.dt-form-msg.is-error{color:#C0524A}
+.dt-reassure{list-style:none;margin:16px 0 0;padding:16px 0 0;border-top:1px solid var(--card-border);display:flex;flex-direction:column;gap:8px}
+.dt-reassure li{font-family:'Spectral',serif;font-size:12.5px;color:var(--text3);text-align:center}

@@ -1,295 +1,375 @@
+  <!-- JSON-LD produit (données confirmées uniquement) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "DEENTAG",
+    "description": "Orologio con chip NFC integrato che dà accesso a uno spazio spirituale: Corano completo, recitazioni, invocazioni, modalità bambini, in 8 lingue.",
+    "brand": { "@type": "Brand", "name": "DEENTAG" },
+    "image": [
+      "https://deentag.vercel.app/images/deentag-watch-box.webp",
+      "https://deentag.vercel.app/images/deentag-watch-homme-poignet.webp",
+      "https://deentag.vercel.app/images/deentag-watch-femme-poignet.webp"
+    ],
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "EUR",
+      "price": "19.99",
+      "availability": "https://schema.org/PreOrder"
+    }
+  }
+  </script>
 
-
-<!-- TOPBAR -->
-<!-- HEADER -->
-<div class="sh-header">
-  <div class="sh-title">DEENTAG &#8212; OBJET NFC D&#201;CORATIF</div>
-  <div class="sh-subtitle">
-    Stampa 3D alta qualit&#224; &#8212; Chip NFC integrato &#8212; App gratuita a vita</div>
-  <div class="sh-badges">
-    <span class="sh-badge gold">NFC Int&#233;gr&#233;</span>
-    <span class="sh-badge gold">App gratuite &amp; illimit&#233;e</span>
-    <span class="sh-badge gold">8 langues</span>
-    <span class="sh-badge">Sans batterie</span>
-    <span class="sh-badge">20 &#215; 13 cm</span>
-    <span class="sh-badge">Id&#233;al cadeau</span>
-  </div>
-</div>
-
-<!-- OFFRE -->
-<div class="sh-sep">
-  <div class="sh-sep-line"></div>
-  <div class="sh-sep-label">Scegli la tua offerta</div>
-  <div class="sh-sep-line"></div>
-</div>
-
-<div class="sh-offers">
-  <div class="sh-offer-card selected" id="offerUnit" onclick="selectOffer('unit')">
-    <div class="sh-offer-top">
-      <div class="sh-offer-radio"><div class="sh-offer-radio-dot"></div></div>
-      <div class="sh-offer-name">1 oggetto &#8212; colore a scelta</div>
-      <div class="sh-offer-price">14,99&nbsp;&#8364;</div>
+  <!-- 1. HERO — ATTENTION -->
+  <section class="dt-hero">
+    <div class="dt-hero-img"><img src="/images/deentag-watch-box.webp" alt="Orologi DEENTAG H e F nelle loro confezioni" loading="eager" /></div>
+    <div class="dt-hero-overlay"></div>
+    <div class="dt-hero-body">
+      <div class="dt-hero-eyebrow dt-reveal">DEENTAG · L'orologio NFC</div>
+      <h1 class="dt-hero-title dt-reveal">Avvicina il telefono.<br>Il Corano si apre.</h1>
+      <p class="dt-hero-beat-line dt-reveal">Un vero orologio, con il Corano completo, le invocazioni e le recitazioni al tuo polso.</p>
+      <p class="dt-hero-price dt-reveal">19,99 € · Un solo acquisto · Senza abbonamento</p>
+      <a class="dt-cta dt-reveal" href="#dtBuy">Prenota la mia DEENTAG</a>
+      <p class="dt-hero-micro dt-reveal">Nessun pagamento ora · Avvisato per primo</p>
+      <ul class="dt-chips dt-reveal" style="list-style:none;padding:0;margin:16px 0 0">
+        <li class="dt-chip">✓ Senza app</li>
+        <li class="dt-chip">✓ Senza abbonamento</li>
+        <li class="dt-chip">✓ 8 lingue</li>
+      </ul>
     </div>
-    <div class="sh-offer-desc">Legno naturale, Verde scuro o Bianco e oro</div>
-  </div>
-  <div class="sh-offer-card" id="offerBundle" onclick="selectOffer('bundle')">
-    <div class="sh-offer-badge">Risparmia 6&#8364;</div>
-    <div class="sh-offer-top">
-      <div class="sh-offer-radio"><div class="sh-offer-radio-dot"></div></div>
-      <div class="sh-offer-name">Pack &#8212; tutti e 3 i colori</div>
-      <div class="sh-offer-price">38,99&nbsp;&#8364;</div>
-    </div>
-    <div class="sh-offer-desc">Legno + Verde + Bianco &#8212; invece di 44,97 &#8364;</div>
-  </div>
-</div>
+  </section>
 
-<!-- COLORIS -->
-<div class="sh-coloris-wrap" id="colorisWrap">
-  <div class="sh-coloris-label">Colore</div>
-  <div class="sh-coloris-btns">
-    <button class="sh-coloris-btn active" onclick="selectColoris('bois',this)">
-      <div class="sh-coloris-swatch" style="background:linear-gradient(135deg,#D4B896,#E8D5B0)"></div>
-      <div class="sh-coloris-name">Legno</div>
-    </button>
-    <button class="sh-coloris-btn" onclick="selectColoris('vert',this)">
-      <div class="sh-coloris-swatch" style="background:linear-gradient(135deg,#1E4D2B,#2D6B3F)"></div>
-      <div class="sh-coloris-name">Verde</div>
-    </button>
-    <button class="sh-coloris-btn" onclick="selectColoris('blanc',this)">
-      <div class="sh-coloris-swatch" style="background:linear-gradient(135deg,#F0EDE8,#FFF);border:1px solid rgba(201,168,76,0.3)"></div>
-      <div class="sh-coloris-name">Bianco</div>
-    </button>
-  </div>
-</div>
+  <!-- 2. COMMENT ÇA MARCHE — INTÉRÊT (remonté juste après le hero) -->
+  <section class="dt-steps-wrap">
+    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">Come funziona</span><span class="dt-sep-line"></span></div>
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">Tre secondi. Un gesto.</h2>
+    <p class="dt-lead dt-reveal" style="text-align:center;max-width:300px;margin:10px auto 0">Il tuo spazio DEENTAG si apre senza app e senza impostazioni.</p>
 
-<!-- COMMENT CA MARCHE -->
-<div class="sh-sep" style="margin-top:6px">
-  <div class="sh-sep-line"></div>
-  <div class="sh-sep-label">Come funziona</div>
-  <div class="sh-sep-line"></div>
-</div>
-<div class="sh-steps">
-  <div class="sh-step">
-    <div class="sh-step-num">1</div>
-    <div class="sh-step-body">
-      <div class="sh-step-title">Posiziona il tuo Deentag</div>
-      <div class="sh-step-desc">Soggiorno, camera o ufficio &#8212; un promemoria quotidiano del tuo legame con Allah.</div>
-    </div>
-  </div>
-  <div class="sh-step">
-    <div class="sh-step-num">2</div>
-    <div class="sh-step-body">
-      <div class="sh-step-title">Scansiona con il tuo telefono</div>
-      <div class="sh-step-desc">Avvicina il tuo smartphone. Accesso immediato grazie all'NFC &#8212; senza app, senza configurazione.</div>
-    </div>
-  </div>
-  <div class="sh-step">
-    <div class="sh-step-num">3</div>
-    <div class="sh-step-body">
-      <div class="sh-step-title">Cresci nella tua fede</div>
-      <div class="sh-step-desc">Invocazioni, Corano completo, modalit&#224; bambini &#8212; gratuito e illimitato per tutta la famiglia.</div>
-    </div>
-  </div>
-</div>
+    <ol class="dt-steps-list">
+      <li class="dt-step-item dt-reveal">
+        <span class="dt-step-num" aria-hidden="true">01</span>
+        <div class="dt-step-body">
+          <h3 class="dt-step-title">Indossalo</h3>
+          <p class="dt-step-desc">Come un orologio classico, ogni giorno.</p>
+        </div>
+      </li>
+      <li class="dt-step-item dt-reveal">
+        <span class="dt-step-num" aria-hidden="true">02</span>
+        <div class="dt-step-body">
+          <h3 class="dt-step-title">Avvicina il telefono</h3>
+          <p class="dt-step-desc">All'area NFC dell'orologio.</p>
+        </div>
+      </li>
+      <li class="dt-step-item dt-reveal">
+        <span class="dt-step-num" aria-hidden="true">03</span>
+        <div class="dt-step-body">
+          <h3 class="dt-step-title">Il tuo spazio si apre</h3>
+          <p class="dt-step-desc">Corano, invocazioni, recitazioni: tutto è lì, all'istante.</p>
+        </div>
+      </li>
+    </ol>
 
-<!-- VITRINE APP -->
-<div class="sh-sep">
-  <div class="sh-sep-line"></div>
-  <div class="sh-sep-label">L'applicazione</div>
-  <div class="sh-sep-line"></div>
-</div>
-<div class="sh-mockup-wrap">
-  <div class="sh-mockup">
-    <div class="sh-mockup-frame">
-      <img src="/images/app-kids.webp" alt="Kids Mode">
-    </div>
-    <div class="sh-mockup-caption">Bambini</div>
-  </div>
-  <div class="sh-mockup main-mock">
-    <div class="sh-mockup-frame">
-      <img src="/images/app-jour.webp" alt="Deentag App">
-    </div>
-    <div class="sh-mockup-caption">Adulti</div>
-  </div>
-  <div class="sh-mockup">
-    <div class="sh-mockup-frame">
-      <img src="/images/app-nuit.webp" alt="Night Mode">
-    </div>
-    <div class="sh-mockup-caption">Notte</div>
-  </div>
-</div>
-
-<!-- CHECKLIST -->
-<div class="sh-checklist">
-  <div class="sh-check-item"><span class="sh-check-icon">&#10022;</span><span class="sh-check-text"><strong>App gratuita e illimitata per sempre</strong> &#8212; nessun abbonamento</span></div>
-  <div class="sh-check-item"><span class="sh-check-icon">&#10022;</span><span class="sh-check-text"><strong>8 lingue disponibili</strong> &#8212; francese, inglese, spagnolo, tedesco, italiano, olandese, portoghese, turco</span></div>
-  <div class="sh-check-item"><span class="sh-check-icon">&#10022;</span><span class="sh-check-text"><strong>Modalit&#224; Bambini gamificata</strong> &#8212; badge, collezione, apprendimento ludico</span></div>
-  <div class="sh-check-item"><span class="sh-check-icon">&#10022;</span><span class="sh-check-text"><strong>Corano completo</strong> &#8212; 30 Juz, 114 Sure, recitazioni audio</span></div>
-</div>
-
-<!-- ACCORDEONS -->
-<div class="sh-sep">
-  <div class="sh-sep-line"></div>
-  <div class="sh-sep-label">Scopri di pi&#249;</div>
-  <div class="sh-sep-line"></div>
-</div>
-<div class="sh-accordions">
-  <div class="sh-accord" id="acc1">
-    <div class="sh-accord-header" onclick="toggleAccord('acc1')">
-      <div class="sh-accord-title">
-        <div>&#128225; Promemoria NFC istantaneo</div>
-        <div class="sh-accord-hint">Nessuna app &#8226; Nessuna batteria &#8226; Accesso in 1 secondo</div>
+    <div class="dt-gesture-visual dt-reveal" aria-hidden="true">
+      <div class="dt-gesture-icon">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="7.5"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><path d="M12 4.5v1.4M12 18.1v1.4M4.5 12h1.4M18.1 12h1.4"/></svg>
       </div>
-      <div class="sh-accord-icon">&#9662;</div>
-    </div>
-    <div class="sh-accord-body"><div class="sh-accord-content">Deentag non &#232; solo un bello oggetto decorativo. &#200; un promemoria visivo quotidiano che ti aiuta a mantenere le tue invocazioni nei momenti chiave della giornata.</div></div>
-  </div>
-  <div class="sh-accord" id="acc2">
-    <div class="sh-accord-header" onclick="toggleAccord('acc2')">
-      <div class="sh-accord-title">
-        <div>&#128214; Corano interattivo completo</div>
-        <div class="sh-accord-hint">30 Jouz &bull; 114 Sourates &bull; Audio</div>
+      <div class="dt-gesture-arrow">
+        <svg viewBox="0 0 24 24" width="20" height="10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M2 5h18M14 1l6 4-6 4"/></svg>
       </div>
-      <div class="sh-accord-icon">&#9662;</div>
+      <div class="dt-gesture-mockup"><img src="/images/app-jour.webp" alt="" loading="lazy" /></div>
     </div>
-    <div class="sh-accord-body"><div class="sh-accord-content">Scopri il Santo Corano in modo moderno. Traduzioni, fonetica e recitazioni audio di lettori rinomati.<div class="sh-accord-stat"><div class="sh-accord-stat-item">30 JOUZ</div><div class="sh-accord-stat-item">114 SOURATES</div><div class="sh-accord-stat-item">6236 VERSETS</div><div class="sh-accord-stat-item">&#127911; AUDIO</div></div></div></div>
-  </div>
-  <div class="sh-accord" id="acc3">
-    <div class="sh-accord-header" onclick="toggleAccord('acc3')">
-      <div class="sh-accord-title">
-        <div>&#128106; Per tutta la famiglia</div>
-        <div class="sh-accord-hint">Adulti &bull; Bambini &bull; 8 lingue</div>
+    <p class="dt-lead dt-reveal" style="text-align:center;margin-top:18px"><strong>Nessuna app da installare. Nessuna impostazione complicata.</strong></p>
+    <a class="dt-cta dt-cta-inline dt-reveal" href="#dtBuy">Prenota la mia DEENTAG</a>
+  </section>
+
+  <!-- 3. CE QU'ON Y TROUVE — INTÉRÊT / DÉSIR -->
+  <section class="dt-content-wrap">
+    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">Il tuo spazio DEENTAG</span><span class="dt-sep-line"></span></div>
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">Più di un orologio.<br>Uno spazio che ti accompagna.</h2>
+    <p class="dt-lead dt-reveal" style="text-align:center;max-width:320px;margin:10px auto 0">Tutto si apre dal tuo telefono, di giorno e di notte, anche per i bambini.</p>
+
+    <div class="dt-screens dt-reveal" role="group" aria-label="Anteprima dello spazio DEENTAG">
+      <figure class="dt-screen"><img src="/images/app-jour.webp" alt="Spazio DEENTAG in modalità giorno" loading="lazy" /><figcaption>Modalità giorno</figcaption></figure>
+      <figure class="dt-screen"><img src="/images/app-nuit.webp" alt="Spazio DEENTAG in modalità notte" loading="lazy" /><figcaption>Modalità notte</figcaption></figure>
+      <figure class="dt-screen"><img src="/images/app-kids.webp" alt="Spazio bambini DEENTAG" loading="lazy" /><figcaption>Modalità bambini</figcaption></figure>
+    </div>
+
+    <div class="dt-content-grid dt-reveal" style="margin-top:22px">
+      <div class="dt-content-card">
+        <div class="dt-content-icon" aria-hidden="true">📖</div>
+        <div class="dt-content-title">Corano completo</div>
+        <div class="dt-content-desc">I 30 Juz e le 114 sure, accessibili dal tuo telefono.</div>
       </div>
-      <div class="sh-accord-icon">&#9662;</div>
-    </div>
-    <div class="sh-accord-body"><div class="sh-accord-content">Che tu voglia rafforzare la tua pratica o trasmettere i valori dell'islam ai tuoi figli, Deentag ti accompagna in ogni fase.</div></div>
-  </div>
-  <div class="sh-accord" id="acc4">
-    <div class="sh-accord-header" onclick="toggleAccord('acc4')">
-      <div class="sh-accord-title">
-        <div>&#10022; Perch&#233; scegliere Deentag?</div>
-        <div class="sh-accord-hint">NFC &bull; Gratuito &bull; Senza batteria &bull; Design</div>
+      <div class="dt-content-card">
+        <div class="dt-content-icon" aria-hidden="true">🎧</div>
+        <div class="dt-content-title">Recitazioni</div>
+        <div class="dt-content-desc">Ascolta le recitazioni disponibili nel tuo spazio.</div>
       </div>
-      <div class="sh-accord-icon">&#9662;</div>
+      <div class="dt-content-card">
+        <div class="dt-content-icon" aria-hidden="true">🤲</div>
+        <div class="dt-content-title">Invocazioni</div>
+        <div class="dt-content-desc">Ritrova le tue invocazioni facilmente, quando ne hai bisogno.</div>
+      </div>
+      <div class="dt-content-card">
+        <div class="dt-content-icon" aria-hidden="true">✨</div>
+        <div class="dt-content-title">Modalità bambini</div>
+        <div class="dt-content-desc">Uno spazio pensato per accompagnare i più piccoli nella loro scoperta.</div>
+      </div>
     </div>
-    <div class="sh-accord-body"><div class="sh-accord-content"><ul>
-      <li>Accesso istantaneo grazie all'NFC &#8212; nessuna installazione</li>
-      <li>App 100% gratuita e illimitata &#8212; per sempre</li>
-      <li>Senza batteria, senza cavi, senza manutenzione</li>
-      <li>Disponibile in 8 lingue &#8212; per tutta la comunit&#224;</li>
-      <li>Design islamico elegante &#8212; si adatta a qualsiasi interno</li>
-    </ul></div></div>
-  </div>
-</div>
-
-<!-- DIMENSIONS -->
-<div class="sh-sep">
-  <div class="sh-sep-line"></div>
-  <div class="sh-sep-label">Dimensions</div>
-  <div class="sh-sep-line"></div>
-</div>
-<div class="sh-dims">
-  <div class="sh-dim-item"><div class="sh-dim-icon">&#128207;</div><div class="sh-dim-val">20</div><div class="sh-dim-unit">cm &#8212; altezza</div></div>
-  <div class="sh-dim-item"><div class="sh-dim-icon">&#128208;</div><div class="sh-dim-val">13</div><div class="sh-dim-unit">cm &#8212; larghezza</div></div>
-  <div class="sh-dim-item"><div class="sh-dim-icon">&#128438;</div><div class="sh-dim-val">3D</div><div class="sh-dim-unit">stampa</div></div>
-</div>
-
-<!-- SECTION CONFIANCE -->
-<div class="sh-trust">
-  <div class="sh-trust-quote">Un nuovo modo di vivere la tua fede, ogni giorno.</div>
-  <div class="sh-trust-items">
-    <div class="sh-trust-item">&#128230;<br>Consegna rapida</div>
-    <div class="sh-trust-item">&#128274;<br>Pagamento sicuro</div>
-    <div class="sh-trust-item">&#127482;<br>Supporto in francese</div>
-    <div class="sh-trust-item">&#9854;<br>App gratuita</div>
-  </div>
-</div>
-
-<!-- FAQ -->
-<div class="sh-sep">
-  <div class="sh-sep-line"></div>
-  <div class="sh-sep-label">FAQ</div>
-  <div class="sh-sep-line"></div>
-</div>
-<div class="sh-accordions">
-  <div class="sh-accord" id="faq1">
-    <div class="sh-accord-header" onclick="toggleAccord('faq1')">
-      <div class="sh-accord-title"><div>Compatibile con iPhone e Android?</div></div>
-      <div class="sh-accord-icon">&#9662;</div>
+    <div class="dt-langs-label dt-reveal">8 lingue</div>
+    <div class="dt-langs dt-reveal">
+      <span class="dt-lang-chip">Français</span>
+      <span class="dt-lang-chip">English</span>
+      <span class="dt-lang-chip">Español</span>
+      <span class="dt-lang-chip">Deutsch</span>
+      <span class="dt-lang-chip">Italiano</span>
+      <span class="dt-lang-chip">Nederlands</span>
+      <span class="dt-lang-chip">Português</span>
+      <span class="dt-lang-chip">Türkçe</span>
     </div>
-    <div class="sh-accord-body"><div class="sh-accord-content">S&#236;, Deentag funziona con tutti gli iPhone dall'iPhone 7 e tutti gli smartphone Android con NFC. Nessuna app da scaricare.</div></div>
-  </div>
-  <div class="sh-accord" id="faq2">
-    <div class="sh-accord-header" onclick="toggleAccord('faq2')">
-      <div class="sh-accord-title"><div>&#200; necessaria una connessione internet?</div></div>
-      <div class="sh-accord-icon">&#9662;</div>
+  </section>
+
+  <!-- 4. UNE VRAIE MONTRE — DÉSIR (scénarios de vie) -->
+  <section class="dt-watch-wrap">
+    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">L'orologio</span><span class="dt-sep-line"></span></div>
+    <h2 class="dt-h2 dt-reveal">Un vero orologio.<br>Non un gadget.</h2>
+    <p class="dt-lead dt-reveal">Un design sobrio ed elegante, pensato per essere indossato ogni giorno. La tecnologia resta discreta, all'interno.</p>
+    <div class="dt-home-carousel dt-reveal">
+      <div class="dt-home-item"><img src="/images/deentag-watch-box.webp" alt="Orologi DEENTAG nella loro confezione" loading="lazy" /></div>
+      <div class="dt-home-item"><img src="/images/deentag-watch-homme-poignet.webp" alt="Orologio DEENTAG H al polso" loading="lazy" /></div>
+      <div class="dt-home-item"><img src="/images/deentag-watch-femme-poignet.webp" alt="Orologio DEENTAG F al polso" loading="lazy" /></div>
     </div>
-    <div class="sh-accord-body"><div class="sh-accord-content">Solo per il primo caricamento. Poi, le invocazioni e il Corano sono disponibili offline.</div></div>
-  </div>
-  <div class="sh-accord" id="faq3">
-    <div class="sh-accord-header" onclick="toggleAccord('faq3')">
-      <div class="sh-accord-title"><div>Posso regalarlo?</div></div>
-      <div class="sh-accord-icon">&#9662;</div>
+    <ul class="dt-scenarios dt-reveal">
+      <li class="dt-scenario"><span class="dt-scenario-when">Al lavoro</span><span class="dt-scenario-what">Un'invocazione prima di una riunione, con un gesto.</span></li>
+      <li class="dt-scenario"><span class="dt-scenario-when">In viaggio</span><span class="dt-scenario-what">Le tue invocazioni di viaggio sempre a portata di mano.</span></li>
+      <li class="dt-scenario"><span class="dt-scenario-when">Prima di dormire</span><span class="dt-scenario-what">La modalità notte, delicata per gli occhi.</span></li>
+      <li class="dt-scenario"><span class="dt-scenario-when">In famiglia</span><span class="dt-scenario-what">La modalità bambini per imparare insieme.</span></li>
+    </ul>
+  </section>
+
+  <!-- 5. DEUX MODÈLES — DÉSIR -->
+  <section class="dt-editorial-wrap">
+    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">Due modelli</span><span class="dt-sep-line"></span></div>
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">Due modelli.<br>Una stessa esperienza.</h2>
+    <div class="dt-editorial-grid">
+      <div class="dt-editorial-item dt-reveal">
+        <div class="dt-editorial-photo"><img src="/images/deentag-watch-homme-poignet.webp" alt="DEENTAG H" loading="lazy" /></div>
+        <div class="dt-editorial-name">DEENTAG H</div>
+        <div class="dt-editorial-tagline">Presenza. Un promemoria di fede ogni giorno.</div>
+        <p class="dt-editorial-text">Un orologio sobrio e senza tempo, pensato per accompagnarti ovunque.</p>
+        <a class="dt-editorial-link dt-editorial-btn" href="#dtBuy" onclick="dtSelectModel('h')">Scegli il modello H →</a>
+      </div>
+      <div class="dt-editorial-item dt-reveal">
+        <div class="dt-editorial-photo"><img src="/images/deentag-watch-femme-poignet.webp" alt="DEENTAG F" loading="lazy" /></div>
+        <div class="dt-editorial-name">DEENTAG F</div>
+        <div class="dt-editorial-tagline">Eleganza.</div>
+        <p class="dt-editorial-text">Un orologio pensato per accompagnare la tua quotidianità con discrezione.</p>
+        <a class="dt-editorial-link dt-editorial-btn" href="#dtBuy" onclick="dtSelectModel('f')">Scegli il modello F →</a>
+      </div>
     </div>
-    <div class="sh-accord-body"><div class="sh-accord-content">Assolutamente. Deentag &#232; uno dei regali pi&#249; originali e spirituali da fare a una persona cara.</div></div>
-  </div>
-  <div class="sh-accord" id="faq4">
-    <div class="sh-accord-header" onclick="toggleAccord('faq4')">
-      <div class="sh-accord-title"><div>Come posiziono il Deentag?</div></div>
-      <div class="sh-accord-icon">&#9662;</div>
+  </section>
+
+  <!-- 6. EN BREF + PRIX — DÉSIR (ancrage) -->
+  <section class="dt-noabo-wrap">
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">19,99 €. Una volta sola.</h2>
+    <p class="dt-lead dt-reveal" style="text-align:center;max-width:320px;margin:10px auto 0">Acquisti il tuo orologio una volta sola. Nessun abbonamento è necessario per usare la tua DEENTAG.</p>
+  </section>
+
+  <section class="dt-spec-wrap">
+    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">In breve</span><span class="dt-sep-line"></span></div>
+    <dl class="dt-spec dt-reveal">
+      <div class="dt-spec-row"><dt>Tipo</dt><dd>Orologio con chip NFC integrato</dd></div>
+      <div class="dt-spec-row"><dt>Modelli</dt><dd>DEENTAG H (uomo) · DEENTAG F (donna)</dd></div>
+      <div class="dt-spec-row"><dt>Accesso</dt><dd>Basta avvicinare il telefono, senza app</dd></div>
+      <div class="dt-spec-row"><dt>Contenuti</dt><dd>Corano completo, recitazioni, invocazioni, modalità bambini</dd></div>
+      <div class="dt-spec-row"><dt>Lingue</dt><dd>8 (FR, EN, ES, DE, IT, NL, PT, TR)</dd></div>
+      <div class="dt-spec-row"><dt>Compatibilità</dt><dd>iPhone e Android con NFC</dd></div>
+      <div class="dt-spec-row"><dt>Prezzo</dt><dd>19,99 €, senza abbonamento</dd></div>
+    </dl>
+  </section>
+
+  <!-- 8. OFFRE + FORMULAIRE — ACTION -->
+  <section class="dt-buy-wrap" id="dtBuy">
+    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">La tua DEENTAG</span><span class="dt-sep-line"></span></div>
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">Prenota la tua</h2>
+
+    <div class="dt-buy-tabs dt-reveal" role="group" aria-label="Scegli il modello">
+      <button type="button" class="dt-buy-tab active" data-model="h" aria-pressed="true" onclick="dtSelectModel('h')">DEENTAG H</button>
+      <button type="button" class="dt-buy-tab" data-model="f" aria-pressed="false" onclick="dtSelectModel('f')">DEENTAG F</button>
     </div>
-    <div class="sh-accord-body"><div class="sh-accord-content">Il Deentag pu&#242; essere posizionato su un mobile, una mensola o una scrivania. Pu&#242; anche essere appeso a una parete.</div></div>
-  </div>
-  <div class="sh-accord" id="faq5">
-    <div class="sh-accord-header" onclick="toggleAccord('faq5')">
-      <div class="sh-accord-title"><div>Quali sono i tempi di consegna e posso ottenere un rimborso?</div></div>
-      <div class="sh-accord-icon">&#9662;</div>
+
+    <div class="dt-buy-card dt-reveal">
+      <div class="dt-buy-model active" data-model="h">
+        <div class="dt-buy-head">
+          <div class="dt-buy-name">DEENTAG H</div>
+          <div class="dt-buy-tagline">Presenza. Un promemoria di fede ogni giorno.</div>
+          <div class="dt-buy-price">19,99 €</div>
+          <p class="dt-buy-line">Un orologio. Un gesto. L'accesso al tuo spazio DEENTAG.</p>
+        </div>
+      </div>
+      <div class="dt-buy-model" data-model="f">
+        <div class="dt-buy-head">
+          <div class="dt-buy-name">DEENTAG F</div>
+          <div class="dt-buy-tagline">Eleganza. Un promemoria di fede ogni giorno.</div>
+          <div class="dt-buy-price">19,99 €</div>
+          <p class="dt-buy-line">Un orologio. Un gesto. L'accesso al tuo spazio DEENTAG.</p>
+        </div>
+      </div>
+
+      <div class="dt-buy-section-label">Cosa è incluso</div>
+      <div class="dt-buy-includes-grid">
+        <div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Orologio DEENTAG</div><div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Chip NFC integrato</div><div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Accesso allo spazio DEENTAG</div><div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Corano completo</div><div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Recitazioni</div><div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Invocazioni</div><div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Modalità bambini</div><div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> 8 lingue</div><div class="dt-buy-check"><span class="dt-buy-check-icon" aria-hidden="true">✓</span> Senza abbonamento</div>
+      </div>
+
+      <form class="dt-form" id="dtWaitlist" novalidate data-btn-reserve="Prenota DEENTAG {model}" data-btn-sending="Invio in corso…" data-btn-done="Iscrizione confermata ✓" data-msg-invalid="Inserisci un indirizzo e-mail valido." data-msg-badmail="Indirizzo e-mail non valido. Controllalo e riprova." data-msg-ok="Grazie! Sarai il primo a saperlo quando si apriranno gli ordini." data-msg-mail="Si sta aprendo la tua app di posta: invia il messaggio per confermare l'iscrizione." data-mail-subject="Essere avvisato del lancio di DEENTAG {model}" data-mail-body="Buongiorno,||||vorrei essere avvisato/a del lancio di DEENTAG {model}.||La mia e-mail: {email}||||Grazie!">
+        <label class="dt-form-label" for="dtEmail">La tua e-mail</label>
+        <input class="dt-input" id="dtEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="nome@esempio.it" required />
+        <input type="hidden" name="model" id="dtModelInput" value="h" />
+        <input type="text" name="website" class="dt-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <button type="submit" class="dt-cta dt-buy-cta" id="dtSubmit">Prenota DEENTAG H</button>
+        <p class="dt-form-msg" id="dtFormMsg" role="status" aria-live="polite"></p>
+      </form>
+
+      <ul class="dt-reassure">
+        <li>✓ Nessun pagamento ora</li>
+        <li>✓ Avvisato per primo all'apertura degli ordini</li>
+        <li>✓ Senza abbonamento, senza app</li>
+      </ul>
     </div>
-    <div class="sh-accord-body"><div class="sh-accord-content">[DA COMPLETARE: i tuoi tempi di consegna reali] e [DA COMPLETARE: la tua politica di rimborso reale].</div></div>
-  </div>
-</div>
-  <div class="sh-dim-item"><div class="sh-dim-val">3D</div><div class="sh-dim-unit">stampa</div></div>
-</div>
+    <p class="dt-lead dt-reveal" style="text-align:center;margin-top:16px;font-style:italic">Sii tra i primi a scoprire DEENTAG.</p>
+  </section>
 
-<!-- FOOTER -->
-<div class="shop-footer">
-  <div class="shop-footer-ornament">
-    <div class="shop-footer-line"></div>
-    <div class="ornament-center"><div class="ornament-diamond"></div><span class="ornament-star">&#10022;</span><div class="ornament-diamond"></div></div>
-    <div class="shop-footer-line"></div>
-  </div>
-  <div class="shop-footer-text">
-    Ogni momento ha la sua invocazione.<br>Deentag ti accompagna in ogni passo.</div>
-  <a href="/it" class="back-pill">
-    <div class="back-pill-arrow">&#8592;</div>
-    <span class="back-pill-txt">Torna all'app</span>
-  </a>
-</div>
+  <!-- 9. CADEAU -->
+  <section class="dt-gift-wrap">
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">Un regalo che ha un senso.</h2>
+    <p class="dt-lead dt-reveal" style="text-align:center;max-width:320px;margin:10px auto 0">Per il Ramadan. Per l'Eid. Per una nascita. Per una persona cara. O semplicemente per fare un piacere.</p>
+    <p class="dt-lead dt-reveal" style="text-align:center;max-width:320px;margin:10px auto 0">Un oggetto che si indossa e uno spazio a cui si torna ogni giorno.</p>
+    <a class="dt-cta dt-reveal" href="#dtBuy" style="margin-top:18px">Regala DEENTAG</a>
+  </section>
 
-<div class="sh-scroll-pad"></div>
-
-<!-- STICKY CTA -->
-<div class="sh-sticky">
-  <div class="sh-sticky-inner">
-    <div class="sh-sticky-info">
-      <div class="sh-sticky-price" id="stickyPrice">14,99 &#8364;</div>
-      <div class="sh-sticky-label">1 oggetto &#8212; colore a scelta</div>
+  <!-- 10. FAQ -->
+  <section class="dt-faq-wrap">
+    <div class="dt-sep"><span class="dt-sep-line"></span><span class="dt-sep-label">Domande</span><span class="dt-sep-line"></span></div>
+    <h2 class="dt-h2 dt-reveal" style="text-align:center">Hai una domanda?</h2>
+    <div class="dt-accordions dt-reveal">
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-access" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">Come accedo a DEENTAG?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-access"><div class="dt-accord-content">Avvicina semplicemente il telefono all'area NFC dell'orologio. Il telefono rileva il chip e apre il tuo spazio DEENTAG direttamente nel browser.</div></div>
+      </div>
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-app" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">Devo installare un'app?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-app"><div class="dt-accord-content">No. Lo spazio DEENTAG si apre direttamente dal telefono, senza alcuna app da scaricare.</div></div>
+      </div>
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-abo" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">C'è un abbonamento?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-abo"><div class="dt-accord-content">No. Acquisti il tuo orologio una volta sola, senza abbonamento.</div></div>
+      </div>
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-content" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">Cosa si trova in DEENTAG?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-content"><div class="dt-accord-content">Il Corano completo (30 Juz, 114 sure), le recitazioni, le invocazioni, una modalità bambini e gli orari di preghiera, disponibili in 8 lingue.</div></div>
+      </div>
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-nfc" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">Che cos'è l'NFC?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-nfc"><div class="dt-accord-content">L'NFC è una tecnologia di comunicazione a cortissimo raggio, già presente in molti smartphone. Basta avvicinare il telefono all'orologio: il chip viene rilevato e il tuo spazio si apre.</div></div>
+      </div>
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-compat" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">Quali telefoni sono compatibili?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-compat"><div class="dt-accord-content">Molti smartphone recenti sono compatibili con l'NFC, tra cui molti modelli di iPhone, Samsung, Xiaomi e Google Pixel. La compatibilità può dipendere dal modello e dalle sue impostazioni: verifica che l'NFC sia attivo.</div></div>
+      </div>
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-iphone" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">Funziona con iPhone e Android?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-iphone"><div class="dt-accord-content">Sì. La maggior parte degli iPhone recenti e molti smartphone Android recenti includono l'NFC necessario per accedere al tuo spazio DEENTAG.</div></div>
+      </div>
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-smartwatch" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">È uno smartwatch?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-smartwatch"><div class="dt-accord-content">DEENTAG è prima di tutto un vero orologio con un chip NFC integrato. Non intende sostituire uno smartwatch, ma offrirti un accesso semplice all'universo DEENTAG.</div></div>
+      </div>
+      <div class="dt-accord">
+        <h3 class="dt-accord-heading">
+          <button type="button" class="dt-accord-header" aria-expanded="false" aria-controls="faq-launch" onclick="dtToggleAccord(this)">
+            <span class="dt-accord-title">Quando posso ordinare?</span>
+            <span class="dt-accord-icon" aria-hidden="true">▾</span>
+          </button>
+        </h3>
+        <div class="dt-accord-body" id="faq-launch"><div class="dt-accord-content">DEENTAG non è ancora in vendita. Iscrivendoti, sarai il primo a sapere quando si apriranno gli ordini, senza pagamento né impegno. I dettagli di consegna saranno comunicati prima del lancio.</div></div>
+      </div>
     </div>
-    <button class="sh-sticky-btn" onclick="handleBuy()">Ordina</button>
+  </section>
+
+  <!-- 11. CTA FINAL -->
+  <section class="dt-final">
+    <div class="dt-final-img">
+      <img src="/images/deentag-watch-box.webp" alt="Orologi DEENTAG" loading="lazy" />
+      <div class="dt-final-overlay"></div>
+    </div>
+    <div class="dt-final-body">
+      <div class="dt-final-title">La tua fede merita un posto nella tua quotidianità.</div>
+      <div class="dt-final-text">Indossa la tua DEENTAG. Avvicina il telefono. E ritrova il tuo spazio spirituale, semplicemente.</div>
+      <a class="dt-cta" href="#dtBuy">Prenota la mia DEENTAG</a>
+      <p class="dt-final-sub">19,99 € · Uomo o Donna · Senza abbonamento</p>
+    </div>
+  </section>
+
+  <!-- 12. FOOTER -->
+  <footer class="shop-footer">
+    <div class="shop-footer-ornament">
+      <span class="shop-footer-line"></span>
+      <span class="ornament-center"><span class="ornament-diamond"></span><span class="ornament-star">✦</span><span class="ornament-diamond"></span></span>
+      <span class="shop-footer-line"></span>
+    </div>
+    <p class="shop-footer-text">Un promemoria discreto, pensato per accompagnare la tua quotidianità.</p>
+    <a href="/it" class="back-pill"><span class="back-pill-arrow" aria-hidden="true">←</span> Torna alla home</a>
+  </footer>
+
+  <div class="dt-scroll-pad"></div>
+
+  <!-- 13. STICKY CTA -->
+  <div class="dt-sticky">
+    <div class="dt-sticky-inner">
+      <div class="dt-sticky-info">
+        <div class="dt-sticky-price">19,99 €</div>
+        <div class="dt-sticky-label">DEENTAG · Uomo o Donna</div>
+      </div>
+      <a class="dt-sticky-btn" style="text-decoration:none;display:flex;align-items:center;justify-content:center" href="#dtBuy">Prenota la mia</a>
+    </div>
   </div>
-</div>
-
-<!-- MODAL -->
-<div class="soon-overlay" id="soon-overlay" onclick="hideSoon(event)">
-  <div class="soon-modal">
-    <span class="soon-icon">&#128332;</span>
-    <div class="soon-title">Prossimamente</div>
-    <div class="soon-text">Il negozio Deentag aprir&#224; molto presto.<br>Torna a trovarci presto!</div>
-    <button class="soon-close" onclick="hideSoon()">Ho capito</button>
-  </div>
-</div>
-
-
-
-
-
